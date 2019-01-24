@@ -78,11 +78,11 @@ Completed by Anna Darwish, Dima Fayyad, Ryan Culhane
     
 ```
 
-#### Choose Weapon
-
-#### Win the round
-
-#### New Choice
-
-#### Game Added
+###Cell Society Discussion
+1. A cell knows what rules to apply for the simulation based on its current state, its neighbors' current state and 
+the rules of the particular simulation. We would have an abstract cell class 
+2. A cell only knows about its neighbors when rules is called.  Rules informs the cell about its next state based on 
+the current state and the state of its neighbors.
+3. Each simulation has a private instance variable that is the Grid for that simulation.  The simulation and the 
+visualizer need to be able to access the grid.
 
