@@ -30,6 +30,8 @@ Cell Society Plan
     
 # Overview
 
+![](CellSocietyPlan.png)
+
 The above is a map of the classes we intend to write for this project. The two abstract 
 classes are the Simulation class and the Cell class. The simulations will be split up by type, 
 where each type of simulation has its own class. While we initially considered only using one 
