@@ -8,6 +8,7 @@ public abstract class Cell {
     List<Cell> possibleNeighbors;
     private Shape myShape;
     private int myCurrentState;
+    private int myNextState;
 
     public abstract void calculateNewState();
 
@@ -32,6 +33,11 @@ public abstract class Cell {
      */
     protected void updatePossibleNeighbors(){
         possibleNeighbors = myGrid.getNeighbors(myLocation);
+    }
+
+    public void updateState(){
+        myCurrentState = myNextState;
+        myNextState = 0;
     }
 
 

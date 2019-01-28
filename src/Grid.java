@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Grid {
     //Could use Grid<E>
@@ -104,4 +105,10 @@ public interface Grid {
      * adjacent to <code>loc</code> in this grid
      */
     ArrayList<Cell> getNeighbors(Location loc);
+
+    /**
+     * Returns the 2D grid that underlies the
+     * @return
+     */
+    List<Cell> getGrid();
 }
