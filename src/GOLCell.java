@@ -29,9 +29,9 @@ public class GOLCell extends Cell{
         List<Location> myNeighborLocations = getMyGrid().getValidBoxLocations(getMyLocation());
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
         if(needsToDie(numAlive)){
-            setMyNextState(DEAD);
+            myNextState = DEAD;
         }else if(needsToLive(numAlive)){
-            setMyNextState(ALIVE);
+            myNextState = ALIVE;
         }
     }
 
