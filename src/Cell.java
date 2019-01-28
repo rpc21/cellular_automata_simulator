@@ -3,12 +3,12 @@ import java.util.*;
 import java.util.List;
 
 public abstract class Cell {
-    private Grid myGrid;
-    private Location myLocation;
+    protected Grid myGrid;
+    protected Location myLocation;
     List<Cell> possibleNeighbors;
-    private Shape myShape;
-    private int myCurrentState;
-    private int myNextState;
+    protected Shape myShape;
+    protected int myCurrentState;
+    protected int myNextState;
 
     public abstract void calculateNewState();
 

@@ -5,8 +5,9 @@ public class GOLCell extends Cell{
     private static final int ALIVE = 1200;
     private static final int DEAD = 1201;
     private boolean alive;
-    private List<Location> myNeighborLocations;
-    private Grid myGrid;
+    //got rid of private List<Location> myNeighborLocations as only needed locally
+    //commented out myGrid here
+//    private Grid myGrid;
     /**
      * Implement Game of Life rules
      * Box neighbors, <2 neighbors alive = DIE, 2 0r 3 live will live, more than 3 live neighbors = die
@@ -16,16 +17,16 @@ public class GOLCell extends Cell{
      */
 
     public GOLCell(Location location, int initialState, Grid grid){
-        setMyCurrentState(initialState);
-        setMyNextState(0);
-        setMyLocation(location);
+        myGrid = grid;
+        myCurrentState = initialState;
+        myNextState = 0;
+        myLocation=location;
         alive = isAlive();
-        setMyGrid(grid);
     }
 
     @Override
     public void calculateNewState() {
-        myNeighborLocations = getMyGrid().getValidBoxLocations(getMyLocation());
+        List<Location> myNeighborLocations = getMyGrid().getValidBoxLocations(getMyLocation());
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
         if(needsToDie(numAlive)){
             setMyNextState(DEAD);
