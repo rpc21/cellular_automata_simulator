@@ -70,6 +70,8 @@ public interface Grid {
      */
     ArrayList<Location> getValidAdjacentLocations(Location loc);
 
+    ArrayList<Location> getValidBoxLocations(Location loc);
+
     /**
      * Gets the valid empty locations adjacent to a given location in all eight
      * compass directions (north, northeast, east, southeast, south, southwest,

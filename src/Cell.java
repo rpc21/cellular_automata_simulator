@@ -9,7 +9,7 @@ public abstract class Cell {
     private Shape myShape;
     private int myCurrentState;
 
-    public abstract int calculateNewState();
+    public abstract void calculateNewState();
 
     /**
      * Used by the visualizer to get the colored shape associated with cell
