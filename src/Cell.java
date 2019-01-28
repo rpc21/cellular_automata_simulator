@@ -19,8 +19,13 @@ public abstract class Cell {
     public Shape getMyShape(){
         return myShape;
     }
+
     public Location getMyLocation(){
         return myLocation;
+    }
+
+    public void setMyLocation(Location myLocation) {
+        this.myLocation = myLocation;
     }
 
     public void setNewState(int newState){
@@ -40,5 +45,27 @@ public abstract class Cell {
         myNextState = 0;
     }
 
+    public int getMyCurrentState() {
+        return myCurrentState;
+    }
 
+    public void setMyCurrentState(int myCurrentState) {
+        this.myCurrentState = myCurrentState;
+    }
+
+    public int getMyNextState() {
+        return myNextState;
+    }
+
+    public void setMyNextState(int myNextState) {
+        this.myNextState = myNextState;
+    }
+
+    public void setMyGrid(Grid myGrid) {
+        this.myGrid = myGrid;
+    }
+
+    public Grid getMyGrid() {
+        return myGrid;
+    }
 }

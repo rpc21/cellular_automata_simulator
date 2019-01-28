@@ -111,4 +111,8 @@ public interface Grid {
      * @return
      */
     List<Cell> getGrid();
+
+
+
+    void printGrid();
 }

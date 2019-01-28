@@ -40,7 +40,7 @@ public class BasicGrid implements Grid{
 
     @Override
     public void put(Location loc, Cell obj) {
-
+        myGrid[loc.getRow()][loc.getCol()] = obj;
     }
 
     @Override
@@ -62,32 +62,28 @@ public class BasicGrid implements Grid{
     public ArrayList<Location> getValidAdjacentLocations(Location loc) {
         int[] deltaRow = {-1, 1, 0, 0};
         int[] deltaCol = {0, 0, -1, 1};
+        return getLocations(loc, deltaRow, deltaCol);
+    }
+
+    private ArrayList<Location> getLocations(Location loc, int[] deltaRow, int[] deltaCol) {
         int locRow = loc.getRow();
         int locCol = loc.getCol();
         ArrayList<Location> validLocations = new ArrayList<>();
-        for (int i = 0; i<deltaCol.length; i++){
+        for (int i = 0; i < deltaCol.length; i++) {
             Location locationToBeChecked = new Location(locRow + deltaRow[i], locCol + deltaCol[i]);
-            if (isValid(locationToBeChecked)){
+            if (isValid(locationToBeChecked)) {
                 validLocations.add(locationToBeChecked);
             }
         }
         return validLocations;
     }
 
+
     @Override
     public ArrayList<Location> getValidBoxLocations(Location loc) {
         int[] deltaRow = {-1, 0, 1, -1, 1, -1, 0, 1};
         int[] deltaCol = {-1, -1, -1, 0,0, 1, 1,1};
-        int locRow = loc.getRow();
-        int locCol = loc.getCol();
-        ArrayList<Location> validLocations = new ArrayList<>();
-        for (int i = 0; i<deltaCol.length; i++){
-            Location locationToBeChecked = new Location(locRow + deltaRow[i], locCol + deltaCol[i]);
-            if (isValid(locationToBeChecked)){
-                validLocations.add(locationToBeChecked);
-            }
-        }
-        return validLocations;
+        return getLocations(loc, deltaRow, deltaCol);
     }
 
     @Override
@@ -103,5 +99,16 @@ public class BasicGrid implements Grid{
     @Override
     public ArrayList<Cell> getNeighbors(Location loc) {
         return null;
+    }
+
+    @Override
+    public void printGrid() {
+        for(int i = 0; i < myGrid.length; i++){
+            StringBuilder rowOfCells = new StringBuilder();
+            for(int j = 0; j < myGrid[0].length; j++){
+                rowOfCells.append(myGrid[i][j]);
+            }
+            System.out.println(rowOfCells);
+        }
     }
 }

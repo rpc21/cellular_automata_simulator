@@ -49,4 +49,16 @@ public class SpreadingFireCell extends Cell {
         return myCurrentState == ON_FIRE;
     }
 
+    @Override
+    public String toString() {
+        if (myCurrentState == EMPTY){
+            return "E";
+        }
+        else if (isOnFire()){
+            return "F";
+        }
+        else {
+            return "T";
+        }
+    }
 }

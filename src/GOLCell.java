@@ -7,9 +7,6 @@ public class GOLCell extends Cell{
     private boolean alive;
     private List<Location> myNeighborLocations;
     private Grid myGrid;
-    private Location myLocation;
-    private int myNextState;
-    private int currentState;
     /**
      * Implement Game of Life rules
      * Box neighbors, <2 neighbors alive = DIE, 2 0r 3 live will live, more than 3 live neighbors = die
@@ -19,21 +16,21 @@ public class GOLCell extends Cell{
      */
 
     public GOLCell(Location location, int initialState, Grid grid){
-        currentState = initialState;
-        myNextState = 0;
-        myLocation = location;
+        setMyCurrentState(initialState);
+        setMyNextState(0);
+        setMyLocation(location);
         alive = isAlive();
-        myGrid = grid;
+        setMyGrid(grid);
     }
 
     @Override
     public void calculateNewState() {
-        myNeighborLocations = myGrid.getValidBoxLocations(myLocation);
+        myNeighborLocations = getMyGrid().getValidBoxLocations(getMyLocation());
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
         if(needsToDie(numAlive)){
-            myNextState = DEAD;
+            setMyNextState(DEAD);
         }else if(needsToLive(numAlive)){
-            myNextState = ALIVE;
+            setMyNextState(ALIVE);
         }
     }
 
@@ -47,18 +44,26 @@ public class GOLCell extends Cell{
     private int calcNumLiveNeighbors(List<Location> locationList){
         int numAlive = 0;
         for(Location l:locationList){
-            GOLCell tempCell =(GOLCell)myGrid.get(l);
+            GOLCell tempCell =(GOLCell)getMyGrid().get(l);
             if(tempCell.isAlive()){ numAlive++; }
         }
         return numAlive;
     }
 
     public boolean isAlive() {
-        if(currentState ==ALIVE){
+        if(getMyCurrentState() ==ALIVE){
             alive = true;
         }else{
             alive = false;
         }
         return alive;
+    }
+
+    @Override
+    public String toString() {
+        if (getMyCurrentState() == ALIVE) {
+            return "A";
+        }
+        return  "D";
     }
 }
