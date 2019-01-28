@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Grid {
     //https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Grid.java
@@ -101,4 +102,10 @@ public interface Grid {
      * adjacent to <code>loc</code> in this grid
      */
     ArrayList<Cell> getNeighbors(Location loc);
+
+    /**
+     * Returns the 2D grid that underlies the
+     * @return
+     */
+    List<Cell> getGrid();
 }

@@ -14,6 +14,7 @@ public class GamePlayer extends Application{
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
 
+
     /**
      * Initialize the stageManager and switch scenes to load the Main Screen of the application
      * Establish the animation loop

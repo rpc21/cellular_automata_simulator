@@ -8,8 +8,9 @@ public abstract class Cell {
     List<Cell> possibleNeighbors;
     private Shape myShape;
     private int myCurrentState;
+    private int myNextState;
 
-    public abstract int calculateNewState();
+    public abstract void calculateNewState();
 
     /**
      * Used by the visualizer to get the colored shape associated with cell
@@ -32,6 +33,11 @@ public abstract class Cell {
      */
     protected void updatePossibleNeighbors(){
         possibleNeighbors = myGrid.getNeighbors(myLocation);
+    }
+
+    public void updateState(){
+        myCurrentState = myNextState;
+        myNextState = 0;
     }
 
 
