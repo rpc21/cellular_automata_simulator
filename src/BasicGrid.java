@@ -66,6 +66,22 @@ public class BasicGrid implements Grid{
     }
 
     @Override
+    public ArrayList<Location> getValidBoxLocations(Location loc) {
+        int[] deltaRow = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] deltaCol = {-1, -1, -1, 0,0, 1, 1,1};
+        int locRow = loc.getRow();
+        int locCol = loc.getCol();
+        ArrayList<Location> validLocations = new ArrayList<>();
+        for (int i = 0; i<deltaCol.length; i++){
+            Location locationToBeChecked = new Location(locRow + deltaRow[i], locCol + deltaCol[i]);
+            if (isValid(locationToBeChecked)){
+                validLocations.add(locationToBeChecked);
+            }
+        }
+        return validLocations;
+    }
+
+    @Override
     public ArrayList<Location> getEmptyAdjacentLocations(Location loc) {
         return null;
     }
