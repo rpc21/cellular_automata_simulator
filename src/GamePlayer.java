@@ -31,7 +31,7 @@ public class GamePlayer extends Application{
     }
 
     private void step(double secondDelay) {
-        
+
     }
 
 }

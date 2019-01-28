@@ -50,7 +50,7 @@ public interface Grid {
      * @return the object at location <code>loc</code> (or <code>null<code>
      *  if the location is unoccupied)
      */
-    void get(Location loc);
+    Cell get(Location loc);
 
     /**
      * Gets the locations in this grid that contain objects.
