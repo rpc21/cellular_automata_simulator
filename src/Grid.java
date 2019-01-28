@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public interface Grid {
+    //Could use Grid<E>
     //https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Grid.java
     /**
      * Returns the number of rows in this grid.
