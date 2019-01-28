@@ -69,9 +69,9 @@ public interface Grid {
      * @return an array list of the valid locations adjacent to <code>loc</code>
      * in this grid
      */
-    ArrayList<Location> getValidAdjacentLocations(Location loc);
+//    ArrayList<Location> getValidAdjacentLocations(Location loc);
 
-    ArrayList<Location> getValidBoxLocations(Location loc);
+//    ArrayList<Location> getValidBoxLocations(Location loc);
 
     /**
      * Gets the valid empty locations adjacent to a given location in all eight
@@ -112,7 +112,7 @@ public interface Grid {
      */
     List<Cell> getGrid();
 
-
+    ArrayList<Location> getLocations(Location loc, int[] deltaRow, int[] deltaCol);
 
     void printGrid();
 }

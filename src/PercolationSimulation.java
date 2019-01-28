@@ -1,10 +1,6 @@
 import java.util.List;
 
-public class SpreadingFireSimulation extends Simulation {
-
-    public SpreadingFireSimulation(int rows, int cols){
-        setMyGrid(new BasicGrid(rows, cols));
-    }
+public class PercolationSimulation extends Simulation {
 
     @Override
     public void simulate(double simulationSpeed) {

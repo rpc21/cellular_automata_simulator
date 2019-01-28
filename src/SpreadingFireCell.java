@@ -5,6 +5,8 @@ public class SpreadingFireCell extends Cell {
     private static final int ON_FIRE = 140002;
     private static final int TREE = 140003;
     private static final int EMPTY = 140004;
+    private static final int[] SPREADING_FIRE_ROW_NEIGHBORS = {-1, 1, 0, 0};
+    private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
 
     private double probCatch;
 
@@ -30,7 +32,7 @@ public class SpreadingFireCell extends Cell {
     }
 
     private boolean catchesFire() {
-        List<Location> neighborLocations = myGrid.getValidAdjacentLocations(myLocation);
+        List<Location> neighborLocations = myGrid.getLocations(myLocation, SPREADING_FIRE_ROW_NEIGHBORS, SPREADING_FIRE_COL_NEIGHBORS);
         boolean nextToTreeOnFire = false;
         for (Location loc : neighborLocations){
             SpreadingFireCell cell = (SpreadingFireCell) myGrid.get(loc);
