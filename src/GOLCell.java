@@ -32,9 +32,9 @@ public class GOLCell extends Cell{
         List<Location> myNeighborLocations = myGrid.getLocations(myLocation, GOL_CELL_ROW_NEIGHBORS, GOL_CELL_COL_NEIGHBORS);
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
         if(needsToDie(numAlive)){
-            setMyNextState(DEAD);
+            myNextState = DEAD;
         }else if(needsToLive(numAlive)){
-            setMyNextState(ALIVE);
+            myNextState = ALIVE;
         }
     }
 
