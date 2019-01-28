@@ -22,19 +22,19 @@ public class GamePlayer extends Application{
     @Override
     public void start (Stage stage) {
 
-        currentSimulation = new GOLSimulation(5,5);
-        int[][] golTestStates = {{0, 1, 1 ,0 , 1},
-                {1, 1, 0, 1, 0},
-                {0, 1, 1, 0, 0},
-                {0, 0, 0, 0, 0},
-                {0, 1, 1, 1, 1}
+        currentSimulation = new SpreadingFireSimulation(5,5);
+        int[][] golTestStates = {{1, 1, 1 , 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 0, 1, 1},
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1}
                                 };
         for (int i = 0; i < golTestStates.length; i++){
             for (int j = 0; j < golTestStates[0].length; j++){
-                golTestStates[i][j] = golTestStates[i][j] + 1200;
+                golTestStates[i][j] = golTestStates[i][j] + 140002;
             }
         }
-        ((GOLSimulation) currentSimulation).setInitialStates(golTestStates);
+        ((SpreadingFireSimulation) currentSimulation).setInitialStates(golTestStates);
 
         for (int i = 0; i < 10; i++){
             System.out.println("Iteration: "+i+"---------------------------");
