@@ -3,10 +3,24 @@ import java.util.List;
 
 public class BasicGrid implements Grid{
     private Cell[][] myGrid;
+    private int myNumRows;
+    private int myNumCols;
 
     public BasicGrid(int numRows, int numCols){
         myGrid = new Cell[numRows][numCols];
+        myNumRows = numRows;
+        myNumCols = numCols;
+    }
 
+    @Override
+    public List<Cell> getGrid() {
+        List<Cell> returnList = new ArrayList<>();
+        for (int i = 0; i < myGrid.length; i++){
+            for (int j = 0; j < myGrid[0].length; j++){
+                returnList.add(myGrid[i][j]);
+            }
+        }
+        return returnList;
     }
 
     @Override
@@ -21,12 +35,12 @@ public class BasicGrid implements Grid{
 
     @Override
     public boolean isValid(Location loc) {
-        return false;
+        return loc.getCol() >= 0 && loc.getCol() < myNumCols && loc.getRow() >= 0 && loc.getRow() < myNumRows;
     }
 
     @Override
     public void put(Location loc, Cell obj) {
-
+        myGrid[loc.getRow()][loc.getCol()] = obj;
     }
 
     @Override
@@ -35,8 +49,8 @@ public class BasicGrid implements Grid{
     }
 
     @Override
-    public void get(Location loc) {
-
+    public Cell get(Location loc) {
+        return myGrid[loc.getRow()][loc.getCol()];
     }
 
     @Override
@@ -44,9 +58,17 @@ public class BasicGrid implements Grid{
         return null;
     }
 
-    @Override
-    public ArrayList<Location> getValidAdjacentLocations(Location loc) {
-        return null;
+    public ArrayList<Location> getLocations(Location loc, int[] deltaRow, int[] deltaCol) {
+        int locRow = loc.getRow();
+        int locCol = loc.getCol();
+        ArrayList<Location> validLocations = new ArrayList<>();
+        for (int i = 0; i < deltaCol.length; i++) {
+            Location locationToBeChecked = new Location(locRow + deltaRow[i], locCol + deltaCol[i]);
+            if (isValid(locationToBeChecked)) {
+                validLocations.add(locationToBeChecked);
+            }
+        }
+        return validLocations;
     }
 
     @Override
@@ -62,5 +84,16 @@ public class BasicGrid implements Grid{
     @Override
     public ArrayList<Cell> getNeighbors(Location loc) {
         return null;
+    }
+
+    @Override
+    public void printGrid() {
+        for(int i = 0; i < myGrid.length; i++){
+            StringBuilder rowOfCells = new StringBuilder();
+            for(int j = 0; j < myGrid[0].length; j++){
+                rowOfCells.append(myGrid[i][j]);
+            }
+            System.out.println(rowOfCells);
+        }
     }
 }

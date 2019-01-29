@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Grid {
+    //Could use Grid<E>
     //https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Grid.java
     /**
      * Returns the number of rows in this grid.
@@ -50,7 +52,7 @@ public interface Grid {
      * @return the object at location <code>loc</code> (or <code>null<code>
      *  if the location is unoccupied)
      */
-    void get(Location loc);
+    Cell get(Location loc);
 
     /**
      * Gets the locations in this grid that contain objects.
@@ -67,7 +69,9 @@ public interface Grid {
      * @return an array list of the valid locations adjacent to <code>loc</code>
      * in this grid
      */
-    ArrayList<Location> getValidAdjacentLocations(Location loc);
+//    ArrayList<Location> getValidAdjacentLocations(Location loc);
+
+//    ArrayList<Location> getValidBoxLocations(Location loc);
 
     /**
      * Gets the valid empty locations adjacent to a given location in all eight
@@ -101,4 +105,14 @@ public interface Grid {
      * adjacent to <code>loc</code> in this grid
      */
     ArrayList<Cell> getNeighbors(Location loc);
+
+    /**
+     * Returns the 2D grid that underlies the
+     * @return
+     */
+    List<Cell> getGrid();
+
+    ArrayList<Location> getLocations(Location loc, int[] deltaRow, int[] deltaCol);
+
+    void printGrid();
 }

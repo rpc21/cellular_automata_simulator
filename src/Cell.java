@@ -3,13 +3,15 @@ import java.util.*;
 import java.util.List;
 
 public abstract class Cell {
-    private Grid myGrid;
-    private Location myLocation;
+    protected Grid myGrid;
+    protected Location myLocation;
     List<Cell> possibleNeighbors;
-    private Shape myShape;
-    private int myCurrentState;
+    protected Shape myShape;
+    protected int myCurrentState;
+    protected int myNextState;
+    protected Map<String, Double> myParameters;
 
-    public abstract int calculateNewState();
+    public abstract void calculateNewState();
 
     /**
      * Used by the visualizer to get the colored shape associated with cell
@@ -18,8 +20,13 @@ public abstract class Cell {
     public Shape getMyShape(){
         return myShape;
     }
+
     public Location getMyLocation(){
         return myLocation;
+    }
+
+    public void setMyLocation(Location myLocation) {
+        this.myLocation = myLocation;
     }
 
     public void setNewState(int newState){
@@ -34,5 +41,36 @@ public abstract class Cell {
         possibleNeighbors = myGrid.getNeighbors(myLocation);
     }
 
+    public void updateState(){
+        myCurrentState = myNextState;
+        myNextState = 0;
+    }
 
+    public int getMyCurrentState() {
+        return myCurrentState;
+    }
+
+    public void setMyCurrentState(int myCurrentState) {
+        this.myCurrentState = myCurrentState;
+    }
+
+    public int getMyNextState() {
+        return myNextState;
+    }
+
+    public void setMyNextState(int myNextState) {
+        this.myNextState = myNextState;
+    }
+
+    public void setMyGrid(Grid myGrid) {
+        this.myGrid = myGrid;
+    }
+
+    public Grid getMyGrid() {
+        return myGrid;
+    }
+
+    public void setMyParameters(Map<String, Double> myParameters) {
+        this.myParameters = myParameters;
+    }
 }
