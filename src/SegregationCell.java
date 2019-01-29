@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class SegregationCell extends MovableCell{
     private static final int TYPEA = 13700;
@@ -9,12 +10,14 @@ public class SegregationCell extends MovableCell{
     private static final int TOBEMOVED = 13703;
     private Location myNextLocation;
     private double threshold;
+    private static final int[] SEGREGATION_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
+    private static final int[] SEGREGATION_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    public SegregationCell(Location location, int initialState, Grid grid, double startThreshold){
+    public SegregationCell(Location location, int initialState, Grid grid, Map<String, Double> myParamList){
         setMyCurrentState(initialState);
         setMyNextState(0);
         setMyLocation(location);
-        threshold = startThreshold;
+        threshold = myParamList.get("THRESHOLD");
         setMyGrid(grid);
     }
 
@@ -49,7 +52,7 @@ public class SegregationCell extends MovableCell{
     }
 
     private boolean isSatisfied(){
-        List<Location> myNeighborLocations = getMyGrid().getValidBoxLocations(getMyLocation());
+        List<Location> myNeighborLocations = getMyGrid().getLocations(getMyLocation(), SEGREGATION_ROW_NEIGHBORS, SEGREGATION_COL_NEIGHBORS);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);
         if(percentSame>=threshold) return true;
         return false;
