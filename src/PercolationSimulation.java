@@ -2,13 +2,12 @@ import java.util.List;
 
 public class PercolationSimulation extends Simulation {
 
-    @Override
-    public void simulate(double simulationSpeed) {
-
+    public PercolationSimulation(int rows, int cols){
+        setMyGrid(new BasicGrid(rows, cols));
     }
 
     @Override
-    public void updateNewParams(List<Integer> paramList) {
+    public void simulate(double simulationSpeed) {
 
     }
 
