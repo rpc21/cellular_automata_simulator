@@ -1,8 +1,8 @@
 import java.util.List;
 
-public class SpreadingFireSimulation extends Simulation {
+public class PercolationSimulation extends Simulation {
 
-    public SpreadingFireSimulation(int rows, int cols){
+    public PercolationSimulation(int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
     }
 

@@ -1,8 +1,8 @@
 import java.util.List;
 
-public class SpreadingFireSimulation extends Simulation {
+public class SegregationSimulation extends Simulation{
 
-    public SpreadingFireSimulation(int rows, int cols){
+    public SegregationSimulation(int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
     }
 
@@ -15,4 +15,5 @@ public class SpreadingFireSimulation extends Simulation {
     public boolean checkIfDone() {
         return false;
     }
+
 }

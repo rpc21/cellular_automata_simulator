@@ -1,58 +1,62 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpreadingFireCell extends Cell {
 
     private static final int ON_FIRE = 140002;
     private static final int TREE = 140003;
     private static final int EMPTY = 140004;
+    private static final int[] SPREADING_FIRE_ROW_NEIGHBORS = {-1, 1, 0, 0};
+    private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
 
-    private int myCurrentState;
-    private int myNextState;
-    private Location myLocation;
-    private Grid myGrid;
-    private double probCatch;
+
+    public SpreadingFireCell(Location loc, int startingState, Grid grid, HashMap<String, Double> parameters){
+        myCurrentState = startingState;
+        myGrid = grid;
+        myLocation = loc;
+        myNextState = 0;
+        myParameters = parameters;
+    }
 
     public SpreadingFireCell(Location loc, int startingState, Grid grid){
-        setMyGrid(grid);
-        setMyLocation(loc);
-        setMyCurrentState(startingState);
-        setMyNextState(0);
-        probCatch = 1.0D;
+        this(loc, startingState, grid, new HashMap<>());
+        myParameters.put("probCatch", 1.0D);
     }
 
     @Override
     public void calculateNewState() {
-        if (getMyCurrentState() == ON_FIRE || getMyCurrentState() == EMPTY) {
-            setMyNextState(EMPTY);
+        if (myCurrentState == ON_FIRE || myCurrentState == EMPTY) {
+            myNextState = EMPTY;
         }
         else if (catchesFire()){
-            setMyNextState(ON_FIRE);
+            myNextState = ON_FIRE;
         }
         else {
-            setMyNextState(TREE);
+            myNextState = TREE;
         }
     }
 
     private boolean catchesFire() {
-        List<Location> neighborLocations = getMyGrid().getValidAdjacentLocations(getMyLocation());
+        List<Location> neighborLocations = myGrid.getLocations(myLocation, SPREADING_FIRE_ROW_NEIGHBORS, SPREADING_FIRE_COL_NEIGHBORS);
         boolean nextToTreeOnFire = false;
         for (Location loc : neighborLocations){
-            SpreadingFireCell cell = (SpreadingFireCell) getMyGrid().get(loc);
+            SpreadingFireCell cell = (SpreadingFireCell) myGrid.get(loc);
             if (cell.isOnFire()){
                 nextToTreeOnFire = true;
             }
         }
         double randomNumber = Math.random();
-        return nextToTreeOnFire && randomNumber <= probCatch;
+        return nextToTreeOnFire && randomNumber <= myParameters.get("probCatch");
     }
 
     public boolean isOnFire() {
-        return getMyCurrentState() == ON_FIRE;
+        return myCurrentState == ON_FIRE;
     }
 
     @Override
     public String toString() {
-        if (getMyCurrentState() == EMPTY){
+        if (myCurrentState == EMPTY){
             return "E";
         }
         else if (isOnFire()){
