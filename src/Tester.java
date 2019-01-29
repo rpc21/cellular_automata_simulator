@@ -16,6 +16,7 @@ public class Tester {
 //        String testCase = "tests/GOLTest1.txt";
 //        String testCase = "tests/SpreadingFire1.txt";
         String testCase = "tests/PercolationTest1.txt";
+        //TODO: specify the path to the test case you created here
 
         File file = new File(testCase);
         // Initialize scanner to read in txt file
@@ -74,6 +75,7 @@ public class Tester {
         else if (simulationType.equals("Percolation")){
             return new PercolationSimulation(rows, cols);
         }
+        //Todo: when SegregationSimulation is ready, uncomment these three lines
 //        else if (simulationType.equals("Segregation")){
 //            return new SegregationSimulation(rows, cols);
 //        }
