@@ -7,25 +7,31 @@ public abstract class MovableCell extends Cell {
      * <code>newLocation</code> is valid in the grid of this actor
      * @param newLocation the new location
      */
-    public void swapLocations(Location newLocation) {
+    protected Location myNextLocation;
+
+    public void swapLocations() {
         if (myGrid == null)
-            throw new IllegalStateException("This actor is not in a grid.");
+            throw new IllegalStateException("This cell is not in the grid.");
 //        if (myGrid.get(myLocation) != this) {
 //            throw new IllegalStateException(
 //                    "The grid contains a different actor at location "
 //                            + myLocation + ".");
 //        }
-        if (!myGrid.isValid(newLocation))
-            throw new IllegalArgumentException("Location " + newLocation
+        if (!myGrid.isValid(myNextLocation))
+            throw new IllegalArgumentException("Location " + myNextLocation
                     + " is not valid.");
 
-        if (newLocation.equals(myLocation))
+        if (myNextLocation.equals(myLocation))
             return;
         myGrid.remove(myLocation);
-        Cell other = myGrid.get(newLocation);
+        Cell other = myGrid.get(myNextLocation);
         if (other != null)
             myGrid.put(myLocation, other);
-        myLocation = newLocation;
+        myLocation = myNextLocation;
         myGrid.put(myLocation, this);
+    }
+
+    public void setMyNextLocation(Location newLoc) {
+        this.myNextLocation = newLoc;
     }
 }

@@ -10,8 +10,6 @@ public class SegregationCell extends MovableCell{
     private static final int TOBEMOVED = 13703;
     private static int[] SEGREGATION_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
     private static int[] SEGREGATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0,0, 1, 1,1};
-
-    private Location myNextLocation;
     private double threshold;
 
     public SegregationCell(Location location, int initialState, Grid grid, HashMap<String,
@@ -26,11 +24,11 @@ public class SegregationCell extends MovableCell{
 
     @Override
     public void updateState(){
-        if(myNextState==TOBEMOVED && myNextState!=0){
-            System.out.println(myNextLocation.getRow() + " " + myNextLocation.getCol());
-            swapLocations(myNextLocation);
+        if(myNextState==TOBEMOVED){
+            System.out.println("moving from " + myLocation.getRow()+" " + myLocation.getCol()+" to New location:"+myNextLocation.getRow() + " " + myNextLocation.getCol());
+            swapLocations();
             myNextState = myCurrentState;
-        } else if (myNextState==0) myNextState = myCurrentState;
+        }
         myCurrentState = myNextState;
         myNextState = 0;
     }
@@ -38,12 +36,11 @@ public class SegregationCell extends MovableCell{
     @Override
     public void calculateNewState() {
         if(isSatisfied()&&myCurrentState!=EMPTY){ myNextState=myCurrentState; }
-        else if(myCurrentState==EMPTY&&myNextState!=TOBEMOVED){ //if empty will remain empty
+        else if(myCurrentState==EMPTY){ //if empty will remain empty
             myNextState = myCurrentState;
         } else if(!isSatisfied()&&myCurrentState!=EMPTY){ //if a move is required
-            myNextState = TOBEMOVED; ///ADDCODE HERE
+            myNextState = TOBEMOVED;
             myNextLocation = chooseNewLocation(findLocationsToMoveTo(myLocation));
-            myGrid.get(myNextLocation).myNextState = TOBEMOVED;
         }
     }
 
@@ -58,7 +55,7 @@ public class SegregationCell extends MovableCell{
         for (int i = 0; i <myGrid.getNumRows(); i++){
             for (int j = 0; j < myGrid.getNumCols(); j++) {
                 Cell currentCell = myGrid.get(new Location(i,j));
-                if(currentCell.getMyCurrentState()==EMPTY&&currentCell.getMyNextState()!=TYPEA &&currentCell.getMyCurrentState()!=TYPEB){
+                if(currentCell.getMyCurrentState()==EMPTY){
                     availableLocations.add(currentCell.getMyLocation());
                 }
             }
@@ -67,7 +64,7 @@ public class SegregationCell extends MovableCell{
     }
 
     private boolean isSatisfied(){
-        List<Location> myNeighborLocations = getMyGrid().getLocations(getMyLocation(), SEGREGATION_CELL_ROW_NEIGHBORS
+        List<Location> myNeighborLocations = getMyGrid().getLocations(myLocation, SEGREGATION_CELL_ROW_NEIGHBORS
                 , SEGREGATION_CELL_COL_NEIGHBORS);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);
         if(percentSame>=threshold) return true;
@@ -75,12 +72,12 @@ public class SegregationCell extends MovableCell{
     }
 
     private double calcPercentSimilarNeighbors(List<Location> locationList){
-        int numSame = 0;
-        int numOther = 0;
+        double numSame = 0;
+        double numOther = 0;
         for(Location l:locationList){
-            SegregationCell tempCell =(SegregationCell)getMyGrid().get(l);
-            if(tempCell.getMyCurrentState()==this.getMyCurrentState()){ numSame++; }
-            else if (tempCell.getMyCurrentState()!=this.getMyCurrentState()&&tempCell.getMyCurrentState()!=EMPTY){ numOther++; }
+            SegregationCell tempCell =(SegregationCell)myGrid.get(l);
+            if(tempCell.getMyCurrentState()==myCurrentState){ numSame++; }
+            else if (tempCell.getMyCurrentState()!=myCurrentState&&tempCell.getMyCurrentState()!=EMPTY){ numOther++; }
         }
         return numSame/(numSame+numOther);
     }
@@ -95,6 +92,8 @@ public class SegregationCell extends MovableCell{
         }
         else if (getMyCurrentState() == TYPEB){
             return "B";
+        } else if(getMyCurrentState()==TOBEMOVED){
+            return "TBM";
         }
         else return "?";
     }
