@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ public abstract class Simulation {
     public abstract void simulate(double simulationSpeed);
 
     public void updateGrid(){
-        List<Cell> cells = myGrid.getGrid();
+        List<Cell> cells = myGrid.getCells();
         for (Cell cell : cells){
             cell.calculateNewState();
         }
@@ -22,7 +21,7 @@ public abstract class Simulation {
     }
 
     public void updateNewParams(Map<String, Double> parameters){
-        for (Cell cell : myGrid.getGrid()){
+        for (Cell cell : myGrid.getCells()){
             cell.setMyParameters(parameters);
         }
     };

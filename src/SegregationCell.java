@@ -64,7 +64,7 @@ public class SegregationCell extends MovableCell{
     }
 
     private boolean isSatisfied(){
-        List<Location> myNeighborLocations = getMyGrid().getLocations(myLocation, SEGREGATION_CELL_ROW_NEIGHBORS
+        List<Location> myNeighborLocations = getMyGrid().getValidNeighbors(myLocation, SEGREGATION_CELL_ROW_NEIGHBORS
                 , SEGREGATION_CELL_COL_NEIGHBORS);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);
         if(percentSame>=threshold) return true;

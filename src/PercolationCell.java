@@ -30,7 +30,7 @@ public class PercolationCell extends Cell {
     }
 
     private boolean nextToPercolatedCell() {
-        List<Location> neighborLocations = myGrid.getLocations(myLocation, PERCOLATION_CELL_ROW_NEIGHBORS,
+        List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, PERCOLATION_CELL_ROW_NEIGHBORS,
                 PERCOLATION_CELL_COL_NEIGHBORS);
         for (Location loc: neighborLocations){
             PercolationCell cell = (PercolationCell) myGrid.get(loc);

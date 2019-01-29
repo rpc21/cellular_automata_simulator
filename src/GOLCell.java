@@ -29,7 +29,7 @@ public class GOLCell extends Cell{
 
     @Override
     public void calculateNewState() {
-        List<Location> myNeighborLocations = myGrid.getLocations(myLocation, GOL_CELL_ROW_NEIGHBORS, GOL_CELL_COL_NEIGHBORS);
+        List<Location> myNeighborLocations = myGrid.getValidNeighbors(myLocation, GOL_CELL_ROW_NEIGHBORS, GOL_CELL_COL_NEIGHBORS);
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
         if(needsToDie(numAlive)){
             myNextState = DEAD;

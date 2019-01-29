@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SpreadingFireCell extends Cell {
 
@@ -38,7 +37,7 @@ public class SpreadingFireCell extends Cell {
     }
 
     private boolean catchesFire() {
-        List<Location> neighborLocations = myGrid.getLocations(myLocation, SPREADING_FIRE_ROW_NEIGHBORS, SPREADING_FIRE_COL_NEIGHBORS);
+        List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, SPREADING_FIRE_ROW_NEIGHBORS, SPREADING_FIRE_COL_NEIGHBORS);
         boolean nextToTreeOnFire = false;
         for (Location loc : neighborLocations){
             SpreadingFireCell cell = (SpreadingFireCell) myGrid.get(loc);
