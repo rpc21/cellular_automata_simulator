@@ -58,14 +58,7 @@ public class BasicGrid implements Grid{
         return null;
     }
 
-    @Override
-    public ArrayList<Location> getValidAdjacentLocations(Location loc) {
-        int[] deltaRow = {-1, 1, 0, 0};
-        int[] deltaCol = {0, 0, -1, 1};
-        return getLocations(loc, deltaRow, deltaCol);
-    }
-
-    private ArrayList<Location> getLocations(Location loc, int[] deltaRow, int[] deltaCol) {
+    public ArrayList<Location> getLocations(Location loc, int[] deltaRow, int[] deltaCol) {
         int locRow = loc.getRow();
         int locCol = loc.getCol();
         ArrayList<Location> validLocations = new ArrayList<>();
@@ -76,14 +69,6 @@ public class BasicGrid implements Grid{
             }
         }
         return validLocations;
-    }
-
-
-    @Override
-    public ArrayList<Location> getValidBoxLocations(Location loc) {
-        int[] deltaRow = {-1, 0, 1, -1, 1, -1, 0, 1};
-        int[] deltaCol = {-1, -1, -1, 0,0, 1, 1,1};
-        return getLocations(loc, deltaRow, deltaCol);
     }
 
     @Override

@@ -4,6 +4,9 @@ public class GOLCell extends Cell{
 
     private static final int ALIVE = 1200;
     private static final int DEAD = 1201;
+    private static int[] GOL_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
+    private static int[] GOL_CELL_COL_NEIGHBORS = {-1, -1, -1, 0,0, 1, 1,1};
+
     private boolean alive;
     //got rid of private List<Location> myNeighborLocations as only needed locally
     //commented out myGrid here
@@ -26,7 +29,7 @@ public class GOLCell extends Cell{
 
     @Override
     public void calculateNewState() {
-        List<Location> myNeighborLocations = getMyGrid().getValidBoxLocations(getMyLocation());
+        List<Location> myNeighborLocations = myGrid.getLocations(myLocation, GOL_CELL_ROW_NEIGHBORS, GOL_CELL_COL_NEIGHBORS);
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
         if(needsToDie(numAlive)){
             myNextState = DEAD;
