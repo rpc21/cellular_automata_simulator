@@ -1,24 +1,27 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SegregationCell extends MovableCell{
     private static final int TYPEA = 13700;
     private static final int TYPEB = 13701;
     private static final int EMPTY = 13702;
     private static final int TOBEMOVED = 13703;
+    private static int[] SEGREGATION_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
+    private static int[] SEGREGATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0,0, 1, 1,1};
+
     private Location myNextLocation;
     private double threshold;
-    private static final int[] SEGREGATION_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
-    private static final int[] SEGREGATION_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    public SegregationCell(Location location, int initialState, Grid grid, Map<String, Double> myParamList){
+    public SegregationCell(Location location, int initialState, Grid grid, HashMap<String,
+            Double> parameters){
         setMyCurrentState(initialState);
         setMyNextState(0);
         setMyLocation(location);
-        threshold = myParamList.get("THRESHOLD");
+        threshold = parameters.get("threshold");
         setMyGrid(grid);
+        myParameters = parameters;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class SegregationCell extends MovableCell{
     }
 
     private List<Location> findLocationsToMoveTo(Location myLocation){
-        List<Location> availableLocations = new ArrayList<Location>();
+        List<Location> availableLocations = new ArrayList<>();
         for (int i = 0; i <myGrid.getNumRows(); i++){
             for (int j = 0; j < myGrid.getNumCols(); j++) {
                 Cell currentCell = myGrid.get(new Location(i,j));
@@ -52,7 +55,8 @@ public class SegregationCell extends MovableCell{
     }
 
     private boolean isSatisfied(){
-        List<Location> myNeighborLocations = getMyGrid().getLocations(getMyLocation(), SEGREGATION_ROW_NEIGHBORS, SEGREGATION_COL_NEIGHBORS);
+        List<Location> myNeighborLocations = getMyGrid().getLocations(getMyLocation(), SEGREGATION_CELL_ROW_NEIGHBORS
+                , SEGREGATION_CELL_COL_NEIGHBORS);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);
         if(percentSame>=threshold) return true;
         return false;

@@ -2,9 +2,9 @@ import java.util.List;
 
 public class PercolationCell extends Cell {
 
-    private static final int BLOCKED = 150002;
+    private static final int BLOCKED = 150004;
     private static final int OPEN = 150003;
-    private static final int PERCOLATED = 150004;
+    private static final int PERCOLATED = 150002;
     private static int[] PERCOLATION_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
     private static int[] PERCOLATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1,1};
 

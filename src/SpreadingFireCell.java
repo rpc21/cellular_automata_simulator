@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpreadingFireCell extends Cell {
 
@@ -8,14 +10,18 @@ public class SpreadingFireCell extends Cell {
     private static final int[] SPREADING_FIRE_ROW_NEIGHBORS = {-1, 1, 0, 0};
     private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
 
-    private double probCatch;
 
-    public SpreadingFireCell(Location loc, int startingState, Grid grid){
+    public SpreadingFireCell(Location loc, int startingState, Grid grid, HashMap<String, Double> parameters){
         myCurrentState = startingState;
         myGrid = grid;
         myLocation = loc;
         myNextState = 0;
-        probCatch = 1.0D;
+        myParameters = parameters;
+    }
+
+    public SpreadingFireCell(Location loc, int startingState, Grid grid){
+        this(loc, startingState, grid, new HashMap<>());
+        myParameters.put("probCatch", 1.0D);
     }
 
     @Override
@@ -41,7 +47,7 @@ public class SpreadingFireCell extends Cell {
             }
         }
         double randomNumber = Math.random();
-        return nextToTreeOnFire && randomNumber <= probCatch;
+        return nextToTreeOnFire && randomNumber <= myParameters.get("probCatch");
     }
 
     public boolean isOnFire() {

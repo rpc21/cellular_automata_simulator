@@ -12,11 +12,6 @@ public class SpreadingFireSimulation extends Simulation {
     }
 
     @Override
-    public void updateNewParams(List<Integer> paramList) {
-
-    }
-
-    @Override
     public boolean checkIfDone() {
         return false;
     }

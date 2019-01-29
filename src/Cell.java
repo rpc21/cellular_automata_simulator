@@ -9,6 +9,7 @@ public abstract class Cell {
     protected Shape myShape;
     protected int myCurrentState;
     protected int myNextState;
+    protected Map<String, Double> myParameters;
 
     public abstract void calculateNewState();
 
@@ -67,5 +68,9 @@ public abstract class Cell {
 
     public Grid getMyGrid() {
         return myGrid;
+    }
+
+    public void setMyParameters(Map<String, Double> myParameters) {
+        this.myParameters = myParameters;
     }
 }

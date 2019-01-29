@@ -23,24 +23,6 @@ public class GamePlayer extends Application{
     public void start (Stage stage) {
 
         currentSimulation = new SpreadingFireSimulation(5,5);
-        int[][] golTestStates = {{1, 1, 1 , 1, 1},
-                {1, 1, 1, 1, 1},
-                {1, 1, 0, 1, 1},
-                {1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1}
-                                };
-        for (int i = 0; i < golTestStates.length; i++){
-            for (int j = 0; j < golTestStates[0].length; j++){
-                golTestStates[i][j] = golTestStates[i][j] + 140002;
-            }
-        }
-        ((SpreadingFireSimulation) currentSimulation).setInitialStates(golTestStates);
-
-        for (int i = 0; i < 10; i++){
-            System.out.println("Iteration: "+i+"---------------------------");
-            currentSimulation.updateGrid();
-
-        }
 
         //attach "game loop" to timeline to play it
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
