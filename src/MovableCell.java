@@ -10,10 +10,11 @@ public abstract class MovableCell extends Cell {
     public void swapLocations(Location newLocation) {
         if (myGrid == null)
             throw new IllegalStateException("This actor is not in a grid.");
-        if (myGrid.get(myLocation) != this)
-            throw new IllegalStateException(
-                    "The grid contains a different actor at location "
-                            + myLocation + ".");
+//        if (myGrid.get(myLocation) != this) {
+//            throw new IllegalStateException(
+//                    "The grid contains a different actor at location "
+//                            + myLocation + ".");
+//        }
         if (!myGrid.isValid(newLocation))
             throw new IllegalArgumentException("Location " + newLocation
                     + " is not valid.");

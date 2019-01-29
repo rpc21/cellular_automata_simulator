@@ -25,6 +25,17 @@ public class SegregationCell extends MovableCell{
     }
 
     @Override
+    public void updateState(){
+        if(myNextState==TOBEMOVED && myNextState!=0){
+            System.out.println(myNextLocation.getRow() + " " + myNextLocation.getCol());
+            swapLocations(myNextLocation);
+            myNextState = myCurrentState;
+        } else if (myNextState==0) myNextState = myCurrentState;
+        myCurrentState = myNextState;
+        myNextState = 0;
+    }
+
+    @Override
     public void calculateNewState() {
         if(isSatisfied()&&myCurrentState!=EMPTY){ myNextState=myCurrentState; }
         else if(myCurrentState==EMPTY&&myNextState!=TOBEMOVED){ //if empty will remain empty
@@ -38,7 +49,8 @@ public class SegregationCell extends MovableCell{
 
     private Location chooseNewLocation(List<Location> availableLocations){
         Collections.shuffle(availableLocations);
-        return availableLocations.get(0);
+        if (availableLocations.size()>0) return availableLocations.get(1);
+        return myLocation;
     }
 
     private List<Location> findLocationsToMoveTo(Location myLocation){
@@ -70,7 +82,7 @@ public class SegregationCell extends MovableCell{
             if(tempCell.getMyCurrentState()==this.getMyCurrentState()){ numSame++; }
             else if (tempCell.getMyCurrentState()!=this.getMyCurrentState()&&tempCell.getMyCurrentState()!=EMPTY){ numOther++; }
         }
-        return numSame/numOther;
+        return numSame/(numSame+numOther);
     }
 
     @Override
@@ -81,8 +93,9 @@ public class SegregationCell extends MovableCell{
         else if (getMyCurrentState() == TYPEA){
             return "A";
         }
-        else {
+        else if (getMyCurrentState() == TYPEB){
             return "B";
         }
+        else return "?";
     }
 }

@@ -16,6 +16,7 @@ public class Tester {
 //        String testCase = "tests/GOLTest1.txt";
 //        String testCase = "tests/SpreadingFire1.txt";
         String testCase = "tests/PercolationTest1.txt";
+//        String testCase = "tests/SegregationTest1.txt";
         //TODO: specify the path to the test case you created here
 
         File file = new File(testCase);

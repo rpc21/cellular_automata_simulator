@@ -5,7 +5,7 @@ import java.util.Map;
 
 public abstract class Simulation {
 
-    private Grid myGrid;
+    protected Grid myGrid;
     private boolean simulationOver;
 
     public abstract void simulate(double simulationSpeed);
