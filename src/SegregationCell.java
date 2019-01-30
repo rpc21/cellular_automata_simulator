@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -63,7 +64,7 @@ public class SegregationCell extends MovableCell{
         return availableLocations;
     }
 
-    private boolean isSatisfied(){
+    public boolean isSatisfied(){
         List<Location> myNeighborLocations = getMyGrid().getValidNeighbors(myLocation, SEGREGATION_CELL_ROW_NEIGHBORS
                 , SEGREGATION_CELL_COL_NEIGHBORS);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);
@@ -97,4 +98,20 @@ public class SegregationCell extends MovableCell{
         }
         else return "?";
     }
+
+    @Override
+    public Color getMyColor() {
+        if (getMyCurrentState() == TYPEA){
+            return Color.BLUE;
+        }
+        else if (getMyCurrentState() == TYPEB) {
+            return Color.RED;
+        }
+        else if (getMyCurrentState() == EMPTY){
+            return Color.WHITE;
+        }
+        return Color.GREEN;
+    }
+
+
 }

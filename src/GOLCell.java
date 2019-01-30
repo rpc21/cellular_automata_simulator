@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.List;
 
 public class GOLCell extends Cell{
@@ -55,7 +56,7 @@ public class GOLCell extends Cell{
     }
 
     public boolean isAlive() {
-        if(getMyCurrentState() ==ALIVE){
+        if(getMyCurrentState() == ALIVE){
             alive = true;
         }else{
             alive = false;
@@ -69,5 +70,13 @@ public class GOLCell extends Cell{
             return "A";
         }
         return  "D";
+    }
+
+    @Override
+    public Color getMyColor() {
+        if (getMyCurrentState() == ALIVE) {
+            return Color.CYAN;
+        }
+        return  Color.BLACK;
     }
 }

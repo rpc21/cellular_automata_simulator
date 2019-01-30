@@ -68,7 +68,7 @@ public abstract class Cell {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public int getMyCurrentState() {

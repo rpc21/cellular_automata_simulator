@@ -5,7 +5,7 @@ import java.util.Map;
 public abstract class Simulation {
 
     protected Grid myGrid;
-    private boolean simulationOver;
+    protected boolean simulationOver;
 
     public abstract void simulate(double simulationSpeed);
 
@@ -30,7 +30,11 @@ public abstract class Simulation {
         simulationOver = true;
     }
 
-    public abstract boolean checkIfDone();
+    /**
+     * Checks if the simulation is over
+     * @return whether or not the simulation is over
+     */
+    public abstract boolean isOver();
 
     public void setMyGrid(Grid myGrid) {
         this.myGrid = myGrid;

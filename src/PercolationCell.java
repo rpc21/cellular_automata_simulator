@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.List;
 
 public class PercolationCell extends Cell {
@@ -55,6 +56,19 @@ public class PercolationCell extends Cell {
         }
         else {
             return "O";
+        }
+    }
+
+    @Override
+    public Color getMyColor() {
+        if (myCurrentState == BLOCKED){
+            return Color.GRAY;
+        }
+        else if (isPercolated()){
+            return Color.CYAN;
+        }
+        else {
+            return Color.WHITE;
         }
     }
 }

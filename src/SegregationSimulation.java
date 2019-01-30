@@ -12,8 +12,13 @@ public class SegregationSimulation extends Simulation{
     }
 
     @Override
-    public boolean checkIfDone() {
-        return false;
+    public boolean isOver() {
+        for (Cell cell: myGrid.getCells()){
+            if (!((SegregationCell) cell).isSatisfied()){
+                return false;
+            }
+        }
+        return true;
     }
 
 }
