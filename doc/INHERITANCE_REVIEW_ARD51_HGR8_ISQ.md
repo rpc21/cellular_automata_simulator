@@ -25,5 +25,27 @@ Inheritance Review - Visualization
 5. It's closed to other changes in other parts of the project but still open to adding
     new simulations. The functions are all cohesive and focused on visualization.
 
+# Part 2
+1. In the beginning, configuration can be invoked to create a new simualtion. After, 
+    visualization will be invoked to present this simulation to the user. Depending on user input
+    from then on, visualization may invoke configuration to create a new simulation, update the 
+    current one, or present the current simulation in a different manner.
+
+2. As long as simulation presents the information in a consistent manner, and configuration is invoked
+    in a consistent manner, visualization will be generally closed to these two areas
+    of the project.
+
+3. We can minimize these dependencies by ensuring that each area of the project can be invoked
+   in a consistent way and does not require much additional information between the different instances
+   that they may be called upon to act.
 
 
+# Part 3
+1. Potential Use Cases
+    * User inputs new parameters to WaTor World: How do we notify simulation?
+    * User switches the current simulation: How do we invoke configuration?
+    * User sets a parameter that requires restarting the simulation (changing number of rows)
+    * User sets a parameter that requires changing the current display, but not whole
+    simulation (changing proportion of races in Segregation)
+2. I am most excited to work on developing the simulation-specific control panels
+3. I am most worried about invoking configuration
