@@ -1,16 +1,12 @@
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -90,7 +86,8 @@ public class XMLParser {
                         var state = columnsList.item(j);
                         if ("CellColumns".equals(state.getNodeName())) {
                             System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
-                            specifiedStates[i][colCount] = Integer.parseInt(state.getTextContent())+clacStateOffset(simulationType);
+                            specifiedStates[i][colCount] = Integer.parseInt(state.getTextContent());//+
+                            // calcStateOffset(simulationType);
                             colCount++;
                         }
                     }
@@ -116,7 +113,7 @@ public class XMLParser {
         return new GOLSimulation(rows, cols);
     }
 
-    private int clacStateOffset(String simulationType){
+    private int calcStateOffset(String simulationType){
         HashMap<String, Integer> simulationToOffsetMap = new HashMap<String, Integer>();
         simulationToOffsetMap.put("GOLSimulation", 1200);
         simulationToOffsetMap.put("Spreading Fire", 140002);

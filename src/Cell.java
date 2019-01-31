@@ -33,6 +33,7 @@ public abstract class Cell {
         myParameters = parameters;
     }
 
+
     public abstract void calculateNewState();
 
     /**

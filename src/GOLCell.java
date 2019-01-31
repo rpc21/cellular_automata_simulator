@@ -17,6 +17,10 @@ public class GOLCell extends Cell{
         super(location, initialState, grid);
     }
 
+    public GOLCell(Location location, int initialState, Grid grid){
+        this(location, GOLState.values()[initialState], grid);
+    }
+
     @Override
     public void calculateNewState() {
         List<Location> myNeighborLocations = myGrid.getValidNeighbors(myLocation, GOL_CELL_ROW_NEIGHBORS, GOL_CELL_COL_NEIGHBORS);
@@ -26,11 +30,6 @@ public class GOLCell extends Cell{
         }else{
             myNextState = GOLState.DEAD;
         }
-//        if(needsToDie(numAlive)){
-//            myNextState = GOLState.DEAD;
-//        }else if(needsToLive(numAlive)){
-//            myNextState = GOLState.ALIVE;
-//        }
     }
 
     private boolean needsToDie(int numAlive){

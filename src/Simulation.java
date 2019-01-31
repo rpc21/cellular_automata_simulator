@@ -89,18 +89,18 @@ public abstract class Simulation {
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, int state, Grid grid,
                                                 HashMap<String, Double> parameters){
         if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, GOLState.values()[state], grid);
+            return new GOLCell(loc, state, grid);
         }
         else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, SpreadingFireState.values()[state], grid, parameters);
+            return new SpreadingFireCell(loc, state, grid, parameters);
         }
         else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, PercolationState.values()[state], grid);
+            return new PercolationCell(loc, state, grid);
         }
         else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, SegregationState.values()[state], grid, parameters);
+            return new SegregationCell(loc, state, grid, parameters);
         }
-        return new GOLCell(loc, GOLState.values()[state], grid);
+        return new GOLCell(loc, state, grid);
     }
 
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, String state, Grid grid,

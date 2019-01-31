@@ -16,6 +16,11 @@ public class SegregationCell extends MovableCell{
         threshold = parameters.get("threshold");
     }
 
+    public SegregationCell(Location location, int initialState, Grid grid, HashMap<String,
+            Double> parameters){
+        this(location, SegregationState.values()[initialState], grid, parameters);
+    }
+
     @Override
     public void updateState(){
         if(myNextState == SegregationState.TO_BE_MOVED){

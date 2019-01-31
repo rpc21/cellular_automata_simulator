@@ -11,6 +11,10 @@ public class PercolationCell extends Cell {
         super(loc, startingState, grid);
     }
 
+    public PercolationCell(Location loc, int startingState, Grid grid){
+        this(loc, PercolationState.values()[startingState], grid);
+    }
+
     @Override
     public void calculateNewState() {
         if (myCurrentState == PercolationState.PERCOLATED || myCurrentState == PercolationState.BLOCKED) {

@@ -12,6 +12,11 @@ public class SpreadingFireCell extends Cell {
         super(loc, startingState, grid, parameters);
     }
 
+    public SpreadingFireCell(Location location, int startingState, Grid grid, HashMap<String,
+            Double> parameters){
+        this(location, SpreadingFireState.values()[startingState], grid, parameters);
+    }
+
     public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid){
         this(loc, startingState, grid, new HashMap<>());
         myParameters.put("probCatch", 1.0D);
