@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public abstract class MovableCell extends Cell {
     /** ADAPTED from WATORWORLD CODE
      * https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Actor.java
@@ -8,6 +10,16 @@ public abstract class MovableCell extends Cell {
      * @param newLocation the new location
      */
     protected Location myNextLocation;
+
+    public MovableCell(Location location, CellState initialState, Grid grid) {
+        super(location, initialState, grid);
+        this.myNextLocation = null;
+    }
+
+    public MovableCell(Location loc, CellState startingState, Grid grid, HashMap<String, Double> parameters) {
+        super(loc, startingState, grid, parameters);
+        this.myNextLocation = null;
+    }
 
     public void swapLocations() {
         if (myGrid == null)
@@ -23,7 +35,6 @@ public abstract class MovableCell extends Cell {
 
         if (myNextLocation.equals(myLocation))
             return;
-        myGrid.remove(myLocation);
         Cell other = myGrid.get(myNextLocation);
         if (other != null)
             myGrid.put(myLocation, other);

@@ -14,9 +14,10 @@ public class Tester {
         simulationToOffsetMap.put("Segregation", 13700);
 
 //        String testCase = "tests/GOLTest1.txt";
-//        String testCase = "tests/SpreadingFire1.txt";
+        String testCase = "tests/SpreadingFire1.txt";
+  //      String testCase = "tests/SpreadingFire1.txt";
 //        String testCase = "tests/PercolationTest1.txt";
-        String testCase = "tests/SegregationTest1.txt";
+//        String testCase = "tests/SegregationTest1.txt";
         //TODO: specify the path to the test case you created here
 
         File file = new File(testCase);
@@ -40,7 +41,7 @@ public class Tester {
             // read in the states should be specified using 0, 1, 2, etc
             for (int i = 0; i < specifiedStates.length; i++){
                 for (int j = 0; j < specifiedStates[0].length; j++){
-                    specifiedStates[i][j] = scanner.nextInt() + simulationToOffsetMap.get(simulationType);
+                    specifiedStates[i][j] = scanner.nextInt();
                 }
             }
 
