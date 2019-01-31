@@ -35,7 +35,6 @@ public abstract class MovableCell extends Cell {
 
         if (myNextLocation.equals(myLocation))
             return;
-        myGrid.remove(myLocation);
         Cell other = myGrid.get(myNextLocation);
         if (other != null)
             myGrid.put(myLocation, other);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="simulation">
+    <simulationType>GOLSimulation</simulationType>
+    <rows>3</rows>
+    <columns>3</columns>
+    <cellStates>
+        <CellRows index="0">
+            <CellColumns>1</CellColumns>
+            <CellColumns>1</CellColumns>
+            <CellColumns>1</CellColumns>
+        </CellRows>
+        <CellRows index="1">
+            <CellColumns>0</CellColumns>
+            <CellColumns>1</CellColumns>
+            <CellColumns>1</CellColumns>
+        </CellRows>
+        <CellRows index="0">
+            <CellColumns>1</CellColumns>
+            <CellColumns>1</CellColumns>
+            <CellColumns>1</CellColumns>
+        </CellRows>
+    </cellStates>
+    <parameters></parameters>
+</data>

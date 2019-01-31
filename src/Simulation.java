@@ -7,6 +7,15 @@ public abstract class Simulation {
     protected Grid myGrid;
     protected boolean simulationOver;
 
+    // Data fields
+    public static final String DATA_TYPE = "simulation";
+    public static final List<String> DATA_FIELDS = List.of(
+            "simulationType",
+            "rows",
+            "columns"
+    );
+
+
     public abstract void simulate(double simulationSpeed);
 
     public void updateGrid(){
