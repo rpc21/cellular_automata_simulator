@@ -2,9 +2,10 @@ import java.awt.*;
 
 public enum SpreadingFireState implements CellState {
 
+    FIRE("F", "FIRE", Color.RED){},
     TREE("T", "TREE", Color.GREEN){},
-    EMPTY("E", "EMPTY", Color.WHITE){},
-    FIRE("F", "FIRE", Color.RED){};
+    EMPTY("E", "EMPTY", Color.WHITE){};
+
 
     private final String myShortenedName;
     private final String myFullState;

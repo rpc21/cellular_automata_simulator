@@ -21,11 +21,16 @@ public class GOLCell extends Cell{
     public void calculateNewState() {
         List<Location> myNeighborLocations = myGrid.getValidNeighbors(myLocation, GOL_CELL_ROW_NEIGHBORS, GOL_CELL_COL_NEIGHBORS);
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
-        if(needsToDie(numAlive)){
-            myNextState = GOLState.DEAD;
-        }else if(needsToLive(numAlive)){
+        if(needsToLive(numAlive)){
             myNextState = GOLState.ALIVE;
+        }else{
+            myNextState = GOLState.DEAD;
         }
+//        if(needsToDie(numAlive)){
+//            myNextState = GOLState.DEAD;
+//        }else if(needsToLive(numAlive)){
+//            myNextState = GOLState.ALIVE;
+//        }
     }
 
     private boolean needsToDie(int numAlive){
@@ -53,7 +58,7 @@ public class GOLCell extends Cell{
 
     @Override
     public String toString() {
-        return myCurrentState.toString();
+        return myCurrentState.getMyShortenedName();
     }
 
     @Override
