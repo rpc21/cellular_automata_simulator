@@ -1,38 +1,35 @@
-
+import java.awt.*;
 import java.util.List;
 
 public class PercolationCell extends Cell {
 
-
-    private static final int BLOCKED = 150004;
-    private static final int OPEN = 150003;
-    private static final int PERCOLATED = 150002;
     private static int[] PERCOLATION_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
     private static int[] PERCOLATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1,1};
 
 
+    public PercolationCell(Location loc, PercolationState startingState, Grid grid){
+        super(loc, startingState, grid);
+    }
+
     public PercolationCell(Location loc, int startingState, Grid grid){
-        myCurrentState = startingState;
-        myGrid = grid;
-        myLocation = loc;
-        myNextState = 0;
+        this(loc, PercolationState.values()[startingState], grid);
     }
 
     @Override
     public void calculateNewState() {
-        if (myCurrentState == PERCOLATED || myCurrentState == BLOCKED) {
+        if (myCurrentState == PercolationState.PERCOLATED || myCurrentState == PercolationState.BLOCKED) {
             myNextState = myCurrentState;
         }
         else if (nextToPercolatedCell()){
-            myNextState = PERCOLATED;
+            myNextState = PercolationState.PERCOLATED;
         }
         else {
-            myNextState = OPEN;
+            myNextState = PercolationState.OPEN;
         }
     }
 
     private boolean nextToPercolatedCell() {
-        List<Location> neighborLocations = myGrid.getLocations(myLocation, PERCOLATION_CELL_ROW_NEIGHBORS,
+        List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, PERCOLATION_CELL_ROW_NEIGHBORS,
                 PERCOLATION_CELL_COL_NEIGHBORS);
         for (Location loc: neighborLocations){
             PercolationCell cell = (PercolationCell) myGrid.get(loc);
@@ -44,19 +41,16 @@ public class PercolationCell extends Cell {
     }
 
     public boolean isPercolated() {
-        return myCurrentState == PERCOLATED;
+        return myCurrentState == PercolationState.PERCOLATED;
     }
 
     @Override
     public String toString() {
-        if (myCurrentState == BLOCKED){
-            return "B";
-        }
-        else if (isPercolated()){
-            return "P";
-        }
-        else {
-            return "O";
-        }
+        return myCurrentState.toString();
+    }
+
+    @Override
+    public Color getMyColor() {
+        return myCurrentState.getMyCellColor();
     }
 }

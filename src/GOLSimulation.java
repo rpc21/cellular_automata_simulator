@@ -13,7 +13,13 @@ public class GOLSimulation extends Simulation {
     }
 
     @Override
-    public boolean checkIfDone() {
-        return false;
+    public boolean isOver() {
+        for (Cell cell: myGrid.getCells()){
+            if (((GOLCell) cell).isAlive()){
+                return false;
+            }
+        }
+        return true;
     }
+
 }

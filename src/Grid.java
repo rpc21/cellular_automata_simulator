@@ -110,9 +110,9 @@ public interface Grid {
      * Returns the 2D grid that underlies the
      * @return
      */
-    List<Cell> getGrid();
+    List<Cell> getCells();
 
-    ArrayList<Location> getLocations(Location loc, int[] deltaRow, int[] deltaCol);
+    ArrayList<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol);
 
     void printGrid();
 }
