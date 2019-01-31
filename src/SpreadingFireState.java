@@ -1,14 +1,16 @@
 import java.awt.*;
 
-public enum GOLState implements CellState{
-    DEAD("D", "DEAD", Color.DARK_GRAY){},
-    ALIVE("A", "ALIVE", Color.GREEN){};
+public enum SpreadingFireState implements CellState {
+
+    TREE("T", "TREE", Color.GREEN){},
+    EMPTY("E", "EMPTY", Color.WHITE){},
+    FIRE("F", "FIRE", Color.RED){};
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-    GOLState(String shortenedName, String fullState, Color cellColor){
+    SpreadingFireState(String shortenedName, String fullState, Color cellColor){
         myShortenedName = shortenedName;
         myFullState = fullState;
         myCellColor = cellColor;

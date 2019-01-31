@@ -1,14 +1,16 @@
 import java.awt.*;
 
-public enum GOLState implements CellState{
-    DEAD("D", "DEAD", Color.DARK_GRAY){},
-    ALIVE("A", "ALIVE", Color.GREEN){};
+public enum SegregationState implements CellState {
+
+    EMPTY("E", "EMPTY",Color.WHITE){},
+    TYPE_A("A", "TYPE_A", Color.RED){},
+    TYPE_B("B", "TYPE_B", Color.BLUE){};
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-    GOLState(String shortenedName, String fullState, Color cellColor){
+    SegregationState(String shortenedName, String fullState, Color cellColor){
         myShortenedName = shortenedName;
         myFullState = fullState;
         myCellColor = cellColor;

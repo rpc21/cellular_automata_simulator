@@ -1,14 +1,16 @@
 import java.awt.*;
 
-public enum GOLState implements CellState{
-    DEAD("D", "DEAD", Color.DARK_GRAY){},
-    ALIVE("A", "ALIVE", Color.GREEN){};
+public enum PercolationState implements CellState{
+
+    PERCOLATED("P", "PERCOLATED", Color.CYAN){},
+    OPEN("O", "OPEN", Color.WHITE){},
+    BLOCKED("B", "BLOCKED", Color.BLACK){};
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-    GOLState(String shortenedName, String fullState, Color cellColor){
+    PercolationState(String shortenedName, String fullState, Color cellColor){
         myShortenedName = shortenedName;
         myFullState = fullState;
         myCellColor = cellColor;
