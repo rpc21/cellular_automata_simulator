@@ -1,18 +1,27 @@
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
  * This class handles parsing XML files and returning a completed object.
  *
+ * Based on code by:
  * @author Rhondu Smithwick
  * @author Robert C. Duvall
+ *
+ * Adapted by:
+ * @author Dima Fayyad
  */
 public class XMLParser {
     // Readable error message that can be displayed by the GUI
@@ -35,10 +44,9 @@ public class XMLParser {
      */
     public Simulation getSimulation(File dataFile) {
         var root = getRootElement(dataFile);
-        if (! isValidFile(root, Simulation.DATA_TYPE)) {
-            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
-        }
-        // read data associated with the fields given by the object
+//        if (! isValidFile(root, Simulation.DATA_TYPE)) {
+//            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
+//        }
         var simulationParams = new HashMap<String, String>();
         for (var field : Simulation.DATA_FIELDS) {
             simulationParams.put(field, getTextValue(root, field));
@@ -47,18 +55,48 @@ public class XMLParser {
         String simulationType = simulationParams.get("simulationType");
         int rows = Integer.parseInt(simulationParams.get("rows"));
         int cols = Integer.parseInt(simulationParams.get("columns"));
-        // Set up grid parameters
-        int[][] specifiedStates = new int[rows][cols];
-        for (int i = 0; i < specifiedStates.length; i++){
-            var currRow = getTextValue(root, "CellRows");
-            for (int j = 0; j < specifiedStates[0].length; j++){
-                specifiedStates[i][j] = Integer.parseInt(getTextValue(root, "CellColumns"))+ clacStateOffset(simulationType);
-            }
-        }
-        for
+
+        int[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
+        HashMap<String, Double> parameters = parseAdditionalParams(root);
+
         Simulation sim = generateSimulation(simulationParams);
         sim.setInitialStates(specifiedStates, simulationType, parameters);
         return sim;
+    }
+
+    private HashMap<String, Double> parseAdditionalParams(Element root){
+        HashMap<String, Double> parameters = new HashMap<String, Double>();
+        NodeList params = root.getElementsByTagName("parameters");
+        if(params!=null){
+            for(int i = 0; i < params.getLength(); i++){
+                var p = params.item(i);
+                if ("parameters".equals(p.getNodeName())&& p.getTextContent().split(" ").length>1) {
+                    parameters.put(p.getTextContent().split(" ")[0], Double.parseDouble(p.getTextContent().split(" ")[1]));
+                }
+            }
+        }
+        return parameters;
+    }
+
+    private int[][] parseGrid(Element root, int rows, int cols, String simulationType){
+        NodeList cellRows = root.getElementsByTagName("CellRows");
+        int[][] specifiedStates = new int[rows][cols];
+        if ((cellRows != null))
+            for (int i = 0; i < cellRows.getLength(); i++) {
+                NodeList columnsList = cellRows.item(i).getChildNodes();
+                if ((columnsList != null)){
+                    int colCount=0;
+                    for (int j = 0; j < columnsList.getLength(); j++) {
+                        var state = columnsList.item(j);
+                        if ("CellColumns".equals(state.getNodeName())) {
+                            System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
+                            specifiedStates[i][colCount] = Integer.parseInt(state.getTextContent())+clacStateOffset(simulationType);
+                            colCount++;
+                        }
+                    }
+                }
+            }
+        return specifiedStates;
     }
 
     private static Simulation generateSimulation(HashMap<String, String> simulationParams){
@@ -80,7 +118,7 @@ public class XMLParser {
 
     private int clacStateOffset(String simulationType){
         HashMap<String, Integer> simulationToOffsetMap = new HashMap<String, Integer>();
-        simulationToOffsetMap.put("Game of Life", 1200);
+        simulationToOffsetMap.put("GOLSimulation", 1200);
         simulationToOffsetMap.put("Spreading Fire", 140002);
         simulationToOffsetMap.put("Percolation", 150002);
         simulationToOffsetMap.put("Segregation", 13700);
