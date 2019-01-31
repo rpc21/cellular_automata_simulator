@@ -12,7 +12,8 @@ public class PercolationSimulation extends Simulation {
     }
 
     @Override
-    public boolean checkIfDone() {
+    public boolean isOver() {
         return false;
     }
+
 }

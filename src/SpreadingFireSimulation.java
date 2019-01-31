@@ -11,8 +11,17 @@ public class SpreadingFireSimulation extends Simulation {
 
     }
 
+    /**
+     * If there are any fires, there is at least one more round
+     * @return whether or not the simulation is over
+     */
     @Override
-    public boolean checkIfDone() {
-        return false;
+    public boolean isOver() {
+        for (Cell cell: myGrid.getCells()){
+            if (((SpreadingFireCell) cell).isOnFire()){
+                return false;
+            }
+        }
+        return true;
     }
 }
