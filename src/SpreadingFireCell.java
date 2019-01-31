@@ -1,38 +1,32 @@
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 
 public class SpreadingFireCell extends Cell {
 
-    private static final int ON_FIRE = 140002;
-    private static final int TREE = 140003;
-    private static final int EMPTY = 140004;
     private static final int[] SPREADING_FIRE_ROW_NEIGHBORS = {-1, 1, 0, 0};
     private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
 
 
-    public SpreadingFireCell(Location loc, int startingState, Grid grid, HashMap<String, Double> parameters){
-        myCurrentState = startingState;
-        myGrid = grid;
-        myLocation = loc;
-        myNextState = 0;
-        myParameters = parameters;
+    public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid, HashMap<String, Double> parameters){
+        super(loc, startingState, grid, parameters);
     }
 
-    public SpreadingFireCell(Location loc, int startingState, Grid grid){
+    public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid){
         this(loc, startingState, grid, new HashMap<>());
         myParameters.put("probCatch", 1.0D);
     }
 
     @Override
     public void calculateNewState() {
-        if (myCurrentState == ON_FIRE || myCurrentState == EMPTY) {
-            myNextState = EMPTY;
+        if (myCurrentState == SpreadingFireState.FIRE || myCurrentState == SpreadingFireState.EMPTY) {
+            myNextState = SpreadingFireState.EMPTY;
         }
         else if (catchesFire()){
-            myNextState = ON_FIRE;
+            myNextState = SpreadingFireState.FIRE;
         }
         else {
-            myNextState = TREE;
+            myNextState = SpreadingFireState.TREE;
         }
     }
 
@@ -46,23 +40,20 @@ public class SpreadingFireCell extends Cell {
             }
         }
         double randomNumber = Math.random();
-        return nextToTreeOnFire && randomNumber <= myParameters.get("probCatch");
+        return nextToTreeOnFire && (randomNumber <= myParameters.get("probCatch"));
     }
 
     public boolean isOnFire() {
-        return myCurrentState == ON_FIRE;
+        return myCurrentState == SpreadingFireState.FIRE;
     }
 
     @Override
     public String toString() {
-        if (myCurrentState == EMPTY){
-            return "E";
-        }
-        else if (isOnFire()){
-            return "F";
-        }
-        else {
-            return "T";
-        }
+        return myCurrentState.getMyShortenedName();
+    }
+
+    @Override
+    public Color getMyColor() {
+        return myCurrentState.getMyCellColor();
     }
 }

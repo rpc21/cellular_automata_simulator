@@ -44,7 +44,7 @@ public abstract class Simulation {
         return myGrid;
     }
 
-    public void setInitialStates(int[][] initialStates, String simulationType, HashMap<String, Double> parameters){
+    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters){
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
@@ -60,21 +60,21 @@ public abstract class Simulation {
         System.out.println("Initial states set");
     }
 
-    private Cell generateSimulationSpecificCell(String simulationType, Location loc, int state, Grid grid,
+    private Cell generateSimulationSpecificCell(String simulationType, Location loc, String state, Grid grid,
                                                 HashMap<String, Double> parameters){
         if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, state, grid);
+            return new GOLCell(loc, GOLState.valueOf(state), grid);
         }
         else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, state, grid, parameters);
+            return new SpreadingFireCell(loc, SpreadingFireState.valueOf(state), grid, parameters);
         }
         else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, state, grid);
+            return new PercolationCell(loc, PercolationState.valueOf(state), grid);
         }
         else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, state, grid, parameters);
+            return new SegregationCell(loc, SegregationState.valueOf(state), grid, parameters);
         }
-        return new GOLCell(loc, state, grid);
+        return new GOLCell(loc, GOLState.valueOf(state), grid);
     }
 
 }

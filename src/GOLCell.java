@@ -6,9 +6,6 @@ public class GOLCell extends Cell{
     private static int[] GOL_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
     private static int[] GOL_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    private GOLState myCurrentState;
-    private GOLState myNextState;
-
     /**
      * Implement Game of Life rules
      * Box neighbors, <2 neighbors alive = DIE, 2 0r 3 live will live, more than 3 live neighbors = die
@@ -16,14 +13,8 @@ public class GOLCell extends Cell{
      * Need to know my state and how many ALIVE neighbors
      * @return the new state
      */
-    public GOLCell(Location location, int initialState, Grid grid){
-        myGrid = grid;
-        if (initialState == 1){
-            myCurrentState = GOLState.ALIVE;
-        } else{
-            myCurrentState = GOLState.DEAD;
-        }
-        myLocation=location;
+    public GOLCell(Location location, GOLState initialState, Grid grid){
+        super(location, initialState, grid);
     }
 
     @Override
@@ -40,6 +31,7 @@ public class GOLCell extends Cell{
     private boolean needsToDie(int numAlive){
         return ((isAlive() && numAlive < 2)|| (isAlive() && numAlive > 3));
     }
+
     private boolean needsToLive(int numAlive){
         return ((isAlive() && numAlive == 2) || (isAlive() && numAlive == 3) || (!isAlive() && numAlive==3));
     }

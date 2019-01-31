@@ -36,14 +36,14 @@ public interface Grid {
      */
     void put(Location loc, Cell obj);
 
-//    /**
-//     * Removes the object at a given location from this grid. <br />
-//     * Precondition: <code>loc</code> is valid in this grid
-//     * @param loc the location of the object that is to be removed
-//     * @return the object that was removed (or <code>null<code> if the location
-//     *  is unoccupied)
-//     */
-//    void remove(Location loc);
+    /**
+     * Removes the object at a given location from this grid. <br />
+     * Precondition: <code>loc</code> is valid in this grid
+     * @param loc the location of the object that is to be removed
+     * @return the object that was removed (or <code>null<code> if the location
+     *  is unoccupied)
+     */
+    void remove(Location loc);
 
     /**
      * Returns the object at a given location in this grid. <br />

@@ -4,7 +4,8 @@ public enum SegregationState implements CellState {
 
     EMPTY("E", "EMPTY",Color.WHITE){},
     TYPE_A("A", "TYPE_A", Color.RED){},
-    TYPE_B("B", "TYPE_B", Color.BLUE){};
+    TYPE_B("B", "TYPE_B", Color.BLUE){},
+    TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);
 
     private final String myShortenedName;
     private final String myFullState;

@@ -78,14 +78,14 @@ public class BasicGrid implements Grid{
         myGrid[loc.getRow()][loc.getCol()] = obj;
     }
 
-//    /**
-//     *
-//     * @param loc the location of the object that is to be removed
-//     */
-//    @Override
-//    public void remove(Location loc) {
-//
-//    }
+    /**
+     *
+     * @param loc the location of the object that is to be removed
+     */
+    @Override
+    public void remove(Location loc) {
+
+    }
 
     /**
      * Get the Cell object in the specified location in the grid
