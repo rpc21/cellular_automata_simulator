@@ -1,6 +1,8 @@
+
 import java.util.List;
 
 public class PercolationCell extends Cell {
+
 
     private static final int BLOCKED = 150004;
     private static final int OPEN = 150003;

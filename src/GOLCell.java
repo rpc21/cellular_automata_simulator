@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+
 import java.util.List;
 
 import java.util.List;
@@ -72,5 +74,7 @@ public class GOLCell extends Cell{
         }
         return  "D";
     }
+
+
 }
 
