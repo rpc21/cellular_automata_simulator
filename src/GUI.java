@@ -59,12 +59,12 @@ public class GUI {
 
     public void step(){
         mySimulation.updateGrid();
-        myGUIGrid.updateGUIGrid(mySimulation.getMyGrid().getCells());
+        myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
     }
 
     private void makeGUIParts(){
         myGUIGrid = new GUIGrid(mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
-        myGUIGrid.updateGUIGrid(mySimulation.getMyGrid().getCells());
+        myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
         makeControls();
         myGUIDefaultPanel = new GUIDefaultPanel(myPlayButton,myStepButton,mySpeedSlider,myChoiceBox);
         myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel());
