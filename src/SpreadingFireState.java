@@ -1,4 +1,4 @@
-import java.awt.*;
+import javafx.scene.paint.Color;
 
 public enum SpreadingFireState implements CellState {
 

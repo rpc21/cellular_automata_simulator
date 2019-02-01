@@ -21,7 +21,7 @@ public class Tester {
         //TODO: specify the path to the test case you created here
 
         File file = new File(testCase);
-        // Initialize scanner to read in txt file
+        // GUI scanner to read in txt file
         try{
             Scanner scanner = new Scanner(file);
 

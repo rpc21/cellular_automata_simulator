@@ -1,4 +1,4 @@
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.List;
 
 public class PercolationCell extends Cell {
