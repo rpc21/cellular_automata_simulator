@@ -44,6 +44,10 @@ public class WatorFish extends WatorCell {
         super.calculateNewState();
     }
 
+    /**
+     * Return the color to display representing the state of the cell
+     * @return a Color representing the state of the cell
+     */
     @Override
     public Color getMyColor() {
         return Color.ORANGE;
@@ -59,6 +63,10 @@ public class WatorFish extends WatorCell {
         return false;
     }
 
+    /**
+     * Return a character representation of the cell state
+     * @return a String of length 1 representing the state of the cell
+     */
     @Override
     public String toString() {
         return "F";

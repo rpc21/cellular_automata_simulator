@@ -7,3 +7,6 @@
             * This con may be unavoidable so it may be worth it
     * We could use an empty boolean flag
 3. Can we delete the GamePlayer class now?  It was more just for getting started
+4. Anna, how do we actually make the simulation happen? Do we ever actually use the .simulate methods or just
+updateGrid?
+5. What role are the simulation classes actually serving? Should we get rid of them
