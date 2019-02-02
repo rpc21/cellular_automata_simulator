@@ -90,4 +90,9 @@ public class WatorShark extends WatorCell {
     public String toString() {
         return "S";
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

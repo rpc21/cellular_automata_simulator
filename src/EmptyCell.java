@@ -1,6 +1,9 @@
 import javafx.scene.paint.Color;
 
-public class EmptyCell extends Cell {
+public class EmptyCell extends WatorCell {
+
+    @Override
+    public void step() {}
 
     public EmptyCell(Location loc){
         myLocation = loc;
@@ -22,5 +25,10 @@ public class EmptyCell extends Cell {
     @Override
     public Color getMyColor() {
         return Color.WHITE;
+    }
+
+    @Override
+    public String toString() {
+        return "E";
     }
 }
