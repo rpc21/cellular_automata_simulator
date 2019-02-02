@@ -2,12 +2,11 @@ import javafx.scene.paint.Color;
 
 public class EmptyCell extends Cell {
 
-    public EmptyCell(Location loc, Grid grid){
+    public EmptyCell(Location loc){
         myLocation = loc;
         myCurrentState = null;
         myNextState = null;
         myParameters = null;
-        myGrid = grid;
     }
 
     @Override

@@ -86,7 +86,7 @@ public class BasicGrid implements Grid{
      */
     @Override
     public void remove(Location loc) {
-        myGrid[loc.getRow()][loc.getCol()] = null;
+        myGrid[loc.getRow()][loc.getCol()] = new EmptyCell(loc);
     }
 
     /**
