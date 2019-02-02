@@ -25,9 +25,10 @@ public class GUI {
     private Group myNode = new Group();
     private XMLParser myParser = new XMLParser(Simulation.DATA_TYPE);
 
+    private GUISimulationFactory myGUISimulationFactory;
     private GUIGrid myGUIGrid;
     private GUIDefaultPanel myGUIDefaultPanel;
-    private GUISimulationPanel mySimulationPanel;
+    private GUISimulationPanel myGUISimulationPanel;
     private Button myPlayButton;
     private Button myStepButton;
     private Slider mySpeedSlider;
@@ -42,8 +43,9 @@ public class GUI {
     public GUI(Stage s, Simulation sim){
         myStage = s;
         mySimulation = sim;
-        mySimulationPanel = new GUISimulationPanel(sim);
         myNode = new Group();
+        myGUISimulationFactory = new GUISimulationFactory();
+        myGUISimulationPanel = new GUIGameOfLifePanel(sim);
         makeGUIParts();
     }
     public void render(){
@@ -108,7 +110,7 @@ public class GUI {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 mySpeedSlider.setValue(mySpeedSlider.getValue());
-                resetAnimation(mySpeedSlider.getValue(),myAnimation.getStatus() == Animation.Status.RUNNING);
+                resetAnimation(mySpeedSlider.getValue() * -1/FRAMES_PER_SECOND,myAnimation.getStatus() == Animation.Status.RUNNING);
             }
         });
     }
@@ -125,11 +127,14 @@ public class GUI {
 
     private void makeSimulationDropDownMenu(){
         myChoiceBox = new ChoiceBox<>();
-        myChoiceBox.getItems().addAll("Game of Life", "Spreading Fire", "Percolation");
+        myChoiceBox.getItems().addAll("Game of Life", "Spreading Fire", "Percolation", "Segregation");
         myChoiceBox.setValue("Game of Life");
         myChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                System.out.println(myChoiceBox.getItems().get((Integer) number2));
+                myAnimation.stop();
+                myChoiceBox.setValue(myChoiceBox.getItems().get((Integer) number2));
                 resetSimulation(myChoiceBox.getItems().get((Integer) number2));
             }
         });
@@ -137,39 +142,17 @@ public class GUI {
     }
 
     private void resetSimulation(String newSim){
-        System.out.println(newSim);
         myChoiceBox.setValue(newSim);
-        String testCase = "";
-        switch(newSim){
-            case "Game of Life":
-                testCase = "tests/GOLTest.xml";
-                break;
-            case "Spreading Fire":
-                testCase = "tests/SpreadingFireTest.xml";
-                break;
-            case "Percolation":
-                testCase = "tests/PercolationTest.xml";
-                break;
-            default:
-                testCase = "tests/GOLTest.xml";
-                break;
-        }
-
-        File file = new File(testCase);
+        File file = new File(myGUISimulationFactory.makeXMLFileName(newSim));
         var sim = myParser.getSimulation(file);
         try{
             mySimulation = sim;
         }catch (Exception e){
             e.printStackTrace();
         }
+        myGUISimulationPanel = myGUISimulationFactory.makeSimulationPanel(newSim,mySimulation);
         myNode = new Group();
-        if (mySimulation instanceof SpreadingFireSimulation) {
-            System.out.println("hi");
-            mySimulationPanel = new GUISpreadingFirePanel(mySimulation);
-        }
-        else
-            mySimulationPanel = new GUISimulationPanel(sim);
-        myNode.getChildren().addAll(mySimulationPanel.getGUISimulationPanel());
+        myNode.getChildren().addAll(myGUISimulationPanel.getGUISimulationPanel());
         makeGUIParts();
         render();
     }

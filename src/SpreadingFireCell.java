@@ -6,7 +6,7 @@ public class SpreadingFireCell extends Cell {
 
     private static final int[] SPREADING_FIRE_ROW_NEIGHBORS = {-1, 1, 0, 0};
     private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
-
+    //Name of parameter -> probCatch
 
     public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid, HashMap<String, Double> parameters){
         super(loc, startingState, grid, parameters);
