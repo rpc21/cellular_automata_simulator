@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -32,6 +33,7 @@ public class GUI {
     private Button myPlayButton;
     private Button myStepButton;
     private Slider mySpeedSlider;
+    private Text mySpeedLabel;
     private ChoiceBox<String> myChoiceBox;
 
     public static final int STAGE_SIZE = 800;
@@ -68,7 +70,7 @@ public class GUI {
         myGUIGrid = new GUIGrid(mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
         myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
         makeControls();
-        myGUIDefaultPanel = new GUIDefaultPanel(myPlayButton,myStepButton,mySpeedSlider,myChoiceBox);
+        myGUIDefaultPanel = new GUIDefaultPanel(myPlayButton,myStepButton,mySpeedLabel,mySpeedSlider,myChoiceBox);
         myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel());
     }
 
@@ -81,7 +83,6 @@ public class GUI {
 
     private void makePlayButton() {
         myPlayButton = new Button("Play");
-        myPlayButton.setLayoutY(1 * GUIDefaultPanel.DEFAULT_CONTROL_SPACING);
         myPlayButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -95,7 +96,6 @@ public class GUI {
     }
     private void makeStepButton(){
         myStepButton = new Button("Step");
-        myStepButton.setLayoutY(2* GUIDefaultPanel.DEFAULT_CONTROL_SPACING);
         myStepButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -105,6 +105,7 @@ public class GUI {
     }
 
     private void makeSpeedSlider(){
+        mySpeedLabel = new Text("Animation Speed");
         mySpeedSlider = new Slider(-17000,-3000,-10000);
         mySpeedSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -127,7 +128,7 @@ public class GUI {
 
     private void makeSimulationDropDownMenu(){
         myChoiceBox = new ChoiceBox<>();
-        myChoiceBox.getItems().addAll("Game of Life", "Spreading Fire", "Percolation", "Segregation");
+        myChoiceBox.getItems().addAll("Game of Life", "Spreading Fire", "Percolation", "Segregation", "Predator-Prey");
         myChoiceBox.setValue("Game of Life");
         myChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override

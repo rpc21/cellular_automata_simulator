@@ -35,6 +35,9 @@ public class GUISimulationFactory {
             case "Segregation":
                 mySimPanel = new GUISegregationPanel(mySim);
                 break;
+            case "Predator-Prey":
+                mySimPanel = new GUIWatorPanel(mySim);
+                break;
             default:
                 mySimPanel = new GUIGameOfLifePanel(mySim);
                 break;

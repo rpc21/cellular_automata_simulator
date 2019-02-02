@@ -1,19 +1,14 @@
-import javafx.animation.Animation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-
-import java.sql.SQLOutput;
 import java.util.HashMap;
 
 public class GUISegregationPanel extends GUISimulationPanel {
     private Simulation mySimulation;
-    private Spinner<Double> myThresholdSpinner = new Spinner<>();
+    private Spinner<Integer> myThresholdSpinner = new Spinner<>();
     private Text myThresh;
     private Slider myRaceOneSlider;
     private Text myRaceOne;
@@ -29,48 +24,25 @@ public class GUISegregationPanel extends GUISimulationPanel {
     public GUISegregationPanel(Simulation mySim){
         super(mySim);
         mySimulation = mySim;
+        setUpInitialValues();
 
-        double redCount = 0;
-        double emptyCount = 0;
-        double blueCount = 0;
-        for (Cell c: mySim.getMyGrid().getCells()){ ;
-            if (c.getMyColor() == Color.RED)
-                redCount++;
-            else if (c.getMyColor() == Color.BLUE)
-                blueCount++;
-            else if (c.getMyColor() == Color.WHITE)
-                emptyCount++;
-        }
-        redCurrVal = redCount/(mySim.getMyGrid().getCells().size());
-        blueCurrVal =  blueCount/(mySim.getMyGrid().getCells().size());
-        emptyCurrVal = emptyCount/(mySim.getMyGrid().getCells().size());
-        myEmptySlider = new Slider(0,1,emptyCurrVal);
+        myThresh = setUpLabel("% Threshold");
+        myEmpty = setUpLabel("% Empty");
+        myRaceOne = setUpLabel("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
 
-
-        myThresh = new Text("Threshold");
-        myThresh.setTextAlignment(TextAlignment.LEFT);
-        SpinnerValueFactory<Double> valueFactory = //
-                new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1, 0.3);
-        ((SpinnerValueFactory.DoubleSpinnerValueFactory) valueFactory).setAmountToStepBy(0.01);
-        myThresholdSpinner.setValueFactory(valueFactory);
-        myThresholdSpinner.setEditable(true);
-        myThresholdSpinner.setMaxWidth(80);
+        myThresholdSpinner = setUpSpinner(0,100,30);
         myThresholdSpinner.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myMap.remove("Threshold");
-                myMap.put("Threshold",myThresholdSpinner.getValue());
-                if (mySimulation instanceof SpreadingFireSimulation) {
-                    mySimulation.updateNewParams(myMap);
-                }
+                myMap.remove("% Threshold");
+                myMap.put("% Threshold",myThresholdSpinner.getValue() *1.0/100);
+                mySimulation.updateNewParams(myMap);
             }
         });
         super.addToStackPane(myThresh,myThresholdSpinner);
 
         myRaceOneSlider = new Slider(0,1.0,redCurrVal/(redCurrVal + blueCurrVal));
         toFraction(redCurrVal/blueCurrVal);
-        myRaceOne = new Text("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
-        myRaceOne.setTextAlignment(TextAlignment.LEFT);
         myRaceOneSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -79,21 +51,23 @@ public class GUISegregationPanel extends GUISimulationPanel {
                 blueCurrVal = 1 - redCurrVal - emptyCurrVal;
                 toFraction(redCurrVal/blueCurrVal);
                 myRaceOne.setText("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
+                myMap.remove("% Red","% Blue");
+                myMap.put("% Red",redCurrVal);
+                myMap.put("% Blue",blueCurrVal);
+                mySimulation.updateNewParams(myMap);
             }
         });
         super.addToStackPane(myRaceOne,myRaceOneSlider);
 
-        myEmpty = new Text("% Empty");
-        myEmpty.setTextAlignment(TextAlignment.LEFT);
+        myEmptySlider = new Slider(0,1.0,emptyCurrVal);
         myEmptySlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 myEmptySlider.setValue(myEmptySlider.getValue());
-                myMap.remove("Empty");
-                myMap.put("Empty",myEmptySlider.getValue());
-                if (mySimulation instanceof SpreadingFireSimulation) {
-                    mySimulation.updateNewParams(myMap);
-                }
+                emptyCurrVal = myEmptySlider.getValue();
+                myMap.remove("% Empty");
+                myMap.put("% Empty",myEmptySlider.getValue());
+                mySimulation.updateNewParams(myMap);
             }
         });
         super.addToStackPane(myEmpty,myEmptySlider);
@@ -122,5 +96,24 @@ public class GUISegregationPanel extends GUISimulationPanel {
         blueCurrRatio = qfound;
 
 
+    }
+
+    private void setUpInitialValues(){
+        double redCount = 0;
+        double emptyCount = 0;
+        double blueCount = 0;
+
+        for (Cell c: mySimulation.getMyGrid().getCells()){ ;
+            if (c.getMyColor() == Color.RED)
+                redCount++;
+            else if (c.getMyColor() == Color.BLUE)
+                blueCount++;
+            else if (c.getMyColor() == Color.WHITE)
+                emptyCount++;
+        }
+        redCurrVal = redCount/(mySimulation.getMyGrid().getCells().size());
+        blueCurrVal =  blueCount/(mySimulation.getMyGrid().getCells().size());
+        emptyCurrVal = emptyCount/(mySimulation.getMyGrid().getCells().size());
+        myEmptySlider = new Slider(0,1,emptyCurrVal);
     }
 }
