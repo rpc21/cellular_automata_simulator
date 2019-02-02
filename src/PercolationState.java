@@ -1,4 +1,4 @@
-import java.awt.*;
+import javafx.scene.paint.Color;
 
 public enum PercolationState implements CellState{
 

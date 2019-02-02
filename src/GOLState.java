@@ -1,7 +1,7 @@
-import java.awt.*;
+import javafx.scene.paint.Color;
 
 public enum GOLState implements CellState{
-    DEAD("D", "DEAD", Color.DARK_GRAY){},
+    DEAD("D", "DEAD", Color.DARKGRAY){},
     ALIVE("A", "ALIVE", Color.GREEN){};
 
     private final String myShortenedName;
