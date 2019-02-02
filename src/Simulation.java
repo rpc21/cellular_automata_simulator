@@ -100,7 +100,23 @@ public abstract class Simulation {
         else if (simulationType.equals("Segregation")){
             return new SegregationCell(loc, state, grid, parameters);
         }
+        else if (simulationType.equals("Wator")){
+            return generateWatorCell(loc, grid, parameters);
+        }
         return new GOLCell(loc, state, grid);
+    }
+
+    protected WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
+        double randomNumber = Math.random();
+        if (randomNumber <= parameters.get("fishPercentage")){
+            return new WatorFish(loc, grid, parameters);
+        }
+        else if (randomNumber <= parameters.get("fishPercentage") + parameters.get("sharkPercentage")){
+            return new WatorShark(loc, grid, parameters);
+        }
+        else{
+            return new EmptyCell(loc);
+        }
     }
 
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, String state, Grid grid,
@@ -116,6 +132,9 @@ public abstract class Simulation {
         }
         else if (simulationType.equals("Segregation")){
             return new SegregationCell(loc, SegregationState.valueOf(state), grid, parameters);
+        }
+        else if (simulationType.equals("Wator")) {
+            return generateWatorCell(loc, grid, parameters);
         }
         return new GOLCell(loc, GOLState.valueOf(state), grid);
     }

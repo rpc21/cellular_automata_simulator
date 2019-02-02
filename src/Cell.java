@@ -1,4 +1,5 @@
 import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.*;
 import java.util.List;
 
@@ -112,8 +113,11 @@ public abstract class Cell {
         return myGrid;
     }
 
-    public void setMyParameters(Map<String, Double> myParameters) {
-        this.myParameters = myParameters;
+    public void setMyParameters(Map<String, Double> updates) {
+
+        for (String parameter : updates.keySet()){
+            myParameters.put(parameter, updates.get(parameter));
+        }
     }
 
     public boolean isEmpty() {

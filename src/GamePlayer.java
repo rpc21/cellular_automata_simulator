@@ -16,7 +16,7 @@ public class GamePlayer extends Application{
 
 
     /**
-     * Initialize the stageManager and switch scenes to load the Main Screen of the application
+     * GUI the stageManager and switch scenes to load the Main Screen of the application
      * Establish the animation loop
      */
     @Override

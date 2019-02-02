@@ -7,9 +7,11 @@ import java.util.List;
  * 2-D array of Cell objects
  */
 public class BasicGrid implements Grid{
-    private Cell[][] myGrid;
-    private int myNumRows;
-    private int myNumCols;
+    public static final int[] ADJACENT_COL = {0, 0, -1, 1};
+    public static final int[] ADJACENT_ROW = {-1, 1, 0, 0};
+    protected Cell[][] myGrid;
+    protected int myNumRows;
+    protected int myNumCols;
 
     /**
      * Constructor for a basic grid initializes an empty 2-D array of Cells of size as specified by the numRows and
@@ -84,7 +86,7 @@ public class BasicGrid implements Grid{
      */
     @Override
     public void remove(Location loc) {
-
+        myGrid[loc.getRow()][loc.getCol()] = new EmptyCell(loc);
     }
 
     /**
@@ -135,12 +137,24 @@ public class BasicGrid implements Grid{
 
     @Override
     public ArrayList<Location> getEmptyAdjacentLocations(Location loc) {
-        return null;
+        ArrayList<Location> emptyAdjacentLocations = new ArrayList<>();
+        for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)){
+            if (get(l).isEmpty()){
+                emptyAdjacentLocations.add(l);
+            }
+        }
+        return emptyAdjacentLocations;
     }
 
     @Override
     public ArrayList<Location> getOccupiedAdjacentLocations(Location loc) {
-        return null;
+        ArrayList<Location> emptyAdjacentLocations = new ArrayList<>();
+        for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)){
+            if (!get(l).isEmpty()){
+                emptyAdjacentLocations.add(l);
+            }
+        }
+        return emptyAdjacentLocations;
     }
 
     @Override
