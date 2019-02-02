@@ -9,6 +9,7 @@ public class SegregationCell extends MovableCell{
     private static int[] SEGREGATION_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
     private static int[] SEGREGATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
     private double threshold;
+    private boolean toBeMoved = false;
 
     public SegregationCell(Location location, SegregationState initialState, Grid grid, HashMap<String,
             Double> parameters){
@@ -30,6 +31,9 @@ public class SegregationCell extends MovableCell{
         }
         myCurrentState = myNextState;
         myNextState = null;
+        if(myCurrentState==SegregationState.EMPTY){ //reset the boolean flag for empty cells
+            toBeMoved=false;
+        }
     }
 
     @Override
@@ -45,7 +49,18 @@ public class SegregationCell extends MovableCell{
 
     private Location chooseNewLocation(List<Location> availableLocations){
         Collections.shuffle(availableLocations);
-        if (availableLocations.size() > 0) return availableLocations.get(0);
+        System.out.println("open spots:"+availableLocations.size());
+        if (availableLocations.size() > 0){
+            System.out.println("spots open");
+            for(Location l:availableLocations){
+                SegregationCell c = (SegregationCell) myGrid.get(l);
+                if(!c.toBeMoved){
+                    c.updateToBeMovedFlag();
+                    System.out.println("assigned new location");
+                    return l;
+                }
+            }
+        }
         return myLocation;
     }
 
@@ -53,13 +68,17 @@ public class SegregationCell extends MovableCell{
         List<Location> availableLocations = new ArrayList<>();
         for (int i = 0; i <myGrid.getNumRows(); i++){
             for (int j = 0; j < myGrid.getNumCols(); j++) {
-                Cell currentCell = myGrid.get(new Location(i,j));
-                if(myCurrentState == SegregationState.EMPTY){
+                SegregationCell currentCell = (SegregationCell)myGrid.get(new Location(i,j));
+                if(currentCell.myCurrentState == SegregationState.EMPTY && ! currentCell.toBeMoved){
                     availableLocations.add(currentCell.getMyLocation());
                 }
             }
         }
         return availableLocations;
+    }
+
+    private void updateToBeMovedFlag(){
+        toBeMoved = true;
     }
 
     public boolean isSatisfied(){
