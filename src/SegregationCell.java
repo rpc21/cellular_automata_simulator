@@ -30,7 +30,6 @@ public class SegregationCell extends MovableCell{
             myNextState = myCurrentState;
         }
         myCurrentState = myNextState;
-        myNextState = null;
         if(myCurrentState==SegregationState.EMPTY){ //reset the boolean flag for empty cells
             toBeMoved=false;
         }

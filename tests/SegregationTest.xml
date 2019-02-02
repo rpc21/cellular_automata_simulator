@@ -16,8 +16,8 @@
         </CellRows>
         <CellRows index="0">
             <CellColumns>1</CellColumns>
+            <CellColumns>2</CellColumns>
             <CellColumns>0</CellColumns>
-            <CellColumns>1</CellColumns>
         </CellRows>
     </cellStates>
     <parameters>threshold 0.4</parameters>
