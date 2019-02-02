@@ -10,13 +10,13 @@ import java.util.HashMap;
 
 
 /**
- * This class handles parsing XML files and returning a completed object.
+ * This class handles parsing XML files and returning a new simulation.
  *
  * Based on code by:
  * @author Rhondu Smithwick
  * @author Robert C. Duvall
  *
- * Adapted by:
+ * Author:
  * @author Dima Fayyad
  */
 public class XMLParser {
@@ -36,29 +36,36 @@ public class XMLParser {
     }
 
     /**
-     * Get the data contained in this XML file as an object
+     * getSimulation takes in an XML file and returns a new simulation
+     * @param dataFile the xml file containing the setup for the simulation
+     * @return a new simulation
      */
     public Simulation getSimulation(File dataFile) {
         var root = getRootElement(dataFile);
 //        if (! isValidFile(root, Simulation.DATA_TYPE)) {
 //            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
 //        }
-        var simulationParams = new HashMap<String, String>();
-        for (var field : Simulation.DATA_FIELDS) {
-            simulationParams.put(field, getTextValue(root, field));
-        }
-
+        HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get("simulationType");
         int rows = Integer.parseInt(simulationParams.get("rows"));
         int cols = Integer.parseInt(simulationParams.get("columns"));
 
         int[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
-        HashMap<String, Double> parameters = parseAdditionalParams(root);
+        HashMap<String, Double> additionalParams = parseAdditionalParams(root);
 
         Simulation sim = generateSimulation(simulationParams);
-        sim.setInitialStates(specifiedStates, simulationType, parameters);
+        sim.setInitialStates(specifiedStates, simulationType, additionalParams);
         return sim;
     }
+
+    private HashMap<String, String> getBasicSimulationParams(Element root){
+        var simulationParams = new HashMap<String, String>();
+        for (var field : Simulation.DATA_FIELDS) {
+            simulationParams.put(field, getTextValue(root, field));
+        }
+        return simulationParams;
+    }
+
 
     private HashMap<String, Double> parseAdditionalParams(Element root){
         HashMap<String, Double> parameters = new HashMap<String, Double>();
