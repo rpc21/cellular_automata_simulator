@@ -24,7 +24,7 @@ public class CellularAutomataMain extends Application {
             e.printStackTrace();
         }
         GUI myGUI = new GUI(stage,myCurrentSimulation);
-        myGUI.render();
+        //myGUI.render();
     }
 }
 

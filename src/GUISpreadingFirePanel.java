@@ -14,7 +14,7 @@ public class GUISpreadingFirePanel extends GUISimulationPanel {
         super(mySim);
         mySimulation = mySim;
 
-        myTextBox = setUpLabel("% Chance of Fire");
+        myTextBox = setUpLabel("Chance of Fire %");
         mySpinner = setUpSpinner(0,100,1);
         mySpinner.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
