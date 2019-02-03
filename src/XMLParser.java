@@ -52,10 +52,20 @@ public class XMLParser {
 
         int[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root);
+        HashMap<String, String> theCredentials = getCredentials(root);
 
         Simulation sim = generateSimulation(simulationParams);
+        sim.setCredentials(theCredentials);
         sim.setInitialStates(specifiedStates, simulationType, additionalParams);
         return sim;
+    }
+
+    private HashMap<String, String> getCredentials(Element root) {
+        var myCredentials = new HashMap<String, String>();
+        for (var field : Simulation.DATA_CREDENTIALS) {
+            myCredentials.put(field, getTextValue(root, field));
+        }
+        return myCredentials;
     }
 
     private HashMap<String, String> getBasicSimulationParams(Element root){

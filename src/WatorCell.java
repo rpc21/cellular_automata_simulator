@@ -2,6 +2,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Map;
 
+
 public abstract class WatorCell extends Cell {
 
     protected int turnsUntilCanBreed;

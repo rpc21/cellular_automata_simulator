@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Grid {
-    //Could use Grid<E>
     //https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Grid.java
     /**
      * Returns the number of rows in this grid.
@@ -61,6 +60,12 @@ public interface Grid {
     ArrayList<Location> getOccupiedLocations();
 
     /**
+     * Gets the locations in this grid that contain empty cells.
+     * @return an array list of all empty locations in this grid
+     */
+    ArrayList<Location> getEmptyLocations();
+
+    /**
      * Gets the valid locations adjacent to a given location in all eight
      * compass directions (north, northeast, east, southeast, south, southwest,
      * west, and northwest). <br />
@@ -107,12 +112,24 @@ public interface Grid {
     ArrayList<Cell> getNeighbors(Location loc);
 
     /**
-     * Returns the 2D grid that underlies the
+     * Returns the a list of Cells that are in the grid while they underlying implementation of the grid remains hidden
      * @return
      */
     List<Cell> getCells();
 
+    /**
+     * Return the Location of the neighbors of loc as specified by deltaRow and deltaCol that are valid locations in
+     * the grid that is being used
+     * @param loc location of the cell whose neighbors you want
+     * @param deltaRow the row offsets from loc
+     * @param deltaCol the col offsets from loc
+     * @return ArrayList of the validNeighbor Locations of loc
+     */
     ArrayList<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol);
 
+    /**
+     * Prints the string representation of the grid using the toStrings defined in the cells
+     * Useful for debugging the backend
+     */
     void printGrid();
 }

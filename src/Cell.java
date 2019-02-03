@@ -11,17 +11,25 @@ import java.util.List;
 public abstract class Cell {
     protected Grid myGrid;
     protected Location myLocation;
-//    List<Cell> possibleNeighbors;
-    protected Shape myShape;
-//    protected int myCurrentState;
+    protected Shape myShape; //TODO: Is this actually handled by visualization?
     protected CellState myCurrentState;
     protected CellState myNextState;
     protected boolean empty;
     protected Map<String, Double> myParameters;
 
 
+    /**
+     * Dummy default constructor, DO NOT USE
+     * Abstract Cell class should never actually be instantiated
+     */
     public Cell() {}
 
+    /**
+     * Super constructor used for common idioms in sub-classes: used to avoid duplicate code
+     * @param location is the location of the cell
+     * @param initialState is the cell's initial state (needs to implement CellState interface or be null)
+     * @param grid is the grid that the cell is a part of
+     */
     public Cell(Location location, CellState initialState, Grid grid){
         myGrid = grid;
         myCurrentState = initialState;
@@ -29,12 +37,23 @@ public abstract class Cell {
         myLocation=location;
     }
 
-    public Cell(Location loc, CellState startingState, Grid grid, HashMap<String, Double> parameters){
-        this(loc, startingState, grid);
+    /**
+     * Super constructor used for common cell idioms in sub-classes: used to avoid duplicate code
+     * @param location is the location of the cell
+     * @param initialState is the cell's initial state (needs to implement CellState interface or be null)
+     * @param grid is the grid that the cell is a part of
+     * @param parameters is a HashMap<String, Double> that specifies the simulation specific parameters
+     */
+    public Cell(Location location, CellState initialState, Grid grid, HashMap<String, Double> parameters){
+        this(location, initialState, grid);
         myParameters = parameters;
     }
 
 
+    /**
+     * Method that takes into account the cell's current state and the current state of its neighbors to calculate
+     * and store the next state.  Must be implemented by subclasses.  Called by Simulation when updating the grid
+     */
     public abstract void calculateNewState();
 
     /**
@@ -86,33 +105,49 @@ public abstract class Cell {
     }
 
     /**
-     *
-     * @return
+     * Getter for the current state of the cell
+     * @return the current state of the cell
      */
     public CellState getMyCurrentState() {
         return myCurrentState;
     }
 
+    //TODO: Determine if we need this
     public void setMyCurrentState(CellState myCurrentState) {
         this.myCurrentState = myCurrentState;
     }
 
+    //TODO: Determine if we need this
     public CellState getMyNextState() {
         return myNextState;
     }
 
+    //TODO: Determine if we need this
     public void setMyNextState(CellState myNextState) {
         this.myNextState = myNextState;
     }
 
+    /**
+     * Setter for my Grid if you want to change the grid to an entirely new grid
+     * @param myGrid new Grid of Cell objects
+     */
     public void setMyGrid(Grid myGrid) {
         this.myGrid = myGrid;
     }
 
+    /**
+     * Getter for myGrid
+     * @return myGrid as an object that implements the grid interface
+     */
     public Grid getMyGrid() {
         return myGrid;
     }
 
+    /**
+     * Setter for myParameters. Will update the the parameters specified in 'updates' in the myParameters map of the
+     * cell
+     * @param updates is a map of parameters to be changed and their new values
+     */
     public void setMyParameters(Map<String, Double> updates) {
 
         for (String parameter : updates.keySet()){
@@ -120,13 +155,34 @@ public abstract class Cell {
         }
     }
 
+    /**
+     * Returns the boolean value of the empty instance variable
+     * Cells that are always empty or always full should override this method to always return true or false
+     * @return if this cell is empty or not
+     */
     public boolean isEmpty() {
         return empty;
     }
 
+    /**
+     * Set the value of the empty instance variable
+     * @param empty boolean of whether cell should be empty or not
+     */
     public void setEmpty(boolean empty) {
         this.empty = empty;
     }
 
-    public abstract Color getMyColor();
+    /**
+     * Get the color that the cell should display which depends on cell type and state
+     * Needs to be implemented by simulation specific subclasses
+     * @return color to display as a representation of the cell in the visualization
+     */
+    public Color getMyColor(){
+        return myCurrentState.getMyCellColor();
+    }
+
+    @Override
+    public String toString() {
+        return myCurrentState.getMyShortenedName();
+    }
 }

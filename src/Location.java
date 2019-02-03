@@ -1,15 +1,14 @@
 public class Location {
     //https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Location.java
-    private int row; // row location in grid
-    private int col; // column location in grid
+    private int row;
+    private int col;
 
     /**
      * Constructs a location with given row and column coordinates.
      * @param r the row
      * @param c the column
      */
-    public Location(int r, int c)
-    {
+    public Location(int r, int c) {
         row = r;
         col = c;
     }

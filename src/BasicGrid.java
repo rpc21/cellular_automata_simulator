@@ -7,8 +7,11 @@ import java.util.List;
  * 2-D array of Cell objects
  */
 public class BasicGrid implements Grid{
+
+    // ADJACENT_COL and ADJACENT_ROW work together to specify the four adjacent neighbors to a grid location
     public static final int[] ADJACENT_COL = {0, 0, -1, 1};
     public static final int[] ADJACENT_ROW = {-1, 1, 0, 0};
+
     protected Cell[][] myGrid;
     protected int myNumRows;
     protected int myNumCols;
@@ -77,7 +80,12 @@ public class BasicGrid implements Grid{
      */
     @Override
     public void put(Location loc, Cell obj) {
-        myGrid[loc.getRow()][loc.getCol()] = obj;
+        if (isValid(loc)){
+            myGrid[loc.getRow()][loc.getCol()] = obj;
+        }
+        else{
+            //TODO: Throw exception that tried to access an invalid location
+        }
     }
 
     /**
@@ -86,7 +94,12 @@ public class BasicGrid implements Grid{
      */
     @Override
     public void remove(Location loc) {
-        myGrid[loc.getRow()][loc.getCol()] = new EmptyCell(loc);
+        if (isValid(loc)) {
+            myGrid[loc.getRow()][loc.getCol()] = new WatorEmpty(loc);
+        }
+        else {
+            //TODO: Throw exception that tried to access an invalid location
+        }
     }
 
     /**
@@ -97,10 +110,12 @@ public class BasicGrid implements Grid{
     @Override
     public Cell get(Location loc) {
         return myGrid[loc.getRow()][loc.getCol()];
+        //TODO: Throw exception that tried to access an invalid location
     }
 
     /**
      * A list of the locations currently occupied by cells
+     * Does NOT return empty cells
      * @return a list of the locations currently occupied by cells
      */
     @Override
@@ -112,6 +127,22 @@ public class BasicGrid implements Grid{
             }
         }
         return occupiedLocations;
+    }
+
+    /**
+     * A list of the locations currently not occupied by cells/occupied by empty cells
+     * Only returns empty cells (OPEN for percolation)
+     * @return a list of the locations currently occupied by empty cells
+     */
+    @Override
+    public ArrayList<Location> getEmptyLocations() {
+        ArrayList<Location> emptyLocations = new ArrayList<>();
+        for (Cell cell : getCells()){
+            if (cell.isEmpty()){
+                emptyLocations.add(cell.getMyLocation());
+            }
+        }
+        return emptyLocations;
     }
 
     /**
@@ -135,19 +166,31 @@ public class BasicGrid implements Grid{
         return validLocations;
     }
 
+    /**
+     * Get the adjacent locations to a specified location where the cell is marked as empty
+     * @param loc a location in this grid
+     * @return ArrayList of empty adjacent locations
+     */
     @Override
     public ArrayList<Location> getEmptyAdjacentLocations(Location loc) {
+        //TODO: Throw exception that tried to access an invalid location
         ArrayList<Location> emptyAdjacentLocations = new ArrayList<>();
-        for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)){
-            if (get(l).isEmpty()){
-                emptyAdjacentLocations.add(l);
+        for (Location location : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)){
+            if (get(location).isEmpty()){
+                emptyAdjacentLocations.add(location);
             }
         }
         return emptyAdjacentLocations;
     }
 
+    /**
+     * Get the adjacent locations to a specified location where the cell is not marked as empty
+     * @param loc a location in this grid
+     * @return ArrayList of occupied adjacent locations
+     */
     @Override
     public ArrayList<Location> getOccupiedAdjacentLocations(Location loc) {
+        //TODO: Throw exception that tried to access an invalid location
         ArrayList<Location> emptyAdjacentLocations = new ArrayList<>();
         for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)){
             if (!get(l).isEmpty()){
@@ -157,13 +200,18 @@ public class BasicGrid implements Grid{
         return emptyAdjacentLocations;
     }
 
+    /**
+     * This method is currently unused???
+     * @param loc a location in this grid
+     * @return null
+     */
     @Override
     public ArrayList<Cell> getNeighbors(Location loc) {
         return null;
     }
 
     /**
-     * Prints the grid row by row
+     * Prints the grid row by row using the toStrings specified by each of the cells
      */
     @Override
     public void printGrid() {

@@ -64,6 +64,11 @@ public class SegregationCell extends MovableCell{
     }
 
     private List<Location> findLocationsToMoveTo(Location myLocation){
+        //TODO: Maybe part of this functionality could be moved to findEmptyCells method in Grid->BasicGrid? We
+        // already have a getOccupiedCells method and having those two ideas in the same class makes sense in Ryan's
+        // mind, alternatively, finding open cells could be a MoveableCell method because only cells that have to
+        // move have to do this.  Also does moving randomly and moving only adjacently matter for how we implement
+        // moveable cells? Wator vs Segregation
         List<Location> availableLocations = new ArrayList<>();
         for (int i = 0; i <myGrid.getNumRows(); i++){
             for (int j = 0; j < myGrid.getNumCols(); j++) {
@@ -100,11 +105,19 @@ public class SegregationCell extends MovableCell{
         return numSame / (numSame + numOther);
     }
 
+    /**
+     * Return a String of length 1 representing the state of the cell
+     * @return String of length 1 representing the state of the cell as defined in SegregationState Enum
+     */
     @Override
     public String toString() {
         return myCurrentState.toString();
     }
 
+    /**
+     * Return the color to display to represent the state of this cell
+     * @return Color to display for this state as defined in SegregationState Enum
+     */
     @Override
     public Color getMyColor() {
         return myCurrentState.getMyCellColor();

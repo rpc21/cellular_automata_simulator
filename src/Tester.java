@@ -2,6 +2,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * Call used for testing the backend before XML/configuration were set up
+ */
 public class Tester {
 
 
@@ -78,9 +81,9 @@ public class Tester {
             return new PercolationSimulation(rows, cols);
         }
         //Todo: when SegregationSimulation is ready, uncomment these three lines
-//        else if (simulationType.equals("Segregation")){
-//            return new SegregationSimulation(rows, cols);
-//        }
+        else if (simulationType.equals("Segregation")){
+            return new SegregationSimulation(rows, cols);
+        }
         return new GOLSimulation(rows, cols);
     }
 }

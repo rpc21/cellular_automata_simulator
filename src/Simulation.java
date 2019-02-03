@@ -6,13 +6,17 @@ public abstract class Simulation {
 
     protected Grid myGrid;
     protected boolean simulationOver;
-
+    protected HashMap<String, String> credentials;
     // Data fields
     public static final String DATA_TYPE = "simulation";
     public static final List<String> DATA_FIELDS = List.of(
             "simulationType",
             "rows",
             "columns"
+    );
+    public static final List<String> DATA_CREDENTIALS = List.of(
+            "title",
+            "author"
     );
 
 
@@ -25,11 +29,22 @@ public abstract class Simulation {
         }
         for (Cell cell : cells){
             cell.updateState();
-//            System.out.println(cell.getMyCurrentState());
         }
         myGrid.printGrid();
     }
 
+    public void setCredentials(HashMap<String, String> myCredentials){
+        credentials = myCredentials;
+    }
+
+    public HashMap<String, String> getCredentials(){
+        return credentials;
+    }
+
+    /**
+     * Passes the information about parameter updates from the visualization to the individual cells
+     * @param parameters
+     */
     public void updateNewParams(Map<String, Double> parameters){
         for (Cell cell : myGrid.getCells()){
             cell.setMyParameters(parameters);
@@ -106,7 +121,7 @@ public abstract class Simulation {
         return new GOLCell(loc, state, grid);
     }
 
-    protected WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
+    private WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
         double randomNumber = Math.random();
         if (randomNumber <= parameters.get("fishPercentage")){
             return new WatorFish(loc, grid, parameters);
@@ -115,7 +130,7 @@ public abstract class Simulation {
             return new WatorShark(loc, grid, parameters);
         }
         else{
-            return new EmptyCell(loc);
+            return new WatorEmpty(loc);
         }
     }
 

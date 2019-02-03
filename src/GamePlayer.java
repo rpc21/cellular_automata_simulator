@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+//TODO: Decide if we can delete, not commenting until we decide bc lazy
 public class GamePlayer extends Application{
     public static final int SIZE = 500;
     public static final int FRAMES_PER_SECOND = 60;
