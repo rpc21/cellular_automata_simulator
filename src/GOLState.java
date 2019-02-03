@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
  * There are two states: DEAD and ALIVE
  */
 public enum GOLState implements CellState{
-    DEAD("D", "DEAD", Color.DARKGRAY){},
-    ALIVE("A", "ALIVE", Color.GREEN){};
+    DEAD("D", "DEAD", Color.DARKGRAY),
+    ALIVE("A", "ALIVE", Color.GREEN);
 
     private final String myShortenedName;
     private final String myFullState;

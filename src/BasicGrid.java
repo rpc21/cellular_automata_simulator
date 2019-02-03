@@ -95,7 +95,7 @@ public class BasicGrid implements Grid{
     @Override
     public void remove(Location loc) {
         if (isValid(loc)) {
-            myGrid[loc.getRow()][loc.getCol()] = new EmptyCell(loc);
+            myGrid[loc.getRow()][loc.getCol()] = new WatorEmpty(loc);
         }
         else {
             //TODO: Throw exception that tried to access an invalid location

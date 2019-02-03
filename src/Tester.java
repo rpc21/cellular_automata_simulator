@@ -2,6 +2,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * Call used for testing the backend before XML/configuration were set up
+ */
 public class Tester {
 
 

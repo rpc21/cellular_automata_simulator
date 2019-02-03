@@ -177,5 +177,12 @@ public abstract class Cell {
      * Needs to be implemented by simulation specific subclasses
      * @return color to display as a representation of the cell in the visualization
      */
-    public abstract Color getMyColor();
+    public Color getMyColor(){
+        return myCurrentState.getMyCellColor();
+    }
+
+    @Override
+    public String toString() {
+        return myCurrentState.getMyShortenedName();
+    }
 }

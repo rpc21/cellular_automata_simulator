@@ -5,19 +5,24 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO: Attribte sources
 public class WatorFish extends WatorCell {
 
     /**
-     * Create a new Fish. Increment the total number of fish.
+     * Constructor for a WatorFish specifies the location, the grid and the parameters
+     * @param loc location of the cell
+     * @param grid grid of WatorCells in which this Fish is held
+     * @param parameters parameters for the fish
      */
     public WatorFish(Location loc, Grid grid, Map<String, Double> parameters){
         super(loc, grid, parameters);
+        myCurrentState = WatorState.FISH;
     }
 
     /**
      * Act to move if possible and then breed if time.
      * Fish act by first checking to see if they can
-     * move. If they can they move to a random location.
+     * move. If they can they move to an adjacent location.
      * Then they check to see if it is time to breed.
      * If so then they create an offspring in the
      * location they just left.
@@ -50,14 +55,22 @@ public class WatorFish extends WatorCell {
      */
     @Override
     public Color getMyColor() {
-        return Color.ORANGE;
+        return myCurrentState.getMyCellColor();
     }
 
+    /**
+     * WatorFish are edible
+     * @return true
+     */
     @Override
     public boolean isEdible() {
         return true;
     }
 
+    /**
+     * Since there is a fish, the cell is not empty
+     * @return false
+     */
     @Override
     public boolean isEmpty() {
         return false;
@@ -69,6 +82,6 @@ public class WatorFish extends WatorCell {
      */
     @Override
     public String toString() {
-        return "F";
+        return myCurrentState.getMyShortenedName();
     }
 }

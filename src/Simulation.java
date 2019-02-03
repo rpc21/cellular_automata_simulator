@@ -119,7 +119,7 @@ public abstract class Simulation {
             return new WatorShark(loc, grid, parameters);
         }
         else{
-            return new EmptyCell(loc);
+            return new WatorEmpty(loc);
         }
     }
 

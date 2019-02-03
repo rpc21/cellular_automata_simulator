@@ -14,6 +14,18 @@ updateGrid? If we don't use .simulate() we should get rid of the methods
 7. Authors of the files?
 8. More thorough commenting
 9. Implement getMyColor and toString in the Cell class because they are literally all the same (except Wator for now)
+    * Changed Wator so in the same format - now I think we can delete these methods in the classes and just use the Cell
+     superclass
 10. Implement PercolationSimulation isOver method (sorry)
 11. Evaluate if we need Enum getMyFullState()
 12. Should parameters be static?
+13. Do we want to delete Tester? Do we need it anymore?
+14.
+
+
+
+
+--------------------------------------What is the role of Simulation------------------------------------------------
+1. Simulation may be more valuable for Wator and Segregation because some parameters such as % fish or % empty are more
+simulation-level parameters than cell-level parameters (in my head), these parameters are also important when
+initializing the grid which is done by the simulation

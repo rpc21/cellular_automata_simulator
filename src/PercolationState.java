@@ -6,9 +6,9 @@ import javafx.scene.paint.Color;
  */
 public enum PercolationState implements CellState{
 
-    PERCOLATED("P", "PERCOLATED", Color.CYAN){},
-    OPEN("O", "OPEN", Color.WHITE){},
-    BLOCKED("B", "BLOCKED", Color.BLACK){};
+    PERCOLATED("P", "PERCOLATED", Color.CYAN),
+    OPEN("O", "OPEN", Color.WHITE),
+    BLOCKED("B", "BLOCKED", Color.BLACK);
 
     private final String myShortenedName;
     private final String myFullState;

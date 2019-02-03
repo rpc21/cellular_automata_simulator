@@ -4,20 +4,18 @@ import javafx.scene.paint.Color;
 // classes that have the possibility of empty cells see To_Do_For_Sunday.  Holding off on comments until resolved bc
 // lazy
 /**
- * The EmptyCell has a location in the grid, is white when displayed in the visualization and is able to communicate
- * that it is empty, making it a viable location for other cells to move.  The EmptyCell has unchanging state and no
+ * The WatorEmpty has a location in the grid, is white when displayed in the visualization and is able to communicate
+ * that it is empty, making it a viable location for other cells to move.  The WatorEmpty has unchanging state and no
  * real state representation
  */
-public class EmptyCell extends WatorCell {
+public class WatorEmpty extends WatorCell {
 
     @Override
     public void step() {}
 
-    public EmptyCell(Location loc){
+    public WatorEmpty(Location loc){
         myLocation = loc;
-        myCurrentState = null;
-        myNextState = null;
-        myParameters = null;
+        myCurrentState = WatorState.EMPTY;
     }
 
     @Override

@@ -12,6 +12,7 @@ public class WatorShark extends WatorCell {
 
     public WatorShark(Location loc, Grid grid, Map<String, Double> parameters){
         super(loc, grid, parameters);
+        myCurrentState = WatorState.SHARK;
         turnsSinceLastAte = 0;
         starveTime = (int) (parameters.get("starveTime") + 0.0);
     }
