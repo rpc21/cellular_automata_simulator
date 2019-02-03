@@ -38,4 +38,39 @@ public class WatorSimulation extends Simulation {
     public String getMyName() {
         return Simulation.WATOR_SIMULATION_NAME;
     }
+
+    @Override
+    public List<String> getPercentageFields() {
+        return null;
+    }
+
+    @Override
+    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
+        for (int i = 0; i < getMyGrid().getNumRows(); i++){
+            for (int j = 0; j < getMyGrid().getNumCols(); j++){
+                Location thisLocation = new Location(i, j);
+                System.out.println("Creating a "+simulationType+" cell");
+                Cell newCell = generateWATORSpecificCell(simulationType, thisLocation, initialStates[i][j],
+                        myGrid, parameters);
+                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
+                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
+                getMyGrid().put(newCell.getMyLocation(), newCell);
+            }
+        }
+        getMyGrid().printGrid();
+        System.out.println("Initial states set");
+    }
+
+    private Cell generateWATORSpecificCell(String simulationType, Location thisLocation, String state, Grid grid,
+                                           HashMap<String, Double> parameters) {
+        if (WatorState.valueOf(state) == WatorState.FISH){
+            return new WatorFish(thisLocation, grid, parameters);
+        }
+        else if (WatorState.valueOf(state) == WatorState.SHARK){
+            return new WatorShark(thisLocation, grid, parameters);
+        }
+        else{
+            return new WatorEmpty(thisLocation);
+        }
+    }
 }

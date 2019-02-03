@@ -38,4 +38,8 @@ public class PercolationSimulation extends Simulation {
         return Simulation.PERCOLATION_SIMULATION_NAME;
     }
 
+    @Override
+    public List<String> getPercentageFields() {
+        return List.of(OPEN_PERCENTAGE, CLOSED_PERCENTAGE, PERCOLATED_PERCENTAGE);
+    }
 }

@@ -43,4 +43,8 @@ public class SegregationSimulation extends Simulation{
         return Simulation.SEGREGATION_SIMULATION_NAME;
     }
 
+    @Override
+    public List<String> getPercentageFields() {
+        return List.of(RED_PERCENTAGE, BLUE_PERCENTAGE, EMPTY_PERCENTAGE);
+    }
 }

@@ -46,4 +46,9 @@ public class SpreadingFireSimulation extends Simulation {
     public String getMyName() {
         return Simulation.SPREADING_FIRE_SIMULATION_NAME;
     }
+
+    @Override
+    public List<String> getPercentageFields() {
+        return List.of(TREE_PERCENTAGE, EMPTY_PERCENTAGE, FIRE_PERCENTAGE);
+    }
 }
