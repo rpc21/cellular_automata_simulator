@@ -47,4 +47,8 @@ public class GOLSimulation extends Simulation {
         return Simulation.GOL_SIMULATION_NAME;
     }
 
+    @Override
+    public List<String> getPercentageFields() {
+        return List.of(DEAD_PERCENTAGE, ALIVE_PERCENTAGE);
+    }
 }

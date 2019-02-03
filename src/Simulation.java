@@ -169,4 +169,6 @@ public abstract class Simulation {
 
     public abstract String getMyName();
 
+    public abstract List<String> getPercentageFields();
+
 }
