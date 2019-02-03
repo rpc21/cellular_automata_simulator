@@ -13,7 +13,9 @@ public class CellularAutomataMain extends Application {
     @Override
     public void start(Stage stage) {
         //String testCase = "tests/GOLTest.xml";
-        String testCase = "tests/GOLTest.xml";
+        //String testCase = "tests/SegregationTest.xml";
+        //String testCase = "tests/PercolationTest.xml";
+        String testCase = "tests/SpreadingFireTest.xml";
         File file = new File(testCase);
         var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
         try{

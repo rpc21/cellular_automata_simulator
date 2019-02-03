@@ -40,7 +40,7 @@ public class PercolationCell extends Cell {
      */
     @Override
     public void calculateNewState() {
-        if (myCurrentState == PercolationState.PERCOLATED || myCurrentState == PercolationState.BLOCKED) {
+        if (myCurrentState == PercolationState.PERCOLATED || myCurrentState == PercolationState.CLOSED) {
             myNextState = myCurrentState;
         }
         else if (nextToPercolatedCell()){

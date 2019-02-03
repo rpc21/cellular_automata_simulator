@@ -7,20 +7,23 @@
     <columns>3</columns>
     <cellStates>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>RED</CellColumns>
+            <CellColumns>RED</CellColumns>
+            <CellColumns>BLUE</CellColumns>
         </CellRows>
         <CellRows index="1">
-            <CellColumns>0</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>2</CellColumns>
+            <CellColumns>RED</CellColumns>
+            <CellColumns>RED</CellColumns>
+            <CellColumns>BLUE</CellColumns>
         </CellRows>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>2</CellColumns>
-            <CellColumns>0</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>RED</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
         </CellRows>
     </cellStates>
-    <parameters>threshold 0.4</parameters>
+    <redPercentage>0.2</redPercentage>
+    <bluePercentage>0.3</bluePercentage>
+    <emptyPercentage>0.5</emptyPercentage>
+    <threshold>0.4</threshold>
 </data>

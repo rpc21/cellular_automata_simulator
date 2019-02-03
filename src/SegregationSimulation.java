@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 
 public class SegregationSimulation extends Simulation{
@@ -13,10 +14,14 @@ public class SegregationSimulation extends Simulation{
     public static final String EMPTY_PERCENTAGE = "emptyPercentage";
     public static final String THRESHOLD = "threshold";
 
-    public SegregationSimulation(int rows, int cols){
+    public static final List<String> SEGREGATION_DATA_FIELDS = List.of(
+            RED_PERCENTAGE, BLUE_PERCENTAGE, EMPTY_PERCENTAGE, THRESHOLD
+    );
+
+    public SegregationSimulation(HashMap<String, Double> params, int rows, int cols){
+        super(params, rows, cols);
         setMyGrid(new BasicGrid(rows, cols));
     }
-
 
     @Override
     public void simulate(double simulationSpeed) {
@@ -33,4 +38,13 @@ public class SegregationSimulation extends Simulation{
         return true;
     }
 
+    @Override
+    public String getMyName() {
+        return Simulation.SEGREGATION_SIMULATION_NAME;
+    }
+
+    @Override
+    public List<String> getPercentageFields() {
+        return List.of(RED_PERCENTAGE, BLUE_PERCENTAGE, EMPTY_PERCENTAGE);
+    }
 }

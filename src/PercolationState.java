@@ -8,7 +8,7 @@ public enum PercolationState implements CellState{
 
     PERCOLATED("P", "PERCOLATED", Color.CYAN),
     OPEN("O", "OPEN", Color.WHITE),
-    BLOCKED("B", "BLOCKED", Color.BLACK);
+    CLOSED("C", "CLOSED", Color.BLACK);
 
     private final String myShortenedName;
     private final String myFullState;
