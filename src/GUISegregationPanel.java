@@ -3,6 +3,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.HashMap;
 
@@ -12,6 +13,7 @@ public class GUISegregationPanel extends GUISimulationPanel {
     private Text myThresh;
     private Slider myRaceOneSlider;
     private Text myRaceOne;
+    private Text myRaceOneVal;
     private Slider myEmptySlider;
     private Text myEmpty;
     private HashMap<String,Double>  myMap = new HashMap<String,Double>();
@@ -25,10 +27,11 @@ public class GUISegregationPanel extends GUISimulationPanel {
         super(mySim);
         mySimulation = mySim;
         setUpInitialValues();
-
-        myThresh = setUpLabel(SegregationSimulation.THRESHOLD);
-        myEmpty = setUpLabel(SegregationSimulation.EMPTY_PERCENTAGE);
-        myRaceOne = setUpLabel("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
+        toFraction(redCurrVal/blueCurrVal);
+        myThresh = setUpLabel("Threshold %");
+        myEmpty = setUpLabel("Empty %");
+        myRaceOne = setUpLabel("Red:Blue = ");
+        myRaceOneVal = setUpLabel(redCurrRatio + "/" + blueCurrRatio);
 
         myThresholdSpinner = setUpSpinner(0,100,30);
         myThresholdSpinner.valueProperty().addListener(new ChangeListener<Number>() {
@@ -42,7 +45,6 @@ public class GUISegregationPanel extends GUISimulationPanel {
         super.addToStackPane(myThresh,myThresholdSpinner);
 
         myRaceOneSlider = new Slider(0,1.0,redCurrVal/(redCurrVal + blueCurrVal));
-        toFraction(redCurrVal/blueCurrVal);
         myRaceOneSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -50,14 +52,14 @@ public class GUISegregationPanel extends GUISimulationPanel {
                 redCurrVal = (mySim.getMyGrid().getCells().size() - emptyCurrVal * mySim.getMyGrid().getCells().size()) * myRaceOneSlider.getValue()/ (1+ myRaceOneSlider.getValue())/mySim.getMyGrid().getCells().size();
                 blueCurrVal = 1 - redCurrVal - emptyCurrVal;
                 toFraction(redCurrVal/blueCurrVal);
-                myRaceOne.setText("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
+                myRaceOneVal.setText(redCurrRatio + "/" + blueCurrRatio);
                 myMap.remove(SegregationSimulation.RED_PERCENTAGE,SegregationSimulation.BLUE_PERCENTAGE);
                 myMap.put(SegregationSimulation.RED_PERCENTAGE,redCurrVal);
                 myMap.put(SegregationSimulation.BLUE_PERCENTAGE,blueCurrVal);
                 mySimulation.updateNewParams(myMap);
             }
         });
-        super.addToStackPane(myRaceOne,myRaceOneSlider);
+        super.addToStackPane(myRaceOne,myRaceOneVal,myRaceOneSlider);
 
         myEmptySlider = new Slider(0,1.0,emptyCurrVal);
         myEmptySlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -75,7 +77,6 @@ public class GUISegregationPanel extends GUISimulationPanel {
     }
 
     private void toFraction(double x) {
-        // Approximate x with p/q.
         final double eps = 0.01;
         int pfound = (int) Math.round(x);
         int qfound = 1;
