@@ -2,6 +2,8 @@ import java.util.List;
 
 public class SpreadingFireSimulation extends Simulation {
 
+    public static final String PROB_CATCH = "probCatch";
+
     public SpreadingFireSimulation(int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
     }

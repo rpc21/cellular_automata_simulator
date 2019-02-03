@@ -26,16 +26,16 @@ public class GUISegregationPanel extends GUISimulationPanel {
         mySimulation = mySim;
         setUpInitialValues();
 
-        myThresh = setUpLabel("% Threshold");
-        myEmpty = setUpLabel("% Empty");
+        myThresh = setUpLabel(SegregationSimulation.THRESHOLD);
+        myEmpty = setUpLabel(SegregationSimulation.EMPTY_PERCENTAGE);
         myRaceOne = setUpLabel("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
 
         myThresholdSpinner = setUpSpinner(0,100,30);
         myThresholdSpinner.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myMap.remove("% Threshold");
-                myMap.put("% Threshold",myThresholdSpinner.getValue() *1.0/100);
+                myMap.remove(SegregationSimulation.THRESHOLD);
+                myMap.put(SegregationSimulation.THRESHOLD,myThresholdSpinner.getValue() *1.0/100);
                 mySimulation.updateNewParams(myMap);
             }
         });
@@ -51,9 +51,9 @@ public class GUISegregationPanel extends GUISimulationPanel {
                 blueCurrVal = 1 - redCurrVal - emptyCurrVal;
                 toFraction(redCurrVal/blueCurrVal);
                 myRaceOne.setText("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
-                myMap.remove("% Red","% Blue");
-                myMap.put("% Red",redCurrVal);
-                myMap.put("% Blue",blueCurrVal);
+                myMap.remove(SegregationSimulation.RED_PERCENTAGE,SegregationSimulation.BLUE_PERCENTAGE);
+                myMap.put(SegregationSimulation.RED_PERCENTAGE,redCurrVal);
+                myMap.put(SegregationSimulation.BLUE_PERCENTAGE,blueCurrVal);
                 mySimulation.updateNewParams(myMap);
             }
         });
@@ -65,8 +65,8 @@ public class GUISegregationPanel extends GUISimulationPanel {
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 myEmptySlider.setValue(myEmptySlider.getValue());
                 emptyCurrVal = myEmptySlider.getValue();
-                myMap.remove("% Empty");
-                myMap.put("% Empty",myEmptySlider.getValue());
+                myMap.remove(SegregationSimulation.EMPTY_PERCENTAGE);
+                myMap.put(SegregationSimulation.EMPTY_PERCENTAGE,myEmptySlider.getValue());
                 mySimulation.updateNewParams(myMap);
             }
         });
