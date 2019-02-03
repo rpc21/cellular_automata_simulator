@@ -1,11 +1,11 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Simulation {
 
     protected Grid myGrid;
     protected boolean simulationOver;
+    protected CellFactory myCellFactory;
+    protected HashMap<String, Double> myParameters;
 
     // Data fields
     public static final String DATA_TYPE = "simulation";
@@ -15,6 +15,14 @@ public abstract class Simulation {
             "columns"
     );
 
+    public Simulation(HashMap<String, Double> parameters){
+        this();
+        myParameters = parameters;
+    }
+
+    public Simulation(){
+        myCellFactory = new CellFactory();
+    }
 
     public abstract void simulate(double simulationSpeed);
 
@@ -35,10 +43,10 @@ public abstract class Simulation {
      * @param parameters
      */
     public void updateNewParams(Map<String, Double> parameters){
-        for (Cell cell : myGrid.getCells()){
-            cell.setMyParameters(parameters);
+        for (String param : parameters.keySet()){
+            myParameters.put(param, parameters.get(param));
         }
-    };
+    }
 
     public void stopSimulation(){
         simulationOver = true;
@@ -63,84 +71,35 @@ public abstract class Simulation {
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
                 System.out.println("Creating a "+simulationType+" cell");
-                Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
-                        myGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
-                getMyGrid().put(newCell.getMyLocation(), newCell);
+                Cell newCell = myCellFactory.generateSimulationSpecificCell(simulationType, thisLocation,
+                        initialStates[i][j], myGrid, parameters);
+                printCellInfo(i, j, newCell);
             }
         }
         getMyGrid().printGrid();
         System.out.println("Initial states set");
     }
 
-    public void setInitialStates(int[][] initialStates, String simulationType, HashMap<String, Double> parameters){
+
+    private void setInitialStates(int[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
                 System.out.println("Creating a "+simulationType+" cell");
-                Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
+                Cell newCell = myCellFactory.generateSimulationSpecificCell(simulationType, thisLocation,
+                        initialStates[i][j],
                         myGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
-                getMyGrid().put(newCell.getMyLocation(), newCell);
+                printCellInfo(i, j, newCell);
             }
         }
         getMyGrid().printGrid();
         System.out.println("Initial states set");
     }
 
-    private Cell generateSimulationSpecificCell(String simulationType, Location loc, int state, Grid grid,
-                                                HashMap<String, Double> parameters){
-        if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, state, grid);
-        }
-        else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, state, grid, parameters);
-        }
-        else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, state, grid);
-        }
-        else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, state, grid, parameters);
-        }
-        else if (simulationType.equals("Wator")){
-            return generateWatorCell(loc, grid, parameters);
-        }
-        return new GOLCell(loc, state, grid);
-    }
-
-    private WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
-        double randomNumber = Math.random();
-        if (randomNumber <= parameters.get("fishPercentage")){
-            return new WatorFish(loc, grid, parameters);
-        }
-        else if (randomNumber <= parameters.get("fishPercentage") + parameters.get("sharkPercentage")){
-            return new WatorShark(loc, grid, parameters);
-        }
-        else{
-            return new WatorEmpty(loc);
-        }
-    }
-
-    private Cell generateSimulationSpecificCell(String simulationType, Location loc, String state, Grid grid,
-                                                HashMap<String, Double> parameters){
-        if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, GOLState.valueOf(state), grid);
-        }
-        else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, SpreadingFireState.valueOf(state), grid, parameters);
-        }
-        else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, PercolationState.valueOf(state), grid);
-        }
-        else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, SegregationState.valueOf(state), grid, parameters);
-        }
-        else if (simulationType.equals("Wator")) {
-            return generateWatorCell(loc, grid, parameters);
-        }
-        return new GOLCell(loc, GOLState.valueOf(state), grid);
+    private void printCellInfo(int i, int j, Cell newCell) {
+        System.out.println(newCell + " to be inserted at " + i + ", " + j);
+        System.out.println(newCell.getMyLocation().getRow() + ", " + newCell.getMyLocation().getCol());
+        getMyGrid().put(newCell.getMyLocation(), newCell);
     }
 
 }

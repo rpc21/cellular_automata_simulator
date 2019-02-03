@@ -1,0 +1,9 @@
+Wator
+5 10 10
+0 0 2 2 2
+1 0 0 0 0
+0 0 0 0 0
+0 2 0 2 0
+0 0 2 2 0
+sharkBreedTime 5.0
+fishBreedTime 3.0
