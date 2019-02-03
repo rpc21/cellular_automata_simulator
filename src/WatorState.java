@@ -1,21 +1,16 @@
 import javafx.scene.paint.Color;
 
-/**
- * SegregationState is an Enum that defines all the possible states for a SegregationCell
- * There are four states: EMPTY, TYPE_A, TYPE_B, and TO_BE_MOVED
- */
-public enum SegregationState implements CellState {
+public enum WatorState implements CellState {
 
-    EMPTY("E", "EMPTY",Color.WHITE),
-    TYPE_A("A", "TYPE_A", Color.RED),
-    TYPE_B("B", "TYPE_B", Color.BLUE),
-    TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);
+    EMPTY("E", "EMPTY", Color.AQUAMARINE),
+    FISH("F", "FISH", Color.ORANGE),
+    SHARK("S", "SHARK", Color.LIGHTGREY);
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-    SegregationState(String shortenedName, String fullState, Color cellColor){
+   WatorState(String shortenedName, String fullState, Color cellColor){
         myShortenedName = shortenedName;
         myFullState = fullState;
         myCellColor = cellColor;
