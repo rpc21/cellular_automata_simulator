@@ -8,8 +8,7 @@ public class Location {
      * @param r the row
      * @param c the column
      */
-    public Location(int r, int c)
-    {
+    public Location(int r, int c) {
         row = r;
         col = c;
     }

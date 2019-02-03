@@ -7,6 +7,13 @@
             * This con may be unavoidable so it may be worth it
     * We could use an empty boolean flag
 3. Can we delete the GamePlayer class now?  It was more just for getting started
-4. Anna, how do we actually make the simulation happen? Do we ever actually use the .simulate methods or just
-updateGrid?
-5. What role are the simulation classes actually serving? Should we get rid of them
+4. Anna, how do we actually make the simulation happen? Do we ever actually use the .simulate() methods or just
+updateGrid? If we don't use .simulate() we should get rid of the methods
+5. What role are the simulation classes actually serving? Should we get rid of them. If not, comment and clean up
+6. Attribute the sources we used such as Grid WatorShark, WatorFish, WatorCell, Location
+7. Authors of the files?
+8. More thorough commenting
+9. Implement getMyColor and toString in the Cell class because they are literally all the same (except Wator for now)
+10. Implement PercolationSimulation isOver method (sorry)
+11. Evaluate if we need Enum getMyFullState()
+12. Should parameters be static?

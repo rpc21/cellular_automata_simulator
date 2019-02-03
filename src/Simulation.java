@@ -30,6 +30,10 @@ public abstract class Simulation {
         myGrid.printGrid();
     }
 
+    /**
+     * Passes the information about parameter updates from the visualization to the individual cells
+     * @param parameters
+     */
     public void updateNewParams(Map<String, Double> parameters){
         for (Cell cell : myGrid.getCells()){
             cell.setMyParameters(parameters);

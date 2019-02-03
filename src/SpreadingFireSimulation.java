@@ -2,6 +2,12 @@ import java.util.List;
 
 public class SpreadingFireSimulation extends Simulation {
 
+    /**
+     * Constructor for the SpreadingFireSimulation. Initializes the grid for the simulation to a BasicGrid of size
+     * rows x cols
+     * @param rows number of rows in the grid for the simulation
+     * @param cols number of columns in the grid for the simulation
+     */
     public SpreadingFireSimulation(int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
     }
