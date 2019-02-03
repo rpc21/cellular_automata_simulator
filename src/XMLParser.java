@@ -94,17 +94,20 @@ public class XMLParser {
     }
 
     private List<String> getSimulationDataFields(String simulationType){
-        if (simulationType.equals("Game of Life")){
+        if (simulationType.equals(Simulation.GOL_SIMULATION_NAME)){
             return GOLSimulation.GOL_DATA_FIELDS;
         }
-        else if (simulationType.equals("Spreading Fire")){
+        else if (simulationType.equals(Simulation.SPREADING_FIRE_SIMULATION_NAME)){
             return SpreadingFireSimulation.SPREADING_FIRE_DATA_FIELDS;
         }
-        else if (simulationType.equals("Percolation")){
+        else if (simulationType.equals(Simulation.PERCOLATION_SIMULATION_NAME)){
             return PercolationSimulation.PERCOLATION_DATA_FIELDS;
         }
-        else if (simulationType.equals("Segregation")){
+        else if (simulationType.equals(Simulation.SEGREGATION_SIMULATION_NAME)){
             return SegregationSimulation.SEGREGATION_DATA_FIELDS;
+        }
+        else if (simulationType.equals(Simulation.WATOR_SIMULATION_NAME)){
+            return WatorSimulation.WATOR_DATA_FIELDS;
         }
         return GOLSimulation.GOL_DATA_FIELDS;
     }

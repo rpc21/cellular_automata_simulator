@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="simulation">
+    <simulationType>Wator</simulationType>
+    <title>The Wator Simulation</title>
+    <author>Dima, Anna and Ryan</author>
+    <rows>10</rows>
+    <columns>10</columns>
+    <GenerateStatesBy>random</GenerateStatesBy>
+    <cellStates>
+        <CellRows index="0">
+            <CellColumns>FISH</CellColumns>
+            <CellColumns>SHARK</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+        </CellRows>
+        <CellRows index="1">
+            <CellColumns>FISH</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>FISH</CellColumns>
+        </CellRows>
+        <CellRows index="0">
+            <CellColumns>FISH</CellColumns>
+            <CellColumns>SHARK</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+        </CellRows>
+    </cellStates>
+    <sharkPercentage>0.2</sharkPercentage>
+    <fishPercentage>0.3</fishPercentage>
+    <emptyPercentage>0.5</emptyPercentage>
+    <sharkBreedTime>4</sharkBreedTime>
+    <fishBreedTime>3</fishBreedTime>
+    <starveTime>6</starveTime>
+</data>
