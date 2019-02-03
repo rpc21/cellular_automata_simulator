@@ -13,7 +13,7 @@ public class CellularAutomataMain extends Application {
     @Override
     public void start(Stage stage) {
         //String testCase = "tests/GOLTest.xml";
-        String testCase = "tests/SegregationTest.xml";
+        String testCase = "tests/GOLTest.xml";
         File file = new File(testCase);
         var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
         try{
@@ -22,7 +22,7 @@ public class CellularAutomataMain extends Application {
             e.printStackTrace();
         }
         GUI myGUI = new GUI(stage,myCurrentSimulation);
-        myGUI.render();
+        //myGUI.render();
     }
 }
 

@@ -8,7 +8,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.util.HashMap;
 
-public class GUISimulationPanel {
+public class GUISimulationPanel extends GUIPanel{
     public static String DEFAULT_FONT_NAME = "Copperplate";
 
 
@@ -32,12 +32,22 @@ public class GUISimulationPanel {
     }
 
     protected void addToStackPane(Text t, Control c){
-        int num_vertical_spacings = myStackPane.getChildren().size();
+        int num_vertical_spacings;
+        if (myStackPane.getChildren().size() % 2 == 0)
+            num_vertical_spacings = myStackPane.getChildren().size();
+        else
+            num_vertical_spacings = myStackPane.getChildren().size() - 1;
         myStackPane.getChildren().addAll(t,c);
         t.setTranslateX(DEFAULT_LABEL_SPACING);
         c.setTranslateX(DEFAULT_LABEL_SPACING);
         t.setTranslateY(GUI.STAGE_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + num_vertical_spacings * DEFAULT_CONTROL_SPACING);
         c.setTranslateY(GUI.STAGE_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + num_vertical_spacings * DEFAULT_CONTROL_SPACING + DEFAULT_LABEL_SPACING);
+    }
+    protected void addToStackPane(Text label, Text val, Control c){
+        addToStackPane(label,c);
+        val.setTranslateX(DEFAULT_LABEL_SPACING + label.getBoundsInLocal().getWidth()/1.5);
+        val.setTranslateY(label.getTranslateY());
+        myStackPane.getChildren().addAll(val);
     }
     protected Text setUpLabel(String text){
         Text myText = new Text(text);
@@ -45,18 +55,6 @@ public class GUISimulationPanel {
         myText.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         return myText;
     }
-    protected Spinner<Integer> setUpSpinner(int min, int max, int init){
-        Spinner<Integer> mySpinner = new Spinner<Integer>();
-        SpinnerValueFactory<Integer> valFactory = //
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, init);
-        ((SpinnerValueFactory.IntegerSpinnerValueFactory) valFactory).setAmountToStepBy(1);
-        mySpinner.setValueFactory(valFactory);
-        mySpinner.setEditable(true);
-        mySpinner.setMaxWidth(80);
-        return mySpinner;
-    }
 
-
-    //clear stackpane method maybe?
 
 }
