@@ -3,24 +3,28 @@
     <simulationType>Spreading Fire</simulationType>
     <title>The Spreading Fire Simulation</title>
     <author>Dima, Anna and Ryan</author>
-    <rows>3</rows>
-    <columns>3</columns>
+    <rows>10</rows>
+    <columns>10</columns>
+    <GenerateStatesBy>random</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
         </CellRows>
         <CellRows index="1">
-            <CellColumns>0</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>FIRE</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>FIRE</CellColumns>
         </CellRows>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>TREE</CellColumns>
         </CellRows>
     </cellStates>
-    <parameters>probCatch 1.0</parameters>
+    <treePercentage>0.7</treePercentage>
+    <firePercentage>0.2</firePercentage>
+    <emptyPercentage>0.1</emptyPercentage>
+    <probCatch>0.8</probCatch>
 </data>
