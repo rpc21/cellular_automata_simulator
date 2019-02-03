@@ -18,7 +18,7 @@ public class WatorSimulation extends Simulation {
     @Override
     public void updateGrid() {
         for (Location loc : myGrid.getOccupiedLocations()){
-            ((WatorCell) myGrid.get(loc)).step();
+           ((WatorCell) myGrid.get(loc)).step();
         }
     }
 }

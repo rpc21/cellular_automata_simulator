@@ -30,6 +30,10 @@ public abstract class Simulation {
         myGrid.printGrid();
     }
 
+    /**
+     * Passes the information about parameter updates from the visualization to the individual cells
+     * @param parameters
+     */
     public void updateNewParams(Map<String, Double> parameters){
         for (Cell cell : myGrid.getCells()){
             cell.setMyParameters(parameters);
@@ -106,7 +110,7 @@ public abstract class Simulation {
         return new GOLCell(loc, state, grid);
     }
 
-    protected WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
+    private WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
         double randomNumber = Math.random();
         if (randomNumber <= parameters.get("fishPercentage")){
             return new WatorFish(loc, grid, parameters);
@@ -115,7 +119,7 @@ public abstract class Simulation {
             return new WatorShark(loc, grid, parameters);
         }
         else{
-            return new EmptyCell(loc);
+            return new WatorEmpty(loc);
         }
     }
 
