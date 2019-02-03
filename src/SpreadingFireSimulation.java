@@ -9,6 +9,7 @@ public class SpreadingFireSimulation extends Simulation {
     public static final List<String> SPREADING_FIRE_DATA_FIELDS = List.of(
             PROB_CATCH, TREE_PERCENTAGE, EMPTY_PERCENTAGE, FIRE_PERCENTAGE
     );
+
     /**
      * Constructor for the SpreadingFireSimulation. Initializes the grid for the simulation to a BasicGrid of size
      * rows x cols

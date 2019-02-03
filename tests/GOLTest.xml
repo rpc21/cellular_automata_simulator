@@ -23,5 +23,6 @@
             <CellColumns>DEAD</CellColumns>
         </CellRows>
     </cellStates>
-    <parameters></parameters>
+    <deadPercentage>0.8</deadPercentage>
+    <alivePercentage>0.2</alivePercentage>
 </data>

@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -51,7 +52,7 @@ public class XMLParser {
         int cols = Integer.parseInt(simulationParams.get("columns"));
 
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
-        HashMap<String, Double> additionalParams = parseAdditionalParams(root);
+        HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);
         HashMap<String, String> theCredentials = getCredentials(root);
 
         Simulation sim = new SimulationFactory().generateSimulation(simulationParams, additionalParams, specifiedStates);
@@ -76,19 +77,29 @@ public class XMLParser {
         return simulationParams;
     }
 
-
-    private HashMap<String, Double> parseAdditionalParams(Element root){
+    private HashMap<String, Double> parseAdditionalParams(Element root, String simulationType){
         HashMap<String, Double> parameters = new HashMap<String, Double>();
-        NodeList params = root.getElementsByTagName("parameters");
-        if(params!=null){
-            for(int i = 0; i < params.getLength(); i++){
-                var p = params.item(i);
-                if ("parameters".equals(p.getNodeName())&& p.getTextContent().split(" ").length>1) {
-                    parameters.put(p.getTextContent().split(" ")[0], Double.parseDouble(p.getTextContent().split(" ")[1]));
-                }
-            }
+        List<String> simulationFields = getSimulationDataFields(simulationType);
+        for (var field : simulationFields) {
+            parameters.put(field, Double.parseDouble(getTextValue(root, field)));
         }
         return parameters;
+    }
+
+    private List<String> getSimulationDataFields(String simulationType){
+        if (simulationType.equals("Game of Life")){
+            return GOLSimulation.GOL_DATA_FIELDS;
+        }
+        else if (simulationType.equals("Spreading Fire")){
+            return SpreadingFireSimulation.SPREADING_FIRE_DATA_FIELDS;
+        }
+        else if (simulationType.equals("Percolation")){
+            return PercolationSimulation.PERCOLATION_DATA_FIELDS;
+        }
+        else if (simulationType.equals("Segregation")){
+            return SegregationSimulation.SEGREGATION_DATA_FIELDS;
+        }
+        return GOLSimulation.GOL_DATA_FIELDS;
     }
 
     //expects states to be ints

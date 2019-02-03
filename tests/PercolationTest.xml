@@ -22,5 +22,7 @@
             <CellColumns>CLOSED</CellColumns>
         </CellRows>
     </cellStates>
-    <parameters></parameters>
+    <openPercentage>0.7</openPercentage>
+    <closedPercentage>0.2</closedPercentage>
+    <percolatedPercentage>0.1</percolatedPercentage>
 </data>

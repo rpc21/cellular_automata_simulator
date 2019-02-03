@@ -22,5 +22,8 @@
             <CellColumns>TREE</CellColumns>
         </CellRows>
     </cellStates>
-    <parameters>probCatch 1.0</parameters>
+    <treePercentage>0.7</treePercentage>
+    <firePercentage>0.2</firePercentage>
+    <emptyPercentage>0.1</emptyPercentage>
+    <probCatch>0.5</probCatch>
 </data>
