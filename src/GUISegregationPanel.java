@@ -3,6 +3,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.HashMap;
 
@@ -26,8 +27,8 @@ public class GUISegregationPanel extends GUISimulationPanel {
         mySimulation = mySim;
         setUpInitialValues();
 
-        myThresh = setUpLabel(SegregationSimulation.THRESHOLD);
-        myEmpty = setUpLabel(SegregationSimulation.EMPTY_PERCENTAGE);
+        myThresh = setUpLabel("Threshold %");
+        myEmpty = setUpLabel("Empty %");
         myRaceOne = setUpLabel("Red:Blue = " + redCurrRatio + "/" + blueCurrRatio);
 
         myThresholdSpinner = setUpSpinner(0,100,30);

@@ -46,8 +46,6 @@ public class GUIDefaultPanel {
             c.setTranslateY(GUI.STAGE_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + iter * DEFAULT_CONTROL_SPACING);
             iter++;
         }
-
-
     }
 
 }

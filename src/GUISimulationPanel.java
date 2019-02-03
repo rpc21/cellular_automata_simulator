@@ -2,20 +2,30 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.util.HashMap;
+
 public class GUISimulationPanel {
+    public static String DEFAULT_FONT_NAME = "Copperplate";
+
+
     private static final int DEFAULT_CONTROL_OFFSET = 0;
     private static final int DEFAULT_CONTROL_SPACING = 40;
     private static final int DEFAULT_LABEL_SPACING = 20;
-    private StackPane myStackPane;
 
+    private HashMap<String,Double> myParamsMap = new HashMap<String,Double>();
+    private StackPane myStackPane;
     private Simulation mySimulation;
+
     public GUISimulationPanel(Simulation mySim){
         mySimulation = mySim;
         myStackPane = new StackPane();
         myStackPane.setLayoutX(DEFAULT_CONTROL_OFFSET);
+//        for (String:mySim.getParams().getKeys)
+
     }
     public StackPane getGUISimulationPanel(){
         return myStackPane;
@@ -32,6 +42,7 @@ public class GUISimulationPanel {
     protected Text setUpLabel(String text){
         Text myText = new Text(text);
         myText.setTextAlignment(TextAlignment.LEFT);
+        myText.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         return myText;
     }
     protected Spinner<Integer> setUpSpinner(int min, int max, int init){
@@ -44,6 +55,8 @@ public class GUISimulationPanel {
         mySpinner.setMaxWidth(80);
         return mySpinner;
     }
+
+
     //clear stackpane method maybe?
 
 }

@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -34,6 +35,7 @@ public class GUI {
     private Button myStepButton;
     private Slider mySpeedSlider;
     private Text mySpeedLabel;
+    private Credentials myCredentials;
     private ChoiceBox<String> myChoiceBox;
 
     public static final int STAGE_SIZE = 800;
@@ -71,7 +73,8 @@ public class GUI {
         myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
         makeControls();
         myGUIDefaultPanel = new GUIDefaultPanel(myPlayButton,myStepButton,mySpeedLabel,mySpeedSlider,myChoiceBox);
-        myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel());
+        myCredentials = new Credentials("Cell Factory","Dima and Ryan");
+        myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel(),myCredentials.getMyCredentials());
     }
 
     private void makeControls(){
@@ -83,6 +86,7 @@ public class GUI {
 
     private void makePlayButton() {
         myPlayButton = new Button("Play");
+        myPlayButton.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         myPlayButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -96,6 +100,7 @@ public class GUI {
     }
     private void makeStepButton(){
         myStepButton = new Button("Step");
+        myStepButton.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         myStepButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -106,6 +111,7 @@ public class GUI {
 
     private void makeSpeedSlider(){
         mySpeedLabel = new Text("Animation Speed");
+        mySpeedLabel.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         mySpeedSlider = new Slider(-17000,-3000,-10000);
         mySpeedSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -129,6 +135,7 @@ public class GUI {
         myChoiceBox = new ChoiceBox<>();
         myChoiceBox.getItems().addAll("Game of Life", "Spreading Fire", "Percolation", "Segregation", "Predator-Prey");
         myChoiceBox.setValue("Game of Life");
+        myChoiceBox.setStyle("-fx-font: 15px \"Copperplate\";");
         myChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
