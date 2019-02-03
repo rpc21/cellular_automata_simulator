@@ -5,22 +5,22 @@
     <author>Dima, Anna and Ryan</author>
     <rows>3</rows>
     <columns>3</columns>
-    <GenerateStatesBy>random<GenerateStatesBy/>
+    <GenerateStatesBy>random</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>DEAD</CellColumns>
+            <CellColumns>ALIVE</CellColumns>
+            <CellColumns>DEAD</CellColumns>
         </CellRows>
         <CellRows index="1">
-            <CellColumns>0</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>ALIVE</CellColumns>
+            <CellColumns>DEAD</CellColumns>
+            <CellColumns>ALIVE</CellColumns>
         </CellRows>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>DEAD</CellColumns>
+            <CellColumns>DEAD</CellColumns>
+            <CellColumns>DEAD</CellColumns>
         </CellRows>
     </cellStates>
     <parameters></parameters>

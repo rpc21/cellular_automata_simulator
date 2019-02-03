@@ -50,13 +50,13 @@ public class XMLParser {
         int rows = Integer.parseInt(simulationParams.get("rows"));
         int cols = Integer.parseInt(simulationParams.get("columns"));
 
-        int[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
+        String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root);
         HashMap<String, String> theCredentials = getCredentials(root);
 
-        Simulation sim = generateSimulation(simulationParams);
+        Simulation sim = new SimulationFactory().generateSimulation(simulationParams, additionalParams, specifiedStates);
         sim.setCredentials(theCredentials);
-        sim.setInitialStates(specifiedStates, simulationType, additionalParams);
+
         return sim;
     }
 
@@ -91,9 +91,33 @@ public class XMLParser {
         return parameters;
     }
 
-    private int[][] parseGrid(Element root, int rows, int cols, String simulationType){
+    //expects states to be ints
+//    private int[][] parseGrid(Element root, int rows, int cols, String simulationType){
+//        NodeList cellRows = root.getElementsByTagName("CellRows");
+//        int[][] specifiedStates = new int[rows][cols];
+//        if ((cellRows != null))
+//            for (int i = 0; i < cellRows.getLength(); i++) {
+//                NodeList columnsList = cellRows.item(i).getChildNodes();
+//                if ((columnsList != null)){
+//                    int colCount=0;
+//                    for (int j = 0; j < columnsList.getLength(); j++) {
+//                        var state = columnsList.item(j);
+//                        if ("CellColumns".equals(state.getNodeName())) {
+//                            System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
+//                            specifiedStates[i][colCount] = Integer.parseInt(state.getTextContent());//+
+//                            // calcStateOffset(simulationType);
+//                            colCount++;
+//                        }
+//                    }
+//                }
+//            }
+//        return specifiedStates;
+//    }
+
+    //expect states to be Strings
+    private String[][] parseGrid(Element root, int rows, int cols, String simulationType){
         NodeList cellRows = root.getElementsByTagName("CellRows");
-        int[][] specifiedStates = new int[rows][cols];
+        String[][] specifiedStates = new String[rows][cols];
         if ((cellRows != null))
             for (int i = 0; i < cellRows.getLength(); i++) {
                 NodeList columnsList = cellRows.item(i).getChildNodes();
@@ -103,8 +127,12 @@ public class XMLParser {
                         var state = columnsList.item(j);
                         if ("CellColumns".equals(state.getNodeName())) {
                             System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
-                            specifiedStates[i][colCount] = Integer.parseInt(state.getTextContent());//+
-                            // calcStateOffset(simulationType);
+//                            try{
+//                                //specifiedStates[i][colCount]=Integer.parseInt(state.getTextContent());
+//                            } catch(NumberFormatException e){
+//                                specifiedStates[i][colCount] = state.getTextContent();
+//                            }
+                            specifiedStates[i][colCount] = state.getTextContent();
                             colCount++;
                         }
                     }
@@ -113,22 +141,22 @@ public class XMLParser {
         return specifiedStates;
     }
 
-    private Simulation generateSimulation(HashMap<String, String> simulationParams){
-        String simulationType = simulationParams.get("simulationType");
-        int rows = Integer.parseInt(simulationParams.get("rows"));
-        int cols = Integer.parseInt(simulationParams.get("columns"));
-        if (simulationType.equals("Game of Life")){
-            return new GOLSimulation(rows, cols);
-        }
-        else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireSimulation(rows, cols);
-        }
-        else if (simulationType.equals("Percolation")){
-            return new PercolationSimulation(rows, cols);
-        }
-        else if (simulationType.equals("Segregation")){ return new SegregationSimulation(rows, cols); }
-        return new GOLSimulation(rows, cols);
-    }
+//    private Simulation generateSimulation(HashMap<String, String> simulationParams){
+//        String simulationType = simulationParams.get("simulationType");
+//        int rows = Integer.parseInt(simulationParams.get("rows"));
+//        int cols = Integer.parseInt(simulationParams.get("columns"));
+//        if (simulationType.equals("Game of Life")){
+//            return new GOLSimulation(rows, cols);
+//        }
+//        else if (simulationType.equals("Spreading Fire")){
+//            return new SpreadingFireSimulation(rows, cols);
+//        }
+//        else if (simulationType.equals("Percolation")){
+//            return new PercolationSimulation(rows, cols);
+//        }
+//        else if (simulationType.equals("Segregation")){ return new SegregationSimulation(rows, cols); }
+//        return new GOLSimulation(rows, cols);
+//    }
 
     private int calcStateOffset(String simulationType){
         HashMap<String, Integer> simulationToOffsetMap = new HashMap<String, Integer>();

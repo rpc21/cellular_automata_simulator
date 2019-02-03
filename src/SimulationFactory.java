@@ -2,11 +2,13 @@ import java.util.HashMap;
 
 public class SimulationFactory {
 
-    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters){
+    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String[][] initialStates){
         String simulationType = basicParameters.get("simulationType");
         int rows = Integer.parseInt(basicParameters.get("rows"));
         int cols = Integer.parseInt(basicParameters.get("columns"));
         Simulation mySimulation = selectSimulationConstructor(simulationType, rows, cols, simulationSpecificParameters);
+
+        mySimulation.setInitialStates(initialStates, simulationType, simulationSpecificParameters);
 
         return mySimulation;
     }

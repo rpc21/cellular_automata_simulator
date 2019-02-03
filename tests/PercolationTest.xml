@@ -7,19 +7,19 @@
     <columns>3</columns>
     <cellStates>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>CLOSED</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="1">
-            <CellColumns>0</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>PERCOLATED</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>PERCOLATED</CellColumns>
         </CellRows>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>CLOSED</CellColumns>
         </CellRows>
     </cellStates>
     <parameters></parameters>

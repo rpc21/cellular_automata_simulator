@@ -7,19 +7,19 @@
     <columns>3</columns>
     <cellStates>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>1</CellColumns>
+            <CellColumns>TYPE_A</CellColumns>
+            <CellColumns>TYPE_A</CellColumns>
+            <CellColumns>TYPE_B</CellColumns>
         </CellRows>
         <CellRows index="1">
-            <CellColumns>0</CellColumns>
-            <CellColumns>1</CellColumns>
-            <CellColumns>2</CellColumns>
+            <CellColumns>TYPE_A</CellColumns>
+            <CellColumns>TYPE_A</CellColumns>
+            <CellColumns>TYPE_B</CellColumns>
         </CellRows>
         <CellRows index="0">
-            <CellColumns>1</CellColumns>
-            <CellColumns>2</CellColumns>
-            <CellColumns>0</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>TYPE_A</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
         </CellRows>
     </cellStates>
     <parameters>threshold 0.4</parameters>

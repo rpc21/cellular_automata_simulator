@@ -6,9 +6,9 @@ public class XMLTester {
 
     public static void main(String[] args){
 
-        String testCase = "tests/SegregationTest.xml";
+//        String testCase = "tests/SegregationTest.xml";
 //        String testCase = "tests/SpreadingFireTest.xml";
- //       String testCase = "tests/GOLTest.xml";
+        String testCase = "tests/GOLTest.xml";
         //String testCase = "tests/PercolationTest.xml";
         //TODO: specify the path to the test case you created here
 
