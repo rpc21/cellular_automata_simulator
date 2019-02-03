@@ -54,11 +54,18 @@ public class XMLParser {
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);
         HashMap<String, String> theCredentials = getCredentials(root);
+        String howToSetInitialStates = getTextValue(root, "GenerateStatesBy");
 
-        Simulation sim = new SimulationFactory().generateSimulation(simulationParams, additionalParams, specifiedStates);
-        sim.setCredentials(theCredentials);
+        SimulationFactory mySimulationFactory = new SimulationFactory();
+        Simulation mySim;
+        if(howToSetInitialStates.equals("random")){
+            mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
+        }else{
+            mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
+        }
+        mySim.setCredentials(theCredentials);
 
-        return sim;
+        return mySim;
     }
 
     private HashMap<String, String> getCredentials(Element root) {

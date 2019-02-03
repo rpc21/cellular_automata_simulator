@@ -3,8 +3,9 @@
     <simulationType>Spreading Fire</simulationType>
     <title>The Spreading Fire Simulation</title>
     <author>Dima, Anna and Ryan</author>
-    <rows>3</rows>
-    <columns>3</columns>
+    <rows>100</rows>
+    <columns>100</columns>
+    <GenerateStatesBy>random</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
             <CellColumns>TREE</CellColumns>
@@ -25,5 +26,5 @@
     <treePercentage>0.7</treePercentage>
     <firePercentage>0.2</firePercentage>
     <emptyPercentage>0.1</emptyPercentage>
-    <probCatch>0.5</probCatch>
+    <probCatch>0.8</probCatch>
 </data>
