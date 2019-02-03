@@ -14,6 +14,9 @@ public class GUISimulationFactory {
             case "Segregation":
                 testCase = "tests/SegregationTest.xml";
                 break;
+            case "Predator-Prey":
+                testCase = "tests/WatorTest.xml";
+                break;
             default:
                 testCase = "tests/GOLTest.xml";
                 break;
