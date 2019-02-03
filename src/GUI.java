@@ -122,8 +122,7 @@ public class GUI {
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(myFrame);
-        if (isPlaying)
-            myAnimation.play();
+        myAnimation.pause();
     }
 
     private void makeSimulationDropDownMenu(){

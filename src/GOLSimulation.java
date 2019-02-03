@@ -6,7 +6,6 @@ public class GOLSimulation extends Simulation {
         setMyGrid(new BasicGrid(rows, cols));
     }
 
-
     @Override
     public void simulate(double simulationSpeed) {
 

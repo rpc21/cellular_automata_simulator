@@ -82,8 +82,8 @@ public class GUIWatorPanel extends GUISimulationPanel {
                     myFishPercentSpinner.decrement(mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() - 100 + percentEmpty);
                 else
                     myFishPercentSpinner.increment(100 - percentEmpty - (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue()));
-                myMap.remove("% Shark");
-                myMap.put("% Shark",mySharkPercentSpinner.getValue() * 1.0);
+                myMap.remove("sharkPercentage");
+                myMap.put("sharkPercentage",mySharkPercentSpinner.getValue() * 1.0);
                 mySimulation.updateNewParams(myMap);
             }
         });
@@ -96,8 +96,8 @@ public class GUIWatorPanel extends GUISimulationPanel {
                     mySharkPercentSpinner.decrement(mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() - 100 + percentEmpty );
                 else
                     mySharkPercentSpinner.increment(100 - percentEmpty - (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue()));
-                myMap.remove("% Fish");
-                myMap.put("% Fish",myFishPercentSpinner.getValue() * 1.0);
+                myMap.remove("fishPercentage");
+                myMap.put("fishPercentage",myFishPercentSpinner.getValue() * 1.0);
                 mySimulation.updateNewParams(myMap);
             }
         });

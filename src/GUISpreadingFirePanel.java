@@ -19,8 +19,8 @@ public class GUISpreadingFirePanel extends GUISimulationPanel {
         mySpinner.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myMap.remove("probCatch");
-                myMap.put("probCatch",1.0*mySpinner.getValue()/100);
+                myMap.remove(SpreadingFireSimulation.PROB_CATCH);
+                myMap.put(SpreadingFireSimulation.PROB_CATCH,1.0*mySpinner.getValue()/100);
                 mySimulation.updateNewParams(myMap);
             }
         });
