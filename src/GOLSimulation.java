@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,10 +15,6 @@ public class GOLSimulation extends Simulation {
         setMyGrid(new BasicGrid(rows, cols));
     }
 
-<<<<<<< HEAD
-    //TODO: can we get rid of this??
-=======
->>>>>>> 5773447599b8f42e824326d0b2e178c3dbf919cb
     @Override
     public void simulate(double simulationSpeed) {
 

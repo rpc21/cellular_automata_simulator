@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="simulation">
     <simulationType>Segregation</simulationType>
+    <title>The Segregation Simulation</title>
+    <author>Dima, Anna and Ryan</author>
     <rows>3</rows>
     <columns>3</columns>
     <cellStates>
