@@ -113,7 +113,7 @@ public class XMLParser {
         return specifiedStates;
     }
 
-    private static Simulation generateSimulation(HashMap<String, String> simulationParams){
+    private Simulation generateSimulation(HashMap<String, String> simulationParams){
         String simulationType = simulationParams.get("simulationType");
         int rows = Integer.parseInt(simulationParams.get("rows"));
         int cols = Integer.parseInt(simulationParams.get("columns"));

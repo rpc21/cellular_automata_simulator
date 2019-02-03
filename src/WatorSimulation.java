@@ -1,7 +1,19 @@
+import java.util.HashMap;
+import java.util.List;
+
 public class WatorSimulation extends Simulation {
+    public static final String SHARKS_PERCENTAGE = "sharkPercentage";
+    public static final String FISH_PERCENTAGE = "fishPercentage";
+    public static final String EMPTY_PERCENTAGE = "emptyPercentage";
+    public static final String SHARK_BREED_TIME = "sharkBreedTime";
+    public static final String FISH_BREED_TIME = "fishBreedTime";
+    public static final String STARVE_TIME = "starveTime";
+    public static final List<String> WATOR_DATA_FIELDS = List.of(
+            SHARKS_PERCENTAGE, FISH_PERCENTAGE, EMPTY_PERCENTAGE, SHARK_BREED_TIME, FISH_BREED_TIME, STARVE_TIME
+    );
 
-
-    public WatorSimulation(int rows, int cols){
+    public WatorSimulation(HashMap<String, Double> params, int rows, int cols){
+        super(params, rows, cols);
         setMyGrid(new WrapAroundGrid(rows, cols));
     }
 
@@ -20,5 +32,10 @@ public class WatorSimulation extends Simulation {
         for (Location loc : myGrid.getOccupiedLocations()){
            ((WatorCell) myGrid.get(loc)).step();
         }
+    }
+
+    @Override
+    public String getMyName() {
+        return Simulation.WATOR_SIMULATION_NAME;
     }
 }

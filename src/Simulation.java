@@ -1,14 +1,27 @@
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.DoubleUnaryOperator;
 
 public abstract class Simulation {
 
+    public static final String GOL_SIMULATION_NAME="Game of Life";
+    public static final String PERCOLATION_SIMULATION_NAME="Percolation";
+    public static final String SEGREGATION_SIMULATION_NAME="Segregation";
+    public static final String SPREADING_FIRE_SIMULATION_NAME="Spreading Fire";
+    public static final String WATOR_SIMULATION_NAME="Wator";
     protected Grid myGrid;
     protected boolean simulationOver;
     protected HashMap<String, String> credentials;
+    protected HashMap<String, Double> myParameters;
     // Data fields
     public static final String DATA_TYPE = "simulation";
+
+    public Simulation(HashMap<String, Double> params, int rows, int cols){
+        setMyGrid(new BasicGrid(rows, cols));
+        myParameters=params;
+    }
+
     public static final List<String> DATA_FIELDS = List.of(
             "simulationType",
             "rows",
@@ -153,5 +166,7 @@ public abstract class Simulation {
         }
         return new GOLCell(loc, GOLState.valueOf(state), grid);
     }
+
+    public abstract String getMyName();
 
 }

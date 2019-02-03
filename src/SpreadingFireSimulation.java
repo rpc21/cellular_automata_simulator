@@ -1,16 +1,24 @@
+import java.util.HashMap;
 import java.util.List;
 
 public class SpreadingFireSimulation extends Simulation {
-
+    public static final String TREE_PERCENTAGE = "treePercentage";
+    public static final String EMPTY_PERCENTAGE = "emptyPercentage";
+    public static final String FIRE_PERCENTAGE = "firePercentage";
+    public static final String PROB_CATCH = "probCatch";
+    public static final List<String> SPREADING_FIRE_DATA_FIELDS = List.of(
+            PROB_CATCH, TREE_PERCENTAGE, EMPTY_PERCENTAGE, FIRE_PERCENTAGE
+    );
     /**
      * Constructor for the SpreadingFireSimulation. Initializes the grid for the simulation to a BasicGrid of size
      * rows x cols
      * @param rows number of rows in the grid for the simulation
      * @param cols number of columns in the grid for the simulation
      */
-    public static final String PROB_CATCH = "probCatch";
 
-    public SpreadingFireSimulation(int rows, int cols){
+
+    public SpreadingFireSimulation(HashMap<String, Double> params, int rows, int cols){
+        super(params, rows, cols);
         setMyGrid(new BasicGrid(rows, cols));
     }
 
@@ -31,5 +39,10 @@ public class SpreadingFireSimulation extends Simulation {
             }
         }
         return true;
+    }
+
+    @Override
+    public String getMyName() {
+        return Simulation.SPREADING_FIRE_SIMULATION_NAME;
     }
 }

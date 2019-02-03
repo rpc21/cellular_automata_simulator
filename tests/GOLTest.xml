@@ -5,6 +5,7 @@
     <author>Dima, Anna and Ryan</author>
     <rows>3</rows>
     <columns>3</columns>
+    <GenerateStatesBy>random<GenerateStatesBy/>
     <cellStates>
         <CellRows index="0">
             <CellColumns>1</CellColumns>
