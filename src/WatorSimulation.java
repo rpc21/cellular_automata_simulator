@@ -1,5 +1,6 @@
 public class WatorSimulation extends Simulation {
 
+
     public WatorSimulation(int rows, int cols){
         setMyGrid(new WrapAroundGrid(rows, cols));
     }
