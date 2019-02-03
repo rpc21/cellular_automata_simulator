@@ -110,7 +110,7 @@ public abstract class Simulation {
         return new GOLCell(loc, state, grid);
     }
 
-    protected WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
+    private WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
         double randomNumber = Math.random();
         if (randomNumber <= parameters.get("fishPercentage")){
             return new WatorFish(loc, grid, parameters);

@@ -130,6 +130,22 @@ public class BasicGrid implements Grid{
     }
 
     /**
+     * A list of the locations currently not occupied by cells/occupied by empty cells
+     * Only returns empty cells (OPEN for percolation)
+     * @return a list of the locations currently occupied by empty cells
+     */
+    @Override
+    public ArrayList<Location> getEmptyLocations() {
+        ArrayList<Location> emptyLocations = new ArrayList<>();
+        for (Cell cell : getCells()){
+            if (cell.isEmpty()){
+                emptyLocations.add(cell.getMyLocation());
+            }
+        }
+        return emptyLocations;
+    }
+
+    /**
      * Returns the valid neighbors of a cell as determined by the rules of that simulation
      * Cells on the borders have fewer neighbors since a BasicGrid does not wrap around
      * @param loc the location of the cell whose neighbors you want

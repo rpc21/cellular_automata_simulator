@@ -13,13 +13,16 @@ public class PercolationSimulation extends Simulation {
     }
 
     @Override
-    public void simulate(double simulationSpeed) {
-
-    }
+    public void simulate(double simulationSpeed) {}
 
     @Override
-    public boolean isOver() {
-        return false;
+    public boolean isOver(){
+        for (Cell cell : myGrid.getCells()){
+            if (cell.isEmpty() && ((PercolationCell) cell).nextToPercolatedCell()){
+                return false;
+            }
+        }
+        return true;
     }
 
 }

@@ -51,7 +51,12 @@ public class PercolationCell extends Cell {
         }
     }
 
-    private boolean nextToPercolatedCell() {
+    /**
+     * Checks if a cell is next to a percolated cell
+     * Useful for determining when to stop the simulation
+     * @return true if next to a percolated cell, false otherwise
+     */
+    public boolean nextToPercolatedCell() {
         List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, PERCOLATION_CELL_ROW_NEIGHBORS,
                 PERCOLATION_CELL_COL_NEIGHBORS);
         for (Location loc: neighborLocations){
@@ -64,10 +69,19 @@ public class PercolationCell extends Cell {
     }
 
     /**
+     * Useful method to use with getEmptyLocations for Grids to allow you to easily get all the open locations in the
+     * Percolation simulation.  Used to check if simulation is over
+     * @return true if the cell is marked as OPEN
+     */
+    public boolean isEmpty(){
+        return myCurrentState == PercolationState.OPEN;
+    }
+
+    /**
      * Returns if the cell is percolated
      * @return if the cell is percolated
      */
-    public boolean isPercolated() {
+    private boolean isPercolated() {
         return myCurrentState == PercolationState.PERCOLATED;
     }
 
