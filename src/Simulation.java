@@ -59,10 +59,14 @@ public abstract class Simulation {
      * @param parameters
      */
     public void updateNewParams(Map<String, Double> parameters){
-        for (Cell cell : myGrid.getCells()){
-            cell.setMyParameters(parameters);
+//        for (Cell cell : myGrid.getCells()){
+//            cell.setMyParameters(parameters);
+//        }
+        for (String key: parameters.keySet()){
+            myParameters.put(key, parameters.get(key));
         }
-    };
+        System.out.println("Parameters updated");
+    }
 
     public void stopSimulation(){
         simulationOver = true;
