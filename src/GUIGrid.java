@@ -9,14 +9,16 @@ public class GUIGrid {
     private GridPane myGridPane = new GridPane();
     private int myRows;
     private int myCols;
-    public static final int GUI_GRID_SIZE = 400;
+    public static final double GUI_GRID_SIZE = 400;
 
 
     public GUIGrid(int r, int c){
         myRows = r;
         myCols = c;
-        myGridPane.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
-        myGridPane.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
+        myGridPane.setTranslateX(CellularAutomataMain.WINDOW_SIZE/2.0 - GUI_GRID_SIZE/2.0);
+        myGridPane.setTranslateY(CellularAutomataMain.WINDOW_SIZE/2.0 - GUI_GRID_SIZE/2.0);
+        myGridPane.setMinSize(GUI_GRID_SIZE,GUI_GRID_SIZE);
+        myGridPane.setMaxSize(GUI_GRID_SIZE,GUI_GRID_SIZE);
     }
 
 
@@ -25,9 +27,10 @@ public class GUIGrid {
         int c = 0;
         while (r <  myRows){
             while (c < myCols){
-                Shape currShape = new Rectangle(GUI_GRID_SIZE/myRows,GUI_GRID_SIZE/myCols);
+                Shape currShape = new Rectangle(GUI_GRID_SIZE*1.0/myRows,GUI_GRID_SIZE * 1.0/myCols);
                 currShape.setFill(myCells.get(r * myRows + c).getMyColor());
                 currShape.setStroke(Color.BLACK);
+                currShape.setStrokeWidth(1.0/25.0*GUI_GRID_SIZE/myRows);
                 myGridPane.add(currShape, c, r);
                 c = c + 1;
             }
@@ -39,10 +42,5 @@ public class GUIGrid {
     public GridPane getGUIGrid(){
         return myGridPane;
     }
-
-
-
-
-
 
 }

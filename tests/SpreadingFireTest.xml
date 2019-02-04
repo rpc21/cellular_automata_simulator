@@ -3,8 +3,8 @@
     <simulationType>Spreading Fire</simulationType>
     <title>The Spreading Fire Simulation</title>
     <author>Dima, Anna and Ryan</author>
-    <rows>10</rows>
-    <columns>10</columns>
+    <rows>25</rows>
+    <columns>25</columns>
     <GenerateStatesBy>random</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">

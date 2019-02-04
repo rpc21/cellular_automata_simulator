@@ -33,7 +33,7 @@ public class GUI {
     };
     private Credentials myCredentials;
 
-    public static final int STAGE_SIZE = 800;
+    public static final int STAGE_SIZE = 1000;
     private static final String STAGE_TITLE = "Cellular Automata Simulation";
     private static final Color BACKGROUND_COLOR = Color.LIGHTSKYBLUE;
     private static final int FRAMES_PER_SECOND = 60;

@@ -6,7 +6,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -38,7 +37,7 @@ public class GUIDefaultPanel extends GUIPanel {
     private int myRows;
     private int myCols;
 
-    private static final int STACKPANE_OFFSET = 600;
+    private static final double STACKPANE_OFFSET = GUI.STAGE_SIZE/2 + GUIGrid.GUI_GRID_SIZE/1.5;
     private static final int DEFAULT_CONTROL_OFFSET = 10;
     private static final int FRAMES_PER_SECOND = 60;
     private static final double MILLISECOND_DELAY = 10000 / FRAMES_PER_SECOND;
