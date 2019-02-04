@@ -34,6 +34,7 @@ public class GUIDefaultPanel extends GUIPanel {
     private GUIGridStep myStepFunction;
     private Timeline myAnimation;
     private KeyFrame myFrame;
+    private String myName;
     private int myRows;
     private int myCols;
 
@@ -43,10 +44,11 @@ public class GUIDefaultPanel extends GUIPanel {
     private static final double MILLISECOND_DELAY = 10000 / FRAMES_PER_SECOND;
     public static final int DEFAULT_CONTROL_SPACING = 40;
 
-    public GUIDefaultPanel(GUIGridStep step, Timeline timeline, KeyFrame frame, int rows, int cols){
+    public GUIDefaultPanel(GUIGridStep step, Timeline timeline, KeyFrame frame, String simName, int rows, int cols){
         myStepFunction = step;
         myAnimation = timeline;
         myFrame = frame;
+        myName = simName;
         myRows = rows;
         myCols = cols;
         makeControls();
@@ -117,12 +119,15 @@ public class GUIDefaultPanel extends GUIPanel {
 
     private void makeSimulationDropDownMenu(){
         myChoiceBox = new ChoiceBox<>();
-        myChoiceBox.getItems().addAll("Game of Life", "Spreading Fire", "Percolation", "Segregation", "Predator-Prey");
+        myChoiceBox.getItems().addAll(Simulation.GOL_SIMULATION_NAME, Simulation.SPREADING_FIRE_SIMULATION_NAME,
+                Simulation.PERCOLATION_SIMULATION_NAME, Simulation.SEGREGATION_SIMULATION_NAME, Simulation.WATOR_SIMULATION_NAME);
+        myChoiceBox.setValue(myName);
         myChoiceBox.setStyle("-fx-font: 15px \"Copperplate\";");
         myChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 myChoiceBox.setValue(myChoiceBox.getItems().get((Integer) number2));
+                System.out.println(myChoiceBox.getValue());
             }
         });
         myDefaultControls.add(myChoiceBox);

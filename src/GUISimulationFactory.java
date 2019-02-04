@@ -2,17 +2,20 @@ public class GUISimulationFactory {
     public String makeXMLFileName(String newSim){
         String testCase;
         switch(newSim){
-            case "Game of Life":
+            case Simulation.GOL_SIMULATION_NAME:
                 testCase = "tests/GOLTest.xml";
                 break;
-            case "Spreading Fire":
+            case Simulation.SPREADING_FIRE_SIMULATION_NAME:
                 testCase = "tests/SpreadingFireTest.xml";
                 break;
-            case "Percolation":
+            case Simulation.PERCOLATION_SIMULATION_NAME:
                 testCase = "tests/PercolationTest.xml";
                 break;
-            case "Segregation":
+            case Simulation.SEGREGATION_SIMULATION_NAME:
                 testCase = "tests/SegregationTest.xml";
+                break;
+            case Simulation.WATOR_SIMULATION_NAME:
+                testCase = "tests/WatorTest.xml";
                 break;
             default:
                 testCase = "tests/GOLTest.xml";
@@ -23,19 +26,19 @@ public class GUISimulationFactory {
     public GUISimulationPanel makeSimulationPanel(String newSim, Simulation mySim){
         GUISimulationPanel mySimPanel;
         switch(newSim){
-            case "Game of Life":
+            case Simulation.GOL_SIMULATION_NAME:
                 mySimPanel = new GUIGameOfLifePanel(mySim);
                 break;
-            case "Spreading Fire":
+            case Simulation.SPREADING_FIRE_SIMULATION_NAME:
                 mySimPanel = new GUISpreadingFirePanel(mySim);
                 break;
-            case "Percolation":
+            case Simulation.PERCOLATION_SIMULATION_NAME:
                 mySimPanel = new GUIPercolationPanel(mySim);
                 break;
-            case "Segregation":
+            case Simulation.SEGREGATION_SIMULATION_NAME:
                 mySimPanel = new GUISegregationPanel(mySim);
                 break;
-            case "Predator-Prey":
+            case Simulation.WATOR_SIMULATION_NAME:
                 mySimPanel = new GUIWatorPanel(mySim);
                 break;
             default:
