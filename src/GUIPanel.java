@@ -19,9 +19,8 @@ public class GUIPanel {
     public boolean needsToReset(){
         return needsToChangeSim;
     }
+
     public void setNeedsToReset(){
         needsToChangeSim = true;
     }
-
-
 }

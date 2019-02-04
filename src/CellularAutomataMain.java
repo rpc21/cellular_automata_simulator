@@ -3,7 +3,7 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class CellularAutomataMain extends Application {
-    public static final int WINDOW_SIZE = 800;
+    public static final int WINDOW_SIZE = 1000;
     private Simulation myCurrentSimulation;
 
     public static void main(String[] args){

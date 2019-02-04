@@ -43,7 +43,7 @@ public abstract class Simulation {
         for (Cell cell : cells){
             cell.updateState();
         }
-        myGrid.printGrid();
+//        myGrid.printGrid();
     }
 
     public void setCredentials(HashMap<String, String> myCredentials){
