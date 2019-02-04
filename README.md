@@ -43,6 +43,9 @@ Features implemented:
 Assumptions or Simplifications:
 
 * Switching between simulations requires the 5 default files GOLTest.xml, PercolationTest.xml, SegregationTest.xml, SpreadingFireTest.xml, and WatorTest.xml
+* Percolation continues running until no changes occur between iterations of the simulation. The number of filled water cells at the start of the configuration is not limited to 1; the user can begin the simulation with as many water filled cells as desired. 
+* The Spreading Fire simulation trees only remain on fire for one iteration before burning down
+* The Predator Prey simulation assumes predator and prey can only move to immediately adjacent vacant cells (including wrap around adjacent cells)
 
 Known Bugs: 
 
