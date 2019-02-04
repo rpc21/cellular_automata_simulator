@@ -1,3 +1,15 @@
+/**
+ * This class defines a Location that is used to specify where a cell is in a grid.  This code is adapted from Mike
+ * Scott's Wa-tor Simulation source code
+ *
+ * Based on code by:
+ * @author Mike Scott, University of Texas
+ * Original source code can be found at:
+ * https://www2.cs.duke.edu/courses/compsci308/current/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Location.java
+ *
+ * Author:
+ * @author Dima Fayyad, Ryan Culhane, Anna Darwish
+ */
 public class Location {
     //https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Location.java
     private int row;
@@ -48,6 +60,10 @@ public class Location {
         return getRow() == otherLoc.getRow() && getCol() == otherLoc.getCol();
     }
 
+    /**
+     * toString method for location
+     * @return (row, col)
+     */
     @Override
     public String toString() {
         return "("+row+","+col+")";

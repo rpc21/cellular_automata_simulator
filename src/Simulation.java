@@ -10,6 +10,8 @@ public abstract class Simulation {
     public static final String SEGREGATION_SIMULATION_NAME="Segregation";
     public static final String SPREADING_FIRE_SIMULATION_NAME="Spreading Fire";
     public static final String WATOR_SIMULATION_NAME="Wator";
+    public static final String TITLE_CREDENTIAL="title";
+    public static final String AUTHOR_CREDENTIAL="author";
     protected Grid myGrid;
     protected boolean simulationOver;
     protected HashMap<String, String> credentials;
@@ -23,13 +25,13 @@ public abstract class Simulation {
     }
 
     public static final List<String> DATA_FIELDS = List.of(
-            "simulationType",
-            "rows",
-            "columns"
+            XMLParser.SIMULATION_TYPE_TAG_NAME,
+            XMLParser.ROW_TAG_NAME,
+            XMLParser.COLUMN_TAG_NAME
     );
     public static final List<String> DATA_CREDENTIALS = List.of(
-            "title",
-            "author"
+            TITLE_CREDENTIAL,
+            AUTHOR_CREDENTIAL
     );
 
 
@@ -43,7 +45,6 @@ public abstract class Simulation {
         for (Cell cell : cells){
             cell.updateState();
         }
-//        myGrid.printGrid();
     }
 
     public void setCredentials(HashMap<String, String> myCredentials){
@@ -59,10 +60,14 @@ public abstract class Simulation {
      * @param parameters
      */
     public void updateNewParams(Map<String, Double> parameters){
-        for (Cell cell : myGrid.getCells()){
-            cell.setMyParameters(parameters);
+//        for (Cell cell : myGrid.getCells()){
+//            cell.setMyParameters(parameters);
+//        }
+        for (String key: parameters.keySet()){
+            myParameters.put(key, parameters.get(key));
         }
-    };
+        System.out.println("Parameters updated");
+    }
 
     public void stopSimulation(){
         simulationOver = true;

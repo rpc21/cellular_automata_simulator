@@ -8,13 +8,11 @@ public class SegregationCell extends MovableCell{
 
     private static int[] SEGREGATION_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
     private static int[] SEGREGATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
-    private double threshold;
     private boolean toBeMoved = false;
 
     public SegregationCell(Location location, SegregationState initialState, Grid grid, HashMap<String,
             Double> parameters){
         super(location, initialState, grid, parameters);
-        threshold = parameters.get("threshold");
     }
 
     public SegregationCell(Location location, int initialState, Grid grid, HashMap<String,
@@ -89,7 +87,7 @@ public class SegregationCell extends MovableCell{
         List<Location> myNeighborLocations = getMyGrid().getValidNeighbors(myLocation, SEGREGATION_CELL_ROW_NEIGHBORS
                 , SEGREGATION_CELL_COL_NEIGHBORS);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);
-        return percentSame >= threshold;
+        return percentSame >= myParameters.get(SegregationSimulation.THRESHOLD);
     }
 
     private double calcPercentSimilarNeighbors(List<Location> locationList){
@@ -105,21 +103,4 @@ public class SegregationCell extends MovableCell{
         return numSame / (numSame + numOther);
     }
 
-    /**
-     * Return a String of length 1 representing the state of the cell
-     * @return String of length 1 representing the state of the cell as defined in SegregationState Enum
-     */
-    @Override
-    public String toString() {
-        return myCurrentState.toString();
-    }
-
-    /**
-     * Return the color to display to represent the state of this cell
-     * @return Color to display for this state as defined in SegregationState Enum
-     */
-    @Override
-    public Color getMyColor() {
-        return myCurrentState.getMyCellColor();
-    }
 }
