@@ -10,6 +10,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GUI {
@@ -22,6 +23,7 @@ public class GUI {
     private XMLParser myParser = new XMLParser(Simulation.DATA_TYPE);
 
     private GUISimulationFactory myGUISimulationFactory;
+    private SimulationFactory mySimFact = new SimulationFactory();
     private GUIGrid myGUIGrid;
     private GUIDefaultPanel myGUIDefaultPanel;
     private GUISimulationPanel myGUISimulationPanel;
@@ -67,8 +69,22 @@ public class GUI {
     }
 
     public void step(){
-        if (myGUIDefaultPanel.needsToReset())
-            resetSimulation();
+        if (myGUIDefaultPanel.getResetClicks()) {
+            HashMap<String,Double> sampleMap = new HashMap<>();
+            sampleMap.put(GOLSimulation.ALIVE_PERCENTAGE, .1);
+            sampleMap.put(GOLSimulation.DEAD_PERCENTAGE, .9);
+            if (true) {
+                mySimulation = mySimFact.generateSimulation(myGUIDefaultPanel.getMyBasicParams(), sampleMap);
+                System.out.println("**********" + mySimulation.getMyGrid().getNumRows());
+                myGUISimulationPanel = myGUISimulationFactory.makeSimulationPanel(mySimulation.getMyName(), mySimulation);
+                myNode = new Group();
+                myNode.getChildren().addAll(myGUISimulationPanel.getGUISimulationPanel());
+                makeGUIParts();
+                render();
+            }
+            else
+                resetSimulation();
+        }
         else {
             mySimulation.updateGrid();
             myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
@@ -79,7 +95,7 @@ public class GUI {
         myGUIGrid = new GUIGrid(mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
         myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
         myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myAnimation,myFrame,mySimulation.getMyName(),mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
-        myCredentials = new Credentials(mySimulation.getCredentials().get("title"),mySimulation.getCredentials().get("author"));
+        myCredentials = new Credentials("why","why");
         myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel(),myCredentials.getMyCredentials());
     }
     private void resetSimulation(){

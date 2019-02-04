@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GUIDefaultPanel extends GUIPanel {
@@ -20,7 +21,6 @@ public class GUIDefaultPanel extends GUIPanel {
     private Button myStepButton;
     private Slider mySpeedSlider;
     private Text mySpeedLabel;
-    private Credentials myCredentials;
     private ChoiceBox<String> myChoiceBox;
     private StackPane myStackPane = new StackPane();
     private List<Node> myDefaultControls = new ArrayList<>();
@@ -36,11 +36,11 @@ public class GUIDefaultPanel extends GUIPanel {
     private String myName;
     private int myRows;
     private int myCols;
+    private HashMap<String,String> myBasicParams = new HashMap<>();
 
     private static final double STACKPANE_OFFSET = GUI.STAGE_SIZE/2 + GUIGrid.GUI_GRID_SIZE/1.5;
     private static final int DEFAULT_CONTROL_OFFSET = 10;
     private static final int FRAMES_PER_SECOND = 60;
-    private static final double MILLISECOND_DELAY = 10000 / FRAMES_PER_SECOND;
     public static final int DEFAULT_CONTROL_SPACING = 40;
 
     public GUIDefaultPanel(GUIGridStep step, Timeline timeline, KeyFrame frame, String simName, int rows, int cols){
@@ -50,8 +50,15 @@ public class GUIDefaultPanel extends GUIPanel {
         myName = simName;
         myRows = rows;
         myCols = cols;
+        populateMap();
         makeControls();
         setUpStackPane();
+    }
+
+    private void populateMap(){
+        myBasicParams.put(XMLParser.COLUMN_TAG_VIS, "" + myRows);
+        myBasicParams.put(XMLParser.ROW_TAG_VIS, "" + myCols);
+        myBasicParams.put(XMLParser.SIMULATION_TYPE_TAG_NAME, "" + myName);
     }
 
     public StackPane getGUIDefaultPanel(){
@@ -136,6 +143,13 @@ public class GUIDefaultPanel extends GUIPanel {
         return myChoiceBox.getValue();
     }
 
+    public HashMap<String,String> getMyBasicParams(){
+        System.out.println(myRowSpinner.getValue() + " " + myColSpinner.getValue());
+        myBasicParams.put(XMLParser.ROW_TAG_VIS, "" + myRowSpinner.getValue());
+        myBasicParams.put(XMLParser.COLUMN_TAG_VIS, "" + myColSpinner.getValue());
+        myBasicParams.put(XMLParser.SIMULATION_TYPE_TAG_NAME, "" + myChoiceBox.getValue());
+        return myBasicParams;
+    }
     private void setUpStackPane(){
         int iter = 0;
         for(Node c: myDefaultControls) {
@@ -146,10 +160,32 @@ public class GUIDefaultPanel extends GUIPanel {
             iter++;
         }
     }
-
+    public int getMyRows(){
+        return myRowSpinner.getValue();
+    }
     private void makeRowsAndColsSetters(int rows, int cols){
-        myRowSpinner = setUpSpinner(1,200, rows);
-        myColSpinner = setUpSpinner(1,200,cols);
+        myRowSpinner = setUpSpinner(3,50, rows);
+        myRowSpinner.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                myBasicParams.remove(XMLParser.ROW_TAG_VIS);
+                myBasicParams.put(XMLParser.ROW_TAG_VIS,"" + myRowSpinner.getValue());
+                for (String a: myBasicParams.keySet())
+                    System.out.println(a + " " + myBasicParams.get(a));
+                updateCurrentMap(XMLParser.ROW_TAG_VIS,"" + myRowSpinner.getValue());
+                setNeedsToReset();
+            }
+        });
+        myColSpinner = setUpSpinner(3,50,cols);
+        myColSpinner.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                myBasicParams.remove(XMLParser.COLUMN_TAG_VIS);
+                myBasicParams.put(XMLParser.COLUMN_TAG_VIS,"" + myColSpinner.getValue());
+
+                setNeedsToReset();
+            }
+        });
         myRowsLabel.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         myColsLabel.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         myDefaultControls.add(myRowsLabel);
@@ -163,12 +199,17 @@ public class GUIDefaultPanel extends GUIPanel {
         myResetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                setNeedsToReset();
+                setResetClicked();
                 myStepFunction.guiGridStep();
             }
         });
         myDefaultControls.add(myResetButton);
     }
+
+    private void updateCurrentMap(String a, String b){
+        myBasicParams.put(a,b);
+    }
+
 
 
 }

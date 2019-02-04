@@ -22,6 +22,7 @@ public class GUISpreadingFirePanel extends GUISimulationPanel {
                 myMap.remove(SpreadingFireSimulation.PROB_CATCH);
                 myMap.put(SpreadingFireSimulation.PROB_CATCH,1.0*mySpinner.getValue()/100);
                 mySimulation.updateNewParams(myMap);
+                setNeedsToUpdate();
             }
         });
         super.addToStackPane(myTextBox,mySpinner);

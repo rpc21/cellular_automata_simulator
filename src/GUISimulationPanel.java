@@ -56,5 +56,12 @@ public class GUISimulationPanel extends GUIPanel{
         return myText;
     }
 
+    protected void updateMyParams(String k, Double val){
+        myParamsMap.put(k,val);
+    }
+    public HashMap<String,Double> getMyParams(){
+        return myParamsMap;
+    }
+
 
 }

@@ -26,8 +26,8 @@ public abstract class Simulation {
 
     public static final List<String> DATA_FIELDS = List.of(
             XMLParser.SIMULATION_TYPE_TAG_NAME,
-            XMLParser.ROW_TAG_NAME,
-            XMLParser.COLUMN_TAG_NAME
+            XMLParser.ROW_TAG_VIS,
+            XMLParser.COLUMN_TAG_VIS
     );
     public static final List<String> DATA_CREDENTIALS = List.of(
             TITLE_CREDENTIAL,
@@ -87,33 +87,18 @@ public abstract class Simulation {
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
-                System.out.println("Creating a "+simulationType+" cell");
+//                System.out.println("Creating a "+simulationType+" cell");
                 Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
                         myGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
+//                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
+//                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
                 getMyGrid().put(newCell.getMyLocation(), newCell);
             }
         }
         getMyGrid().printGrid();
-        System.out.println("Initial states set");
+//        System.out.println("Initial states set");
     }
 
-    public void setInitialStates(int[][] initialStates, String simulationType, HashMap<String, Double> parameters){
-        for (int i = 0; i < getMyGrid().getNumRows(); i++){
-            for (int j = 0; j < getMyGrid().getNumCols(); j++){
-                Location thisLocation = new Location(i, j);
-                System.out.println("Creating a "+simulationType+" cell");
-                Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
-                        myGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
-                getMyGrid().put(newCell.getMyLocation(), newCell);
-            }
-        }
-        getMyGrid().printGrid();
-        System.out.println("Initial states set");
-    }
 
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, int state, Grid grid,
                                                 HashMap<String, Double> parameters){

@@ -15,7 +15,8 @@ public class SimulationFactory {
 
     public Simulation generateSimulation(HashMap<String, String> basicParameters,
                                          HashMap<String, Double> simulationSpecificParameters){
-
+        for (String a: basicParameters.keySet())
+            System.out.println(a + basicParameters.get(a));
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
