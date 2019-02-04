@@ -1,11 +1,12 @@
-import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
-//TODO: Attribte sources
+/**
+ * WatorFish is loosely based on the Actor class reference in the credits of WatorCell.  WatorFish implements the
+ * rules for a fish in the Predator-Prey simulation as specified at the link below:
+ * https://en.wikipedia.org/wiki/Wa-Tor
+ */
 public class WatorFish extends WatorCell {
 
     /**
@@ -32,7 +33,6 @@ public class WatorFish extends WatorCell {
     public void step(){
         turnsUntilCanBreed--;
         ArrayList<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
-//        System.out.println("Fish at location "+myLocation);
         if(openSpots.size() > 0){
             Location oldLocation = myLocation;
             Collections.shuffle(openSpots);
@@ -40,28 +40,20 @@ public class WatorFish extends WatorCell {
             if(turnsUntilCanBreed <= 0){
                 WatorFish newFish = new WatorFish(oldLocation, myGrid, myParameters);
                 myGrid.put(newFish.getMyLocation(), newFish);
-                turnsUntilCanBreed = (int) (myParameters.get(WatorSimulation.FISH_BREED_TIME) + 0.0);
-//                System.out.println("Fish breeds to location: "+newFish.getMyLocation());
+                turnsUntilCanBreed = (int) Math.floor(myParameters.get(WatorSimulation.FISH_BREED_TIME));
             }else{
                 myGrid.put(myLocation, new WatorEmpty(myLocation));
             }
             myLocation = openSpots.get(0);
         }
-//        System.out.println("Fish next location: "+myLocation);
-    }
-
-    @Override
-    public void calculateNewState() {
-        super.calculateNewState();
     }
 
     /**
-     * Return the color to display representing the state of the cell
-     * @return a Color representing the state of the cell
+     * Fish moves on its turn and does not store next state.  Uses the step function instead
      */
-    @Override
-    public Color getMyColor() {
-        return myCurrentState.getMyCellColor();
+    @Deprecated
+    public void calculateNewState() {
+        super.calculateNewState();
     }
 
     /**
@@ -82,12 +74,4 @@ public class WatorFish extends WatorCell {
         return false;
     }
 
-    /**
-     * Return a character representation of the cell state
-     * @return a String of length 1 representing the state of the cell
-     */
-    @Override
-    public String toString() {
-        return myCurrentState.getMyShortenedName();
-    }
 }

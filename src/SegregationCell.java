@@ -103,21 +103,4 @@ public class SegregationCell extends MovableCell{
         return numSame / (numSame + numOther);
     }
 
-    /**
-     * Return a String of length 1 representing the state of the cell
-     * @return String of length 1 representing the state of the cell as defined in SegregationState Enum
-     */
-    @Override
-    public String toString() {
-        return myCurrentState.toString();
-    }
-
-    /**
-     * Return the color to display to represent the state of this cell
-     * @return Color to display for this state as defined in SegregationState Enum
-     */
-    @Override
-    public Color getMyColor() {
-        return myCurrentState.getMyCellColor();
-    }
 }

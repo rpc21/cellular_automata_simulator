@@ -1,8 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles parsing XML files and returning a new simulation.
+ *
+ * Based on code by:
+ * @author Mike Scott, University of Texas
+ * Original source code can be found at:
+ * https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Grid.java
+ *
+ * Author:
+ * @author Dima Fayyad, Ryan Culhane, Anna Darwish
+ */
 public interface Grid {
-    //https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Grid.java
     /**
      * Returns the number of rows in this grid.
      * @return the number of rows, or -1 if this grid is unbounded
