@@ -43,8 +43,7 @@ public class WatorShark extends WatorCell {
                 Location offspringLocation = openSpots.get(0);
                 WatorShark newShark = new WatorShark(offspringLocation, myGrid, myParameters);
                 myGrid.put(newShark.getMyLocation(), newShark);
-                turnsUntilCanBreed = (int) (myParameters.get(WatorSimulation.SHARK_BREED_TIME) + 0.0);
-//                System.out.println("Shark at location "+ myLocation + " breeds to location: "+newShark.getMyLocation());
+                turnsUntilCanBreed = (int) Math.floor(myParameters.get(WatorSimulation.SHARK_BREED_TIME));
             }
         }
     }
@@ -52,13 +51,11 @@ public class WatorShark extends WatorCell {
     private void tryToMove() {
         ArrayList<Location> emptyLocations = myGrid.getEmptyAdjacentLocations(myLocation);
         if (emptyLocations.size() > 0){
-//            System.out.println("Shark is going to move from location "+myLocation);
             Collections.shuffle(emptyLocations);
             Location newLocation = emptyLocations.get(0);
             myGrid.put(newLocation, this);
             myGrid.remove(myLocation);
             myLocation = newLocation;
-//            System.out.println("Shark is now at location: "+myLocation);
         }
     }
 
@@ -81,27 +78,9 @@ public class WatorShark extends WatorCell {
         return false;
     }
 
-    /**
-     * Return the color to display representing the state of the cell
-     * @return a Color representing the state of the cell
-     */
-    @Override
-    public Color getMyColor() {
-        return Color.LIGHTGREY;
-    }
-
     @Override
     public boolean isEdible() {
         return false;
-    }
-
-    /**
-     * Return a character representation of the cell state
-     * @return a String of length 1 representing the state of the cell
-     */
-    @Override
-    public String toString() {
-        return "S";
     }
 
     @Override

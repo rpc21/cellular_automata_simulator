@@ -22,6 +22,10 @@ public class SpreadingFireCell extends Cell {
         myParameters.put(SpreadingFireSimulation.PROB_CATCH, 1.0D);
     }
 
+    /**
+     * Calculates the new state of the SpreadingFireCell based on the SpreadingFire rules, the state of the cell and the
+     * state of the cell's neighbors
+     */
     @Override
     public void calculateNewState() {
         if (myCurrentState == SpreadingFireState.FIRE || myCurrentState == SpreadingFireState.EMPTY) {
@@ -52,21 +56,4 @@ public class SpreadingFireCell extends Cell {
         return myCurrentState == SpreadingFireState.FIRE;
     }
 
-    /**
-     * Return a String of length 1 representing the state of the cell
-     * @return String of length 1 representing the state of the cell as defined in SpreadingFireState Enum
-     */
-    @Override
-    public String toString() {
-        return myCurrentState.getMyShortenedName();
-    }
-
-    /**
-     * Return the color to display to represent the state of this cell
-     * @return Color to display for this state as defined in GOLState Enum
-     */
-    @Override
-    public Color getMyColor() {
-        return myCurrentState.getMyCellColor();
-    }
 }

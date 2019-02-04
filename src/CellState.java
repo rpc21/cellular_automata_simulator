@@ -15,9 +15,6 @@ public interface CellState {
      */
     String getMyShortenedName();
 
-    //TODO: Do we need this???
-    String getMyFullState();
-
     /**
      * Return the color to display representing the state of the cell
      * @return a Color representing the state of the cell
