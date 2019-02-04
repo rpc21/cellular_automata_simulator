@@ -6,7 +6,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -34,19 +33,21 @@ public class GUIDefaultPanel extends GUIPanel {
     private GUIGridStep myStepFunction;
     private Timeline myAnimation;
     private KeyFrame myFrame;
+    private String myName;
     private int myRows;
     private int myCols;
 
-    private static final int STACKPANE_OFFSET = 600;
+    private static final double STACKPANE_OFFSET = GUI.STAGE_SIZE/2 + GUIGrid.GUI_GRID_SIZE/1.5;
     private static final int DEFAULT_CONTROL_OFFSET = 10;
     private static final int FRAMES_PER_SECOND = 60;
     private static final double MILLISECOND_DELAY = 10000 / FRAMES_PER_SECOND;
     public static final int DEFAULT_CONTROL_SPACING = 40;
 
-    public GUIDefaultPanel(GUIGridStep step, Timeline timeline, KeyFrame frame, int rows, int cols){
+    public GUIDefaultPanel(GUIGridStep step, Timeline timeline, KeyFrame frame, String simName, int rows, int cols){
         myStepFunction = step;
         myAnimation = timeline;
         myFrame = frame;
+        myName = simName;
         myRows = rows;
         myCols = cols;
         makeControls();
@@ -117,12 +118,15 @@ public class GUIDefaultPanel extends GUIPanel {
 
     private void makeSimulationDropDownMenu(){
         myChoiceBox = new ChoiceBox<>();
-        myChoiceBox.getItems().addAll("Game of Life", "Spreading Fire", "Percolation", "Segregation", "Predator-Prey");
+        myChoiceBox.getItems().addAll(Simulation.GOL_SIMULATION_NAME, Simulation.SPREADING_FIRE_SIMULATION_NAME,
+                Simulation.PERCOLATION_SIMULATION_NAME, Simulation.SEGREGATION_SIMULATION_NAME, Simulation.WATOR_SIMULATION_NAME);
+        myChoiceBox.setValue(myName);
         myChoiceBox.setStyle("-fx-font: 15px \"Copperplate\";");
         myChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 myChoiceBox.setValue(myChoiceBox.getItems().get((Integer) number2));
+                System.out.println(myChoiceBox.getValue());
             }
         });
         myDefaultControls.add(myChoiceBox);
