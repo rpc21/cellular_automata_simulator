@@ -68,7 +68,7 @@ public class GUI {
 
     public void step(){
         if (myGUIDefaultPanel.needsToReset())
-            resetSimulation(myGUIDefaultPanel.getSimName());
+            resetSimulation();
         else {
             mySimulation.updateGrid();
             myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
@@ -78,12 +78,12 @@ public class GUI {
     private void makeGUIParts(){
         myGUIGrid = new GUIGrid(mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
         myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
-        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myAnimation,myFrame,mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
+        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myAnimation,myFrame,mySimulation.getMyName(),mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
         myCredentials = new Credentials(mySimulation.getCredentials().get("title"),mySimulation.getCredentials().get("author"));
         myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel(),myCredentials.getMyCredentials());
     }
-    private void resetSimulation(String newSim){
-        newSim = myGUIDefaultPanel.getSimName();
+    private void resetSimulation(){
+        String newSim = myGUIDefaultPanel.getSimName();
         File file = new File(myGUISimulationFactory.makeXMLFileName(newSim));
         var sim = myParser.getSimulation(file);
         try{
