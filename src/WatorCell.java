@@ -15,7 +15,7 @@ public abstract class WatorCell extends Cell {
         myLocation = loc;
         myGrid = grid;
         myParameters = parameters;
-        turnsUntilCanBreed = (int) (parameters.get("breedTime") + Math.random() * 3);
+//        turnsUntilCanBreed = (int) (parameters.get("breedTime") + Math.random() * 3);
     }
 
     /**
