@@ -32,6 +32,7 @@ public class WatorSimulation extends Simulation {
         for (Location loc : myGrid.getOccupiedLocations()){
            ((WatorCell) myGrid.get(loc)).step();
         }
+//        myGrid.printGrid();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class WatorSimulation extends Simulation {
 
     @Override
     public List<String> getPercentageFields() {
-        return null;
+        return List.of(SHARKS_PERCENTAGE, FISH_PERCENTAGE, EMPTY_PERCENTAGE);
     }
 
     @Override
@@ -63,6 +64,8 @@ public class WatorSimulation extends Simulation {
 
     private Cell generateWATORSpecificCell(String simulationType, Location thisLocation, String state, Grid grid,
                                            HashMap<String, Double> parameters) {
+        System.out.println(state);
+        System.out.println(state + " " + WatorState.valueOf(state));
         if (WatorState.valueOf(state) == WatorState.FISH){
             return new WatorFish(thisLocation, grid, parameters);
         }

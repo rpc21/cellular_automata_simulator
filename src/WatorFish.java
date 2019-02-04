@@ -17,6 +17,7 @@ public class WatorFish extends WatorCell {
     public WatorFish(Location loc, Grid grid, Map<String, Double> parameters){
         super(loc, grid, parameters);
         myCurrentState = WatorState.FISH;
+        turnsUntilCanBreed = (int) (parameters.get(WatorSimulation.FISH_BREED_TIME) + 0.0);
     }
 
     /**
@@ -31,6 +32,7 @@ public class WatorFish extends WatorCell {
     public void step(){
         turnsUntilCanBreed--;
         ArrayList<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
+//        System.out.println("Fish at location "+myLocation);
         if(openSpots.size() > 0){
             Location oldLocation = myLocation;
             Collections.shuffle(openSpots);
@@ -38,10 +40,14 @@ public class WatorFish extends WatorCell {
             if(turnsUntilCanBreed <= 0){
                 WatorFish newFish = new WatorFish(oldLocation, myGrid, myParameters);
                 myGrid.put(newFish.getMyLocation(), newFish);
-                turnsUntilCanBreed = (int) (myParameters.get("breedTime") + 0.0);
+                turnsUntilCanBreed = (int) (myParameters.get(WatorSimulation.FISH_BREED_TIME) + 0.0);
+//                System.out.println("Fish breeds to location: "+newFish.getMyLocation());
+            }else{
+                myGrid.put(myLocation, new WatorEmpty(myLocation));
             }
+            myLocation = openSpots.get(0);
         }
-        myLocation = openSpots.get(0);
+//        System.out.println("Fish next location: "+myLocation);
     }
 
     @Override

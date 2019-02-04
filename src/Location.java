@@ -48,5 +48,8 @@ public class Location {
         return getRow() == otherLoc.getRow() && getCol() == otherLoc.getCol();
     }
 
-
+    @Override
+    public String toString() {
+        return "("+row+","+col+")";
+    }
 }

@@ -14,7 +14,8 @@ public class WatorShark extends WatorCell {
         super(loc, grid, parameters);
         myCurrentState = WatorState.SHARK;
         turnsSinceLastAte = 0;
-        starveTime = (int) (parameters.get("starveTime") + 0.0);
+        starveTime = (int) (parameters.get(WatorSimulation.STARVE_TIME) + 0.0);
+        turnsUntilCanBreed = (int) (parameters.get(WatorSimulation.SHARK_BREED_TIME) + 0.0);
     }
 
     @Override
@@ -42,7 +43,8 @@ public class WatorShark extends WatorCell {
                 Location offspringLocation = openSpots.get(0);
                 WatorShark newShark = new WatorShark(offspringLocation, myGrid, myParameters);
                 myGrid.put(newShark.getMyLocation(), newShark);
-                turnsUntilCanBreed = (int) (myParameters.get("breedTime") + 0.0);
+                turnsUntilCanBreed = (int) (myParameters.get(WatorSimulation.SHARK_BREED_TIME) + 0.0);
+//                System.out.println("Shark at location "+ myLocation + " breeds to location: "+newShark.getMyLocation());
             }
         }
     }
@@ -50,11 +52,13 @@ public class WatorShark extends WatorCell {
     private void tryToMove() {
         ArrayList<Location> emptyLocations = myGrid.getEmptyAdjacentLocations(myLocation);
         if (emptyLocations.size() > 0){
+//            System.out.println("Shark is going to move from location "+myLocation);
             Collections.shuffle(emptyLocations);
             Location newLocation = emptyLocations.get(0);
             myGrid.put(newLocation, this);
             myGrid.remove(myLocation);
             myLocation = newLocation;
+//            System.out.println("Shark is now at location: "+myLocation);
         }
     }
 
