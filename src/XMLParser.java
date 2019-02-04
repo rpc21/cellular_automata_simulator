@@ -23,6 +23,13 @@ import java.util.List;
 public class XMLParser {
     // Readable error message that can be displayed by the GUI
     public static final String ERROR_MESSAGE = "XML file does not represent %s";
+    public static final String ROW_TAG_NAME="rows";
+    public static final String COLUMN_TAG_NAME="columns";
+    public static final String SIMULATION_TYPE_TAG_NAME="simulationType";
+    public static final String CELL_ROWS_TAG_NAME="CellRows";
+    public static final String CELL_COLUMNS_TAG_NAME="CellColumns";
+    public static final String RANDOM_STRING="random";
+    public static final String GEN_STATES_TAG_NAME="GenerateStatesBy";
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
     // keep only one documentBuilder because it is expensive to make and can reset it before parsing
@@ -47,18 +54,18 @@ public class XMLParser {
 //            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
 //        }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
-        String simulationType = simulationParams.get("simulationType");
-        int rows = Integer.parseInt(simulationParams.get("rows"));
-        int cols = Integer.parseInt(simulationParams.get("columns"));
+        String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
+        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
+        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
 
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);
         HashMap<String, String> theCredentials = getCredentials(root);
-        String howToSetInitialStates = getTextValue(root, "GenerateStatesBy");
+        String howToSetInitialStates = getTextValue(root, GEN_STATES_TAG_NAME);
 
         SimulationFactory mySimulationFactory = new SimulationFactory();
         Simulation mySim;
-        if(howToSetInitialStates.equals("random")){
+        if(howToSetInitialStates.equals(RANDOM_STRING)){
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
         }else{
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
@@ -112,32 +119,9 @@ public class XMLParser {
         return GOLSimulation.GOL_DATA_FIELDS;
     }
 
-    //expects states to be ints
-//    private int[][] parseGrid(Element root, int rows, int cols, String simulationType){
-//        NodeList cellRows = root.getElementsByTagName("CellRows");
-//        int[][] specifiedStates = new int[rows][cols];
-//        if ((cellRows != null))
-//            for (int i = 0; i < cellRows.getLength(); i++) {
-//                NodeList columnsList = cellRows.item(i).getChildNodes();
-//                if ((columnsList != null)){
-//                    int colCount=0;
-//                    for (int j = 0; j < columnsList.getLength(); j++) {
-//                        var state = columnsList.item(j);
-//                        if ("CellColumns".equals(state.getNodeName())) {
-//                            System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
-//                            specifiedStates[i][colCount] = Integer.parseInt(state.getTextContent());//+
-//                            // calcStateOffset(simulationType);
-//                            colCount++;
-//                        }
-//                    }
-//                }
-//            }
-//        return specifiedStates;
-//    }
-
     //expect states to be Strings
     private String[][] parseGrid(Element root, int rows, int cols, String simulationType){
-        NodeList cellRows = root.getElementsByTagName("CellRows");
+        NodeList cellRows = root.getElementsByTagName(CELL_ROWS_TAG_NAME);
         String[][] specifiedStates = new String[rows][cols];
         if ((cellRows != null))
             for (int i = 0; i < cellRows.getLength(); i++) {
@@ -146,13 +130,8 @@ public class XMLParser {
                     int colCount=0;
                     for (int j = 0; j < columnsList.getLength(); j++) {
                         var state = columnsList.item(j);
-                        if ("CellColumns".equals(state.getNodeName())) {
+                        if (CELL_COLUMNS_TAG_NAME.equals(state.getNodeName())) {
                             System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
-//                            try{
-//                                //specifiedStates[i][colCount]=Integer.parseInt(state.getTextContent());
-//                            } catch(NumberFormatException e){
-//                                specifiedStates[i][colCount] = state.getTextContent();
-//                            }
                             specifiedStates[i][colCount] = state.getTextContent();
                             colCount++;
                         }
@@ -160,32 +139,6 @@ public class XMLParser {
                 }
             }
         return specifiedStates;
-    }
-
-//    private Simulation generateSimulation(HashMap<String, String> simulationParams){
-//        String simulationType = simulationParams.get("simulationType");
-//        int rows = Integer.parseInt(simulationParams.get("rows"));
-//        int cols = Integer.parseInt(simulationParams.get("columns"));
-//        if (simulationType.equals("Game of Life")){
-//            return new GOLSimulation(rows, cols);
-//        }
-//        else if (simulationType.equals("Spreading Fire")){
-//            return new SpreadingFireSimulation(rows, cols);
-//        }
-//        else if (simulationType.equals("Percolation")){
-//            return new PercolationSimulation(rows, cols);
-//        }
-//        else if (simulationType.equals("Segregation")){ return new SegregationSimulation(rows, cols); }
-//        return new GOLSimulation(rows, cols);
-//    }
-
-    private int calcStateOffset(String simulationType){
-        HashMap<String, Integer> simulationToOffsetMap = new HashMap<String, Integer>();
-        simulationToOffsetMap.put("GOLSimulation", 1200);
-        simulationToOffsetMap.put("Spreading Fire", 140002);
-        simulationToOffsetMap.put("Percolation", 150002);
-        simulationToOffsetMap.put("Segregation", 13700);
-        return simulationToOffsetMap.get(simulationType);
     }
 
     // Get root element of an XML file
