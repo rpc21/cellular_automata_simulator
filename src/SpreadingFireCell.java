@@ -19,7 +19,7 @@ public class SpreadingFireCell extends Cell {
 
     public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid){
         this(loc, startingState, grid, new HashMap<>());
-        myParameters.put("probCatch", 1.0D);
+        myParameters.put(SpreadingFireSimulation.PROB_CATCH, 1.0D);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SpreadingFireCell extends Cell {
             }
         }
         double randomNumber = Math.random();
-        return nextToTreeOnFire && (randomNumber <= myParameters.get("probCatch"));
+        return nextToTreeOnFire && (randomNumber <= myParameters.get(SpreadingFireSimulation.PROB_CATCH));
     }
 
     public boolean isOnFire() {
