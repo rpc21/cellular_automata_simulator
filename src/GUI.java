@@ -1,17 +1,13 @@
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 
 public class GUI {
     private Stage myStage;
@@ -20,10 +16,10 @@ public class GUI {
     private Timeline myAnimation;
     private KeyFrame myFrame;
     private Group myNode;
-    private XMLParser myParser = new XMLParser(Simulation.DATA_TYPE);
 
     private GUISimulationFactory myGUISimulationFactory;
     private SimulationFactory mySimFact = new SimulationFactory();
+    private XMLParser myNewSimFact;
     private GUIGrid myGUIGrid;
     private GUIDefaultPanel myGUIDefaultPanel;
     private GUISimulationPanel myGUISimulationPanel;
@@ -31,6 +27,12 @@ public class GUI {
         @Override
         public void guiGridStep() {
             step();
+        }
+    };
+    GUIReset myResetFunction = new GUIReset() {
+        @Override
+        public void guiReset() {
+            resetWithParams();
         }
     };
     private Credentials myCredentials;
@@ -46,15 +48,7 @@ public class GUI {
         mySimulation = sim;
         myNode = new Group();
         myGUISimulationFactory = new GUISimulationFactory();
-        myGUISimulationPanel = new GUIGameOfLifePanel(sim);
-        myFrame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
-        myScene = new Scene(myNode,STAGE_SIZE,STAGE_SIZE,BACKGROUND_COLOR);
-        myStage.setScene(myScene);
-        myStage.setTitle(STAGE_TITLE);
-        myStage.show();
-        myAnimation = new Timeline();
-        myAnimation.setCycleCount(Timeline.INDEFINITE);
-        myAnimation.getKeyFrames().add(myFrame);
+        render();
         makeGUIParts();
     }
     public void render(){
@@ -69,49 +63,51 @@ public class GUI {
     }
 
     public void step(){
-        if (myGUIDefaultPanel.getResetClicks()) {
-            HashMap<String,Double> sampleMap = new HashMap<>();
-            sampleMap.put(GOLSimulation.ALIVE_PERCENTAGE, .1);
-            sampleMap.put(GOLSimulation.DEAD_PERCENTAGE, .9);
-            if (true) {
-                mySimulation = mySimFact.generateSimulation(myGUIDefaultPanel.getMyBasicParams(), sampleMap);
-                System.out.println("**********" + mySimulation.getMyGrid().getNumRows());
-                myGUISimulationPanel = myGUISimulationFactory.makeSimulationPanel(mySimulation.getMyName(), mySimulation);
-                myNode = new Group();
-                myNode.getChildren().addAll(myGUISimulationPanel.getGUISimulationPanel());
-                makeGUIParts();
-                render();
-            }
-            else
-                resetSimulation();
-        }
-        else {
             mySimulation.updateGrid();
             myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
         }
+
+    public void resetWithParams(){
+        if (myGUISimulationPanel.getName().equals(myGUIDefaultPanel.getSimName()))
+            mySimulation = mySimFact.generateSimulation(myGUIDefaultPanel.getMyBasicParams(), myGUISimulationPanel.getMyParams());
+        else {
+            File file;
+            if (!myGUIDefaultPanel.getSimName().equals(GOLSimulation.GOL_SIMULATION_NAME))
+                file = new File("tests/" + myGUIDefaultPanel.getSimName().replaceAll(" ","") + "Test.xml");
+            else
+                file = new File("tests/GOLTest.xml");
+            var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
+            try {
+                mySimulation = p;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        myNode = new Group();
+        makeGUIParts();
+        render();
     }
+
+//    public void resetWithoutParams(){
+//        File file = new File(myGUIDefaultPanel.getSimName());
+//        var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
+//        try{
+//            mySimulation = p;
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        myNode = new Group();
+//        makeGUIParts();
+//        render();
+//    }
 
     private void makeGUIParts(){
         myGUIGrid = new GUIGrid(mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
         myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
-        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myAnimation,myFrame,mySimulation.getMyName(),mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
-        myCredentials = new Credentials("why","why");
-        myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel(),myCredentials.getMyCredentials());
-    }
-    private void resetSimulation(){
-        String newSim = myGUIDefaultPanel.getSimName();
-        File file = new File(myGUISimulationFactory.makeXMLFileName(newSim));
-        var sim = myParser.getSimulation(file);
-        try{
-            mySimulation = sim;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        myGUISimulationPanel = myGUISimulationFactory.makeSimulationPanel(newSim,mySimulation);
-        myNode = new Group();
-        myNode.getChildren().addAll(myGUISimulationPanel.getGUISimulationPanel());
-        makeGUIParts();
-        render();
+        myGUISimulationPanel = myGUISimulationFactory.makeSimulationPanel(mySimulation.getMyName(), mySimulation);
+        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction,myAnimation,myFrame,mySimulation.getMyName(),mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
+        myCredentials = new Credentials(mySimulation.getMyName(),"Dima, Ryan, and Anna");
+        myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel(),myCredentials.getMyCredentials(),myGUISimulationPanel.getGUISimulationPanel());
     }
 
 

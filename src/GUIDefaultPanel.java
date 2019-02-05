@@ -31,6 +31,7 @@ public class GUIDefaultPanel extends GUIPanel {
     private Button myResetButton;
 
     private GUIGridStep myStepFunction;
+    private GUIReset myResetFunction;
     private Timeline myAnimation;
     private KeyFrame myFrame;
     private String myName;
@@ -43,8 +44,9 @@ public class GUIDefaultPanel extends GUIPanel {
     private static final int FRAMES_PER_SECOND = 60;
     public static final int DEFAULT_CONTROL_SPACING = 40;
 
-    public GUIDefaultPanel(GUIGridStep step, Timeline timeline, KeyFrame frame, String simName, int rows, int cols){
+    public GUIDefaultPanel(GUIGridStep step, GUIReset reset, Timeline timeline, KeyFrame frame, String simName, int rows, int cols){
         myStepFunction = step;
+        myResetFunction = reset;
         myAnimation = timeline;
         myFrame = frame;
         myName = simName;
@@ -75,7 +77,7 @@ public class GUIDefaultPanel extends GUIPanel {
     }
 
     private void makePlayButton() {
-        myPlayButton = new Button("Play");
+        myPlayButton = new Button("Play/Pause");
         myPlayButton.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         myPlayButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -160,9 +162,6 @@ public class GUIDefaultPanel extends GUIPanel {
             iter++;
         }
     }
-    public int getMyRows(){
-        return myRowSpinner.getValue();
-    }
     private void makeRowsAndColsSetters(int rows, int cols){
         myRowSpinner = setUpSpinner(3,50, rows);
         myRowSpinner.valueProperty().addListener(new ChangeListener<Number>() {
@@ -199,8 +198,9 @@ public class GUIDefaultPanel extends GUIPanel {
         myResetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                myAnimation.pause();
                 setResetClicked();
-                myStepFunction.guiGridStep();
+                myResetFunction.guiReset();
             }
         });
         myDefaultControls.add(myResetButton);

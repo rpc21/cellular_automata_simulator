@@ -99,6 +99,10 @@ public abstract class Simulation {
 //        System.out.println("Initial states set");
     }
 
+    public HashMap<String,Double> getInitialParams(){
+        return myParameters;
+    }
+
 
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, int state, Grid grid,
                                                 HashMap<String, Double> parameters){
@@ -156,5 +160,7 @@ public abstract class Simulation {
     public abstract String getMyName();
 
     public abstract List<String> getPercentageFields();
+
+
 
 }
