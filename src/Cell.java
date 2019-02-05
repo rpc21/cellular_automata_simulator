@@ -14,7 +14,6 @@ public abstract class Cell {
     protected Shape myShape; //TODO: Is this actually handled by visualization?
     protected CellState myCurrentState;
     protected CellState myNextState;
-    protected boolean empty;
     protected Map<String, Double> myParameters;
 
 
@@ -161,15 +160,7 @@ public abstract class Cell {
      * @return if this cell is empty or not
      */
     public boolean isEmpty() {
-        return empty;
-    }
-
-    /**
-     * Set the value of the empty instance variable
-     * @param empty boolean of whether cell should be empty or not
-     */
-    public void setEmpty(boolean empty) {
-        this.empty = empty;
+        return false;
     }
 
     /**
@@ -181,6 +172,10 @@ public abstract class Cell {
         return myCurrentState.getMyCellColor();
     }
 
+    /**
+     * Get the string of length one representation of the cell
+     * @return a string of length one that represents the state of the cell
+     */
     @Override
     public String toString() {
         return myCurrentState.getMyShortenedName();

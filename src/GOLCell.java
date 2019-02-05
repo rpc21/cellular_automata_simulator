@@ -53,12 +53,6 @@ public class GOLCell extends Cell{
         }
     }
 
-    //TODO: Decided to not use because it is just the else of needsToLive and just having these two caused us to miss
-    // cases leading to NPEs, permission to delete?
-    private boolean needsToDie(int numAlive){
-        return ((isAlive() && numAlive < 2)|| (isAlive() && numAlive > 3));
-    }
-
     private boolean needsToLive(int numAlive){
         return ((isAlive() && numAlive == 2) || (isAlive() && numAlive == 3) || (!isAlive() && numAlive==3));
     }
@@ -81,25 +75,6 @@ public class GOLCell extends Cell{
     public boolean isAlive() {
         return (myCurrentState == GOLState.ALIVE);
     }
-
-    /**
-     * Return a String of length 1 representing the state of the cell
-     * @return String of length 1 representing the state of the cell as defined in GOLState Enum
-     */
-    @Override
-    public String toString() {
-        return myCurrentState.getMyShortenedName();
-    }
-
-    /**
-     * Return the color to display to represent the state of this cell
-     * @return Color to display for this state as defined in GOLState Enum
-     */
-    @Override
-    public Color getMyColor() {
-        return myCurrentState.getMyCellColor();
-    }
-
 
 }
 

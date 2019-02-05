@@ -36,11 +36,6 @@ public enum GOLState implements CellState{
         return myShortenedName;
     }
 
-    //TODO: TBH I don't really think we use this: I think we can get rid of it
-    @Override
-    public String getMyFullState() {
-        return myFullState;
-    }
 
     /**
      * Return the color to display representing the state of the cell
