@@ -50,22 +50,22 @@ public class WatorSimulation extends Simulation {
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
-                System.out.println("Creating a "+simulationType+" cell");
+//                System.out.println("Creating a "+simulationType+" cell");
                 Cell newCell = generateWATORSpecificCell(simulationType, thisLocation, initialStates[i][j],
                         myGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
+//                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
+//                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
                 getMyGrid().put(newCell.getMyLocation(), newCell);
             }
         }
         getMyGrid().printGrid();
-        System.out.println("Initial states set");
+//        System.out.println("Initial states set");
     }
 
     private Cell generateWATORSpecificCell(String simulationType, Location thisLocation, String state, Grid grid,
                                            HashMap<String, Double> parameters) {
-        System.out.println(state);
-        System.out.println(state + " " + WatorState.valueOf(state));
+//        System.out.println(state);
+//        System.out.println(state + " " + WatorState.valueOf(state));
         if (WatorState.valueOf(state) == WatorState.FISH){
             return new WatorFish(thisLocation, grid, parameters);
         }

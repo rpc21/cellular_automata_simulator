@@ -21,87 +21,91 @@ public class GUIWatorPanel extends GUISimulationPanel {
     private Spinner<Integer> mySharkPercentSpinner;
     private Text myFishPercentBox;
     private Spinner<Integer> myFishPercentSpinner;
-    private int percentEmpty = 20;
+    private Text myEmptyPercentBox;
+    private Spinner<Integer> myEmptyPercentSpinner;
     private HashMap<String,Double>  myMap = new HashMap<String,Double>();
 
     private static final int MIN_TURNS = 0;
-    private static final int MAX_TURNS = 10;
+    private static final int MAX_TURNS = 20;
 
     public GUIWatorPanel(Simulation mySim){
         super(mySim);
         mySimulation = mySim;
+
+        for (String paramName: mySim.getInitialParams().keySet() )
+            myMap.put(new String(paramName), new Double(mySim.getInitialParams().get(paramName)));
         
         myFishBreedTextBox = setUpLabel("Fish Breed");
         mySharkBreedTextBox = setUpLabel("Shark Breed");
         mySharkStarveTextBox = setUpLabel("Shark Starve");
         myFishPercentBox = setUpLabel("Fish Percent");
         mySharkPercentBox = setUpLabel("Shark Percent");
+        myEmptyPercentBox = setUpLabel("Water Percent");
 
-        myFishBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,5);
-        mySharkBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,5);
-        mySharkStarveSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,5);
-        mySharkPercentSpinner = setUpSpinner(0,100 - percentEmpty, (100-percentEmpty)/2);
-        myFishPercentSpinner = setUpSpinner(0, 100 - percentEmpty, (100-percentEmpty)/2);
+        myFishBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.FISH_BREED_TIME) *1.0));
+        mySharkBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.SHARK_BREED_TIME)*1.0));
+        mySharkStarveSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.STARVE_TIME)*1.0));
+        mySharkPercentSpinner = setUpSpinner(0,100,(int)(myMap.get(WatorSimulation.SHARKS_PERCENTAGE)*100));
+        myFishPercentSpinner = setUpSpinner(0, 100, (int)(myMap.get(WatorSimulation.FISH_PERCENTAGE)*100));
+        myEmptyPercentSpinner = setUpSpinner(0,100, (int)(myMap.get(WatorSimulation.EMPTY_PERCENTAGE)*100));
 
-        myFishBreedSpinner.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myMap.remove("Fish Breed");
-                myMap.put("Fish Breed",myFishBreedSpinner.getValue() * 1.0);
-                mySimulation.updateNewParams(myMap);
-            }
-        });
         super.addToStackPane(myFishBreedTextBox,myFishBreedSpinner);
-
-
-        mySharkBreedSpinner.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myMap.remove("Shark Breed");
-                myMap.put("Shark Breed",mySharkBreedSpinner.getValue() * 1.0);
-                mySimulation.updateNewParams(myMap);
-            }
-        });
         super.addToStackPane(mySharkBreedTextBox,mySharkBreedSpinner);
-
-
-        mySharkStarveSpinner.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myMap.remove("Shark Starve");
-                myMap.put("Shark Starve",mySharkStarveSpinner.getValue() * 1.0);
-                mySimulation.updateNewParams(myMap);
-            }
-        });
         super.addToStackPane(mySharkStarveTextBox,mySharkStarveSpinner);
+        super.addToStackPane(mySharkPercentBox,mySharkPercentSpinner);
+        super.addToStackPane(myFishPercentBox,myFishPercentSpinner);
+        super.addToStackPane(myEmptyPercentBox,myEmptyPercentSpinner);
 
         mySharkPercentSpinner.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                if (myFishPercentSpinner.getValue() + mySharkPercentSpinner.getValue() > 100 - percentEmpty)
-                    myFishPercentSpinner.decrement(mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() - 100 + percentEmpty);
-                else
-                    myFishPercentSpinner.increment(100 - percentEmpty - (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue()));
-                myMap.remove("sharkPercentage");
-                myMap.put("sharkPercentage",mySharkPercentSpinner.getValue() * 1.0);
-                mySimulation.updateNewParams(myMap);
+                if ((myFishPercentSpinner.getValue() + mySharkPercentSpinner.getValue() + myEmptyPercentSpinner.getValue() != 100)) {
+                    if (myFishPercentSpinner.getValue() + mySharkPercentSpinner.getValue() > 100 - myEmptyPercentSpinner.getValue())
+                        myFishPercentSpinner.decrement(mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() - 100 + myEmptyPercentSpinner.getValue());
+                    else
+                        myFishPercentSpinner.increment(100 - myEmptyPercentSpinner.getValue() - (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue()));
+                }
             }
         });
-        super.addToStackPane(mySharkPercentBox,mySharkPercentSpinner);
 
         myFishPercentSpinner.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                if (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() > (100 - percentEmpty))
-                    mySharkPercentSpinner.decrement(mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() - 100 + percentEmpty );
-                else
-                    mySharkPercentSpinner.increment(100 - percentEmpty - (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue()));
-                myMap.remove("fishPercentage");
-                myMap.put("fishPercentage",myFishPercentSpinner.getValue() * 1.0);
-                mySimulation.updateNewParams(myMap);
+                if ((myFishPercentSpinner.getValue() + mySharkPercentSpinner.getValue() + myEmptyPercentSpinner.getValue() != 100)) {
+                    if (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() > (100 - myEmptyPercentSpinner.getValue()))
+                        mySharkPercentSpinner.decrement(mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() - 100 + myEmptyPercentSpinner.getValue());
+                    else
+                        mySharkPercentSpinner.increment(100 - myEmptyPercentSpinner.getValue() - (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue()));
+                }
             }
         });
-        super.addToStackPane(myFishPercentBox,myFishPercentSpinner);
 
+        myEmptyPercentSpinner.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                if (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() > (100 - myEmptyPercentSpinner.getValue())) {
+                    int decrement = mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue() - 100 + myEmptyPercentSpinner.getValue();
+                    mySharkPercentSpinner.decrement(decrement/2);
+                    myFishPercentSpinner.decrement(decrement - decrement/2);
+                }
+                else {
+                    int increment = 100 - myEmptyPercentSpinner.getValue() - (mySharkPercentSpinner.getValue() + myFishPercentSpinner.getValue());
+                    mySharkPercentSpinner.increment(increment/2);
+                    myFishPercentSpinner.increment(increment - increment/2);
+                }
+            }
+        });
+
+
+    }
+
+    public HashMap<String,Double> getMyParams(){
+        myMap.put(WatorSimulation.FISH_BREED_TIME,1.0* myFishBreedSpinner.getValue());
+        myMap.put(WatorSimulation.SHARK_BREED_TIME,1.0* mySharkBreedSpinner.getValue());
+        myMap.put(WatorSimulation.STARVE_TIME,1.0* mySharkStarveSpinner.getValue());
+        myMap.put(WatorSimulation.FISH_PERCENTAGE, 1.0* myFishPercentSpinner.getValue()/100);
+        myMap.put(WatorSimulation.SHARKS_PERCENTAGE, 1.0* mySharkPercentSpinner.getValue()/100);
+        myMap.put(WatorSimulation.EMPTY_PERCENTAGE, 1.0* myEmptyPercentSpinner.getValue()/100);
+        return myMap;
     }
 }

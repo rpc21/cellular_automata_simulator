@@ -1,7 +1,6 @@
 import javafx.scene.control.Control;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -55,6 +54,28 @@ public class GUISimulationPanel extends GUIPanel{
         myText.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         return myText;
     }
+
+    protected double getCurrentCount(Color col){
+        int count = 0;
+        for (Cell c: mySimulation.getMyGrid().getCells())
+            if (c.getMyColor().equals(col))
+                count++;
+        return 1.0 * count/mySimulation.getMyGrid().getCells().size();
+    }
+    public String getName(){
+        return mySimulation.getMyName();
+    }
+    protected double getInitParamValue(String key){
+        return mySimulation.getInitialParams().get(key);
+    }
+
+    protected void updateMyParams(String k, Double val){
+        myParamsMap.put(k,val);
+    }
+    public HashMap<String,Double> getMyParams(){
+        return myParamsMap;
+    }
+
 
 
 }
