@@ -11,13 +11,16 @@ public class SpreadingFireCell extends Cell {
     public SpreadingFireCell(Location location, SpreadingFireState initialState, Grid currentGrid, Grid nextGrid, HashMap<String,
             Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
+        myNeighbors = NeighborsDefinitions.ADJACENT;
     }
 
+    @Deprecated
     public SpreadingFireCell(Location location, int startingState, Grid grid, Grid nextGrid, HashMap<String,
             Double> parameters){
         this(location, SpreadingFireState.values()[startingState], grid, nextGrid, parameters);
     }
 
+    @Deprecated
     public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid, Grid nextGrid){
         this(loc, startingState, grid, nextGrid, new HashMap<>());
         myParameters.put(SpreadingFireSimulation.PROB_CATCH, 1.0D);
@@ -41,7 +44,7 @@ public class SpreadingFireCell extends Cell {
     }
 
     private boolean catchesFire() {
-        List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, SPREADING_FIRE_ROW_NEIGHBORS, SPREADING_FIRE_COL_NEIGHBORS);
+        List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, myNeighbors);
         boolean nextToTreeOnFire = false;
         for (Location loc : neighborLocations){
             SpreadingFireCell cell = (SpreadingFireCell) myGrid.get(loc);

@@ -16,6 +16,7 @@ public abstract class Cell {
     protected CellState myCurrentState;
     protected CellState myNextState;
     protected Map<String, Double> myParameters;
+    protected NeighborsDefinitions myNeighbors;
 
 
     /**

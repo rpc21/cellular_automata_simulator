@@ -166,6 +166,10 @@ public class BasicGrid implements Grid{
         return validLocations;
     }
 
+    public ArrayList<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions){
+        return getValidNeighbors(loc, neighborsDefinitions.getDeltaRow(), neighborsDefinitions.getDeltaCol());
+    }
+
     /**
      * Get the adjacent locations to a specified location where the cell is marked as empty
      * @param loc a location in this grid
