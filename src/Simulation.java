@@ -189,4 +189,8 @@ public abstract class Simulation {
         myGrid.put(location, newCell);
     }
 
+    public List<String> getMyPossibleStates(){
+        return myGrid.getCells().get(0).myCurrentState.getPossibleValues();
+    }
+
 }

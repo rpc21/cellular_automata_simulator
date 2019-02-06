@@ -1,5 +1,7 @@
 import javafx.scene.paint.Color;
 
+import java.util.List;
+
 /**
  * The CellState interface is used to unify the state enums of the different cells to allow enums to be passed to
  * cell constructors and for their values to be held in instance variables in the cells.  All CellStates should have
@@ -20,4 +22,6 @@ public interface CellState {
      * @return a Color representing the state of the cell
      */
     Color getMyCellColor();
+
+    List<String> getPossibleValues();
 }

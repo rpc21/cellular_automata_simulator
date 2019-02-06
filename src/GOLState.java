@@ -1,5 +1,10 @@
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * GOLState is an Enum that defines all the possible states for a GOLCell
  * There are two states: DEAD and ALIVE
@@ -45,4 +50,14 @@ public enum GOLState implements CellState{
     public Color getMyCellColor() {
         return myCellColor;
     }
+
+    @Override
+    public List<String> getPossibleValues() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i< values().length; i++){
+            arrayList.add(myFullState);
+        }
+        return arrayList;
+    }
+
 }
