@@ -23,13 +23,19 @@ public enum GOLState implements CellState{
         myCellColor = cellColor;
     }
 
-    /**
-     * Return a character representation of the cell state
-     * @return a String of length 1 representing the state of the cell
-     */
+//    /**
+//     * Return a character representation of the cell state
+//     * @return a String of length 1 representing the state of the cell
+//     */
+//    @Override
+//    public String toString() {
+//        return myShortenedName;
+//    }
+
+
     @Override
     public String toString() {
-        return myShortenedName;
+        return myFullState;
     }
 
     /**
