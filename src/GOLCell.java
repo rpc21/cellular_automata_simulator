@@ -18,10 +18,10 @@ public class GOLCell extends Cell{
      * Constructor for GOLCell, calls the super constructor from Cell abstract class
      * @param location location of the cell
      * @param initialState initial state of the cell - must be a GOLState (either dead or alive)
-     * @param grid grid used in the simulation
+     * @param currentGrid grid used in the simulation
      */
-    public GOLCell(Location location, GOLState initialState, Grid grid){
-        super(location, initialState, grid);
+    public GOLCell(Location location, GOLState initialState, Grid currentGrid, Grid nextGrid){
+        super(location, initialState, currentGrid, nextGrid);
     }
 
     /**
@@ -30,8 +30,8 @@ public class GOLCell extends Cell{
      * @param initialState initial state represented as an int, used to convert into a GOLState (0 for DEAD 1 for ALIVE)
      * @param grid grid used in the simulation
      */
-    public GOLCell(Location location, int initialState, Grid grid){
-        this(location, GOLState.values()[initialState], grid);
+    public GOLCell(Location location, int initialState, Grid grid, Grid nextGrid){
+        this(location, GOLState.values()[initialState], grid, nextGrid);
     }
 
     /**

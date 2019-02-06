@@ -10,6 +10,7 @@ import java.util.List;
  */
 public abstract class Cell {
     protected Grid myGrid;
+    protected Grid myNextGrid;
     protected Location myLocation;
     protected Shape myShape; //TODO: Is this actually handled by visualization?
     protected CellState myCurrentState;
@@ -27,11 +28,12 @@ public abstract class Cell {
      * Super constructor used for common idioms in sub-classes: used to avoid duplicate code
      * @param location is the location of the cell
      * @param initialState is the cell's initial state (needs to implement CellState interface or be null)
-     * @param grid is the grid that the cell is a part of
+     * @param currentGrid is the grid that the cell is a part of
      */
-    public Cell(Location location, CellState initialState, Grid grid){
-        myGrid = grid;
+    public Cell(Location location, CellState initialState, Grid currentGrid, Grid nextGrid){
+        myGrid = currentGrid;
         myCurrentState = initialState;
+        myNextGrid = nextGrid;
         myNextState = null;
         myLocation=location;
     }
@@ -40,11 +42,12 @@ public abstract class Cell {
      * Super constructor used for common cell idioms in sub-classes: used to avoid duplicate code
      * @param location is the location of the cell
      * @param initialState is the cell's initial state (needs to implement CellState interface or be null)
-     * @param grid is the grid that the cell is a part of
+     * @param currentGrid is the grid that the cell is a part of
      * @param parameters is a HashMap<String, Double> that specifies the simulation specific parameters
      */
-    public Cell(Location location, CellState initialState, Grid grid, HashMap<String, Double> parameters){
-        this(location, initialState, grid);
+    public Cell(Location location, CellState initialState, Grid currentGrid, Grid nextGrid,
+                HashMap<String, Double> parameters){
+        this(location, initialState, currentGrid, nextGrid);
         myParameters = parameters;
     }
 

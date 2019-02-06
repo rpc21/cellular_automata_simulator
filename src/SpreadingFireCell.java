@@ -8,17 +8,18 @@ public class SpreadingFireCell extends Cell {
     private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
     //Name of parameter -> probCatch
 
-    public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid, HashMap<String, Double> parameters){
-        super(loc, startingState, grid, parameters);
-    }
-
-    public SpreadingFireCell(Location location, int startingState, Grid grid, HashMap<String,
+    public SpreadingFireCell(Location location, SpreadingFireState initialState, Grid currentGrid, Grid nextGrid, HashMap<String,
             Double> parameters){
-        this(location, SpreadingFireState.values()[startingState], grid, parameters);
+        super(location, initialState, currentGrid, nextGrid, parameters);
     }
 
-    public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid){
-        this(loc, startingState, grid, new HashMap<>());
+    public SpreadingFireCell(Location location, int startingState, Grid grid, Grid nextGrid, HashMap<String,
+            Double> parameters){
+        this(location, SpreadingFireState.values()[startingState], grid, nextGrid, parameters);
+    }
+
+    public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid, Grid nextGrid){
+        this(loc, startingState, grid, nextGrid, new HashMap<>());
         myParameters.put(SpreadingFireSimulation.PROB_CATCH, 1.0D);
     }
 

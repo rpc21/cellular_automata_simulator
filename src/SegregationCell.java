@@ -10,14 +10,14 @@ public class SegregationCell extends MovableCell{
     private static int[] SEGREGATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
     private boolean toBeMoved = false;
 
-    public SegregationCell(Location location, SegregationState initialState, Grid grid, HashMap<String,
+    public SegregationCell(Location location, SegregationState initialState, Grid currentGrid, Grid nextGrid, HashMap<String,
             Double> parameters){
-        super(location, initialState, grid, parameters);
+        super(location, initialState, currentGrid, nextGrid, parameters);
     }
 
-    public SegregationCell(Location location, int initialState, Grid grid, HashMap<String,
+    public SegregationCell(Location location, int initialState, Grid grid, Grid nextGrid, HashMap<String,
             Double> parameters){
-        this(location, SegregationState.values()[initialState], grid, parameters);
+        this(location, SegregationState.values()[initialState], grid, nextGrid, parameters);
     }
 
     @Override

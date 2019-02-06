@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.DoubleUnaryOperator;
 
 public abstract class Simulation {
 
@@ -13,6 +12,7 @@ public abstract class Simulation {
     public static final String TITLE_CREDENTIAL="title";
     public static final String AUTHOR_CREDENTIAL="author";
     protected Grid myGrid;
+    protected Grid myNextGrid;
     protected boolean simulationOver;
     protected HashMap<String, String> credentials;
     protected HashMap<String, Double> myParameters;
@@ -93,7 +93,7 @@ public abstract class Simulation {
                 Location thisLocation = new Location(i, j);
                 System.out.println("Creating a "+simulationType+" cell");
                 Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
-                        myGrid, parameters);
+                        myGrid, myNextGrid, parameters);
                 System.out.println(newCell + " to be inserted at "+ i + ", "+j);
                 System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
                 getMyGrid().put(newCell.getMyLocation(), newCell);
@@ -109,7 +109,7 @@ public abstract class Simulation {
                 Location thisLocation = new Location(i, j);
                 System.out.println("Creating a "+simulationType+" cell");
                 Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
-                        myGrid, parameters);
+                        myGrid, myNextGrid, parameters);
                 System.out.println(newCell + " to be inserted at "+ i + ", "+j);
                 System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
                 getMyGrid().put(newCell.getMyLocation(), newCell);
@@ -120,32 +120,33 @@ public abstract class Simulation {
     }
 
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, int state, Grid grid,
+                                                Grid nextGrid,
                                                 HashMap<String, Double> parameters){
         if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, state, grid);
+            return new GOLCell(loc, state, grid, nextGrid);
         }
         else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, state, grid, parameters);
+            return new SpreadingFireCell(loc, state, grid, nextGrid, parameters);
         }
         else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, state, grid);
+            return new PercolationCell(loc, state, grid, nextGrid);
         }
         else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, state, grid, parameters);
+            return new SegregationCell(loc, state, grid, nextGrid, parameters);
         }
         else if (simulationType.equals("Wator")){
-            return generateWatorCell(loc, grid, parameters);
+            return generateWatorCell(loc, grid, nextGrid, parameters);
         }
-        return new GOLCell(loc, state, grid);
+        return new GOLCell(loc, state, nextGrid, grid);
     }
 
-    private WatorCell generateWatorCell(Location loc, Grid grid, HashMap<String, Double> parameters){
+    private WatorCell generateWatorCell(Location loc, Grid grid, Grid nextGrid, HashMap<String, Double> parameters){
         double randomNumber = Math.random();
         if (randomNumber <= parameters.get("fishPercentage")){
-            return new WatorFish(loc, grid, parameters);
+            return new WatorFish(loc, grid, nextGrid, parameters);
         }
         else if (randomNumber <= parameters.get("fishPercentage") + parameters.get("sharkPercentage")){
-            return new WatorShark(loc, grid, parameters);
+            return new WatorShark(loc, grid, nextGrid, parameters);
         }
         else{
             return new WatorEmpty(loc);
@@ -153,23 +154,24 @@ public abstract class Simulation {
     }
 
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, String state, Grid grid,
+                                                Grid nextGrid,
                                                 HashMap<String, Double> parameters){
         if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, GOLState.valueOf(state), grid);
+            return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
         }
         else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, SpreadingFireState.valueOf(state), grid, parameters);
+            return new SpreadingFireCell(loc, SpreadingFireState.valueOf(state), grid, nextGrid, parameters);
         }
         else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, PercolationState.valueOf(state), grid);
+            return new PercolationCell(loc, PercolationState.valueOf(state), grid, nextGrid);
         }
         else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, SegregationState.valueOf(state), grid, parameters);
+            return new SegregationCell(loc, SegregationState.valueOf(state), grid, nextGrid, parameters);
         }
         else if (simulationType.equals("Wator")) {
-            return generateWatorCell(loc, grid, parameters);
+            return generateWatorCell(loc, grid, nextGrid, parameters);
         }
-        return new GOLCell(loc, GOLState.valueOf(state), grid);
+        return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
     }
 
     public abstract String getMyName();

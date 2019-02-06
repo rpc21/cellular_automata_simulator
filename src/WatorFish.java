@@ -15,8 +15,8 @@ public class WatorFish extends WatorCell {
      * @param grid grid of WatorCells in which this Fish is held
      * @param parameters parameters for the fish
      */
-    public WatorFish(Location loc, Grid grid, Map<String, Double> parameters){
-        super(loc, grid, parameters);
+    public WatorFish(Location loc, Grid grid, Grid nextGrid, Map<String, Double> parameters){
+        super(loc, grid, nextGrid, parameters);
         myCurrentState = WatorState.FISH;
         turnsUntilCanBreed = (int) (parameters.get(WatorSimulation.FISH_BREED_TIME) + 0.0);
     }
@@ -38,7 +38,7 @@ public class WatorFish extends WatorCell {
             Collections.shuffle(openSpots);
             moveTo(openSpots.get(0));
             if(turnsUntilCanBreed <= 0){
-                WatorFish newFish = new WatorFish(oldLocation, myGrid, myParameters);
+                WatorFish newFish = new WatorFish(oldLocation, myGrid, myNextGrid, myParameters);
                 myGrid.put(newFish.getMyLocation(), newFish);
                 turnsUntilCanBreed = (int) Math.floor(myParameters.get(WatorSimulation.FISH_BREED_TIME));
             }else{
