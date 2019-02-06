@@ -14,14 +14,14 @@ public class PercolationCell extends Cell {
     private static int[] PERCOLATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1,1};
 
 
-    /**
-     * Constructor for PercolationCell taking in a PercolationState as a CellState
-     * @param loc location of the cell in the grid
-     * @param startingState the starting state of the cell (can be PERCOLATED, OPEN or CLOSED
-     * @param grid grid used for the simulation (that will contain the cell
-     */
-    public PercolationCell(Location loc, PercolationState startingState, Grid grid){
-        super(loc, startingState, grid);
+//    /**
+//     * Constructor for PercolationCell taking in a PercolationState as a CellState
+//     * @param loc location of the cell in the grid
+//     * @param startingState the starting state of the cell (can be PERCOLATED, OPEN or CLOSED
+//     * @param grid grid used for the simulation (that will contain the cell
+//     */
+    public PercolationCell(Location location, PercolationState initialState, Grid currentGrid, Grid nextGrid){
+        super(location, initialState, currentGrid, nextGrid);
     }
 
     /**
@@ -30,8 +30,8 @@ public class PercolationCell extends Cell {
      * @param startingState an int corresponding to the desired PercolationState
      * @param grid grid used for the simulation (that will contain the cell)
      */
-    public PercolationCell(Location loc, int startingState, Grid grid){
-        this(loc, PercolationState.values()[startingState], grid);
+    public PercolationCell(Location loc, int startingState, Grid grid, Grid nextGrid){
+        this(loc, PercolationState.values()[startingState], grid, nextGrid);
     }
 
     /**

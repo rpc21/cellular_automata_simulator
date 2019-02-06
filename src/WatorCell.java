@@ -22,9 +22,10 @@ public abstract class WatorCell extends Cell {
         super();
     }
 
-    public WatorCell(Location loc, Grid grid, Map<String, Double> parameters){
-        myLocation = loc;
-        myGrid = grid;
+    public WatorCell(Location location, Grid currentGrid, Grid nextGrid, Map<String, Double> parameters){
+        myLocation = location;
+        myGrid = currentGrid;
+        myNextGrid = nextGrid;
         myParameters = parameters;
 //        turnsUntilCanBreed = (int) (parameters.get("breedTime") + Math.random() * 3);
     }
