@@ -10,8 +10,8 @@ public class WatorShark extends WatorCell {
     private int turnsUntilCanBreed;
     private int starveTime;
 
-    public WatorShark(Location loc, Grid grid, Map<String, Double> parameters){
-        super(loc, grid, parameters);
+    public WatorShark(Location loc, Grid grid, Grid nextGrid, Map<String, Double> parameters){
+        super(loc, grid, nextGrid, parameters);
         myCurrentState = WatorState.SHARK;
         turnsSinceLastAte = 0;
         starveTime = (int) (parameters.get(WatorSimulation.STARVE_TIME) + 0.0);
@@ -41,7 +41,7 @@ public class WatorShark extends WatorCell {
             if(openSpots.size() > 0){
                 Collections.shuffle(openSpots);
                 Location offspringLocation = openSpots.get(0);
-                WatorShark newShark = new WatorShark(offspringLocation, myGrid, myParameters);
+                WatorShark newShark = new WatorShark(offspringLocation, myGrid, myNextGrid, myParameters);
                 myGrid.put(newShark.getMyLocation(), newShark);
                 turnsUntilCanBreed = (int) Math.floor(myParameters.get(WatorSimulation.SHARK_BREED_TIME));
             }

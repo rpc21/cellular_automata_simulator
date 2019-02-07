@@ -16,4 +16,9 @@ public class WrapAroundGrid extends BasicGrid {
         }
         return validNeighbors;
     }
+
+    @Override
+    public ArrayList<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions) {
+        return getValidNeighbors(loc, neighborsDefinitions.getDeltaRow(), neighborsDefinitions.getDeltaCol());
+    }
 }

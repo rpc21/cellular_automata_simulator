@@ -11,13 +11,14 @@ public abstract class MovableCell extends Cell {
      */
     protected Location myNextLocation;
 
-    public MovableCell(Location location, CellState initialState, Grid grid) {
-        super(location, initialState, grid);
+    public MovableCell(Location location, CellState initialState, Grid grid, Grid nextGrid) {
+        super(location, initialState, grid, nextGrid);
         this.myNextLocation = null;
     }
 
-    public MovableCell(Location loc, CellState startingState, Grid grid, HashMap<String, Double> parameters) {
-        super(loc, startingState, grid, parameters);
+    public MovableCell(Location loc, CellState startingState, Grid grid, Grid nextGrid, HashMap<String,
+                       Double> parameters) {
+        super(loc, startingState, grid, nextGrid, parameters);
         this.myNextLocation = null;
     }
 

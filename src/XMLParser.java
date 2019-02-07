@@ -23,8 +23,8 @@ import java.util.List;
 public class XMLParser {
     // Readable error message that can be displayed by the GUI
     public static final String ERROR_MESSAGE = "XML file does not represent %s";
-    public static final String ROW_TAG_VIS="rows";
-    public static final String COLUMN_TAG_VIS="columns";
+    public static final String ROW_TAG_NAME="rows";
+    public static final String COLUMN_TAG_NAME="columns";
     public static final String SIMULATION_TYPE_TAG_NAME="simulationType";
     public static final String CELL_ROWS_TAG_NAME="CellRows";
     public static final String CELL_COLUMNS_TAG_NAME="CellColumns";
@@ -55,8 +55,8 @@ public class XMLParser {
 //        }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
-        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_VIS));
-        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_VIS));
+        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
+        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
 
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);

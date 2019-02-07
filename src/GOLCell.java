@@ -1,5 +1,8 @@
 import javafx.scene.paint.Color;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The GOLCell extend the abstract Cell class and implements the rule of Game Of Life simulation.  The GOLSimulation
@@ -14,14 +17,21 @@ public class GOLCell extends Cell{
     private static int[] GOL_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
     private static int[] GOL_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
 
+
+    public GOLCell(Location location, GOLState initialState, Grid currentGrid, Grid nextGrid,
+                   HashMap<String, Double> parameters){
+        super(location, initialState, currentGrid, nextGrid, parameters);
+    }
+
     /**
      * Constructor for GOLCell, calls the super constructor from Cell abstract class
      * @param location location of the cell
      * @param initialState initial state of the cell - must be a GOLState (either dead or alive)
-     * @param grid grid used in the simulation
+     * @param currentGrid grid used in the simulation
      */
-    public GOLCell(Location location, GOLState initialState, Grid grid){
-        super(location, initialState, grid);
+    public GOLCell(Location location, GOLState initialState, Grid currentGrid, Grid nextGrid){
+        super(location, initialState, currentGrid, nextGrid);
+        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }
 
     /**
@@ -30,8 +40,9 @@ public class GOLCell extends Cell{
      * @param initialState initial state represented as an int, used to convert into a GOLState (0 for DEAD 1 for ALIVE)
      * @param grid grid used in the simulation
      */
-    public GOLCell(Location location, int initialState, Grid grid){
-        this(location, GOLState.values()[initialState], grid);
+    @Deprecated
+    public GOLCell(Location location, int initialState, Grid grid, Grid nextGrid){
+        this(location, GOLState.values()[initialState], grid, nextGrid);
     }
 
     /**
@@ -43,7 +54,7 @@ public class GOLCell extends Cell{
      */
     @Override
     public void calculateNewState() {
-        List<Location> myNeighborLocations = myGrid.getValidNeighbors(myLocation, GOL_CELL_ROW_NEIGHBORS, GOL_CELL_COL_NEIGHBORS);
+        List<Location> myNeighborLocations = myGrid.getValidNeighbors(myLocation, myNeighbors);
         int numAlive = calcNumLiveNeighbors(myNeighborLocations);
         if(needsToLive(numAlive)){
             myNextState = GOLState.ALIVE;
