@@ -1,7 +1,8 @@
-import java.awt.*;
 import javafx.scene.paint.Color;
-import java.util.*;
-import java.util.List;
+
+import java.awt.Shape;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract superclass to define the common behaviors of all possible types of Cells.  Simulation-specific cells need
@@ -47,7 +48,7 @@ public abstract class Cell {
      * @param parameters is a HashMap<String, Double> that specifies the simulation specific parameters
      */
     public Cell(Location location, CellState initialState, Grid currentGrid, Grid nextGrid,
-                HashMap<String, Double> parameters){
+                Map<String, Double> parameters){
         this(location, initialState, currentGrid, nextGrid);
         myParameters = parameters;
     }

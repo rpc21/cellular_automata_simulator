@@ -1,8 +1,4 @@
-import javafx.scene.paint.Color;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SegregationCell extends MovableCell{
 
@@ -10,8 +6,8 @@ public class SegregationCell extends MovableCell{
     private static int[] SEGREGATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
     private boolean toBeMoved = false;
 
-    public SegregationCell(Location location, SegregationState initialState, Grid currentGrid, Grid nextGrid, HashMap<String,
-            Double> parameters){
+    public SegregationCell(Location location, SegregationState initialState, Grid currentGrid, Grid nextGrid, Map<String,
+                Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
         myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }

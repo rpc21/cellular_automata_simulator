@@ -10,6 +10,11 @@ public class ForageAnt {
     private AntGrid myGrid;
     private boolean hasFoodItem;
 
+    public ForageAnt(Location myLocation, NeighborsDefinitions myDirection, AntGrid myGrid) {
+        this.myLocation = myLocation;
+        this.myDirection = myDirection;
+        this.myGrid = myGrid;
+    }
 
     public void act(){
         if (hasFoodItem){
