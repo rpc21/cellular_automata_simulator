@@ -1,4 +1,5 @@
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
@@ -121,24 +122,43 @@ public class XMLParser {
 
     //expect states to be Strings
     private String[][] parseGrid(Element root, int rows, int cols, String simulationType){
+        String[][] specifiedStates = new String[rows][cols];
+        try {
+            specifiedStates = parseRows(root, rows, cols);
+        } catch(NullPointerException e){
+            //ADD ERROR CATCHING
+        }
+        return specifiedStates;
+    }
+
+    private String[][] parseRows(Element root, int rows, int cols){
         NodeList cellRows = root.getElementsByTagName(CELL_ROWS_TAG_NAME);
         String[][] specifiedStates = new String[rows][cols];
-        if ((cellRows != null))
+        if(cellRows!=null){
             for (int i = 0; i < cellRows.getLength(); i++) {
-                NodeList columnsList = cellRows.item(i).getChildNodes();
-                if ((columnsList != null)){
-                    int colCount=0;
-                    for (int j = 0; j < columnsList.getLength(); j++) {
-                        var state = columnsList.item(j);
-                        if (CELL_COLUMNS_TAG_NAME.equals(state.getNodeName())) {
-                            System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
-                            specifiedStates[i][colCount] = state.getTextContent();
-                            colCount++;
-                        }
-                    }
-                }
+                parseColumns(root, specifiedStates, cellRows, i);
             }
+        }
         return specifiedStates;
+    }
+
+    private void parseColumns(Element root, String[][] specifiedStates, NodeList cellRows, int i){
+        NodeList columnsList = cellRows.item(i).getChildNodes();
+        if(columnsList!=null){
+            int colCount = 0;
+            for (int j = 0; j < columnsList.getLength(); j++) {
+                Node state = columnsList.item(j);
+                addCellToInitialStatesArray(state, specifiedStates, i, colCount);
+            }
+        }
+    }
+
+    private void addCellToInitialStatesArray(Node state, String[][] specifiedStates, int i, int colCount){
+        if (CELL_COLUMNS_TAG_NAME.equals(state.getNodeName())) {
+            System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
+            specifiedStates[i][colCount] = state.getTextContent();
+            colCount++;
+        }
     }
 
     // Get root element of an XML file
