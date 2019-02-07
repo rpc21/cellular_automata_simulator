@@ -2,17 +2,17 @@ import javafx.scene.paint.Color;
 
 public enum WatorState implements CellState {
 
-    EMPTY("E", "EMPTY", Color.AQUAMARINE),
-    FISH("F", "FISH", Color.ORANGE),
-    SHARK("S", "SHARK", Color.LIGHTGREY);
+    EMPTY("E", "emptyPercentage", Color.AQUAMARINE),
+    FISH("F", "fishPercentage", Color.ORANGE),
+    SHARK("S", "sharkPercentage", Color.LIGHTGREY);
 
     private final String myShortenedName;
-    private final String myFullState;
+    private final String myParamName;
     private final Color myCellColor;
 
-   WatorState(String shortenedName, String fullState, Color cellColor){
+   WatorState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myParamName = ParamName;
         myCellColor = cellColor;
     }
 
@@ -42,5 +42,10 @@ public enum WatorState implements CellState {
     @Override
     public Color getMyCellColor() {
         return myCellColor;
+    }
+
+    @Override
+    public String getMyParamName() {
+        return myParamName;
     }
 }

@@ -5,16 +5,16 @@ import javafx.scene.paint.Color;
  * There are two states: DEAD and ALIVE
  */
 public enum GOLState implements CellState{
-    DEAD("D", "DEAD", Color.DARKGRAY),
-    ALIVE("A", "ALIVE", Color.GREEN);
+    DEAD("D", "deadPercentage", Color.DARKGRAY),
+    ALIVE("A", "alivePercentage", Color.GREEN);
 
     private final String myShortenedName;
-    private final String myFullState;
+    private final String myParamName;
     private final Color myCellColor;
 
-    GOLState(String shortenedName, String fullState, Color cellColor){
+    GOLState(String shortenedName, String paramName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myParamName = paramName;
         myCellColor = cellColor;
     }
 
@@ -44,5 +44,10 @@ public enum GOLState implements CellState{
     @Override
     public Color getMyCellColor() {
         return myCellColor;
+    }
+
+    @Override
+    public String getMyParamName() {
+        return myParamName;
     }
 }

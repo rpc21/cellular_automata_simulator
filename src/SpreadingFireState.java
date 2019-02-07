@@ -6,18 +6,18 @@ import javafx.scene.paint.Color;
  */
 public enum SpreadingFireState implements CellState {
 
-    FIRE("F", "FIRE", Color.RED),
-    TREE("T", "TREE", Color.GREEN),
-    EMPTY("E", "EMPTY", Color.WHITE);
+    FIRE("F", "firePercentage", Color.RED),
+    TREE("T", "treePercentage", Color.GREEN),
+    EMPTY("E", "emptyPercentage", Color.WHITE);
 
 
     private final String myShortenedName;
-    private final String myFullState;
+    private final String myParamName;
     private final Color myCellColor;
 
-    SpreadingFireState(String shortenedName, String fullState, Color cellColor){
+    SpreadingFireState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myParamName = ParamName;
         myCellColor = cellColor;
     }
 
@@ -47,4 +47,10 @@ public enum SpreadingFireState implements CellState {
     public Color getMyCellColor() {
         return myCellColor;
     }
+
+    @Override
+    public String getMyParamName() {
+        return myParamName;
+    }
+
 }

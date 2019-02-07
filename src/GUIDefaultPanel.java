@@ -19,19 +19,19 @@ import java.util.List;
 public class GUIDefaultPanel extends GUIPanel {
     private Button myPlayButton;
     private Button myStepButton;
+    private Button myAddSimButton;
     private Slider mySpeedSlider;
     private Text mySpeedLabel;
     private ChoiceBox<String> myChoiceBox;
     private StackPane myStackPane = new StackPane();
     private List<Node> myDefaultControls = new ArrayList<>();
     private Spinner<Integer> myRowSpinner;
-    private Text myRowsLabel = new Text("Rows: ");
-    private Spinner<Integer> myColSpinner;
-    private Text myColsLabel = new Text("Cols: ");
+    private Text myRowsLabel = new Text("Rows x Cols: ");
     private Button myResetButton;
 
     private GUIGridStep myStepFunction;
     private GUIReset myResetFunction;
+    private GUIAddSimulation myAddSimFunction;
     private Timeline myAnimation;
     private KeyFrame myFrame;
     private String myName;
@@ -44,9 +44,10 @@ public class GUIDefaultPanel extends GUIPanel {
     private static final int FRAMES_PER_SECOND = 60;
     public static final int DEFAULT_CONTROL_SPACING = 40;
 
-    public GUIDefaultPanel(GUIGridStep step, GUIReset reset, Timeline timeline, KeyFrame frame, String simName, int rows, int cols){
+    public GUIDefaultPanel(GUIGridStep step, GUIReset reset, GUIAddSimulation add, Timeline timeline, KeyFrame frame, String simName, int rows, int cols){
         myStepFunction = step;
         myResetFunction = reset;
+        myAddSimFunction = add;
         myAnimation = timeline;
         myFrame = frame;
         myName = simName;
@@ -70,6 +71,7 @@ public class GUIDefaultPanel extends GUIPanel {
     private void makeControls(){
         makePlayButton();
         makeStepButton();
+        makeSimButton();
         makeSpeedSlider();
         makeRowsAndColsSetters(myRows,myCols);
         makeSimulationDropDownMenu();
@@ -102,6 +104,19 @@ public class GUIDefaultPanel extends GUIPanel {
             }
         });
         myDefaultControls.add(myStepButton);
+    }
+
+    private void makeSimButton(){
+        myAddSimButton = new Button("Add Simulation");
+        myAddSimButton.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME,15));
+        myAddSimButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                myAnimation.pause();
+                myAddSimFunction.guiAddSim();
+            }
+        });
+        myDefaultControls.add(myAddSimButton);
     }
 
     private void makeSpeedSlider(){
@@ -146,9 +161,9 @@ public class GUIDefaultPanel extends GUIPanel {
     }
 
     public HashMap<String,String> getMyBasicParams(){
-        System.out.println(myRowSpinner.getValue() + " " + myColSpinner.getValue());
+        System.out.println(myRowSpinner.getValue() + " " + myRowSpinner.getValue());
         myBasicParams.put(XMLParser.ROW_TAG_VIS, "" + myRowSpinner.getValue());
-        myBasicParams.put(XMLParser.COLUMN_TAG_VIS, "" + myColSpinner.getValue());
+        myBasicParams.put(XMLParser.COLUMN_TAG_VIS, "" + myRowSpinner.getValue());
         myBasicParams.put(XMLParser.SIMULATION_TYPE_TAG_NAME, "" + myChoiceBox.getValue());
         return myBasicParams;
     }
@@ -164,33 +179,9 @@ public class GUIDefaultPanel extends GUIPanel {
     }
     private void makeRowsAndColsSetters(int rows, int cols){
         myRowSpinner = setUpSpinner(3,50, rows);
-        myRowSpinner.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myBasicParams.remove(XMLParser.ROW_TAG_VIS);
-                myBasicParams.put(XMLParser.ROW_TAG_VIS,"" + myRowSpinner.getValue());
-                for (String a: myBasicParams.keySet())
-                    System.out.println(a + " " + myBasicParams.get(a));
-                updateCurrentMap(XMLParser.ROW_TAG_VIS,"" + myRowSpinner.getValue());
-                setNeedsToReset();
-            }
-        });
-        myColSpinner = setUpSpinner(3,50,cols);
-        myColSpinner.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myBasicParams.remove(XMLParser.COLUMN_TAG_VIS);
-                myBasicParams.put(XMLParser.COLUMN_TAG_VIS,"" + myColSpinner.getValue());
-
-                setNeedsToReset();
-            }
-        });
         myRowsLabel.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
-        myColsLabel.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         myDefaultControls.add(myRowsLabel);
         myDefaultControls.add(myRowSpinner);
-        myDefaultControls.add(myColsLabel);
-        myDefaultControls.add(myColSpinner);
     }
     private void setUpResetButton(){
         myResetButton = new Button("Reset");

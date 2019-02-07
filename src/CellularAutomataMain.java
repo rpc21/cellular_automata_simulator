@@ -1,18 +1,21 @@
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.File;
+import java.util.HashMap;
 
 public class CellularAutomataMain extends Application {
     public static final int WINDOW_SIZE = 1000;
+    private GUI myGUI;
     private Simulation myCurrentSimulation;
-
+    private Button newSimWindowButton = new Button("Open New Simulation");
     public static void main(String[] args){
         launch(args);
     }
 
     @Override
     public void start(Stage stage) {
-        String testCase = "tests/GOLTest.xml";
+        String testCase = "tests/GameOfLifeTest.xml";
         //String testCase = "tests/SegregationTest.xml";
         //String testCase = "tests/PercolationTest.xml";
 //        String testCase = "tests/SpreadingFireTest.xml";
@@ -24,9 +27,15 @@ public class CellularAutomataMain extends Application {
         }catch (Exception e){
             e.printStackTrace();
         }
-        GUI myGUI = new GUI(stage,myCurrentSimulation);
+        myGUI = new GUI(stage,myCurrentSimulation);
         //myGUI.render();
     }
+//    private void newStageWindowButton(){
+//        GUI secondGUI = new GUI(stage)
+//    }
+//    public void makeNewSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String[][] initialStates){
+//
+//    }
 }
 
 

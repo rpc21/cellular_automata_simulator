@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +35,6 @@ public abstract class Simulation {
             TITLE_CREDENTIAL,
             AUTHOR_CREDENTIAL
     );
-
 
     public abstract void simulate(double simulationSpeed);
 

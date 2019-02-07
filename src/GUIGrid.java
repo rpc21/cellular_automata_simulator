@@ -1,46 +1,36 @@
-
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import java.util.List;
 
-public class GUIGrid {
+public abstract class GUIGrid {
     private GridPane myGridPane = new GridPane();
-    private int myRows;
-    private int myCols;
-    public static final double GUI_GRID_SIZE = 400;
+    private StackPane myStackPane = new StackPane();
+    public static final int GUI_GRID_SIZE = 400;
 
-
-    public GUIGrid(int r, int c){
-        myRows = r;
-        myCols = c;
-        myGridPane.setTranslateX(CellularAutomataMain.WINDOW_SIZE/2.0 - GUI_GRID_SIZE/2.0);
-        myGridPane.setTranslateY(CellularAutomataMain.WINDOW_SIZE/2.0 - GUI_GRID_SIZE/2.0);
-        myGridPane.setMinSize(GUI_GRID_SIZE,GUI_GRID_SIZE);
-        myGridPane.setMaxSize(GUI_GRID_SIZE,GUI_GRID_SIZE);
+    public GUIGrid(){
+        myGridPane.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
+        myGridPane.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
     }
+    public abstract void makeGUIGrid(List<Cell> myCells);
 
-
-    public void makeGUIGrid(List<Cell> myCells){
-        int r = 0;
-        int c = 0;
-        while (r <  myRows){
-            while (c < myCols){
-                Shape currShape = new Rectangle(GUI_GRID_SIZE*1.0/myRows,GUI_GRID_SIZE * 1.0/myCols);
-                currShape.setFill(myCells.get(r * myRows + c).getMyColor());
-                currShape.setStroke(Color.BLACK);
-                currShape.setStrokeWidth(1.0/25.0*GUI_GRID_SIZE/myRows);
-                myGridPane.add(currShape, c, r);
-                c = c + 1;
-            }
-            c = 0;
-            r = r + 1;
-        }
+    protected void populateGUIGrid(Shape myShape, int r, int c){
+        myGridPane.add(myShape,r,c);
     }
 
     public GridPane getGUIGrid(){
         return myGridPane;
     }
+    public StackPane getGUIHexGrid(){
+        myStackPane.setTranslateX(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
+        myStackPane.setTranslateY(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
+        return myStackPane;
+    }
+    protected void populateGUIGridHex(Shape myShape, int r, int c){
+        myStackPane.getChildren().addAll(myShape);
+    }
+
 
 }

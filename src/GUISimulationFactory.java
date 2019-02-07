@@ -3,7 +3,7 @@ public class GUISimulationFactory {
         String testCase;
         switch(newSim){
             case Simulation.GOL_SIMULATION_NAME:
-                testCase = "tests/GOLTest.xml";
+                testCase = "tests/GameOfLifeTest.xml";
                 break;
             case Simulation.SPREADING_FIRE_SIMULATION_NAME:
                 testCase = "tests/SpreadingFireTest.xml";
@@ -18,7 +18,7 @@ public class GUISimulationFactory {
                 testCase = "tests/WatorTest.xml";
                 break;
             default:
-                testCase = "tests/GOLTest.xml";
+                testCase = "tests/GameOfLifeTest.xml";
                 break;
         }
         return testCase;

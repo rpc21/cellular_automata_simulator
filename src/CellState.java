@@ -20,4 +20,11 @@ public interface CellState {
      * @return a Color representing the state of the cell
      */
     Color getMyCellColor();
+
+    /**
+     * Return the associate parameter name of the cell's state for visualization purposes
+     * @return a Color representing the state of the cell
+     */
+    String getMyParamName();
+
 }

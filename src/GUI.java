@@ -1,12 +1,17 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GUI {
@@ -17,12 +22,12 @@ public class GUI {
     private KeyFrame myFrame;
     private Group myNode;
 
-    private GUISimulationFactory myGUISimulationFactory;
-    private SimulationFactory mySimFact = new SimulationFactory();
-    private XMLParser myNewSimFact;
-    private GUIGrid myGUIGrid;
+    private GUIManager myManager = new GUIManager();
     private GUIDefaultPanel myGUIDefaultPanel;
-    private GUISimulationPanel myGUISimulationPanel;
+    private GUIGraph myGUIGraph;
+
+    private Credentials myCredentials;
+
     GUIGridStep myStepFunction = new GUIGridStep() {
         @Override
         public void guiGridStep() {
@@ -35,7 +40,13 @@ public class GUI {
             resetWithParams();
         }
     };
-    private Credentials myCredentials;
+    GUIAddSimulation myAddSimFunction = new GUIAddSimulation() {
+        @Override
+        public void guiAddSim() {
+            addSimulation();
+        }
+    };
+
 
     public static final int STAGE_SIZE = 1000;
     private static final String STAGE_TITLE = "Cellular Automata Simulation";
@@ -47,9 +58,10 @@ public class GUI {
         myStage = s;
         mySimulation = sim;
         myNode = new Group();
-        myGUISimulationFactory = new GUISimulationFactory();
+        myManager.addSimulation(sim,myNode);
+        myNode.getChildren().addAll(myManager.retGridPane());
         render();
-        makeGUIParts();
+        makeGUIParts(sim);
     }
     public void render(){
         myFrame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
@@ -63,51 +75,37 @@ public class GUI {
     }
 
     public void step(){
-            mySimulation.updateGrid();
-            myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
+        myManager.updateGUIParts();
+        //myGUIGraph.updateChart(mySimulation.getMyGrid().getCells());
         }
 
-    public void resetWithParams(){
-        if (myGUISimulationPanel.getName().equals(myGUIDefaultPanel.getSimName()))
-            mySimulation = mySimFact.generateSimulation(myGUIDefaultPanel.getMyBasicParams(), myGUISimulationPanel.getMyParams());
-        else {
-            File file;
-            if (!myGUIDefaultPanel.getSimName().equals(GOLSimulation.GOL_SIMULATION_NAME))
-                file = new File("tests/" + myGUIDefaultPanel.getSimName().replaceAll(" ","") + "Test.xml");
-            else
-                file = new File("tests/GOLTest.xml");
-            var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
-            try {
-                mySimulation = p;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        myNode = new Group();
-        makeGUIParts();
-        render();
+    private void addSimulation(){
+        myManager.addSimulation(mySimulation,myNode);
     }
 
-//    public void resetWithoutParams(){
-//        File file = new File(myGUIDefaultPanel.getSimName());
-//        var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
-//        try{
-//            mySimulation = p;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        myNode = new Group();
-//        makeGUIParts();
-//        render();
-//    }
 
-    private void makeGUIParts(){
-        myGUIGrid = new GUIGrid(mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
-        myGUIGrid.makeGUIGrid(mySimulation.getMyGrid().getCells());
-        myGUISimulationPanel = myGUISimulationFactory.makeSimulationPanel(mySimulation.getMyName(), mySimulation);
-        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction,myAnimation,myFrame,mySimulation.getMyName(),mySimulation.getMyGrid().getNumRows(),mySimulation.getMyGrid().getNumCols());
-        myCredentials = new Credentials(mySimulation.getMyName(),"Dima, Ryan, and Anna");
-        myNode.getChildren().addAll(myGUIGrid.getGUIGrid(),myGUIDefaultPanel.getGUIDefaultPanel(),myCredentials.getMyCredentials(),myGUISimulationPanel.getGUISimulationPanel());
+    public void resetWithParams(){
+        myNode.getChildren().clear();
+        myManager.resetSimulations(myGUIDefaultPanel);
+        mySimulation = myManager.getPrimarySimulation();
+        makeGUIParts(mySimulation);
+//        myNode.getChildren().add(myManager.retGridPane());
+        for (GUIHexagonGrid grid : myManager.getGrids()) {
+            myNode.getChildren().add(grid.getGUIHexGrid());
+        }
+        for (GUISimulationPanel panel: myManager.getPanels())
+            myNode.getChildren().add(panel.getGUISimulationPanel());
+
+
+    }
+
+
+    private void makeGUIParts(Simulation currSim){
+        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myAnimation,myFrame,
+                currSim.getMyName(),currSim.getMyGrid().getNumRows(),currSim.getMyGrid().getNumCols());
+        myCredentials = new Credentials("lol","hi");
+        //myGUIGraph = new GUIGraph(currSim);
+        myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials());//,myGUIGraph.getMyChart());
     }
 
 

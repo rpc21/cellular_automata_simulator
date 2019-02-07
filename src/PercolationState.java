@@ -11,12 +11,12 @@ public enum PercolationState implements CellState{
     CLOSED("C", "CLOSED", Color.BLACK);
 
     private final String myShortenedName;
-    private final String myFullState;
+    private final String myParamName;
     private final Color myCellColor;
 
-    PercolationState(String shortenedName, String fullState, Color cellColor){
+    PercolationState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myParamName = ParamName;
         myCellColor = cellColor;
     }
 
@@ -45,5 +45,10 @@ public enum PercolationState implements CellState{
     @Override
     public Color getMyCellColor() {
         return myCellColor;
+    }
+
+    @Override
+    public String getMyParamName() {
+        return myParamName;
     }
 }
