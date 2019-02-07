@@ -10,6 +10,7 @@ public abstract class Simulation {
     public static final String PERCOLATION_SIMULATION_NAME="Percolation";
     public static final String SEGREGATION_SIMULATION_NAME="Segregation";
     public static final String SPREADING_FIRE_SIMULATION_NAME="Spreading Fire";
+    public static final String FORAGE_SIMULATION_NAME = "Forage";
     public static final String WATOR_SIMULATION_NAME="Wator";
     public static final String TITLE_CREDENTIAL="title";
     public static final String AUTHOR_CREDENTIAL="author";
@@ -36,9 +37,6 @@ public abstract class Simulation {
             TITLE_CREDENTIAL,
             AUTHOR_CREDENTIAL
     );
-
-
-    public abstract void simulate(double simulationSpeed);
 
     public void updateGrid(){
         List<Cell> cells = myGrid.getCells();

@@ -8,7 +8,18 @@ public enum NeighborsDefinitions {
             , 0, 1, 2}),
     TRIANGLE_12_POINT_DOWN(new int[] {-1, -1, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1}, new int[] {-2, -1,0, 1, 2, -2, -1, 1,
             2, -1, 0, 1}),
-    HEXAGON(new int[] {-1, -1, 0, 0, 1, 1}, new int[] {-1, 0, -1, 1, -1, 0});
+    HEXAGON(new int[] {-1, -1, 0, 0, 1, 1}, new int[] {-1, 0, -1, 1, -1, 0}),
+    NORTH(new int[] {-1}, new int[] {0}),
+    NORTH_EAST(new int[] {-1}, new int[] {1}),
+    EAST(new int[] {0}, new int[] {1}),
+    SOUTH_EAST(new int[] {1}, new int[] {1}),
+    SOUTH(new int[] {1}, new int[] {0}),
+    SOUTH_WEST(new int[] {1}, new int[] {-1}),
+    WEST(new int[] {0}, new int[] {-1}),
+    NORTH_WEST(new int[] {-1}, new int[] {-1});
+
+    public static final NeighborsDefinitions[] CARDINAL_DIRECTIONS_COMPLETE = {NORTH, NORTH_EAST, EAST, SOUTH_EAST,
+            SOUTH, SOUTH_WEST, WEST, NORTH_WEST};
 
     private final int[] deltaRow;
     private final int[] deltaCol;
