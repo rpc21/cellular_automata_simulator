@@ -4,6 +4,8 @@ import java.util.Map;
 
 public abstract class Simulation {
 
+    // Data fields
+    public static final String DATA_TYPE = "simulation";
     public static final String GOL_SIMULATION_NAME="Game of Life";
     public static final String PERCOLATION_SIMULATION_NAME="Percolation";
     public static final String SEGREGATION_SIMULATION_NAME="Segregation";
@@ -11,17 +13,18 @@ public abstract class Simulation {
     public static final String WATOR_SIMULATION_NAME="Wator";
     public static final String TITLE_CREDENTIAL="title";
     public static final String AUTHOR_CREDENTIAL="author";
+
     protected Grid myGrid;
     protected Grid myNextGrid;
-    protected boolean simulationOver;
     protected HashMap<String, String> credentials;
     protected HashMap<String, Double> myParameters;
-    // Data fields
-    public static final String DATA_TYPE = "simulation";
+
+    protected boolean simulationOver;
+
 
     public Simulation(HashMap<String, Double> params, int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
-        myParameters=params;
+        myParameters = params;
     }
 
     public static final List<String> DATA_FIELDS = List.of(
@@ -103,50 +106,27 @@ public abstract class Simulation {
         System.out.println("Initial states set");
     }
 
-    public void setInitialStates(int[][] initialStates, String simulationType, HashMap<String, Double> parameters){
-        for (int i = 0; i < getMyGrid().getNumRows(); i++){
-            for (int j = 0; j < getMyGrid().getNumCols(); j++){
-                Location thisLocation = new Location(i, j);
-                System.out.println("Creating a "+simulationType+" cell");
-                Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
-                        myGrid, myNextGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
-                getMyGrid().put(newCell.getMyLocation(), newCell);
-            }
-        }
-        getMyGrid().printGrid();
-        System.out.println("Initial states set");
-    }
-
-    private Cell generateSimulationSpecificCell(String simulationType, Location loc, int state, Grid grid,
-                                                Grid nextGrid,
-                                                HashMap<String, Double> parameters){
-        if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, state, grid, nextGrid);
-        }
-        else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, state, grid, nextGrid, parameters);
-        }
-        else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, state, grid, nextGrid);
-        }
-        else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, state, grid, nextGrid, parameters);
-        }
-        else if (simulationType.equals("Wator")){
-            return generateWatorCell(loc, grid, nextGrid, parameters);
-        }
-        return new GOLCell(loc, state, nextGrid, grid);
-    }
-
+    @Deprecated
     private WatorCell generateWatorCell(Location loc, Grid grid, Grid nextGrid, HashMap<String, Double> parameters){
         double randomNumber = Math.random();
-        if (randomNumber <= parameters.get("fishPercentage")){
+        if (randomNumber <= parameters.get(WatorSimulation.FISH_PERCENTAGE)){
             return new WatorFish(loc, grid, nextGrid, parameters);
         }
-        else if (randomNumber <= parameters.get("fishPercentage") + parameters.get("sharkPercentage")){
+        else if (randomNumber <= parameters.get(WatorSimulation.FISH_PERCENTAGE) + parameters.get(WatorSimulation.SHARK_PERCENTAGE)){
             return new WatorShark(loc, grid, nextGrid, parameters);
+        }
+        else{
+            return new WatorEmpty(loc);
+        }
+    }
+
+    private WatorCell generateWatorCellByState(Location loc, CellState state){
+        double randomNumber = Math.random();
+        if (state == WatorState.FISH){
+            return new WatorFish(loc, myGrid, myNextGrid, myParameters);
+        }
+        else if (state == WatorState.SHARK){
+            return new WatorShark(loc, myGrid, myNextGrid, myParameters);
         }
         else{
             return new WatorEmpty(loc);
@@ -156,20 +136,17 @@ public abstract class Simulation {
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, String state, Grid grid,
                                                 Grid nextGrid,
                                                 HashMap<String, Double> parameters){
-        if (simulationType.equals("Game of Life")){
-            return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
-        }
-        else if (simulationType.equals("Spreading Fire")){
-            return new SpreadingFireCell(loc, SpreadingFireState.valueOf(state), grid, nextGrid, parameters);
-        }
-        else if (simulationType.equals("Percolation")){
-            return new PercolationCell(loc, PercolationState.valueOf(state), grid, nextGrid);
-        }
-        else if (simulationType.equals("Segregation")){
-            return new SegregationCell(loc, SegregationState.valueOf(state), grid, nextGrid, parameters);
-        }
-        else if (simulationType.equals("Wator")) {
-            return generateWatorCell(loc, grid, nextGrid, parameters);
+        switch (simulationType) {
+            case GOL_SIMULATION_NAME:
+                return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
+            case SPREADING_FIRE_SIMULATION_NAME:
+                return new SpreadingFireCell(loc, SpreadingFireState.valueOf(state), grid, nextGrid, parameters);
+            case PERCOLATION_SIMULATION_NAME:
+                return new PercolationCell(loc, PercolationState.valueOf(state), grid, nextGrid);
+            case SEGREGATION_SIMULATION_NAME:
+                return new SegregationCell(loc, SegregationState.valueOf(state), grid, nextGrid, parameters);
+            case WATOR_SIMULATION_NAME:
+                return generateWatorCellByState(loc, WatorState.valueOf(state));
         }
         return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
     }
@@ -177,5 +154,20 @@ public abstract class Simulation {
     public abstract String getMyName();
 
     public abstract List<String> getPercentageFields();
+
+    /**
+     * This method needs to be overridden by the subclasses
+     * @param location
+     * @param newState
+     */
+    public void replaceCell(Location location, String newState){
+        Cell newCell = generateSimulationSpecificCell(getMyName(), location, newState, myGrid, myNextGrid,
+                myParameters);
+        myGrid.put(location, newCell);
+    }
+
+    public List<String> getMyPossibleStates(){
+        return myGrid.getCells().get(0).getMyCurrentState().getPossibleValues();
+    }
 
 }

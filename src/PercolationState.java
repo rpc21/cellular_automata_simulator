@@ -1,5 +1,8 @@
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * PercolationState is an Enum that defines all the possible states for a PercolationCell
  * There are three states: PERCOLATED, OPEN and BLOCKED
@@ -45,5 +48,14 @@ public enum PercolationState implements CellState{
     @Override
     public Color getMyCellColor() {
         return myCellColor;
+    }
+
+    @Override
+    public List<String> getPossibleValues() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i< values().length; i++){
+            arrayList.add(myFullState);
+        }
+        return arrayList;
     }
 }

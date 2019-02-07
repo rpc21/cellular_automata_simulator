@@ -27,6 +27,7 @@ public abstract class WatorCell extends Cell {
         myGrid = currentGrid;
         myNextGrid = nextGrid;
         myParameters = parameters;
+        myNeighbors = NeighborsDefinitions.ADJACENT;
 //        turnsUntilCanBreed = (int) (parameters.get("breedTime") + Math.random() * 3);
     }
 

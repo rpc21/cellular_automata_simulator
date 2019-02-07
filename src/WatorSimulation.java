@@ -2,14 +2,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class WatorSimulation extends Simulation {
-    public static final String SHARKS_PERCENTAGE = "sharkPercentage";
+    public static final String SHARK_PERCENTAGE = "sharkPercentage";
     public static final String FISH_PERCENTAGE = "fishPercentage";
     public static final String EMPTY_PERCENTAGE = "emptyPercentage";
     public static final String SHARK_BREED_TIME = "sharkBreedTime";
     public static final String FISH_BREED_TIME = "fishBreedTime";
     public static final String STARVE_TIME = "starveTime";
     public static final List<String> WATOR_DATA_FIELDS = List.of(
-            SHARKS_PERCENTAGE, FISH_PERCENTAGE, EMPTY_PERCENTAGE, SHARK_BREED_TIME, FISH_BREED_TIME, STARVE_TIME
+            SHARK_PERCENTAGE, FISH_PERCENTAGE, EMPTY_PERCENTAGE, SHARK_BREED_TIME, FISH_BREED_TIME, STARVE_TIME
     );
 
     public WatorSimulation(HashMap<String, Double> params, int rows, int cols){
@@ -42,7 +42,7 @@ public class WatorSimulation extends Simulation {
 
     @Override
     public List<String> getPercentageFields() {
-        return List.of(SHARKS_PERCENTAGE, FISH_PERCENTAGE, EMPTY_PERCENTAGE);
+        return List.of(SHARK_PERCENTAGE, FISH_PERCENTAGE, EMPTY_PERCENTAGE);
     }
 
     @Override

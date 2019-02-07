@@ -22,6 +22,7 @@ public class PercolationCell extends Cell {
 //     */
     public PercolationCell(Location location, PercolationState initialState, Grid currentGrid, Grid nextGrid){
         super(location, initialState, currentGrid, nextGrid);
+        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }
 
     /**
@@ -30,6 +31,7 @@ public class PercolationCell extends Cell {
      * @param startingState an int corresponding to the desired PercolationState
      * @param grid grid used for the simulation (that will contain the cell)
      */
+    @Deprecated
     public PercolationCell(Location loc, int startingState, Grid grid, Grid nextGrid){
         this(loc, PercolationState.values()[startingState], grid, nextGrid);
     }
@@ -57,8 +59,7 @@ public class PercolationCell extends Cell {
      * @return true if next to a percolated cell, false otherwise
      */
     public boolean nextToPercolatedCell() {
-        List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, PERCOLATION_CELL_ROW_NEIGHBORS,
-                PERCOLATION_CELL_COL_NEIGHBORS);
+        List<Location> neighborLocations = myGrid.getValidNeighbors(myLocation, myNeighbors);
         for (Location loc: neighborLocations){
             PercolationCell cell = (PercolationCell) myGrid.get(loc);
             if (cell.isPercolated()){

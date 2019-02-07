@@ -137,6 +137,8 @@ public interface Grid {
      */
     ArrayList<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol);
 
+    ArrayList<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions);
+
     /**
      * Prints the string representation of the grid using the toStrings defined in the cells
      * Useful for debugging the backend
