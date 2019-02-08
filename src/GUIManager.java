@@ -1,13 +1,17 @@
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javafx.scene.control.ScrollPane.ScrollBarPolicy.ALWAYS;
 
 public class GUIManager {
     private List<Simulation> mySimulations;
@@ -17,10 +21,12 @@ public class GUIManager {
     private SimulationFactory mySimFact = new SimulationFactory();
     private int numSimulations;
     private GridPane myGridPane;
+    private ScrollPane myScrollPane;
 
 
     public GUIManager (){
         myGridPane = new GridPane();
+        myScrollPane = new ScrollPane();
         mySimulations = new ArrayList<>();
         myGUIGrids = new ArrayList<>();
         myGUISimPanels = new ArrayList<>();
@@ -29,11 +35,23 @@ public class GUIManager {
     public void addSimulation(Simulation sim, Group currNode){
         numSimulations++;
         mySimulations.add(sim);
-        myGUIGrids.add(new GUIHexagonGrid(sim.getMyGrid().getNumRows(),sim.getMyGrid().getNumCols()));
+        myGUIGrids.add(new GUIHexagonGrid(sim.getMyGrid().getNumRows(), sim.getMyGrid().getNumCols(),sim));
         myGUIGrids.get(numSimulations - 1).makeGUIGrid(sim.getMyGrid().getCells());
         myGUISimPanels.add(myGUISimulationFactory.makeSimulationPanel(sim.getMyName(), sim));
         managePositions();
-        currNode.getChildren().addAll(myGUIGrids.get(numSimulations-1).getGUIHexGrid(),myGUISimPanels.get(numSimulations - 1).getGUISimulationPanel());
+
+//        ScrollPane myScroll = new ScrollPane();
+//        myScroll.setMaxSize(700,700);
+//        myScroll.setMinSize(300,300);
+//
+//        myScroll.setHbarPolicy(ALWAYS);
+//        myScroll.setVbarPolicy(ALWAYS);
+//        myScroll.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
+//        myScroll.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
+//        myGUIGrids.get(numSimulations-1).getGUIHexGrid().setTranslateX(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
+//        myGUIGrids.get(numSimulations-1).getGUIHexGrid().setTranslateY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
+        //myScroll.setContent(myGUIGrids.get(numSimulations  - 1).getGUIHexGrid());
+        currNode.getChildren().addAll( myGUIGrids.get(numSimulations-1).getGUIHexGrid(),myGUISimPanels.get(numSimulations - 1).getGUISimulationPanel());
     }
 
     public void updateGUIParts(){
@@ -62,7 +80,7 @@ public class GUIManager {
             }
             if (currSim != null)
                 mySimulations.set(i,currSim);
-            GUIHexagonGrid currGrid = new GUIHexagonGrid(currSim.getMyGrid().getNumRows(), currSim.getMyGrid().getNumCols());
+            GUIHexagonGrid currGrid = new GUIHexagonGrid(currSim.getMyGrid().getNumRows(), currSim.getMyGrid().getNumCols(), currSim);
             currGrid.makeGUIGrid(currSim.getMyGrid().getCells());
             myGUIGrids.set(i,currGrid);
             myGUISimPanels.set(i,myGUISimulationFactory.makeSimulationPanel(currSim.getMyName(),currSim));
@@ -108,8 +126,12 @@ public class GUIManager {
 
             StackPane panelOne = myGUISimPanels.get(0).getGUISimulationPanel();
             StackPane panelTwo = myGUISimPanels.get(1).getGUISimulationPanel();
+            panelOne.setScaleX(0.75);
+            panelOne.setScaleY(0.75);
+            panelTwo.setScaleX(0.75);
+            panelTwo.setScaleY(0.75);
             panelOne.setLayoutY(0.0);
-            panelTwo.setLayoutY(gridTwo.getLayoutY());
+            panelTwo.setLayoutY(gridTwo.getLayoutY() + 30);
         }
 //        myGridPane.getChildren().clear();
 //        int count = 0;

@@ -1,23 +1,14 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class GUI {
     private Stage myStage;
     private Simulation mySimulation;
-    private Scene myScene;
     private Timeline myAnimation;
     private KeyFrame myFrame;
     private Group myNode;
@@ -26,7 +17,6 @@ public class GUI {
     private GUIDefaultPanel myGUIDefaultPanel;
     private GUIGraph myGUIGraph;
 
-    private Credentials myCredentials;
 
     GUIGridStep myStepFunction = new GUIGridStep() {
         @Override
@@ -65,7 +55,7 @@ public class GUI {
     }
     public void render(){
         myFrame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
-        myScene = new Scene(myNode,STAGE_SIZE,STAGE_SIZE,BACKGROUND_COLOR);
+        Scene myScene = new Scene(myNode,STAGE_SIZE,STAGE_SIZE,BACKGROUND_COLOR);
         myStage.setScene(myScene);
         myStage.setTitle(STAGE_TITLE);
         myStage.show();
@@ -103,8 +93,8 @@ public class GUI {
     private void makeGUIParts(Simulation currSim){
         myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myAnimation,myFrame,
                 currSim.getMyName(),currSim.getMyGrid().getNumRows(),currSim.getMyGrid().getNumCols());
-        myCredentials = new Credentials("lol","hi");
-        //myGUIGraph = new GUIGraph(currSim);
+        Credentials myCredentials = new Credentials("lol","hi");
+        myGUIGraph = new GUIGraph(currSim);
         myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials());//,myGUIGraph.getMyChart());
     }
 

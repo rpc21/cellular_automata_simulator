@@ -175,6 +175,9 @@ public abstract class Simulation {
     public List<String> getMyPossibleStates(){
         return myGrid.getCells().get(0).getMyCurrentState().getPossibleValues();
     }
+    public HashMap<String,Double> getInitialParams(){
+        return myParameters;
+    }
 
 }
 

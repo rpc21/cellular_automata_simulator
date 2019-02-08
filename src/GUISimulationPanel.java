@@ -65,9 +65,7 @@ public class GUISimulationPanel extends GUIPanel{
     public String getName(){
         return mySimulation.getMyName();
     }
-    protected double getInitParamValue(String key){
-        return mySimulation.getInitialParams().get(key);
-    }
+
 
     protected void updateMyParams(String k, Double val){
         myParamsMap.put(k,val);

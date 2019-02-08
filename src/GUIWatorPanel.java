@@ -1,16 +1,11 @@
-import javafx.animation.Animation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import java.util.HashMap;
 
 public class GUIWatorPanel extends GUISimulationPanel {
-    private Simulation mySimulation;
     private Text myFishBreedTextBox;
     private Spinner<Integer> myFishBreedSpinner;
     private Text mySharkBreedTextBox;
@@ -30,7 +25,6 @@ public class GUIWatorPanel extends GUISimulationPanel {
 
     public GUIWatorPanel(Simulation mySim){
         super(mySim);
-        mySimulation = mySim;
 
         for (String paramName: mySim.getInitialParams().keySet() )
             myMap.put(new String(paramName), new Double(mySim.getInitialParams().get(paramName)));
@@ -45,7 +39,7 @@ public class GUIWatorPanel extends GUISimulationPanel {
         myFishBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.FISH_BREED_TIME) *1.0));
         mySharkBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.SHARK_BREED_TIME)*1.0));
         mySharkStarveSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.STARVE_TIME)*1.0));
-        mySharkPercentSpinner = setUpSpinner(0,100,(int)(myMap.get(WatorSimulation.SHARKS_PERCENTAGE)*100));
+        mySharkPercentSpinner = setUpSpinner(0,100,(int)(myMap.get(WatorSimulation.SHARK_PERCENTAGE)*100));
         myFishPercentSpinner = setUpSpinner(0, 100, (int)(myMap.get(WatorSimulation.FISH_PERCENTAGE)*100));
         myEmptyPercentSpinner = setUpSpinner(0,100, (int)(myMap.get(WatorSimulation.EMPTY_PERCENTAGE)*100));
 
@@ -104,7 +98,7 @@ public class GUIWatorPanel extends GUISimulationPanel {
         myMap.put(WatorSimulation.SHARK_BREED_TIME,1.0* mySharkBreedSpinner.getValue());
         myMap.put(WatorSimulation.STARVE_TIME,1.0* mySharkStarveSpinner.getValue());
         myMap.put(WatorSimulation.FISH_PERCENTAGE, 1.0* myFishPercentSpinner.getValue()/100);
-        myMap.put(WatorSimulation.SHARKS_PERCENTAGE, 1.0* mySharkPercentSpinner.getValue()/100);
+        myMap.put(WatorSimulation.SHARK_PERCENTAGE, 1.0* mySharkPercentSpinner.getValue()/100);
         myMap.put(WatorSimulation.EMPTY_PERCENTAGE, 1.0* myEmptyPercentSpinner.getValue()/100);
         return myMap;
     }

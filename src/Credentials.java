@@ -3,8 +3,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Credentials {
-    private static final int CREDENTIALS_LENGTH = 230;
-    private static final int CREDENTIALS_HEIGHT = 20;
     private static final int CREDENTIALS_PANEL_X_COOR = GUI.STAGE_SIZE;
     private static final int CREDENTIALS_PANEL_Y_COOR = GUI.STAGE_SIZE;
 
