@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>circle</shape>
+    <shape>triangle</shape>
     <neighborsType>adjacent</neighborsType>
-    <edges>toroidal</edges>
-    <cellSize>1</cellSize>
+    <edges>ADJACENT</edges>
     <outline>no</outline>
     <stateColors>
         <DEAD>black</DEAD>

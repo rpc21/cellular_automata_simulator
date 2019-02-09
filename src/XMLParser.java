@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 import java.util.Random;
 
 
@@ -89,10 +90,9 @@ public class XMLParser {
                 myCredentials.put(field, getTextValue(root, field));
             }
             return myCredentials;
-        } catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("author and title must be valid strings");
+        } catch(NullPointerException e){
+            throw new NullPointerException("Invalid author of name");
         }
-
     }
 
     private HashMap<String, String> getBasicSimulationParams(Element root){
@@ -104,12 +104,17 @@ public class XMLParser {
     }
 
     private HashMap<String, Double> parseAdditionalParams(Element root, String simulationType){
-        HashMap<String, Double> parameters = new HashMap<String, Double>();
-        List<String> simulationFields = getSimulationDataFields(simulationType);
-        for (var field : simulationFields) {
-            parameters.put(field, Double.parseDouble(getTextValue(root, field)));
+        try{
+            HashMap<String, Double> parameters = new HashMap<String, Double>();
+            List<String> simulationFields = getSimulationDataFields(simulationType);
+            for (var field : simulationFields) {
+                parameters.put(field, Double.parseDouble(getTextValue(root, field)));
+            }
+            return parameters;
+        } catch(NullPointerException e){
+            throw new NullPointerException("Field is missing");
         }
-        return parameters;
+
     }
 
     private List<String> getSimulationDataFields(String simulationType){
@@ -191,19 +196,24 @@ public class XMLParser {
 
     // Get value of Element's attribute
     private String getAttribute (Element e, String attributeName) {
-        return e.getAttribute(attributeName);
+        try {
+            return e.getAttribute(attributeName);
+        }catch(NullPointerException exc){
+            throw new NullPointerException("No such attribute");
+        }
     }
 
     // Get value of Element's text
-    private String getTextValue (Element e, String tagName) {
-        var nodeList = e.getElementsByTagName(tagName);
-        if (nodeList != null && nodeList.getLength() > 0) {
-            return nodeList.item(0).getTextContent();
+    private String getTextValue (Element e, String tagName) throws NullPointerException {
+        try{
+            var nodeList = e.getElementsByTagName(tagName);
+            if (nodeList != null && nodeList.getLength() > 0) {
+                return nodeList.item(0).getTextContent();
+            }
+        }catch(NullPointerException exc){
+            throw new NullPointerException("No such field" + tagName);
         }
-        else {
-            // FIXME: empty string or null, is it an error to not find the text value?
-            return "";
-        }
+        return "";
     }
 
     private DocumentBuilder getDocumentBuilder () {

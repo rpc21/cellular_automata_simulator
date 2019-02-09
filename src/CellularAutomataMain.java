@@ -14,9 +14,9 @@ public class CellularAutomataMain extends Application {
     public void start(Stage stage) {
         //String testCase = "tests/GOLTest.xml";
         //String testCase = "tests/SegregationTest.xml";
-        String testCase = "tests/PercolationTest.xml";
-//        String testCase = "tests/SpreadingFireTest.xml";
-        //String testCase = "tests/WatorTest.xml";
+        //String testCase = "tests/PercolationTest.xml";
+        //String testCase = "tests/SpreadingFireTest.xml";
+        String testCase = "tests/WatorTest.xml";
         File Testfile = new File(testCase);
 
         String styleTestCase = "tests/StyleTest1.XML";
