@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 public class SimulationFactory {
+    private Random dice = new Random();
 
     public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String[][] initialStates){
 
@@ -19,6 +21,15 @@ public class SimulationFactory {
             System.out.println(a + basicParameters.get(a));
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
+        mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
+        return mySimulation;
+    }
+
+    public Simulation generateSimulation(HashMap<String, String> basicParameters,
+                                         HashMap<String, Double> simulationSpecificParameters, String InitialStatesType){
+
+        Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
+        String[][] initialStates = createInitialStatesFromRandomPercentages(mySimulation, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
         return mySimulation;
     }
@@ -42,6 +53,11 @@ public class SimulationFactory {
         //TODO: Make sure we process the entire list, add default cells to the simulations
         return  initialStates;
 
+    }
+
+    private String[][] createInitialStatesFromRandomPercentages(Simulation mySimulation, HashMap<String, Double> simulationSpecificParameters) {
+        generateRandomStatePercentages(mySimulation, simulationSpecificParameters);
+        return createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
     }
 
     private Simulation getSimulationWithEmptyGrid(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters) {
@@ -77,5 +93,20 @@ public class SimulationFactory {
                 return new WatorSimulation(simulationSpecificParameters, rows, cols);
         }
         return new GOLSimulation(simulationSpecificParameters, rows, cols);
+    }
+
+
+    public double getRandomInRange(double min, double max) {
+        return min + (max - min) * dice.nextDouble();
+    }
+
+    private void generateRandomStatePercentages(Simulation mySimulation, HashMap<String, Double> additionalParams){
+        double maxPercentValue=1;
+        double minPercentValue=0;
+        for (String key : mySimulation.getPercentageFields()){
+            double percentState = getRandomInRange(minPercentValue, maxPercentValue);
+            additionalParams.put(key, percentState);
+            maxPercentValue = maxPercentValue - percentState;
+        }
     }
 }

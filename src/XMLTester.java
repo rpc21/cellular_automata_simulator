@@ -13,10 +13,14 @@ public class XMLTester {
         String testCase = "tests/WatorTest.xml";
         //TODO: specify the path to the test case you created here
 
-        File file = new File(testCase);
-        var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
+        File Testfile = new File(testCase);
+
+        String styleTestCase = "tests/StyleTest1.XML";
+        File styleFile = new File(styleTestCase);
+        //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
+        var simulation = new setUpSimulation().setSimulation(Testfile, styleFile);
         try{
-            Simulation currentSimulation = p;
+            Simulation currentSimulation = simulation;
             for (int i = 0; i < 10; i++){
                 System.out.println("Iteration: "+i+"---------------------------");
                 currentSimulation.updateGrid();

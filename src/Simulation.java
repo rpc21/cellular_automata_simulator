@@ -23,7 +23,9 @@ public abstract class Simulation {
     protected Grid myGrid;
     protected Grid myNextGrid;
     protected HashMap<String, String> credentials;
+    protected HashMap<String, String> stateToColor;
     protected HashMap<String, Double> myParameters;
+    protected HashMap<String, String> myStyleProperties;
 
     protected boolean simulationOver;
 
@@ -62,6 +64,14 @@ public abstract class Simulation {
 
     public HashMap<String, String> getCredentials(){
         return credentials;
+    }
+
+    public void setColors(HashMap<String, String> myColors){
+        stateToColor = myColors;
+    }
+
+    public HashMap<String, String> getStateToColorMap(){
+        return stateToColor;
     }
 
     /**

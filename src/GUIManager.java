@@ -85,11 +85,14 @@ public class GUIManager {
                 currSim = mySimFact.generateSimulation(currDefaultPanel.getMyBasicParams(), currSimPanel.getMyParams());
             }
             else {
-                File file = new File("tests/" + currDefaultPanel.getSimName().replaceAll(" ","") + "Test.xml");
-                var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
-                try {
-                    currSim = p;
-                } catch (Exception e) {
+                String newSim = currDefaultPanel.getSimName().replaceAll(" ", "");
+                File file = new File(myGUISimulationFactory.makeXMLFileName(newSim));
+                File styleFile = new File(myGUISimulationFactory.makeXMLFileName(newSim));
+                //var sim = myParser.getSimulation(file);
+                var sim = new setUpSimulation().setSimulation(file, styleFile);
+                try{
+                    currSim = sim;
+                }catch (Exception e){
                     e.printStackTrace();
                 }
             }

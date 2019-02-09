@@ -6,13 +6,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
+
 public class GUI {
     private Stage myStage;
     private Simulation mySimulation;
     private Timeline myAnimation;
     private KeyFrame myFrame;
     private Group myNode;
-
+    private GUISimulationFactory myGUISimulationFactory = new GUISimulationFactory();
     private GUIManager myManager = new GUIManager();
     private GUIDefaultPanel myGUIDefaultPanel;
     private GUIGraph myGUIGraph;
@@ -84,7 +86,8 @@ public class GUI {
     }
 
 
-    public void resetWithParams(){
+
+    public void resetWithParams() {
         myNode.getChildren().clear();
         myManager.resetSimulations(myGUIDefaultPanel);
         mySimulation = myManager.getPrimarySimulation();
@@ -92,6 +95,19 @@ public class GUI {
         for (GUIGrid grid : myManager.getGrids()) {
             myNode.getChildren().add(grid.getGUIGrid());
         }
+    }
+    private void resetSimulation(){
+        String newSim = myGUIDefaultPanel.getSimName();
+        File file = new File(myGUISimulationFactory.makeXMLFileName(newSim));
+        File styleFile = new File(myGUISimulationFactory.makeXMLFileName(newSim));
+        //var sim = myParser.getSimulation(file);
+        var sim = new setUpSimulation().setSimulation(file, styleFile);
+        try{
+            mySimulation = sim;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         for (GUISimulationPanel panel: myManager.getPanels())
             myNode.getChildren().add(panel.getGUISimulationPanel());
         myManager.managePositions();

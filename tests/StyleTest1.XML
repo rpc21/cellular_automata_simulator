@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="style">
+    <shape>circle</shape>
+    <neighborsType>adjacent</neighborsType>
+    <edges>toroidal</edges>
+    <cellSize>1</cellSize>
+    <outline>no</outline>
+    <stateColors>
+        <DEAD>black</DEAD>
+        <ALIVE>green</ALIVE>>
+    </stateColors>
+</data>
