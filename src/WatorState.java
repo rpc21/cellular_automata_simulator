@@ -5,17 +5,17 @@ import java.util.List;
 
 public enum WatorState implements CellState {
 
-    EMPTY("E", "emptyPercentage", Color.AQUAMARINE),
-    FISH("F", "fishPercentage", Color.ORANGE),
-    SHARK("S", "sharkPercentage", Color.LIGHTGREY);
+    EMPTY("E", "EMPTY", Color.AQUAMARINE),
+    FISH("F", "FISH", Color.ORANGE),
+    SHARK("S", "SHARK", Color.LIGHTGREY);
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-   WatorState(String shortenedName, String ParamName, Color cellColor){
+    WatorState(String shortenedName, String fullState, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = ParamName;
+        myFullState = fullState;
         myCellColor = cellColor;
     }
 
