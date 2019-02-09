@@ -84,10 +84,15 @@ public class XMLParser {
 
     private HashMap<String, String> getCredentials(Element root) {
         var myCredentials = new HashMap<String, String>();
-        for (var field : Simulation.DATA_CREDENTIALS) {
-            myCredentials.put(field, getTextValue(root, field));
+        try{
+            for (var field : Simulation.DATA_CREDENTIALS) {
+                myCredentials.put(field, getTextValue(root, field));
+            }
+            return myCredentials;
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("author and title must be valid strings");
         }
-        return myCredentials;
+
     }
 
     private HashMap<String, String> getBasicSimulationParams(Element root){
