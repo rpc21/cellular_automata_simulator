@@ -52,16 +52,16 @@ public class GUISimulationFactory {
         GUIGrid myGrid;
         switch(newShape) {
             case "Rectangle":
-                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim);
                 break;
             case "Triangle":
-                myGrid = new GUITriangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                myGrid = new GUITriangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim);
                 break;
             case "Hexagon":
                 myGrid = new GUIHexagonGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim);
                 break;
             default:
-                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(),mySim.getMyGrid().getNumCols());
+                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(),mySim.getMyGrid().getNumCols(), mySim);
                 break;
         }
         return myGrid;

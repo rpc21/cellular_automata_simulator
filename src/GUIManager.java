@@ -1,11 +1,7 @@
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,13 +11,14 @@ import static javafx.scene.control.ScrollPane.ScrollBarPolicy.ALWAYS;
 
 public class GUIManager {
     private List<Simulation> mySimulations;
-    private List<GUIHexagonGrid> myGUIGrids;
+    private List<GUIGrid> myGUIGrids;
     private List<GUISimulationPanel> myGUISimPanels;
     private GUISimulationFactory myGUISimulationFactory;
     private SimulationFactory mySimFact = new SimulationFactory();
     private int numSimulations;
     private GridPane myGridPane;
     private ScrollPane myScrollPane;
+    private String myCurrShape = "Hexagon";
 
 
     public GUIManager (){
@@ -35,23 +32,41 @@ public class GUIManager {
     public void addSimulation(Simulation sim, Group currNode){
         numSimulations++;
         mySimulations.add(sim);
-        myGUIGrids.add(new GUIHexagonGrid(sim.getMyGrid().getNumRows(), sim.getMyGrid().getNumCols(),sim));
+        myGUIGrids.add(myGUISimulationFactory.makeGUIGrid(myCurrShape, sim));
         myGUIGrids.get(numSimulations - 1).makeGUIGrid(sim.getMyGrid().getCells());
+        System.out.println("jjj" + myGUIGrids.size());
         myGUISimPanels.add(myGUISimulationFactory.makeSimulationPanel(sim.getMyName(), sim));
         managePositions();
 
 //        ScrollPane myScroll = new ScrollPane();
-//        myScroll.setMaxSize(700,700);
-//        myScroll.setMinSize(300,300);
+//        myScroll.setMaxSize(400,400);
+//        myScroll.setMinSize(400,400);
 //
 //        myScroll.setHbarPolicy(ALWAYS);
 //        myScroll.setVbarPolicy(ALWAYS);
 //        myScroll.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
 //        myScroll.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
-//        myGUIGrids.get(numSimulations-1).getGUIHexGrid().setTranslateX(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
-//        myGUIGrids.get(numSimulations-1).getGUIHexGrid().setTranslateY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2);
-        //myScroll.setContent(myGUIGrids.get(numSimulations  - 1).getGUIHexGrid());
-        currNode.getChildren().addAll( myGUIGrids.get(numSimulations-1).getGUIHexGrid(),myGUISimPanels.get(numSimulations - 1).getGUISimulationPanel());
+//        myGUIGrids.get(numSimulations-1).getGUIGrid().setLayoutX(-100);
+//        myGUIGrids.get(numSimulations-1).getGUIGrid().setLayoutY(-100);
+//        myGUIGrids.get(numSimulations-1).getGUIGrid().setTranslateX(-200);
+//        myGUIGrids.get(numSimulations-1).getGUIGrid().setTranslateY(-200);
+//        Rectangle myRectangle = new Rectangle (500,500);
+//        myScroll.setContent(myGUIGrids.get(numSimulations-1).getGUIGrid());
+        currNode.getChildren().addAll( myGUIGrids.get(numSimulations - 1).getGUIGrid(),myGUISimPanels.get(numSimulations - 1).getGUISimulationPanel());
+        for (GUIGrid g: myGUIGrids)
+            if (!currNode.getChildren().contains(g.getGUIGrid()))
+                currNode.getChildren().add(g.getGUIGrid());
+    }
+
+
+    public void removeSimulation(Group currNode){
+        currNode.getChildren().removeAll(myGUIGrids.get(myGUIGrids.size() - 1).getGUIGrid(),
+                myGUISimPanels.get(myGUISimPanels.size() -1).getGUISimulationPanel());
+        myGUIGrids.remove(myGUIGrids.size() -1 );
+        myGUISimPanels.remove(myGUISimPanels.size() -1);
+        mySimulations.remove(mySimulations.size() - 1);
+        numSimulations--;
+        managePositions();
     }
 
     public void updateGUIParts(){
@@ -80,7 +95,7 @@ public class GUIManager {
             }
             if (currSim != null)
                 mySimulations.set(i,currSim);
-            GUIHexagonGrid currGrid = new GUIHexagonGrid(currSim.getMyGrid().getNumRows(), currSim.getMyGrid().getNumCols(), currSim);
+            GUIGrid currGrid = myGUISimulationFactory.makeGUIGrid(myCurrShape, currSim);
             currGrid.makeGUIGrid(currSim.getMyGrid().getCells());
             myGUIGrids.set(i,currGrid);
             myGUISimPanels.set(i,myGUISimulationFactory.makeSimulationPanel(currSim.getMyName(),currSim));
@@ -90,8 +105,8 @@ public class GUIManager {
        managePositions();
     }
 
-    public List<GUIHexagonGrid> getGrids(){
-        return myGUIGrids;
+    public List<GUIGrid> getGrids(){
+       return myGUIGrids;
     }
     public List<GUISimulationPanel> getPanels(){
         return myGUISimPanels;
@@ -104,60 +119,35 @@ public class GUIManager {
         return myGridPane;
     }
 
-    private void managePositions() {
+    public void managePositions() {
 
         if (numSimulations == 1) {
-            StackPane gridOne = myGUIGrids.get(0).getGUIHexGrid();
+            StackPane gridOne = myGUIGrids.get(0).getGUIGrid();
             gridOne.setScaleX(1.0);
             gridOne.setScaleY(1.0);
             StackPane panelOne = myGUISimPanels.get(0).getGUISimulationPanel();
-            panelOne.setLayoutY(0.0);
+            gridOne.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + 100);
+            gridOne.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - myGUIGrids.get(0).getHalfWay());
+            panelOne.setLayoutY(gridOne.getLayoutY());
+            panelOne.setTranslateY(gridOne.getTranslateY());
         } else {
-            StackPane gridOne = myGUIGrids.get(0).getGUIHexGrid();
-            StackPane gridTwo = myGUIGrids.get(1).getGUIHexGrid();
-            gridOne.setScaleX(0.75);
-            gridOne.setScaleY(0.75);
-            gridTwo.setScaleX(0.75);
-            gridTwo.setScaleY(0.75);
-            if (gridOne.getBoundsInParent().intersects((gridTwo.getBoundsInParent())))
-                gridTwo.setLayoutY(300);
-            //gridTwo.setTranslateY(gridTwo.getTranslateY() + gridOne.getBoundsInParent().getHeight() * 2);
-            gridTwo.setTranslateX(gridOne.getTranslateX());
-
+            StackPane gridOne = myGUIGrids.get(0).getGUIGrid();
+            StackPane gridTwo = myGUIGrids.get(1).getGUIGrid();
             StackPane panelOne = myGUISimPanels.get(0).getGUISimulationPanel();
-            StackPane panelTwo = myGUISimPanels.get(1).getGUISimulationPanel();
-            panelOne.setScaleX(0.75);
-            panelOne.setScaleY(0.75);
-            panelTwo.setScaleX(0.75);
-            panelTwo.setScaleY(0.75);
-            panelOne.setLayoutY(0.0);
-            panelTwo.setLayoutY(gridTwo.getLayoutY() + 30);
-        }
-//        myGridPane.getChildren().clear();
-//        int count = 0;
-//        for (int i = 0; i < 2; i++){
-//            for (int j = 0; j < 2; j++) {
-//                if (count < myGUIGrids.size()) {
-//                    myGUIGrids.get(count).getGUIHexGrid().setScaleX(1.0 - (0.25 * (myGUIGrids.size() - 1)));
-//                    myGUIGrids.get(count).getGUIHexGrid().setScaleY(1.0 - (0.25 * (myGUIGrids.size() - 1)));
-//                    myGridPane.add(myGUIGrids.get(count).getGUIHexGrid(), i, j);
-//                }
-//                count++;
-//            }
-//        }
-//        if (myGUIGrids.size() > 1) {
-//            RowConstraints column = new RowConstraints(200);
-//            myGridPane.getRowConstraints().add(column);
-//            if (myGUIGrids.size() > 2) {
-//                ColumnConstraints col = new ColumnConstraints(200);
-//                myGridPane.getColumnConstraints().add(col);
-//            }
-//        }
+            gridOne.setScaleX(0.5);
+            gridOne.setScaleY(0.5);
+            gridTwo.setScaleX(0.5);
+            gridTwo.setScaleY(0.5);
+            gridOne.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + 100);
+            gridOne.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - 0.5 * myGUIGrids.get(0).getHalfWay());
+            panelOne.setLayoutY(gridOne.getLayoutY());
+            panelOne.setTranslateY(gridOne.getTranslateY());
+            gridTwo.setLayoutY(gridOne.getLayoutY() + gridOne.getTranslateY() + gridOne.getBoundsInParent().getHeight() + 60);
+            gridTwo.setLayoutX(gridOne.getLayoutX());
 
-//        myGridPane.setLayoutX(0.0);
-//        myGridPane.setLayoutY(0.0);
-//        myGridPane.setTranslateX(0.0);
-//        myGridPane.setTranslateY(0.0);
+            StackPane panelTwo = myGUISimPanels.get(1).getGUISimulationPanel();
+            panelTwo.setLayoutY(gridTwo.getLayoutY());
+        }
         System.out.println(myGridPane.getChildren().size());
 
 

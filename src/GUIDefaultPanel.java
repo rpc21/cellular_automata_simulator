@@ -20,16 +20,16 @@ public class GUIDefaultPanel extends GUIPanel {
     GUISimulationNameChooser mySimChooser;
     GUIResetButton myResetButton;
 
-    private static final double STACKPANE_OFFSET = GUI.STAGE_SIZE/2 + GUIGrid.GUI_GRID_SIZE/1.5;
+    private static final double STACKPANE_OFFSET = GUI.STAGE_SIZE/2 + GUIGrid.GUI_GRID_SIZE/2;
     private static final int DEFAULT_CONTROL_OFFSET = 10;
     public static final int DEFAULT_CONTROL_SPACING = 40;
 
-    public GUIDefaultPanel(GUIGridStep step, GUIReset reset, GUIAddSimulation add, Timeline timeline,
+    public GUIDefaultPanel(GUIGridStep step, GUIReset reset, GUIAddSimulation add, GUIRemoveSimulation remove, Timeline timeline,
                            KeyFrame frame, String simName, int rows, int cols){
 
         myPlayButton = new GUIPlayButton(timeline);
         myStepButton = new GUIStepButton(timeline,step);
-        myAddSimButton = new GUIAddSimulationButton(add);
+        myAddSimButton = new GUIAddSimulationButton(add,remove);
         mySpeedSlider = new GUISpeedSlider(timeline,frame,step);
         myRowSpinner = new GUIRowColSpinner(rows);
         myShapeChooser = new GUIShapeChooser("Rectangle");
@@ -65,7 +65,7 @@ public class GUIDefaultPanel extends GUIPanel {
             myStackPane.getChildren().addAll(c);
             myStackPane.setLayoutX(STACKPANE_OFFSET);
             c.setTranslateX(DEFAULT_CONTROL_OFFSET);
-            c.setTranslateY(GUI.STAGE_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + iter * DEFAULT_CONTROL_SPACING);
+            c.setTranslateY(iter * DEFAULT_CONTROL_SPACING);
             iter++;
         }
     }

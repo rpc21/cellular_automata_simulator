@@ -8,7 +8,6 @@ public class CellularAutomataMain extends Application {
     public static final int WINDOW_SIZE = 1000;
     private GUI myGUI;
     private Simulation myCurrentSimulation;
-    private Button newSimWindowButton = new Button("Open New Simulation");
     public static void main(String[] args){
         launch(args);
     }
@@ -30,12 +29,6 @@ public class CellularAutomataMain extends Application {
         myGUI = new GUI(stage,myCurrentSimulation);
         //myGUI.render();
     }
-//    private void newStageWindowButton(){
-//        GUI secondGUI = new GUI(stage)
-//    }
-//    public void makeNewSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String[][] initialStates){
-//
-//    }
 }
 
 

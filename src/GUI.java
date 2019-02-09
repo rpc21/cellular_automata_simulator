@@ -36,6 +36,12 @@ public class GUI {
             addSimulation();
         }
     };
+    GUIRemoveSimulation myRemoveSimFunction = new GUIRemoveSimulation() {
+        @Override
+        public void guiRemoveSim() {
+            removeSimulation();
+        }
+    };
 
 
     public static final int STAGE_SIZE = 1000;
@@ -73,29 +79,37 @@ public class GUI {
         myManager.addSimulation(mySimulation,myNode);
     }
 
+    private void removeSimulation(){
+        myManager.removeSimulation(myNode);
+    }
+
 
     public void resetWithParams(){
         myNode.getChildren().clear();
         myManager.resetSimulations(myGUIDefaultPanel);
         mySimulation = myManager.getPrimarySimulation();
         makeGUIParts(mySimulation);
-//        myNode.getChildren().add(myManager.retGridPane());
-        for (GUIHexagonGrid grid : myManager.getGrids()) {
-            myNode.getChildren().add(grid.getGUIHexGrid());
+        for (GUIGrid grid : myManager.getGrids()) {
+            myNode.getChildren().add(grid.getGUIGrid());
         }
         for (GUISimulationPanel panel: myManager.getPanels())
             myNode.getChildren().add(panel.getGUISimulationPanel());
+        myManager.managePositions();
+        myGUIDefaultPanel.getGUIDefaultPanel().setLayoutY(myManager.getGrids().get(0).getGUIGrid().getLayoutY());
+        myGUIDefaultPanel.getGUIDefaultPanel().setTranslateY(myManager.getGrids().get(0).getGUIGrid().getTranslateY());
 
 
     }
 
 
     private void makeGUIParts(Simulation currSim){
-        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myAnimation,myFrame,
+        myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myRemoveSimFunction, myAnimation,myFrame,
                 currSim.getMyName(),currSim.getMyGrid().getNumRows(),currSim.getMyGrid().getNumCols());
+        myGUIDefaultPanel.getGUIDefaultPanel().setLayoutY(myManager.getGrids().get(0).getGUIGrid().getLayoutY());
+        myGUIDefaultPanel.getGUIDefaultPanel().setTranslateY(myManager.getGrids().get(0).getGUIGrid().getTranslateY());
         Credentials myCredentials = new Credentials("lol","hi");
         myGUIGraph = new GUIGraph(currSim);
-        myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials());//,myGUIGraph.getMyChart());
+        myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials(),myGUIGraph.getMyChart());
     }
 
 

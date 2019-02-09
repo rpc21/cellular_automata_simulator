@@ -1,53 +1,93 @@
-import javafx.scene.layout.GridPane;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class GUIGrid {
-    private GridPane myGridPane = new GridPane();
     private StackPane myStackPane = new StackPane();
-    protected HashMap<Color,String> myMap;
+    private int myRows;
+    private int myCols;
+    private Simulation mySim;
+    private LinkedList<Color> myPossibleColors;
+    protected HashMap<Color,String> myMap = new HashMap<Color,String>();
     protected HashMap<String,Color> revMap;
-    public static final int GUI_GRID_SIZE = 400;
+    public static final double GUI_GRID_SIZE = 600;
 
-    public GUIGrid(){
-        myGridPane.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
-        myGridPane.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
-        //getter function for String to Color Map
+    public GUIGrid(int r, int c, Simulation sim){
+        myRows = r;
+        myCols = c;
+        mySim = sim;
         HashMap<String,Color> wrongOrderMap = new HashMap<>();
         wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
         wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
         revMap = wrongOrderMap;
-        myMap = new HashMap<>();
-        reverse(wrongOrderMap);
+        reverse(revMap);
+        myPossibleColors = new LinkedList<Color>(myMap.keySet());
     }
-    public abstract void makeGUIGrid(List<Cell> myCells);
+    public void makeGUIGrid(List<Cell> myCells){
+        int r = 0, c = 0;
+        while (r <  myRows){
+            while (c < myCols){
+                final int  rCopy = r;
+                final int  cCopy = c;
+                Polygon currPolygon = new Polygon();
+                currPolygon.getPoints().addAll(getVertices(r,c));
+                currPolygon.setTranslateX((getX(r,c)));
+                currPolygon.setTranslateY(getY(r,c));
+                currPolygon.setFill(myCells.get(r * myRows + c).getMyColor());
+                currPolygon.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event)
+                    {
+                        if (myPossibleColors.indexOf(currPolygon.getFill()) + 1 != myPossibleColors.size())
+                            currPolygon.setFill(myPossibleColors.get(myPossibleColors.indexOf(currPolygon.getFill()) + 1));
+                        else
+                            currPolygon.setFill(myPossibleColors.get(0));
+                        warnSimulation(rCopy,cCopy,currPolygon.getFill());
+                    }
+                });
+                currPolygon.setStroke(Color.BLACK);
+                populateGUIGrid(currPolygon,c,r);
+                c = c + 1;
+            }
+            c = 0;
+            r = r + 1;
+        }
+    };
 
-    protected void populateGUIGrid(Shape myShape, int r, int c){
-        myGridPane.add(myShape,r,c);
-    }
+    public abstract Double[] getVertices(int r, int c);
 
-    public GridPane getGUIGrid(){
-        return myGridPane;
-    }
-    public StackPane getGUIHexGrid(){
-        myStackPane.setTranslateX(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
-        myStackPane.setTranslateY(CellularAutomataMain.WINDOW_SIZE/2 - GUI_GRID_SIZE/2);
+    public abstract double getX(int r, int c);
+
+    public abstract double getY(int r, int c);
+
+    public abstract double getHalfWay();
+
+    public StackPane getGUIGrid(){
+//        myStackPane.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + 100);
+//        myStackPane.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - getHalfWay());
         return myStackPane;
     }
-    protected void populateGUIGridHex(Shape myShape, int r, int c){
+    protected void populateGUIGrid(Shape myShape, int r, int c){
         myStackPane.getChildren().addAll(myShape);
     }
+
     private void reverse(HashMap<String,Color> wrong){
         for(Map.Entry<String, Color> entry : wrong.entrySet()){
             myMap.put(entry.getValue(), entry.getKey());
         }
 
+    }
+    private void warnSimulation(int r, int col, Paint c){
+        mySim.replaceCell(new Location(r,col),myMap.get(c));
     }
 
 }
