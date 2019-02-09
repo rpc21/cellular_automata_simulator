@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -23,9 +24,11 @@ import java.util.List;
  */
 public class XMLParser {
     // Readable error message that can be displayed by the GUI
+
     public static final String ERROR_MESSAGE = "XML file does not represent %s";
     public static final String ROW_TAG_NAME="rows";
-    public static final String RANDOM_STRING="random";
+    public static final String RANDOM_STRING="randomFromPercentages";
+    public static final String COMPLETELY_RANDOM_STRING="completelyRandom";
     public static final String COLUMN_TAG_NAME="columns";
     public static final String SIMULATION_TYPE_TAG_NAME="simulationType";
     public static final String CELL_ROWS_TAG_NAME="CellRows";
@@ -69,6 +72,9 @@ public class XMLParser {
 
         if(howToSetInitialStates.equals(RANDOM_STRING)){
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
+        }else if(howToSetInitialStates.equals(COMPLETELY_RANDOM_STRING)){
+            //TODO SET THE PERCENTAGES RANDOMLY TO ADD TO 1
+            mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
         }else{
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
         }
@@ -203,4 +209,5 @@ public class XMLParser {
             throw new XMLException(e);
         }
     }
+
 }
