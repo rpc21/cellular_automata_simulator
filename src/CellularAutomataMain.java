@@ -17,13 +17,19 @@ public class CellularAutomataMain extends Application {
         //String testCase = "tests/PercolationTest.xml";
 //        String testCase = "tests/SpreadingFireTest.xml";
         String testCase = "tests/WatorTest.xml";
-        File file = new File(testCase);
-        var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
+        File Testfile = new File(testCase);
+
+        String styleTestCase = "tests/StyleTest1.XML";
+        File styleFile = new File(styleTestCase);
+
+        var simulation = new setUpSimulation().setSimulation(Testfile, styleFile);
+        //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
         try{
-            myCurrentSimulation = p;
+            myCurrentSimulation = simulation;
         }catch (Exception e){
             e.printStackTrace();
         }
+
         GUI myGUI = new GUI(stage,myCurrentSimulation);
         //myGUI.render();
     }

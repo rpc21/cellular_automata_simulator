@@ -4,7 +4,7 @@
     <neighborsType>adjacent</neighborsType>
     <edges>toroidal</edges>
     <cellSize>1</cellSize>
-    <outline>on</outline>
+    <outline>no</outline>
     <stateColors>
         <DEAD>black</DEAD>
         <ALIVE>green</ALIVE>>

@@ -29,20 +29,102 @@ public class XMLStyler {
         TYPE_ATTRIBUTE = type;
     }
 
-    public Simulation updateSimulationStyle(File dataFile, Simulation simulation){
+    public Simulation setSimulationStyle(File dataFile, Simulation simulation){
         var root = getRootElement(dataFile);
-        List<String> states = simulation.getMyPossibleStates();
-
+        simulation.setColors(readStateColors(simulation.getMyPossibleStates(), root));
+        simulation.myStyleProperties =makeStylePropertiesMap(root);
         return simulation;
     }
 
-    private void readStateColors(List<String> states, Element root){
+    private HashMap<String, String> makeStylePropertiesMap(Element root){
+        HashMap<String, String> styleProperties = new HashMap<String, String>();
+        readInShape(root, styleProperties);
+        readInNeighborsType(root, styleProperties);
+        readInEdges(root, styleProperties);
+        readInCellSize(root, styleProperties);
+        readInOutline(root, styleProperties);
+        return styleProperties;
+    }
+    
+    private void readInOutline(Element root, HashMap<String, String> styleProperties){
+        String outline = getTextValue(root, OUTLINE_TAG_NAME);
+        styleProperties.put(OUTLINE_TAG_NAME, outline);
+    }
+
+    private void readInCellSize(Element root, HashMap<String, String> styleProperties){
+        String cellSize = getTextValue(root, CELL_SIZE_TAG_NAME);
+        styleProperties.put(CELL_SIZE_TAG_NAME, cellSize);
+    }
+
+    private void readInEdges(Element root, HashMap<String, String> styleProperties){
+        String edges = getTextValue(root, EDGE_TYPE_TAG_NAME);
+        styleProperties.put(EDGE_TYPE_TAG_NAME, edges);
+    }
+
+    private void readInNeighborsType(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException{
+        try {
+            String neighbors = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME);
+            if (!isValidNeighbors(neighbors)) {
+                styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, neighbors);
+            }
+        } catch (IllegalArgumentException e){
+            try {//try all lower case
+                String lowerCaseName = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME).toLowerCase();
+                if(isValidNeighbors(lowerCaseName)){
+                    styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, lowerCaseName);
+                }
+            }
+            catch (IllegalArgumentException ee) {
+                throw new IllegalArgumentException("neighbors type must be a valid string: " + NeighborsDefinitions.values());
+            }
+        }
+    }
+
+    private void readInShape(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException {
+        try {
+            String shape = getTextValue(root, SHAPE_TYPE_TAG_NAME);
+            if (!isValidShape(shape)) {
+                styleProperties.put(SHAPE_TYPE_TAG_NAME, shape);
+            }
+        } catch(IllegalArgumentException e){
+            try {//try all lower case
+                String lowerCaseName = getTextValue(root, SHAPE_TYPE_TAG_NAME).toLowerCase();
+                if(isValidShape(lowerCaseName)){
+                    styleProperties.put(SHAPE_TYPE_TAG_NAME, lowerCaseName);
+                }
+            }
+            catch (IllegalArgumentException ee) {
+                throw new IllegalArgumentException("shape must be a valid string: " + simulationShapes.values());
+            }
+        }
+    }
+
+    public boolean isValidNeighbors(String possibleNeighbors){
+        for(NeighborsDefinitions neighborType: NeighborsDefinitions.values()){
+            if(possibleNeighbors.equals(neighborType.toString())){
+                return possibleNeighbors.equals(neighborType.toString());
+            }
+        }
+        return false;
+    }
+
+    public boolean isValidShape(String possibleShape){
+        for(simulationShapes s: simulationShapes.values()){
+            if(possibleShape.equals(s.toString())){
+                return possibleShape.equals(s.toString());
+            }
+        }
+        return false;
+    }
+
+    private HashMap<String, String> readStateColors(List<String> states, Element root){
         HashMap<String, String> statesToColors = new HashMap<String, String>();
         NodeList stateColorsList = root.getElementsByTagName(STATE_COLORS_TAG_NAME);
-        //NodeList columnsList = cellRows.getChildNodes();
         for(String currentState: states){
             statesToColors.put(currentState,getTextValue(root, currentState));
+            System.out.println(getTextValue(root, currentState));
         }
+        return statesToColors;
 
     }
 

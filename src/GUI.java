@@ -85,7 +85,9 @@ public class GUI {
     private void resetSimulation(){
         String newSim = myGUIDefaultPanel.getSimName();
         File file = new File(myGUISimulationFactory.makeXMLFileName(newSim));
-        var sim = myParser.getSimulation(file);
+        File styleFile = new File(myGUISimulationFactory.makeXMLFileName(newSim));
+        //var sim = myParser.getSimulation(file);
+        var sim = new setUpSimulation().setSimulation(file, styleFile);
         try{
             mySimulation = sim;
         }catch (Exception e){

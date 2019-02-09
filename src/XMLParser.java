@@ -25,11 +25,11 @@ public class XMLParser {
     // Readable error message that can be displayed by the GUI
     public static final String ERROR_MESSAGE = "XML file does not represent %s";
     public static final String ROW_TAG_NAME="rows";
+    public static final String RANDOM_STRING="random";
     public static final String COLUMN_TAG_NAME="columns";
     public static final String SIMULATION_TYPE_TAG_NAME="simulationType";
     public static final String CELL_ROWS_TAG_NAME="CellRows";
     public static final String CELL_COLUMNS_TAG_NAME="CellColumns";
-    public static final String RANDOM_STRING="random";
     public static final String GEN_STATES_TAG_NAME="GenerateStatesBy";
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
@@ -49,7 +49,7 @@ public class XMLParser {
      * @param dataFile the xml file containing the setup for the simulation
      * @return a new simulation
      */
-    public Simulation getSimulation(File dataFile) {
+    public Simulation setSimulation(File dataFile) {
         var root = getRootElement(dataFile);
 //        if (! isValidFile(root, Simulation.DATA_TYPE)) {
 //            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
@@ -66,13 +66,13 @@ public class XMLParser {
 
         SimulationFactory mySimulationFactory = new SimulationFactory();
         Simulation mySim;
+
         if(howToSetInitialStates.equals(RANDOM_STRING)){
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
         }else{
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
         }
         mySim.setCredentials(theCredentials);
-
         return mySim;
     }
 
