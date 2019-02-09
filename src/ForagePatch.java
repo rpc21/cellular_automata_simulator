@@ -17,9 +17,36 @@ public class ForagePatch extends Cell{
     }
 
     private void initializePheromones() {
-        if (myCurrentState == ForageState.OBSTACLE || myCurrentState == ForageState.){
-
+        switch (myCurrentState) {
+            case OBSTACLE:
+                myFoodPheromones = 0.0D;
+                myHomePheromones = 0.0D;
+                break;
+            case FOOD:
+                myHomePheromones = 0.0D;
+                myFoodPheromones = myParameters.get("maxFoodPheromones");
+                break;
+            case EMPTY:
+                myHomePheromones = myParameters.get("maxHomePheromones") * 0.25;
+                myFoodPheromones = myParameters.get("maxFoodPheromones") * 0.25;
+                break;
+            case NEST:
+                myHomePheromones = myParameters.get("maxHomePheromones");
+                myFoodPheromones = 0.0D;
+                break;
         }
+    }
+
+    public boolean hasFoodSource(){
+        return myCurrentState == ForageState.FOOD;
+    }
+
+    public boolean isValidAntLocation(){
+        return myCurrentState != ForageState.OBSTACLE;
+    }
+
+    public boolean isTheNest(){
+        return myCurrentState == ForageState.NEST;
     }
 
     @Override
@@ -27,5 +54,11 @@ public class ForagePatch extends Cell{
 
     }
 
+    public double getMyFoodPheromones() {
+        return myFoodPheromones;
+    }
 
+    public double getMyHomePheromones() {
+        return myHomePheromones;
+    }
 }

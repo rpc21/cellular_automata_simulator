@@ -1,7 +1,4 @@
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ForageAnt {
 
@@ -28,21 +25,63 @@ public class ForageAnt {
 
     private void findFoodSource() {
         Location myNextLocation = null;
-        if (myGrid.get(myLocation).isTheNest()) {
+        if (((ForagePatch) myGrid.get(myLocation)).isTheNest()) {
             myDirection = getDirectionWithMaxFoodPheromones(calculateForwardDirections());
         }
         myNextLocation = selectLocation(calculateForwardLocations());
         if (myNextLocation == null){
-            myNextLocation = selectLocation(calculateNeighborLocations());
+            myNextLocation = selectLocation(myGrid.getPossibleMoves(calculateNeighborLocations()));
         }
         if (myNextLocation != null){
             dropHomePheromones();
             move(myNextLocation);
-            if (myGrid.get(myLocation).hasFoodSource()){
+            if (((ForagePatch) myGrid.get(myLocation)).hasFoodSource()){
                 pickUpFoodItem();
                 hasFoodItem = true;
             }
         }
+    }
+
+    private List<Location> calculateForwardLocations() {
+        ArrayList<Location> forwardLocations = new ArrayList<>();
+        for (NeighborsDefinitions neighborsDefinitions : calculateForwardDirections()){
+            Location neighborLocation = new Location(myLocation.getRow() + neighborsDefinitions.getDeltaRow()[0],
+                    myLocation.getCol() + neighborsDefinitions.getDeltaCol()[0]);
+            forwardLocations.add(neighborLocation);
+        }
+        return forwardLocations;
+    }
+
+    private NeighborsDefinitions getDirectionWithMaxFoodPheromones(List<NeighborsDefinitions> directions) {
+        HashMap<NeighborsDefinitions, Double> neighborToPheromoneMap = new HashMap<>();
+        for (NeighborsDefinitions direction : directions){
+            Location neighborLocation = new Location(myLocation.getRow() + direction.getDeltaRow()[0],
+                    myLocation.getCol()+direction.getDeltaCol()[0]);
+            if (((ForagePatch) myGrid.get(neighborLocation)).isValidAntLocation()) {
+                neighborToPheromoneMap.put(direction, ((ForagePatch) myGrid.get(neighborLocation)).getMyFoodPheromones());
+            }
+        }
+        if (neighborToPheromoneMap.isEmpty()){
+            return myDirection;
+        }
+        else {
+            return Collections.max(neighborToPheromoneMap.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
+        }
+    }
+
+
+
+    private List<NeighborsDefinitions> calculateForwardDirections() {
+        ArrayList<NeighborsDefinitions> forwardDirections = new ArrayList<>();
+        NeighborsDefinitions[] directions = NeighborsDefinitions.CARDINAL_DIRECTIONS_COMPLETE;
+        for (int i = 0; i < directions.length; i++){
+            if (directions[i] == myDirection){
+                forwardDirections.add(directions[(i-1+directions.length) % directions.length]);
+                forwardDirections.add(directions[i]);
+                forwardDirections.add(directions[(i+1+directions.length) % directions.length]);
+            }
+        }
+        return forwardDirections;
     }
 
     private void dropHomePheromones() {
@@ -87,7 +126,7 @@ public class ForageAnt {
 
     private void returnToNest() {
         NeighborsDefinitions myNextDirection = null;
-        if (myGrid.get(myLocation).hasFoodSource()) {
+        if (((ForagePatch) myGrid.get(myLocation)).hasFoodSource()) {
             myNextDirection = getDirectionWithMaxHomePheromones(calculateForwardDirections());
         }
         if (myNextDirection == null){
