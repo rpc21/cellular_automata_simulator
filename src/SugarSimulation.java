@@ -22,7 +22,7 @@ public class SugarSimulation extends Simulation{
     }
 
     @Override
-    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
+    public void setInitialStates(String[][] initialStates, String simulationType, Map<String, Double> parameters) {
         super.setInitialStates(initialStates, simulationType, parameters);
         initializeSugarAgents();
         sugarMax = sugarMax();
