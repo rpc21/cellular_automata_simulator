@@ -6,6 +6,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -54,9 +55,9 @@ public class XMLParser {
      * @param dataFile the xml file containing the setup for the simulation
      * @return a new simulation
      */
-    public Simulation setSimulation(File dataFile) {
+    public Simulation setSimulation(File dataFile){
         var root = getRootElement(dataFile);
-        if (! isValidFile(root, Simulation.DATA_TYPE)) {
+        if (!isValidFile(root, Simulation.DATA_TYPE)) {
             System.out.println(root);
             throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
         }
