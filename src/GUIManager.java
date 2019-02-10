@@ -66,14 +66,14 @@ public class GUIManager {
         }
     }
 
-    public void resetSimulations(GUIDefaultPanel currDefaultPanel, Map<String,String> credentials){
+    public void resetSimulations(GUIDefaultPanel currDefaultPanel, HashMap<String,String> credentials){
         for (int i = 0; i < numSimulations; i ++ ){
             Simulation currSim = null;
             GUISimulationPanel currSimPanel = myGUISimPanels.get(i);
             GUIGrid guiGrid = myGUIGrids.get(i);
             if (currSimPanel.getName().equals(currDefaultPanel.getSimName())) {
                 currDefaultPanel.getMyBasicParams().put(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,guiGrid.getNeighbors());
-                currSim = mySimFact.generateSimulation(currDefaultPanel.getMyBasicParams(), currSimPanel.getMyParams());
+                currSim = mySimFact.generateSimulation(currDefaultPanel.getMyBasicParams(), currSimPanel.getMyParams(), credentials);
             }
             else {
                 String newSim = currDefaultPanel.getSimName();
