@@ -1,5 +1,8 @@
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum WatorState implements CellState {
 
     EMPTY("E", "EMPTY", Color.AQUAMARINE),
@@ -10,7 +13,7 @@ public enum WatorState implements CellState {
     private final String myFullState;
     private final Color myCellColor;
 
-   WatorState(String shortenedName, String fullState, Color cellColor){
+    WatorState(String shortenedName, String fullState, Color cellColor){
         myShortenedName = shortenedName;
         myFullState = fullState;
         myCellColor = cellColor;
@@ -42,5 +45,14 @@ public enum WatorState implements CellState {
     @Override
     public Color getMyCellColor() {
         return myCellColor;
+    }
+
+    @Override
+    public List<String> getPossibleValues() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i< values().length; i++){
+            arrayList.add(myFullState);
+        }
+        return arrayList;
     }
 }

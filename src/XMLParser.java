@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -23,13 +24,15 @@ import java.util.List;
  */
 public class XMLParser {
     // Readable error message that can be displayed by the GUI
+
     public static final String ERROR_MESSAGE = "XML file does not represent %s";
-    public static final String ROW_TAG_VIS="rows";
-    public static final String COLUMN_TAG_VIS="columns";
+    public static final String ROW_TAG_NAME="rows";
+    public static final String RANDOM_STRING="randomFromPercentages";
+    public static final String COMPLETELY_RANDOM_STRING="completelyRandom";
+    public static final String COLUMN_TAG_NAME="columns";
     public static final String SIMULATION_TYPE_TAG_NAME="simulationType";
     public static final String CELL_ROWS_TAG_NAME="CellRows";
     public static final String CELL_COLUMNS_TAG_NAME="CellColumns";
-    public static final String RANDOM_STRING="random";
     public static final String GEN_STATES_TAG_NAME="GenerateStatesBy";
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
@@ -49,15 +52,15 @@ public class XMLParser {
      * @param dataFile the xml file containing the setup for the simulation
      * @return a new simulation
      */
-    public Simulation getSimulation(File dataFile) {
+    public Simulation setSimulation(File dataFile) {
         var root = getRootElement(dataFile);
 //        if (! isValidFile(root, Simulation.DATA_TYPE)) {
 //            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
 //        }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
-        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_VIS));
-        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_VIS));
+        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
+        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
 
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);
@@ -66,22 +69,30 @@ public class XMLParser {
 
         SimulationFactory mySimulationFactory = new SimulationFactory();
         Simulation mySim;
+
         if(howToSetInitialStates.equals(RANDOM_STRING)){
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
+        }else if(howToSetInitialStates.equals(COMPLETELY_RANDOM_STRING)){
+            //TODO SET THE PERCENTAGES RANDOMLY TO ADD TO 1
+            mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
         }else{
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
         }
         mySim.setCredentials(theCredentials);
-
         return mySim;
     }
 
     private HashMap<String, String> getCredentials(Element root) {
         var myCredentials = new HashMap<String, String>();
-        for (var field : Simulation.DATA_CREDENTIALS) {
-            myCredentials.put(field, getTextValue(root, field));
+        try{
+            for (var field : Simulation.DATA_CREDENTIALS) {
+                myCredentials.put(field, getTextValue(root, field));
+            }
+            return myCredentials;
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("author and title must be valid strings");
         }
-        return myCredentials;
+
     }
 
     private HashMap<String, String> getBasicSimulationParams(Element root){
@@ -195,7 +206,6 @@ public class XMLParser {
         }
     }
 
-    // Boilerplate code needed to make a documentBuilder
     private DocumentBuilder getDocumentBuilder () {
         try {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -204,4 +214,5 @@ public class XMLParser {
             throw new XMLException(e);
         }
     }
+
 }

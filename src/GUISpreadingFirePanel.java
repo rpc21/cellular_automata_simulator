@@ -4,7 +4,6 @@ import javafx.scene.text.Text;
 import java.util.HashMap;
 
 public class GUISpreadingFirePanel extends GUISimulationPanel {
-    private Simulation mySimulation;
     private Text myProbTextBox;
     private Spinner<Integer> myProbSpinner;
     private Text myTreeTextBox;
@@ -17,7 +16,6 @@ public class GUISpreadingFirePanel extends GUISimulationPanel {
     private HashMap<String,Double>  myMap = new HashMap<String,Double>();
     public GUISpreadingFirePanel(Simulation mySim){
         super(mySim);
-        mySimulation = mySim;
 
        for (String paramName: mySim.getInitialParams().keySet() )
             myMap.put(new String(paramName), new Double(mySim.getInitialParams().get(paramName)));

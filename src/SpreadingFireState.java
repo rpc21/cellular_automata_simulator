@@ -1,5 +1,8 @@
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * SpreadingFireState is an Enum that defines all the possible states for a SpreadingFireCell
  * There are three states: FIRE, TREE, and EMPTY
@@ -15,9 +18,9 @@ public enum SpreadingFireState implements CellState {
     private final String myFullState;
     private final Color myCellColor;
 
-    SpreadingFireState(String shortenedName, String fullState, Color cellColor){
+    SpreadingFireState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myFullState = ParamName;
         myCellColor = cellColor;
     }
 
@@ -46,5 +49,14 @@ public enum SpreadingFireState implements CellState {
     @Override
     public Color getMyCellColor() {
         return myCellColor;
+    }
+
+    @Override
+    public List<String> getPossibleValues() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i< values().length; i++){
+            arrayList.add(myFullState);
+        }
+        return arrayList;
     }
 }

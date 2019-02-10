@@ -1,33 +1,23 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Slider;
+
 import javafx.scene.control.Spinner;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.HashMap;
 
 public class GUISegregationPanel extends GUISimulationPanel {
-    private Simulation mySimulation;
     private Spinner<Integer> myThresholdSpinner = new Spinner<>();
     private Text myThresh;
     private Spinner<Integer> myRaceOneSpinner;
     private Text myRaceOne;
     private Spinner<Integer> myRaceTwoSpinner;
     private Text myRaceTwo;
-    private Text myRaceRatio;
     private Spinner<Integer> myEmptySpinner;
     private Text myEmpty;
     private HashMap<String,Double>  myMap = new HashMap<String,Double>();
-//    double emptyCurrVal;
-//    double redCurrVal;
-//    double blueCurrVal;
     int redCurrRatio;
     int blueCurrRatio;
 
     public GUISegregationPanel(Simulation mySim){
         super(mySim);
-        mySimulation = mySim;
         for (String paramName: mySim.getInitialParams().keySet() )
             myMap.put(new String(paramName), new Double(mySim.getInitialParams().get(paramName)));
 
@@ -42,32 +32,12 @@ public class GUISegregationPanel extends GUISimulationPanel {
         myEmpty = setUpLabel("Empty %");
         myRaceOne = setUpLabel("Red %");
         myRaceTwo = setUpLabel("Blue %");
-//        myRaceRatio = setUpLabel(redCurrRatio + "/" + blueCurrRatio);
 
         super.addToStackPane(myThresh,myThresholdSpinner);
         super.addToStackPane(myRaceOne,myRaceOneSpinner);
         super.addToStackPane(myRaceTwo,myRaceTwoSpinner);
         super.addToStackPane(myEmpty,myEmptySpinner);
 
-//        myRaceOneSlider.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-//                myRaceOneSlider.setValue(myRaceOneSlider.getValue());
-//                redCurrVal = myRaceOneSlider.getValue();//(mySim.getMyGrid().getCells().size() - myEmptySlider.getValue() * mySim.getMyGrid().getCells().size()) * myRaceOneSlider.getValue()/ (1+ myRaceOneSlider.getValue())/mySim.getMyGrid().getCells().size();
-//                blueCurrVal = 1 - redCurrVal - myEmptySlider.getValue();
-//                toFraction(redCurrVal/blueCurrVal);
-//                myRaceOneVal.setText(redCurrRatio + "/" + blueCurrRatio);
-//            }
-//        });
-//
-//        myEmptySlider = new Slider(0,1.0,emptyCurrVal);
-//        myEmptySlider.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-//                myEmptySlider.setValue(myEmptySlider.getValue());
-//                emptyCurrVal = myEmptySlider.getValue();
-//            }
-//        });
 
     }
 

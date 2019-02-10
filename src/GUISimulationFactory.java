@@ -1,9 +1,11 @@
+import javafx.stage.Stage;
+
 public class GUISimulationFactory {
     public String makeXMLFileName(String newSim){
         String testCase;
         switch(newSim){
             case Simulation.GOL_SIMULATION_NAME:
-                testCase = "tests/GOLTest.xml";
+                testCase = "tests/GameOfLifeTest.xml";
                 break;
             case Simulation.SPREADING_FIRE_SIMULATION_NAME:
                 testCase = "tests/SpreadingFireTest.xml";
@@ -18,7 +20,7 @@ public class GUISimulationFactory {
                 testCase = "tests/WatorTest.xml";
                 break;
             default:
-                testCase = "tests/GOLTest.xml";
+                testCase = "tests/GameOfLifeTest.xml";
                 break;
         }
         return testCase;
@@ -46,5 +48,32 @@ public class GUISimulationFactory {
                 break;
         }
         return mySimPanel;
+    }
+
+    public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage s){
+        GUIGrid myGrid;
+        GUIGridPolygon myPolygon = makeGUIPolygon(newShape,mySim);
+        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),mySim, s,myPolygon);
+        return myGrid;
+
+    }
+    public GUIGridPolygon makeGUIPolygon(String newShape, Simulation mySim){
+        GUIGridPolygon myPolygon;
+        switch(newShape) {
+            case "Rectangle":
+                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                break;
+            case "Triangle":
+                myPolygon = new GUIGridTriangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                break;
+            case "Hexagon":
+                myPolygon = new GUIGridHexagon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                break;
+            default:
+                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                break;
+        }
+        return myPolygon;
+
     }
 }

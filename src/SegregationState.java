@@ -1,23 +1,26 @@
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * SegregationState is an Enum that defines all the possible states for a SegregationCell
  * There are four states: EMPTY, RED, BLUE, and TO_BE_MOVED
  */
 public enum SegregationState implements CellState {
 
-    EMPTY("E", "EMPTY",Color.WHITE),
-    RED("A", "RED", Color.RED),
-    BLUE("B", "BLUE", Color.BLUE),
+    EMPTY("E", "emptyPercentage",Color.WHITE),
+    RED("A", "redPercentage", Color.RED),
+    BLUE("B", "bluePercentage", Color.BLUE),
     TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-    SegregationState(String shortenedName, String fullState, Color cellColor){
+    SegregationState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myFullState = ParamName;
         myCellColor = cellColor;
     }
 
@@ -46,5 +49,14 @@ public enum SegregationState implements CellState {
     @Override
     public Color getMyCellColor() {
         return myCellColor;
+    }
+
+    @Override
+    public List<String> getPossibleValues() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i< values().length; i++){
+            arrayList.add(myFullState);
+        }
+        return arrayList;
     }
 }

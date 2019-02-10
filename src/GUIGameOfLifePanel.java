@@ -1,15 +1,12 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class GUIGameOfLifePanel extends GUISimulationPanel{
 
     private HashMap<String,Double> myMap = new HashMap<>();
-    private double myInitialDead;
     private Text myTextBox;
     private Spinner<Integer> mySpinner;
 
