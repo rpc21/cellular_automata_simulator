@@ -26,12 +26,11 @@ public class SimulationFactory {
      * Credentials also passed in
      * @param basicParameters
      * @param simulationSpecificParameters
-     * @param InitialStatesType
      * @param credentials
      * @return
      */
-    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String InitialStatesType,Map<String, String> credentials){
-        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters, InitialStatesType);
+    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, Map<String, String> credentials){
+        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters);
         myNewSimulation.setCredentials(credentials);
         return myNewSimulation;
     }
