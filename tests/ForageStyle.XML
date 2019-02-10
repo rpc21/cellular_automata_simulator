@@ -3,7 +3,7 @@
     <shape>triangle</shape>
     <neighborsType>adjacent</neighborsType>
     <outline>no</outline>
-    <edges>ADJACENT</edges>
+    <edges>basic</edges>
     <stateColors>
         <color id = "FOOD">BLUE</color>
         <color id = "NEST">ORANGE</color>

@@ -3,7 +3,7 @@
     <shape>rectangle</shape>
     <neighborsType>adjacent</neighborsType>
     <outline>no</outline>
-    <edges>ADJACENT</edges>
+    <edges>basic</edges>
     <stateColors>
         <color id = "PATCH">BLUE</color>
     </stateColors>

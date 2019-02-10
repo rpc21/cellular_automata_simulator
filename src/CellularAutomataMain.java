@@ -24,11 +24,12 @@ public class CellularAutomataMain extends Application {
         //String testCase = "tests/SegregationTest.xml";
         //String testCase = "tests/GOLTest.xml";
         //String testCase = "tests/GameOfLifeTest.xml";
-        String testCase = "tests/PercolationTest.xml";
+        //String testCase = "tests/PercolationTest.xml";
         //String testCase = "tests/SpreadingFireTest.xml";
         //String testCase = "tests/SugarTest.xml";
         //String testCase = "tests/WatorTest.xml";
         //String testCase = "tests/ForageTest.xml";
+        String testCase = "tests/PercolationNeighborsTest";
         File testFile = new File(testCase);
 //
         //String styleTestCase = "tests/ForageStyle.XML";
