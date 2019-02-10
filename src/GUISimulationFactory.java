@@ -1,3 +1,5 @@
+import javafx.stage.Stage;
+
 public class GUISimulationFactory {
     public String makeXMLFileName(String newSim){
         String testCase;
@@ -48,20 +50,20 @@ public class GUISimulationFactory {
         return mySimPanel;
     }
 
-    public GUIGrid makeGUIGrid(String newShape, Simulation mySim){
+    public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage s){
         GUIGrid myGrid;
         switch(newShape) {
             case "Rectangle":
-                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim);
+                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim, s);
                 break;
             case "Triangle":
-                myGrid = new GUITriangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim);
+                myGrid = new GUITriangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim, s);
                 break;
             case "Hexagon":
-                myGrid = new GUIHexagonGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim);
+                myGrid = new GUIHexagonGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim, s);
                 break;
             default:
-                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(),mySim.getMyGrid().getNumCols(), mySim);
+                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(),mySim.getMyGrid().getNumCols(), mySim, s);
                 break;
         }
         return myGrid;

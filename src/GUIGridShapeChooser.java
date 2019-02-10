@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GUIShapeChooser extends GUIControlManager{
+public class GUIGridShapeChooser extends GUIControlManager{
 
     private ChoiceBox<Object> myChooser = new ChoiceBox<>();
     private List<Object> possibleShapes = Arrays.asList("Rectangle", "Triangle", "Hexagon");
-    public GUIShapeChooser(String initialShape){
+    public GUIGridShapeChooser(String initialShape){
         super.setUpChoiceBox(myChooser, initialShape, possibleShapes);
     }
     public List<Node> getDisplay(){

@@ -1,10 +1,12 @@
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,12 +18,14 @@ public abstract class GUIGrid {
     private int myRows;
     private int myCols;
     private Simulation mySim;
+    private GUIGridOptions myOptions;
+
     private LinkedList<Color> myPossibleColors;
     protected HashMap<Color,String> myMap = new HashMap<Color,String>();
     protected HashMap<String,Color> revMap;
-    public static final double GUI_GRID_SIZE = 600;
+    public static final double GUI_GRID_SIZE = 500;
 
-    public GUIGrid(int r, int c, Simulation sim){
+    public GUIGrid(int r, int c, Simulation sim, Stage stage){
         myRows = r;
         myCols = c;
         mySim = sim;
@@ -31,8 +35,11 @@ public abstract class GUIGrid {
         revMap = wrongOrderMap;
         reverse(revMap);
         myPossibleColors = new LinkedList<Color>(myMap.keySet());
+        myOptions = new GUIGridOptions(stage);
+
     }
     public void makeGUIGrid(List<Cell> myCells){
+        myStackPane.getChildren().clear();
         int r = 0, c = 0;
         while (r <  myRows){
             while (c < myCols){
@@ -54,7 +61,7 @@ public abstract class GUIGrid {
                         warnSimulation(rCopy,cCopy,currPolygon.getFill());
                     }
                 });
-                currPolygon.setStroke(Color.BLACK);
+                currPolygon.setStroke(myOptions.getStroke());
                 populateGUIGrid(currPolygon,c,r);
                 c = c + 1;
             }
@@ -62,6 +69,10 @@ public abstract class GUIGrid {
             r = r + 1;
         }
     };
+
+    public Node getGUIStyle(){
+        return myOptions.getOptionsButton();
+    }
 
     public abstract Double[] getVertices(int r, int c);
 
@@ -72,8 +83,6 @@ public abstract class GUIGrid {
     public abstract double getHalfWay();
 
     public StackPane getGUIGrid(){
-//        myStackPane.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + 100);
-//        myStackPane.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - getHalfWay());
         return myStackPane;
     }
     protected void populateGUIGrid(Shape myShape, int r, int c){
@@ -89,5 +98,6 @@ public abstract class GUIGrid {
     private void warnSimulation(int r, int col, Paint c){
         mySim.replaceCell(new Location(r,col),myMap.get(c));
     }
+
 
 }

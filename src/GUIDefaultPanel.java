@@ -16,7 +16,6 @@ public class GUIDefaultPanel extends GUIPanel {
     GUIAddSimulationButton myAddSimButton;
     GUISpeedSlider mySpeedSlider;
     GUIRowColSpinner myRowSpinner;
-    GUIShapeChooser myShapeChooser;
     GUISimulationNameChooser mySimChooser;
     GUIResetButton myResetButton;
 
@@ -32,7 +31,6 @@ public class GUIDefaultPanel extends GUIPanel {
         myAddSimButton = new GUIAddSimulationButton(add,remove);
         mySpeedSlider = new GUISpeedSlider(timeline,frame,step);
         myRowSpinner = new GUIRowColSpinner(rows);
-        myShapeChooser = new GUIShapeChooser("Rectangle");
         mySimChooser = new GUISimulationNameChooser(simName);
         myResetButton = new GUIResetButton(timeline,reset);
 
@@ -41,7 +39,6 @@ public class GUIDefaultPanel extends GUIPanel {
         myDefaultControls.addAll(myAddSimButton.getDisplay());
         myDefaultControls.addAll(mySpeedSlider.getDisplay());
         myDefaultControls.addAll(myRowSpinner.getDisplay());
-        myDefaultControls.addAll(myShapeChooser.getDisplay());
         myDefaultControls.addAll(mySimChooser.getDisplay());
         myDefaultControls.addAll(myResetButton.getDisplay());
         populateMap(rows,cols, simName);

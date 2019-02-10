@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class GUITriangleGrid extends GUIGrid{
     private static final double SIDE_TO_GRID_RATIO = 4.0/3.0;
     private static final double HEIGHT_TO_SIDE_RATIO = 21.0/40.0;
 
-    public GUITriangleGrid(int r, int c, Simulation sim){
-        super(r,c,sim);
+    public GUITriangleGrid(int r, int c, Simulation sim, Stage s){
+        super(r,c,sim,s);
         myCols = c;
         myTriangleBottomLength = GUI_GRID_SIZE/(double)r * SIDE_TO_GRID_RATIO;
         myTriangleHeight = myTriangleBottomLength * HEIGHT_TO_SIDE_RATIO;

@@ -1,11 +1,12 @@
+import javafx.stage.Stage;
 
 public class GUIHexagonGrid extends GUIGrid{
     private double myApothemLength;
     private double myCols;
 
 
-    public GUIHexagonGrid(int r, int c, Simulation sim){
-        super(r,c,sim);
+    public GUIHexagonGrid(int r, int c, Simulation sim, Stage s){
+        super(r,c,sim,s);
         myCols = c;
         myApothemLength = GUIGrid.GUI_GRID_SIZE/(double)r/2.0;
         System.out.println(myApothemLength);
