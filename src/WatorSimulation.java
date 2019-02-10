@@ -45,7 +45,7 @@ public class WatorSimulation extends Simulation {
     }
 
     @Override
-    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
+    public void setInitialStates(String[][] initialStates, String simulationType, Map<String, Double> parameters) {
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
@@ -61,7 +61,7 @@ public class WatorSimulation extends Simulation {
     }
 
     private Cell generateWATORSpecificCell(String simulationType, Location thisLocation, String state, Grid grid,
-                                           Grid nextGrid, HashMap<String, Double> parameters) {
+                                           Grid nextGrid, Map<String, Double> parameters) {
         if (WatorState.valueOf(state) == WatorState.FISH){
             return new WatorFish(thisLocation, grid, nextGrid, parameters);
         }

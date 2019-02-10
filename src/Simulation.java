@@ -114,7 +114,7 @@ public abstract class Simulation {
         return myGrid;
     }
 
-    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters){
+    public void setInitialStates(String[][] initialStates, String simulationType, Map<String, Double> parameters){
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
