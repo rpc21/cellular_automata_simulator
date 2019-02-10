@@ -29,7 +29,7 @@ public enum PercolationState implements CellState{
      */
     @Override
     public String toString() {
-        return myShortenedName;
+        return myFullState;
     }
 
     /**

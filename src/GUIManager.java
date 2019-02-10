@@ -31,7 +31,7 @@ public class GUIManager {
         numSimulations++;
         mySimulations.add(sim);
         myStage = stage;
-        myShape = "Rectangle";
+        myShape = "rectangle";
         myGUIGrids.add(myGUISimulationFactory.makeGUIGrid(myShape, sim,stage));
         myGUIGrids.get(numSimulations - 1).makeGUIGrid(sim.getMyGrid().getCells());
         myGUISimPanels.add(myGUISimulationFactory.makeSimulationPanel(sim.getMyName(), sim));

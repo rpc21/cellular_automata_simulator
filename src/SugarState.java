@@ -15,7 +15,10 @@ public enum SugarState implements CellState{
         myFullState = paramName;
         myCellColor = cellColor;
     }
-
+    @Override
+    public String toString() {
+        return myFullState;
+    }
     @Override
     public String getMyShortenedName() {
         return myShortenedName;

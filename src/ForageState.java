@@ -19,7 +19,7 @@ public enum ForageState implements CellState {
         myFullState = fullState;
         myCellColor = cellColor;
     }
-
+    public String toString(){ return myFullState;}
     @Override
     public String getMyShortenedName() {
         return myShortenedName;

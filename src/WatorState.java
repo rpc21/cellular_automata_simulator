@@ -25,7 +25,7 @@ public enum WatorState implements CellState {
      */
     @Override
     public String toString() {
-        return myShortenedName;
+        return myFullState;
     }
 
     /**

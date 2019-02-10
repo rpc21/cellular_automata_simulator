@@ -33,7 +33,7 @@ public enum SegregationState implements CellState {
      */
     @Override
     public String toString() {
-        return myShortenedName;
+        return myFullState;
     }
 
     /**
