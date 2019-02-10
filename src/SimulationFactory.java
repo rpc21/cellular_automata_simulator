@@ -11,13 +11,14 @@ public class SimulationFactory {
         return mySimulation;
     }
 
-    public Simulation generateSimulation(HashMap<String, String> basicParameters,
-                                          HashMap<String, Double> simulationSpecificParameters){
+    public Simulation generateSimulation(Map<String, String> basicParameters,
+                                          Map<String, Double> simulationSpecificParameters){
         for (String a: basicParameters.keySet())
             System.out.println(a + basicParameters.get(a));
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
+        mySimulation.setMyStyleProperties(basicParameters);
         mySimulation.updateNeighbors(basicParameters);
         return mySimulation;
     }
@@ -29,14 +30,14 @@ public class SimulationFactory {
      * @param credentials
      * @return
      */
-    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, Map<String, String> credentials){
+    public Simulation generateSimulation(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters, Map<String, String> credentials){
         Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters);
         myNewSimulation.setCredentials(credentials);
         return myNewSimulation;
     }
 
-    public Simulation generateSimulation(HashMap<String, String> basicParameters,
-                                         HashMap<String, Double> simulationSpecificParameters, String InitialStatesType){
+    public Simulation generateSimulation(Map<String, String> basicParameters,
+                                         Map<String, Double> simulationSpecificParameters, String InitialStatesType){
 
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromRandomPercentages(mySimulation, simulationSpecificParameters);
@@ -44,7 +45,8 @@ public class SimulationFactory {
         return mySimulation;
     }
 
-    private String[][] createInitialStatesFromPercentages(Simulation mySimulation, HashMap<String, Double> simulationSpecificParameters) {
+    private String[][] createInitialStatesFromPercentages(Simulation mySimulation,
+                                                          Map<String, Double> simulationSpecificParameters) {
 
         int rows = mySimulation.getMyGrid().getNumRows();
         int cols = mySimulation.getMyGrid().getNumCols();
@@ -65,12 +67,12 @@ public class SimulationFactory {
 
     }
 
-    private String[][] createInitialStatesFromRandomPercentages(Simulation mySimulation, HashMap<String, Double> simulationSpecificParameters) {
+    private String[][] createInitialStatesFromRandomPercentages(Simulation mySimulation, Map<String, Double> simulationSpecificParameters) {
         generateRandomStatePercentages(mySimulation, simulationSpecificParameters);
         return createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
     }
 
-    private Simulation getSimulationWithEmptyGrid(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters) {
+    private Simulation getSimulationWithEmptyGrid(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters) {
         String simulationType = basicParameters.get("simulationType");
         int rows = Integer.parseInt(basicParameters.getOrDefault("rows", "10"));
         int cols = Integer.parseInt(basicParameters.getOrDefault("columns", "10"));
@@ -92,7 +94,7 @@ public class SimulationFactory {
     }
 
     private Simulation selectSimulationConstructor(String simulationType, Grid grid,
-                                                   HashMap<String, Double> simulationSpecificParameters){
+                                                   Map<String, Double> simulationSpecificParameters){
         switch (simulationType) {
             case Simulation.GOL_SIMULATION_NAME:
                 return new GOLSimulation(simulationSpecificParameters, grid);
@@ -117,7 +119,7 @@ public class SimulationFactory {
         return min + (max - min) * dice.nextDouble();
     }
 
-    private void generateRandomStatePercentages(Simulation mySimulation, HashMap<String, Double> additionalParams){
+    private void generateRandomStatePercentages(Simulation mySimulation, Map<String, Double> additionalParams){
         double maxPercentValue=1;
         double minPercentValue=0;
         for (String key : mySimulation.getPercentageFields()){
