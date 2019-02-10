@@ -53,9 +53,9 @@ public class Location {
      */
     public boolean equals(Object other)
     {
-        if (!(other instanceof Location))
+        if (!(other instanceof Location)) {
             return false;
-
+        }
         Location otherLoc = (Location) other;
         return getRow() == otherLoc.getRow() && getCol() == otherLoc.getCol();
     }

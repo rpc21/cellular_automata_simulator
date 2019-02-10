@@ -1,6 +1,6 @@
-import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpreadingFireCell extends Cell {
 
@@ -8,8 +8,8 @@ public class SpreadingFireCell extends Cell {
     private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
     //Name of parameter -> probCatch
 
-    public SpreadingFireCell(Location location, SpreadingFireState initialState, Grid currentGrid, Grid nextGrid, HashMap<String,
-            Double> parameters){
+    public SpreadingFireCell(Location location, SpreadingFireState initialState, Grid currentGrid, Grid nextGrid, Map<String,
+                Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
         myNeighbors = NeighborsDefinitions.ADJACENT;
     }

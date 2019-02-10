@@ -1,3 +1,9 @@
+import javafx.scene.paint.Color;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -6,25 +12,31 @@ public abstract class Simulation {
 
     // Data fields
     public static final String DATA_TYPE = "simulation";
+    public static final String FORAGE_SIMULATION_NAME = "Forage";
     public static final String GOL_SIMULATION_NAME="Game of Life";
     public static final String PERCOLATION_SIMULATION_NAME="Percolation";
     public static final String SEGREGATION_SIMULATION_NAME="Segregation";
     public static final String SPREADING_FIRE_SIMULATION_NAME="Spreading Fire";
+    public static final String SUGAR_SIMULATION_NAME= "Sugar";
     public static final String WATOR_SIMULATION_NAME="Wator";
     public static final String TITLE_CREDENTIAL="title";
     public static final String AUTHOR_CREDENTIAL="author";
 
     protected Grid myGrid;
     protected Grid myNextGrid;
-    protected HashMap<String, String> credentials;
-    protected HashMap<String, String> stateToColor;
-    protected HashMap<String, Double> myParameters;
-    protected HashMap<String, String> myStyleProperties;
+    protected Map<String, String> credentials;
+    protected Map<String, Double> myParameters;
+    protected Map<String, String> stateToColor;
+    protected Map<String, String> myStyleProperties;
 
     protected boolean simulationOver;
 
+    public Simulation(){
+        myParameters = new HashMap<>();
+        setMyGrid(new BasicGrid(10,10));
+    }
 
-    public Simulation(HashMap<String, Double> params, int rows, int cols){
+    public Simulation(Map<String, Double> params, int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
         myParameters = params;
     }
@@ -39,9 +51,6 @@ public abstract class Simulation {
             AUTHOR_CREDENTIAL
     );
 
-
-    public abstract void simulate(double simulationSpeed);
-
     public void updateGrid(){
         List<Cell> cells = myGrid.getCells();
         for (Cell cell : cells){
@@ -52,11 +61,11 @@ public abstract class Simulation {
         }
     }
 
-    public void setCredentials(HashMap<String, String> myCredentials){
+    public void setCredentials(Map<String, String> myCredentials){
         credentials = myCredentials;
     }
 
-    public HashMap<String, String> getCredentials(){
+    public Map<String, String> getCredentials(){
         return credentials;
     }
 
@@ -64,7 +73,7 @@ public abstract class Simulation {
         stateToColor = myColors;
     }
 
-    public HashMap<String, String> getStateToColorMap(){
+    public Map<String, String> getStateToColorMap(){
         return stateToColor;
     }
 
@@ -145,7 +154,7 @@ public abstract class Simulation {
 
     private Cell generateSimulationSpecificCell(String simulationType, Location loc, String state, Grid grid,
                                                 Grid nextGrid,
-                                                HashMap<String, Double> parameters){
+                                                Map<String, Double> parameters){
         switch (simulationType) {
             case GOL_SIMULATION_NAME:
                 return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
@@ -157,6 +166,10 @@ public abstract class Simulation {
                 return new SegregationCell(loc, SegregationState.valueOf(state), grid, nextGrid, parameters);
             case WATOR_SIMULATION_NAME:
                 return generateWatorCellByState(loc, WatorState.valueOf(state));
+            case FORAGE_SIMULATION_NAME:
+                return new ForagePatch(loc, ForageState.valueOf(state), (AntGrid) grid, (AntGrid) nextGrid, parameters);
+            case SUGAR_SIMULATION_NAME:
+                return new SugarPatch(loc, parameters, grid, state);
         }
         return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
     }
@@ -179,5 +192,9 @@ public abstract class Simulation {
     public List<String> getMyPossibleStates(){
         return myGrid.getCells().get(0).getMyCurrentState().getPossibleValues();
     }
+    public Map<String,Double> getInitialParams(){
+        return myParameters;
+    }
 
 }
+

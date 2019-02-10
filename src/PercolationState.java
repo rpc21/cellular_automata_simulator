@@ -17,9 +17,9 @@ public enum PercolationState implements CellState{
     private final String myFullState;
     private final Color myCellColor;
 
-    PercolationState(String shortenedName, String fullState, Color cellColor){
+    PercolationState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myFullState = ParamName;
         myCellColor = cellColor;
     }
 
@@ -58,4 +58,5 @@ public enum PercolationState implements CellState{
         }
         return arrayList;
     }
+
 }

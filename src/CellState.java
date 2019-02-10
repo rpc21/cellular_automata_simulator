@@ -23,5 +23,7 @@ public interface CellState {
      */
     Color getMyCellColor();
 
+
     List<String> getPossibleValues();
+
 }

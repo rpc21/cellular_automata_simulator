@@ -9,18 +9,18 @@ import java.util.List;
  */
 public enum SegregationState implements CellState {
 
-    EMPTY("E", "EMPTY",Color.WHITE),
-    RED("A", "RED", Color.RED),
-    BLUE("B", "BLUE", Color.BLUE),
+    EMPTY("E", "emptyPercentage",Color.WHITE),
+    RED("A", "redPercentage", Color.RED),
+    BLUE("B", "bluePercentage", Color.BLUE),
     TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-    SegregationState(String shortenedName, String fullState, Color cellColor){
+    SegregationState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myFullState = ParamName;
         myCellColor = cellColor;
     }
 

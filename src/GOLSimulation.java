@@ -1,5 +1,8 @@
+import javafx.scene.paint.Color;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * GOLSimulation handles the GameOfLife simulation, communicating between the individual cells and the Visualization
@@ -10,6 +13,7 @@ public class GOLSimulation extends Simulation {
     public static final List<String> GOL_DATA_FIELDS = List.of(
             DEAD_PERCENTAGE, ALIVE_PERCENTAGE
     );
+
 
     /**
      * Constructor for the GOLSimulation. Initializes the grid for the simulation to a BasicGrid of size rows x cols
@@ -22,11 +26,6 @@ public class GOLSimulation extends Simulation {
     }
 
 
-
-    @Override
-    public void simulate(double simulationSpeed) {
-
-    }
 
     /**
      * Checks if the simulation is over

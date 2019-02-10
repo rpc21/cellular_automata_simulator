@@ -1,7 +1,6 @@
 import javafx.scene.control.Control;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -23,8 +22,6 @@ public class GUISimulationPanel extends GUIPanel{
     public GUISimulationPanel(Simulation mySim){
         mySimulation = mySim;
         myStackPane = new StackPane();
-        myStackPane.setLayoutX(DEFAULT_CONTROL_OFFSET);
-//        for (String:mySim.getParams().getKeys)
 
     }
     public StackPane getGUISimulationPanel(){
@@ -40,21 +37,33 @@ public class GUISimulationPanel extends GUIPanel{
         myStackPane.getChildren().addAll(t,c);
         t.setTranslateX(DEFAULT_LABEL_SPACING);
         c.setTranslateX(DEFAULT_LABEL_SPACING);
-        t.setTranslateY(GUI.STAGE_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + num_vertical_spacings * DEFAULT_CONTROL_SPACING);
-        c.setTranslateY(GUI.STAGE_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + num_vertical_spacings * DEFAULT_CONTROL_SPACING + DEFAULT_LABEL_SPACING);
+        t.setTranslateY(num_vertical_spacings * DEFAULT_CONTROL_SPACING);
+        c.setTranslateY(num_vertical_spacings * DEFAULT_CONTROL_SPACING + DEFAULT_LABEL_SPACING);
     }
-    protected void addToStackPane(Text label, Text val, Control c){
-        addToStackPane(label,c);
-        val.setTranslateX(DEFAULT_LABEL_SPACING + label.getBoundsInLocal().getWidth()/1.5);
-        val.setTranslateY(label.getTranslateY());
-        myStackPane.getChildren().addAll(val);
-    }
+
     protected Text setUpLabel(String text){
         Text myText = new Text(text);
         myText.setTextAlignment(TextAlignment.LEFT);
         myText.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
         return myText;
     }
+
+    protected double getCurrentCount(Color col){
+        int count = 0;
+        for (Cell c: mySimulation.getMyGrid().getCells())
+            if (c.getMyColor().equals(col))
+                count++;
+        return 1.0 * count/mySimulation.getMyGrid().getCells().size();
+    }
+    public String getName(){
+        return mySimulation.getMyName();
+    }
+
+
+    public HashMap<String,Double> getMyParams(){
+        return myParamsMap;
+    }
+
 
 
 }
