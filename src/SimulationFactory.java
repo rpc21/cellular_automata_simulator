@@ -91,6 +91,10 @@ public class SimulationFactory {
                 return new SegregationSimulation(simulationSpecificParameters, rows, cols);
             case Simulation.WATOR_SIMULATION_NAME:
                 return new WatorSimulation(simulationSpecificParameters, rows, cols);
+            case Simulation.FORAGE_SIMULATION_NAME:
+                return new ForageSimulation(simulationSpecificParameters, rows, cols);
+            case Simulation.SUGAR_SIMULATION_NAME:
+                return new SugarSimulation(rows, cols, simulationSpecificParameters);
         }
         return new GOLSimulation(simulationSpecificParameters, rows, cols);
     }

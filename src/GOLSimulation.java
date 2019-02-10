@@ -26,10 +26,6 @@ public class GOLSimulation extends Simulation {
     }
 
 
-    @Override
-    public void simulate(double simulationSpeed) {
-
-    }
 
     /**
      * Checks if the simulation is over

@@ -18,11 +18,6 @@ public class WatorSimulation extends Simulation {
     }
 
     @Override
-    public void simulate(double simulationSpeed) {
-
-    }
-
-    @Override
     public boolean isOver() {
         return myGrid.getOccupiedLocations().size() == 0;
     }

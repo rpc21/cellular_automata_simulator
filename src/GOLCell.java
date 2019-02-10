@@ -1,8 +1,5 @@
-import javafx.scene.paint.Color;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The GOLCell extend the abstract Cell class and implements the rule of Game Of Life simulation.  The GOLSimulation
@@ -65,7 +62,9 @@ public class GOLCell extends Cell{
     }
 
     private boolean needsToLive(int numAlive){
-        return ((isAlive() && numAlive == 2) || (isAlive() && numAlive == 3) || (!isAlive() && numAlive==3));
+        boolean needsToStayAlive = isAlive() && (numAlive == 2 || numAlive == 3);
+        boolean needsToComeToLife = !isAlive() && numAlive == 3;
+        return needsToComeToLife || needsToStayAlive;
     }
 
     private int calcNumLiveNeighbors(List<Location> locationList){

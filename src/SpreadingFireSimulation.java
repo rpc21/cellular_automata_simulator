@@ -23,11 +23,6 @@ public class SpreadingFireSimulation extends Simulation {
         setMyGrid(new BasicGrid(rows, cols));
     }
 
-    @Override
-    public void simulate(double simulationSpeed) {
-
-    }
-
     /**
      * If there are any fires, there is at least one more round
      * @return whether or not the simulation is over

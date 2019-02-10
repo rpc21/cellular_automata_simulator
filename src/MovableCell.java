@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.Map;
 
 public abstract class MovableCell extends Cell {
     /** ADAPTED from WATORWORLD CODE
@@ -16,8 +16,8 @@ public abstract class MovableCell extends Cell {
         this.myNextLocation = null;
     }
 
-    public MovableCell(Location loc, CellState startingState, Grid grid, Grid nextGrid, HashMap<String,
-                       Double> parameters) {
+    public MovableCell(Location loc, CellState startingState, Grid grid, Grid nextGrid, Map<String,
+                           Double> parameters) {
         super(loc, startingState, grid, nextGrid, parameters);
         this.myNextLocation = null;
     }
@@ -30,12 +30,14 @@ public abstract class MovableCell extends Cell {
 //                    "The grid contains a different actor at location "
 //                            + myLocation + ".");
 //        }
-        if (!myGrid.isValid(myNextLocation))
+        if (!myGrid.isValid(myNextLocation)) {
             throw new IllegalArgumentException("Location " + myNextLocation
                     + " is not valid.");
+        }
 
-        if (myNextLocation.equals(myLocation))
+        if (myNextLocation.equals(myLocation)) {
             return;
+        }
         Cell other = myGrid.get(myNextLocation);
         if (other != null)
             myGrid.put(myLocation, other);
