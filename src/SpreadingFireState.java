@@ -30,7 +30,7 @@ public enum SpreadingFireState implements CellState {
      */
     @Override
     public String toString() {
-        return myShortenedName;
+        return myFullState;
     }
 
     /**

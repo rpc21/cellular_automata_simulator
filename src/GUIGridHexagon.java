@@ -1,4 +1,7 @@
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
 
 public class GUIGridHexagon extends GUIGridPolygon{
     private double myApothemLength;
@@ -9,7 +12,6 @@ public class GUIGridHexagon extends GUIGridPolygon{
         super(r,c);
         myCols = c;
         myApothemLength = GUIGrid.GUI_GRID_SIZE/(double)r/2.0;
-        System.out.println(myApothemLength);
 
     }
 

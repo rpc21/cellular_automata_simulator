@@ -12,7 +12,7 @@ public class CellularAutomataMain extends Application {
     public static final int WINDOW_SIZE = 1000;
     private Simulation myCurrentSimulation;
 
-    private static final String DEFAULT_SIMULATION = "tests/SpreadingFireTest.xml";
+    private static final String DEFAULT_SIMULATION = "tests/GameOfLifeTest.xml";
     private static final String DEFAULT_STYLE = "tests/StyleTest1.XML";
     public static void main(String[] args){
         launch(args);
@@ -21,8 +21,10 @@ public class CellularAutomataMain extends Application {
     @Override
     public void start(Stage stage) {
         //String testCase = "tests/GameOfLifeTest.xml";
-        String testCase = "tests/SegregationTest.xml";
-        //String testCase = "tests/PercolationTest.xml";
+        //String testCase = "tests/SegregationTest.xml";
+        //String testCase = "tests/GOLTest.xml";
+        //String testCase = "tests/GameOfLifeTest.xml";
+        String testCase = "tests/PercolationTest.xml";
         //String testCase = "tests/SpreadingFireTest.xml";
         //String testCase = "tests/SugarTest.xml";
         //String testCase = "tests/WatorTest.xml";
@@ -30,11 +32,12 @@ public class CellularAutomataMain extends Application {
         File testFile = new File(testCase);
 //
         //String styleTestCase = "tests/ForageStyle.XML";
-        String styleTestCase = "tests/SegregationStyle.XML";
+       //String styleTestCase = "tests/SegregationStyle.XML";
         //String styleTestCase = "tests/GameOfLifeStyle.XML";
-        //String styleTestCase = "tests/PercolationStyle.XML";
+        String styleTestCase = "tests/PercolationStyle.XML";
         //String styleTestCase = "tests/SpreadingFireStyle.XML";
         //String styleTestCase = "tests/SugarStyle.XML";
+        //String styleTestCase = "tests/GameOfLifeStyle.XML";
         File styleFile = new File(styleTestCase);
 //
         //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
