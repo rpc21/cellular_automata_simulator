@@ -187,7 +187,33 @@ public abstract class Cell {
     }
 
 
-    public void setMyNeighbors(NeighborsDefinitions myNeighbors) {
-        this.myNeighbors = myNeighbors;
+    public void setMyNeighbors(NeighborsDefinitions neighbors) {
+        if (neighbors == NeighborsDefinitions.HEXAGON){
+            handleHexagons();
+        }
+        else if (neighbors == NeighborsDefinitions.TRIANGLE_12_POINT_UP){
+            handleTriangles();
+        }
+        else{
+            myNeighbors = neighbors;
+        }
+    }
+
+    private void handleTriangles() {
+        if ((myLocation.getRow() + myLocation.getCol()) % 2 == 0){
+            myNeighbors = NeighborsDefinitions.TRIANGLE_12_POINT_UP;
+        }
+        else{
+            myNeighbors = NeighborsDefinitions.TRIANGLE_12_POINT_DOWN;
+        }
+    }
+
+    private void handleHexagons() {
+        if (myLocation.getRow() % 2 == 1){
+            myNeighbors = NeighborsDefinitions.HEXAGON;
+        }
+        else{
+            myNeighbors = NeighborsDefinitions.FLIPPED_HEXAGON;
+        }
     }
 }

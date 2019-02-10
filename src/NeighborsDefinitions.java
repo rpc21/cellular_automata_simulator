@@ -9,6 +9,7 @@ public enum NeighborsDefinitions {
     TRIANGLE_12_POINT_DOWN(new int[] {-1, -1, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1}, new int[] {-2, -1,0, 1, 2, -2, -1, 1,
             2, -1, 0, 1}),
     HEXAGON(new int[] {-1, -1, 0, 0, 1, 1}, new int[] {-1, 0, -1, 1, -1, 0}),
+    FLIPPED_HEXAGON(new int[] {-1, -1, 0, 0, 1, 1}, new int[] {0, 1, -1, 1, 0, 1}),
     NORTH(new int[] {-1}, new int[] {0}),
     NORTH_EAST(new int[] {-1}, new int[] {1}),
     EAST(new int[] {0}, new int[] {1}),
