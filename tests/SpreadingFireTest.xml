@@ -11,11 +11,11 @@
         <CellRows index="0">
             <CellColumns>TREE</CellColumns>
             <CellColumns>TREE</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="1">
             <CellColumns>FIRE</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
             <CellColumns>FIRE</CellColumns>
         </CellRows>
         <CellRows index="0">

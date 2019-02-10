@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="style">
+    <shape>rectangle</shape>
+    <neighborsType>adjacent</neighborsType>
+    <edges>ADJACENT</edges>
+    <outline>no</outline>
+    <stateColors>
+        <color id = "OPEN">WHITE</color>
+        <color id = "CLOSED">BLACK</color>
+        <color id = "PERCOLATED">BLUE</color>
+    </stateColors>
+</data>
