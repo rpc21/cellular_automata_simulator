@@ -31,6 +31,30 @@ public class GUISimulationFactory {
         }
         return testCase;
     }
+    public String makeXMLStyleName(String newSim){
+        String testCase;
+        switch(newSim){
+            case Simulation.GOL_SIMULATION_NAME:
+                testCase = "tests/GameOfLifeStyle.xml";
+                break;
+            case Simulation.SPREADING_FIRE_SIMULATION_NAME:
+                testCase = "tests/SpreadingFireStyle.xml";
+                break;
+            case Simulation.PERCOLATION_SIMULATION_NAME:
+                testCase = "tests/PercolationStyle.xml";
+                break;
+            case Simulation.SEGREGATION_SIMULATION_NAME:
+                testCase = "tests/SegregationStyle.xml";
+                break;
+            case Simulation.WATOR_SIMULATION_NAME:
+                testCase = "tests/WatorStyle.xml";
+                break;
+            default:
+                testCase = "tests/GameOfLifeStyle.xml";
+                break;
+        }
+        return testCase;
+    }
     public GUISimulationPanel makeSimulationPanel(String newSim, Simulation mySim){
         GUISimulationPanel mySimPanel;
         switch(newSim){
@@ -59,12 +83,13 @@ public class GUISimulationFactory {
     public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage stage){
         GUIGrid myGrid;
         XMLStyler myStyler = new XMLStyler("media");
-        Map<String, String> initProps = myStyler.getStylePropertiesMap(new File("tests/StyleTest1.XML"));
-        HashMap<String, Paint> wrongOrderMap = new HashMap<>();
-        wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
-        wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
+        Map<String, String> initProps = myStyler.getStylePropertiesMap(new File(makeXMLStyleName(mySim.getMyName())));
+        Map<String,Paint> myColors = myStyler.getColorMap(new File(makeXMLStyleName(mySim.getMyName())));
+//        HashMap<String, Paint> wrongOrderMap = new HashMap<>();
+//        wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
+//        wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
         GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
-        GUIGridCell myCell = new GUIGridCell(wrongOrderMap, mySim, myPolygon);
+        GUIGridCell myCell = new GUIGridCell(myColors, mySim, myPolygon);
         myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell,initProps);
         return myGrid;
 
@@ -72,13 +97,13 @@ public class GUISimulationFactory {
     public GUIGridPolygon makeGUIPolygon(int rows, int cols, String shape){
         GUIGridPolygon myPolygon;
         switch(shape) {
-            case "Rectangle":
+            case "rectangle":
                 myPolygon = new GUIGridRectangle(rows,cols);
                 break;
-            case "Triangle":
+            case "triangle":
                 myPolygon =  new GUIGridTriangle(rows,cols);
                 break;
-            case "Hexagon":
+            case "hexagon":
                 myPolygon = new GUIGridHexagon(rows,cols);
                 break;
             default:

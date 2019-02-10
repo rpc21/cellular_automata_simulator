@@ -12,14 +12,14 @@ import java.util.Map;
 
 public class GUIGridCell {
 
-    private HashMap<Paint,String> myPaintToStateMap;
-    private HashMap<String,Paint> myStateToPaintMap;
+    private Map<Paint,String> myPaintToStateMap;
+    private Map<String,Paint> myStateToPaintMap;
     private List<Paint> myPossibleColors;
     private Simulation mySim;
     private GUIGridPolygon myPolygon;
     private GUISimulationFactory myFactory = new GUISimulationFactory();
 
-    public GUIGridCell(HashMap<String,Paint> myMap, Simulation sim, GUIGridPolygon shape){
+    public GUIGridCell(Map<String,Paint> myMap, Simulation sim, GUIGridPolygon shape){
         myStateToPaintMap = myMap;
         myPaintToStateMap = reverse(myMap);
         myPossibleColors = new ArrayList<>(myMap.values());
@@ -74,8 +74,8 @@ public class GUIGridCell {
         mySim.replaceCell(new Location(r,c),myPaintToStateMap.get(color));
     }
 
-    private HashMap<Paint,String> reverse(HashMap<String,Paint> wrong){
-        HashMap<Paint,String> tempMap = new HashMap<>();
+    private Map<Paint,String> reverse(Map<String,Paint> wrong){
+        Map<Paint,String> tempMap = new HashMap<>();
         for(Map.Entry<String, Paint> entry : wrong.entrySet()){
             tempMap.put(entry.getValue(), entry.getKey());
         }
