@@ -150,7 +150,7 @@ public class XMLParser {
         try {
             specifiedStates = parseRows(root, rows, cols);
         } catch(NullPointerException e){
-            //ADD ERROR CATCHING
+            throw new NullPointerException("No initial states specified");
         }
         return specifiedStates;
     }

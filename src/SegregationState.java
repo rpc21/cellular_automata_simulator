@@ -9,9 +9,12 @@ import java.util.List;
  */
 public enum SegregationState implements CellState {
 
-    EMPTY("O", "emptyPercentage",Color.WHITE),
-    RED("A", "redPercentage", Color.RED),
-    BLUE("B", "bluePercentage", Color.BLUE),
+    //EMPTY("O", "emptyPercentage",Color.WHITE),
+    //RED("A", "redPercentage", Color.RED),
+    //BLUE("B", "bluePercentage", Color.BLUE),
+    EMPTY("O", "OPEN",Color.WHITE),
+    RED("A", "RED", Color.RED),
+    BLUE("B", "BLUE", Color.BLUE),
     TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);
 
     private final String myShortenedName;
