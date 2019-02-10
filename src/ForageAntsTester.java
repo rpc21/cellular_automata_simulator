@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class RyanTester {
+public class ForageAntsTester {
 
     public static void main(String[] args) {
 //        System.out.println(NeighborsDefinitions.ADJACENT);

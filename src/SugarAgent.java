@@ -43,6 +43,7 @@ public class SugarAgent {
     }
 
     private void moveSugarAgent(Location nextLocation) {
+        ((SugarPatch) myGrid.get(myLocation)).removeSugarAgent(this);
         myLocation = nextLocation;
         ((SugarPatch) myGrid.get(nextLocation)).addSugarAgent(this);
     }

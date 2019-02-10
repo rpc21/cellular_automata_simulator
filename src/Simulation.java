@@ -6,11 +6,12 @@ public abstract class Simulation {
 
     // Data fields
     public static final String DATA_TYPE = "simulation";
+    public static final String FORAGE_SIMULATION_NAME = "Forage";
     public static final String GOL_SIMULATION_NAME="Game of Life";
     public static final String PERCOLATION_SIMULATION_NAME="Percolation";
     public static final String SEGREGATION_SIMULATION_NAME="Segregation";
     public static final String SPREADING_FIRE_SIMULATION_NAME="Spreading Fire";
-    public static final String FORAGE_SIMULATION_NAME = "Forage";
+    public static final String SUGAR_SIMULATION_NAME= "Sugar";
     public static final String WATOR_SIMULATION_NAME="Wator";
     public static final String TITLE_CREDENTIAL="title";
     public static final String AUTHOR_CREDENTIAL="author";
@@ -151,6 +152,8 @@ public abstract class Simulation {
                 return generateWatorCellByState(loc, WatorState.valueOf(state));
             case FORAGE_SIMULATION_NAME:
                 return new ForagePatch(loc, ForageState.valueOf(state), (AntGrid) grid, (AntGrid) nextGrid, parameters);
+            case SUGAR_SIMULATION_NAME:
+                return new SugarPatch(loc, parameters, grid, state);
         }
         return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
     }

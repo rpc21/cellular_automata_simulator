@@ -3,6 +3,7 @@ import java.util.*;
 public class SugarSimulation extends Simulation{
 
     public static final String SUGAR_AGENT_PERCENTAGE = "sugarAgentPercentage";
+    public static final String SUGAR_GROW_BACK_RATE = "sugarGrowBackRate";
     private List<SugarAgent> mySugarAgents;
 
     public static final List<String> SUGAR_DATA_FIELDS = List.of(SUGAR_AGENT_PERCENTAGE);
@@ -10,6 +11,11 @@ public class SugarSimulation extends Simulation{
 
     public SugarSimulation(int rows, int cols, Map<String, Double> parameters){
         super(parameters, rows, cols);
+    }
+
+    @Override
+    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
+        super.setInitialStates(initialStates, simulationType, parameters);
         initializeSugarAgents();
     }
 
@@ -54,7 +60,7 @@ public class SugarSimulation extends Simulation{
 
     @Override
     public String getMyName() {
-        return null;
+        return Simulation.SUGAR_SIMULATION_NAME;
     }
 
     @Override

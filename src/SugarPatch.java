@@ -5,19 +5,19 @@ import java.util.Map;
 public class SugarPatch extends Cell{
 
     public static final String MAXIMUM_SUGAR_CAPACITY = "maximumSugarCapacity";
-    public static final String SUGAR_GROW_BACK_RATE = "sugarGrowBackRate";
     private List<SugarAgent> mySugarAgents;
     private int amountOfSugar;
     private int maximumSugarCapacity;
     private int myGrowBackRate;
 
-    public SugarPatch(Map<String, Double> parameters, Grid grid, String state){
+    public SugarPatch(Location location, Map<String, Double> parameters, Grid grid, String state){
+        myLocation = location;
         myParameters = parameters;
         myGrid = grid;
         mySugarAgents = new ArrayList<>();
         maximumSugarCapacity = Integer.parseInt(state);
         amountOfSugar = maximumSugarCapacity;
-        myGrowBackRate = (int) (double) parameters.get(SUGAR_GROW_BACK_RATE);
+        myGrowBackRate = (int) (double) parameters.get(SugarSimulation.SUGAR_GROW_BACK_RATE);
     }
 
 
@@ -34,6 +34,10 @@ public class SugarPatch extends Cell{
         mySugarAgents.add(agent);
     }
 
+    public void removeSugarAgent(SugarAgent agent){
+        mySugarAgents.remove(agent);
+    }
+
     public int getSugar(){
         return amountOfSugar;
     }
@@ -45,5 +49,15 @@ public class SugarPatch extends Cell{
 
     public void takeSugar(){
         amountOfSugar = 0;
+    }
+
+    @Override
+    public String toString() {
+        if (mySugarAgents.isEmpty()){
+            return ""+amountOfSugar;
+        }
+        else{
+            return "D";
+        }
     }
 }
