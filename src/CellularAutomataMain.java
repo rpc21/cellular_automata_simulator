@@ -21,7 +21,7 @@ public class CellularAutomataMain extends Application {
     @Override
     public void start(Stage stage) {
         //String testCase = "tests/GOLTest.xml";
-        String testCase = "tests/ForageTest.xml";
+        String testCase = "tests/GameOfLifeTest.xml";
         //String testCase = "tests/PercolationTest.xml";
         //String testCase = "tests/SpreadingFireTest.xml";
 //        String testCase = "tests/SugarTest.xml";
@@ -30,7 +30,7 @@ public class CellularAutomataMain extends Application {
         File testFile = new File(testCase);
 //
         //String styleTestCase = "tests/ForageStyle.XML";
-        String styleTestCase = "tests/ForageStyle.XML";
+        String styleTestCase = "tests/GameOfLifeStyle.XML";
         File styleFile = new File(styleTestCase);
 //
         //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
