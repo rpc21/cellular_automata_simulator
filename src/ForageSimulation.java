@@ -14,25 +14,24 @@ public class ForageSimulation extends Simulation {
         super();
     }
 
-    public ForageSimulation(Map<String, Double> params, int rows, int cols){
-        myParameters = params;
-        myGrid = new AntGrid(rows, cols);
-        myNextGrid = new AntGrid(rows, cols);
+
+    public ForageSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
     }
 
     @Override
     public void updateGrid() {
-        myNextGrid = new AntGrid(myGrid.getNumRows(), myGrid.getNumCols());
+        myNextGrid = new GridFactory().generateGrid(myGrid);
         copyMyGrid();
         for (Cell patch: myGrid.getCells()){
-            ((ForagePatch) patch).updateState((AntGrid) myNextGrid);
+            ((ForagePatch) patch).updateState(myNextGrid);
         }
         myGrid = myNextGrid;
     }
 
     private void copyMyGrid() {
         for (Cell patch : myGrid.getCells()){
-            myNextGrid.put(patch.getMyLocation(), new ForagePatch((ForagePatch) patch, (AntGrid) myNextGrid));
+            myNextGrid.put(patch.getMyLocation(), new ForagePatch((ForagePatch) patch, myNextGrid));
         }
     }
 

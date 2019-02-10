@@ -62,9 +62,11 @@ public class SimulationFactory {
 
     private Simulation getSimulationWithEmptyGrid(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters) {
         String simulationType = basicParameters.get("simulationType");
-        int rows = Integer.parseInt(basicParameters.get("rows"));
-        int cols = Integer.parseInt(basicParameters.get("columns"));
-        return selectSimulationConstructor(simulationType, rows, cols, simulationSpecificParameters);
+        int rows = Integer.parseInt(basicParameters.getOrDefault("rows", "10"));
+        int cols = Integer.parseInt(basicParameters.getOrDefault("columns", "10"));
+        String gridType = basicParameters.getOrDefault("gridType", Grid.BASIC_GRID_NAME);
+        Grid grid = new GridFactory().generateGrid(gridType, rows, cols);
+        return selectSimulationConstructor(simulationType, grid, simulationSpecificParameters);
     }
 
 
@@ -79,24 +81,25 @@ public class SimulationFactory {
         return gridLocations;
     }
 
-    private Simulation selectSimulationConstructor(String simulationType, int rows, int cols, HashMap<String, Double> simulationSpecificParameters){
+    private Simulation selectSimulationConstructor(String simulationType, Grid grid,
+                                                   HashMap<String, Double> simulationSpecificParameters){
         switch (simulationType) {
             case Simulation.GOL_SIMULATION_NAME:
-                return new GOLSimulation(simulationSpecificParameters, rows, cols);
+                return new GOLSimulation(simulationSpecificParameters, grid);
             case Simulation.SPREADING_FIRE_SIMULATION_NAME:
-                return new SpreadingFireSimulation(simulationSpecificParameters, rows, cols);
+                return new SpreadingFireSimulation(simulationSpecificParameters, grid);
             case Simulation.PERCOLATION_SIMULATION_NAME:
-                return new PercolationSimulation(simulationSpecificParameters, rows, cols);
+                return new PercolationSimulation(simulationSpecificParameters, grid);
             case Simulation.SEGREGATION_SIMULATION_NAME:
-                return new SegregationSimulation(simulationSpecificParameters, rows, cols);
+                return new SegregationSimulation(simulationSpecificParameters, grid);
             case Simulation.WATOR_SIMULATION_NAME:
-                return new WatorSimulation(simulationSpecificParameters, rows, cols);
+                return new WatorSimulation(simulationSpecificParameters, grid);
             case Simulation.FORAGE_SIMULATION_NAME:
-                return new ForageSimulation(simulationSpecificParameters, rows, cols);
+                return new ForageSimulation(simulationSpecificParameters, grid);
             case Simulation.SUGAR_SIMULATION_NAME:
-                return new SugarSimulation(rows, cols, simulationSpecificParameters);
+                return new SugarSimulation(simulationSpecificParameters, grid);
         }
-        return new GOLSimulation(simulationSpecificParameters, rows, cols);
+        return new GOLSimulation(simulationSpecificParameters, grid);
     }
 
 
