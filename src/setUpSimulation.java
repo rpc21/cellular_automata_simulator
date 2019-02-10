@@ -1,4 +1,6 @@
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class setUpSimulation {
 
@@ -11,6 +13,8 @@ public class setUpSimulation {
 
         Simulation mySimulation = xmlParser.setSimulation(xmlParserFile);
         xmlStyler.setSimulationStyle(styleFile, mySimulation);
+        //Map<String, String> s = xmlStyler.getColorMap(new File("tests/COLORTEST.xml"));
+        System.out.println(mySimulation.getStateToColorMap());
         return mySimulation;
     }
 

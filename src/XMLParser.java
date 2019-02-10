@@ -35,6 +35,7 @@ public class XMLParser {
     public static final String CELL_ROWS_TAG_NAME="CellRows";
     public static final String CELL_COLUMNS_TAG_NAME="CellColumns";
     public static final String GEN_STATES_TAG_NAME="GenerateStatesBy";
+    public static final String EDGE_TYPE_TAG_NAME="edges";
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
     // keep only one documentBuilder because it is expensive to make and can reset it before parsing
@@ -103,6 +104,9 @@ public class XMLParser {
         for (var field : Simulation.DATA_FIELDS) {
             simulationParams.put(field, getTextValue(root, field));
         }
+        String edgetype = readInEdges(root);
+        simulationParams.put(EDGE_TYPE_TAG_NAME, edgetype);
+        System.out.println(simulationParams);
         return simulationParams;
     }
 
@@ -229,6 +233,10 @@ public class XMLParser {
         catch (ParserConfigurationException e) {
             throw new XMLException(e);
         }
+    }
+
+    private String readInEdges(Element root){
+        return getTextValue(root, EDGE_TYPE_TAG_NAME);
     }
 
 }

@@ -5,6 +5,7 @@
     <author>Dima, Anna and Ryan</author>
     <rows>3</rows>
     <columns>3</columns>
+    <edges>ADJACENT</edges>
     <GenerateStatesBy>seebelow</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">

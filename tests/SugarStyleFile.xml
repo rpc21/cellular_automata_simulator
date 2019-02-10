@@ -2,7 +2,8 @@
 <data media="style">
     <shape>rectangle</shape>
     <neighborsType>adjacent</neighborsType>
-    <edges>ADJACENT</edges>
     <outline>no</outline>
-    <PATCH>blue</PATCH>
+    <stateColors>
+        <color id = "PATCH">blue</color>
+    </stateColors>
 </data>
