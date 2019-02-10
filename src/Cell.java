@@ -185,4 +185,9 @@ public abstract class Cell {
     public String toString() {
         return myCurrentState.getMyShortenedName();
     }
+
+
+    public void setMyNeighbors(NeighborsDefinitions myNeighbors) {
+        this.myNeighbors = myNeighbors;
+    }
 }

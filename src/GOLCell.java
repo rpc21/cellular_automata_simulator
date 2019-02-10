@@ -28,7 +28,7 @@ public class GOLCell extends Cell{
      */
     public GOLCell(Location location, GOLState initialState, Grid currentGrid, Grid nextGrid){
         super(location, initialState, currentGrid, nextGrid);
-        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
+//        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }
 
     /**

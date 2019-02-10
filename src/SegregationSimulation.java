@@ -47,4 +47,12 @@ public class SegregationSimulation extends Simulation{
     public List<String> getPercentageFields() {
         return List.of(RED_PERCENTAGE, BLUE_PERCENTAGE, EMPTY_PERCENTAGE);
     }
+
+    @Override
+    public void updateNeighbors(Map<String, String> styleProperties){
+        for (Cell cell : myGrid.getCells()){
+            cell.setMyNeighbors(NeighborsDefinitions.valueOf(styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,
+                    NeighborsDefinitions.BOX_NEIGHBORS.toString())));
+        }
+    }
 }

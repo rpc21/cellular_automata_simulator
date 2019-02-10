@@ -6,6 +6,8 @@ public class SugarTester {
 //        System.out.println(NeighborsDefinitions.values());
 //        System.out.println(GOLState.ALIVE);
 
+        NeighborsDefinitions nd = NeighborsDefinitions.valueOf(NeighborsDefinitions.BOX_NEIGHBORS.toString());
+
         HashMap<String, String> basicParameters = new HashMap<>();
         basicParameters.put("rows", "4");
         basicParameters.put("columns", "4");
