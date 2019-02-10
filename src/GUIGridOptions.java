@@ -1,11 +1,8 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -55,6 +52,7 @@ public class GUIGridOptions extends GUIPanel {
         myBox.getChildren().addAll(myNeighborsChooser.getDisplay());
         return myBox;
     }
+    public String getNeighbors(){ return myNeighborsChooser.getNeighbors();}
     public Button getOptionsButton(){
         return myGUIGridOptionsButton;
     }

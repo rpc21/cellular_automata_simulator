@@ -12,7 +12,7 @@ public enum SegregationState implements CellState {
     //EMPTY("O", "emptyPercentage",Color.WHITE),
     //RED("A", "redPercentage", Color.RED),
     //BLUE("B", "bluePercentage", Color.BLUE),
-    EMPTY("O", "OPEN",Color.WHITE),
+    EMPTY("E", "EMPTY",Color.WHITE),
     RED("R", "RED", Color.RED),
     BLUE("B", "BLUE", Color.BLUE),
     TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);

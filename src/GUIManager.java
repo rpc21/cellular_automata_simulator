@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static javafx.scene.control.ScrollPane.ScrollBarPolicy.ALWAYS;
 
@@ -65,11 +66,13 @@ public class GUIManager {
         }
     }
 
-    public void resetSimulations(GUIDefaultPanel currDefaultPanel){
+    public void resetSimulations(GUIDefaultPanel currDefaultPanel, Map<String,String> credentials){
         for (int i = 0; i < numSimulations; i ++ ){
             Simulation currSim = null;
             GUISimulationPanel currSimPanel = myGUISimPanels.get(i);
+            GUIGrid guiGrid = myGUIGrids.get(i);
             if (currSimPanel.getName().equals(currDefaultPanel.getSimName())) {
+                currDefaultPanel.getMyBasicParams().put(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,guiGrid.getNeighbors());
                 currSim = mySimFact.generateSimulation(currDefaultPanel.getMyBasicParams(), currSimPanel.getMyParams());
             }
             else {

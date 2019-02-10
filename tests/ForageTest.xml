@@ -11,17 +11,17 @@
         <CellRows index="0">
             <CellColumns>NEST</CellColumns>
             <CellColumns>OBSTACLE</CellColumns>
-            <CellColumns>OPEN</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
         </CellRows>
         <CellRows index="1">
-            <CellColumns>OPEN</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
             <CellColumns>OBSTACLE</CellColumns>
-            <CellColumns>OPEN</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
         </CellRows>
         <CellRows index="2">
-            <CellColumns>OPEN</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
             <CellColumns>FOOD</CellColumns>
-            <CellColumns>OPEN</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
         </CellRows>
     </cellStates>
     <maxFoodPheromones>20.0</maxFoodPheromones>

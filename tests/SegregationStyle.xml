@@ -7,6 +7,6 @@
     <stateColors>
         <color id = "RED">RED</color>
         <color id = "BLUE">BLUE</color>
-        <color id = "OPEN">WHITE</color>
+        <color id = "EMPTY">WHITE</color>
     </stateColors>
 </data>

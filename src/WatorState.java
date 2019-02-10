@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum WatorState implements CellState {
 
-    EMPTY("O", "OPEN", Color.AQUAMARINE),
+    EMPTY("E", "EMPTY", Color.AQUAMARINE),
     FISH("F", "FISH", Color.ORANGE),
     SHARK("S", "SHARK", Color.LIGHTGREY);
 
