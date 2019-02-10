@@ -11,7 +11,6 @@ public class SimulationFactory {
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(),
                 simulationSpecificParameters);
-
         return mySimulation;
     }
 
@@ -22,6 +21,7 @@ public class SimulationFactory {
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
+        mySimulation.updateNeighbors(basicParameters);
         return mySimulation;
     }
 
