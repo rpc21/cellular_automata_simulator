@@ -54,9 +54,6 @@ public class SpreadingFireSimulation extends Simulation {
 
     @Override
     public void updateNeighbors(Map<String, String> styleProperties){
-        for (Cell cell : myGrid.getCells()){
-            cell.setMyNeighbors(NeighborsDefinitions.valueOf(styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,
-                    NeighborsDefinitions.ADJACENT.toString().toUpperCase())));
-        }
+        super.updateNeighbors(styleProperties, NeighborsDefinitions.ADJACENT);
     }
 }

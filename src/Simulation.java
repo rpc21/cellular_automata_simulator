@@ -202,9 +202,13 @@ public abstract class Simulation {
     }
 
     public void updateNeighbors(Map<String, String> styleProperties){
+        this.updateNeighbors(styleProperties, NeighborsDefinitions.ADJACENT);
+    }
+
+    public void updateNeighbors(Map<String, String> styleProperties, NeighborsDefinitions defaultValue){
         for (Cell cell : myGrid.getCells()){
-            cell.setMyNeighbors(NeighborsDefinitions.valueOf(styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,
-                    NeighborsDefinitions.ADJACENT.toString()).toUpperCase()));
+            String neighbor = styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME, defaultValue.toString());
+            cell.setMyNeighbors(NeighborsDefinitions.valueOf(neighbor.toUpperCase()));
         }
     }
 
