@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GUI {
     private Stage myStage;
