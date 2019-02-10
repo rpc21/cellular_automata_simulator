@@ -192,6 +192,7 @@ public abstract class Simulation {
         Cell newCell = generateSimulationSpecificCell(getMyName(), location, newState, myGrid, myNextGrid,
                 myParameters);
         myGrid.put(location, newCell);
+        updateNeighbors(myStyleProperties, NeighborsDefinitions.ADJACENT);
     }
 
     public List<String> getMyPossibleStates(){

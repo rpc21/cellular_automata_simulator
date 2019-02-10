@@ -8,7 +8,6 @@ public class SimulationFactory {
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(),
                 simulationSpecificParameters);
-
         return mySimulation;
     }
 
@@ -19,6 +18,7 @@ public class SimulationFactory {
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
+        mySimulation.updateNeighbors(basicParameters);
         return mySimulation;
     }
 
@@ -26,12 +26,11 @@ public class SimulationFactory {
      * Credentials also passed in
      * @param basicParameters
      * @param simulationSpecificParameters
-     * @param InitialStatesType
      * @param credentials
      * @return
      */
-    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String InitialStatesType,Map<String, String> credentials){
-        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters, InitialStatesType);
+    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, Map<String, String> credentials){
+        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters);
         myNewSimulation.setCredentials(credentials);
         return myNewSimulation;
     }
