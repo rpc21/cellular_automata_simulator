@@ -1,4 +1,8 @@
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
 
 public class GUISimulationFactory {
     public String makeXMLFileName(String newSim){
@@ -50,27 +54,31 @@ public class GUISimulationFactory {
         return mySimPanel;
     }
 
-    public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage s){
+    public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage stage){
         GUIGrid myGrid;
-        GUIGridPolygon myPolygon = makeGUIPolygon(newShape,mySim);
-        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),mySim, s,myPolygon);
+        HashMap<String, Paint> wrongOrderMap = new HashMap<>();
+        wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
+        wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
+        GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
+        GUIGridCell myCell = new GUIGridCell(wrongOrderMap, mySim, myPolygon);
+        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell);
         return myGrid;
 
     }
-    public GUIGridPolygon makeGUIPolygon(String newShape, Simulation mySim){
+    public GUIGridPolygon makeGUIPolygon(int rows, int cols, String shape){
         GUIGridPolygon myPolygon;
-        switch(newShape) {
+        switch(shape) {
             case "Rectangle":
-                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                myPolygon = new GUIGridRectangle(rows,cols);
                 break;
             case "Triangle":
-                myPolygon = new GUIGridTriangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                myPolygon =  new GUIGridTriangle(rows,cols);
                 break;
             case "Hexagon":
-                myPolygon = new GUIGridHexagon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                myPolygon = new GUIGridHexagon(rows,cols);
                 break;
             default:
-                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                myPolygon = new GUIGridRectangle(rows,cols);
                 break;
         }
         return myPolygon;

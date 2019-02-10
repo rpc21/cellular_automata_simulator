@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>Rectangle</shape>
+    <shape>rectangle</shape>
     <neighborsType>adjacent</neighborsType>
     <edges>ADJACENT</edges>
     <outline>no</outline>

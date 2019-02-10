@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 public class GUIGridOptions extends GUIPanel {
 
     private Button myGUIGridOptionsButton;
-    private Button setGridChanges;
     private GUIGridShapeChooser myShapeChooser;
     private GUIGridBoundriesChooser myBoundryChooser;
     private GUIGridEdgeChooser myEdgeChooser;
@@ -60,8 +59,8 @@ public class GUIGridOptions extends GUIPanel {
         return myShapeChooser.getShape();
     }
 
-    public Paint getStroke(Paint c){
-        return myBoundryChooser.determineStroke(c);
+    public boolean getStroke(){
+        return myBoundryChooser.determineStroke( );
     }
 }
 
