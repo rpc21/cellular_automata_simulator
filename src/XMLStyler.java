@@ -15,7 +15,6 @@ public class XMLStyler {
     public static final String SHAPE_TYPE_TAG_NAME="shape";
     public static final String NEIGHBORS_TYPE_TAG_NAME="neighborsType";
     public static final String EDGE_TYPE_TAG_NAME="edges";
-    public static final String CELL_SIZE_TAG_NAME="cellSize";
     public static final String OUTLINE_TAG_NAME="outline";
     public static final String STATE_COLORS_TAG_NAME = "stateColors";
 
@@ -41,19 +40,13 @@ public class XMLStyler {
         readInShape(root, styleProperties);
         readInNeighborsType(root, styleProperties);
         readInEdges(root, styleProperties);
-        readInCellSize(root, styleProperties);
         readInOutline(root, styleProperties);
         return styleProperties;
     }
-    
+
     private void readInOutline(Element root, HashMap<String, String> styleProperties){
         String outline = getTextValue(root, OUTLINE_TAG_NAME);
         styleProperties.put(OUTLINE_TAG_NAME, outline);
-    }
-
-    private void readInCellSize(Element root, HashMap<String, String> styleProperties){
-        String cellSize = getTextValue(root, CELL_SIZE_TAG_NAME);
-        styleProperties.put(CELL_SIZE_TAG_NAME, cellSize);
     }
 
     private void readInEdges(Element root, HashMap<String, String> styleProperties){
@@ -64,8 +57,10 @@ public class XMLStyler {
     private void readInNeighborsType(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException{
         try {
             String neighbors = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME);
-            if (!isValidNeighbors(neighbors)) {
+            if (isValidNeighbors(neighbors)) {
                 styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, neighbors);
+            } else {
+                throw new IllegalArgumentException("neighbors type must be a valid string: " + NeighborsDefinitions.values());
             }
         } catch (IllegalArgumentException e){
             try {//try all lower case
@@ -83,8 +78,13 @@ public class XMLStyler {
     private void readInShape(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException {
         try {
             String shape = getTextValue(root, SHAPE_TYPE_TAG_NAME);
-            if (!isValidShape(shape)) {
+            if (isValidShape(shape)) {
                 styleProperties.put(SHAPE_TYPE_TAG_NAME, shape);
+            }
+            else {
+                System.out.println("not a valid shape!");
+                throw new IllegalArgumentException("shape must be a valid string: " + simulationShapes.values());
+
             }
         } catch(IllegalArgumentException e){
             try {//try all lower case

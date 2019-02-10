@@ -2,8 +2,7 @@
 <data media="style">
     <shape>Rectangle</shape>
     <neighborsType>adjacent</neighborsType>
-    <edges>toroidal</edges>
-    <cellSize>1</cellSize>
+    <edges>ADJACENT</edges>
     <outline>no</outline>
     <stateColors>
         <DEAD>black</DEAD>

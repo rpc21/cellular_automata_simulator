@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 import java.util.Random;
 
 
@@ -54,9 +55,10 @@ public class XMLParser {
      */
     public Simulation setSimulation(File dataFile) {
         var root = getRootElement(dataFile);
-//        if (! isValidFile(root, Simulation.DATA_TYPE)) {
-//            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
-//        }
+        if (! isValidFile(root, Simulation.DATA_TYPE)) {
+            System.out.println(root);
+            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
+        }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
         int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
@@ -67,13 +69,15 @@ public class XMLParser {
         HashMap<String, String> theCredentials = getCredentials(root);
         String howToSetInitialStates = getTextValue(root, GEN_STATES_TAG_NAME);
 
+        return initializeSimulation(howToSetInitialStates, simulationParams, additionalParams, specifiedStates, theCredentials);
+    }
+
+    private Simulation initializeSimulation(String howToSetInitialStates, HashMap<String, String> simulationParams, HashMap<String, Double> additionalParams, String[][] specifiedStates, HashMap<String, String> theCredentials){
         SimulationFactory mySimulationFactory = new SimulationFactory();
         Simulation mySim;
-
         if(howToSetInitialStates.equals(RANDOM_STRING)){
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
         }else if(howToSetInitialStates.equals(COMPLETELY_RANDOM_STRING)){
-            //TODO SET THE PERCENTAGES RANDOMLY TO ADD TO 1
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
         }else{
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
@@ -89,10 +93,9 @@ public class XMLParser {
                 myCredentials.put(field, getTextValue(root, field));
             }
             return myCredentials;
-        } catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("author and title must be valid strings");
+        } catch(NullPointerException e){
+            throw new NullPointerException("Invalid author or name");
         }
-
     }
 
     private HashMap<String, String> getBasicSimulationParams(Element root){
@@ -104,12 +107,17 @@ public class XMLParser {
     }
 
     private HashMap<String, Double> parseAdditionalParams(Element root, String simulationType){
-        HashMap<String, Double> parameters = new HashMap<String, Double>();
-        List<String> simulationFields = getSimulationDataFields(simulationType);
-        for (var field : simulationFields) {
-            parameters.put(field, Double.parseDouble(getTextValue(root, field)));
+        try{
+            HashMap<String, Double> parameters = new HashMap<String, Double>();
+            List<String> simulationFields = getSimulationDataFields(simulationType);
+            for (var field : simulationFields) {
+                parameters.put(field, Double.parseDouble(getTextValue(root, field)));
+            }
+            return parameters;
+        } catch(NullPointerException e){
+            throw new NullPointerException("Field is missing");
         }
-        return parameters;
+
     }
 
     private List<String> getSimulationDataFields(String simulationType){
@@ -191,19 +199,24 @@ public class XMLParser {
 
     // Get value of Element's attribute
     private String getAttribute (Element e, String attributeName) {
-        return e.getAttribute(attributeName);
+        try {
+            return e.getAttribute(attributeName);
+        }catch(NullPointerException exc){
+            throw new NullPointerException("No such attribute");
+        }
     }
 
     // Get value of Element's text
-    private String getTextValue (Element e, String tagName) {
-        var nodeList = e.getElementsByTagName(tagName);
-        if (nodeList != null && nodeList.getLength() > 0) {
-            return nodeList.item(0).getTextContent();
+    private String getTextValue (Element e, String tagName) throws NullPointerException {
+        try{
+            var nodeList = e.getElementsByTagName(tagName);
+            if (nodeList != null && nodeList.getLength() > 0) {
+                return nodeList.item(0).getTextContent();
+            }
+        }catch(NullPointerException exc){
+            throw new NullPointerException("No such field" + tagName);
         }
-        else {
-            // FIXME: empty string or null, is it an error to not find the text value?
-            return "";
-        }
+        return "";
     }
 
     private DocumentBuilder getDocumentBuilder () {
