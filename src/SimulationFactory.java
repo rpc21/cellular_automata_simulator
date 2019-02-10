@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class SimulationFactory {
     private Random dice = new Random();
@@ -16,13 +13,27 @@ public class SimulationFactory {
     }
 
     public Simulation generateSimulation(HashMap<String, String> basicParameters,
-                                         HashMap<String, Double> simulationSpecificParameters){
+                                          HashMap<String, Double> simulationSpecificParameters){
         for (String a: basicParameters.keySet())
             System.out.println(a + basicParameters.get(a));
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
         return mySimulation;
+    }
+
+    /**
+     * Credentials also passed in
+     * @param basicParameters
+     * @param simulationSpecificParameters
+     * @param InitialStatesType
+     * @param credentials
+     * @return
+     */
+    public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String InitialStatesType,Map<String, String> credentials){
+        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters, InitialStatesType);
+        myNewSimulation.setCredentials(credentials);
+        return myNewSimulation;
     }
 
     public Simulation generateSimulation(HashMap<String, String> basicParameters,

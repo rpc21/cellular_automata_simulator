@@ -7,7 +7,7 @@ public enum ForageState implements CellState {
 
     FOOD("F", "FOOD", Color.RED),
     NEST("N", "NEST", Color.BROWN),
-    EMPTY("O", "OPEN", Color.LIGHTGREEN),
+    EMPTY("E", "EMPTY", Color.LIGHTGREEN),
     OBSTACLE("O", "OBSTACLE", Color.WHITE);
 
 

@@ -11,7 +11,7 @@ public enum SpreadingFireState implements CellState {
 
     FIRE("F", "FIRE", Color.RED),
     TREE("T", "TREE", Color.GREEN),
-    EMPTY("O", "OPEN", Color.WHITE);
+    EMPTY("E", "EMPTY", Color.WHITE);
 
 
     private final String myShortenedName;

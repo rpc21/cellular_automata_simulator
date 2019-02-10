@@ -7,7 +7,7 @@
     <stateColors>
         <color id = "FOOD">BLUE</color>
         <color id = "NEST">ORANGE</color>
-        <color id = "OPEN">YELLOW</color>
+        <color id = "EMPTY">YELLOW</color>
         <color id = "OBSTACLE">RED</color>
     </stateColors>
 </data>

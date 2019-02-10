@@ -123,7 +123,7 @@ public class XMLStyler {
 
     public boolean isValidNeighbors(String possibleNeighbors){
         for(NeighborsDefinitions neighborType: NeighborsDefinitions.values()){
-            if(possibleNeighbors.equals(neighborType.toString())){
+            if(possibleNeighbors.toUpperCase().equals(neighborType.toString().toUpperCase())){
                 return possibleNeighbors.equals(neighborType.toString());
             }
         }

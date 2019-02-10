@@ -6,7 +6,7 @@
     <outline>no</outline>
     <stateColors>
         <color id = "TREE">GREEN</color>
-        <color id = "OPEN">WHITE</color>
+        <color id = "EMPTY">WHITE</color>
         <color id = "FIRE">RED</color>
     </stateColors>
 </data>
