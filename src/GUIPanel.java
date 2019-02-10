@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class GUIPanel {
 
-    private boolean needsToReset;
     private static final int SPINNER_STEP = 1;
     protected static String DEFAULT_FONT_NAME = "Copperplate";
     protected static int CONTROL_TEXT_SIZE = 15;
@@ -37,10 +36,6 @@ public class GUIPanel {
                 cb.setValue(cb.getItems().get((Integer)number2));
             }
         });
-    }
-
-    public void setResetClicked(){
-        needsToReset = true;
     }
 
 

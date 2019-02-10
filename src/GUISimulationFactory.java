@@ -2,7 +2,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GUISimulationFactory {
     public String makeXMLFileName(String newSim){
@@ -56,12 +58,14 @@ public class GUISimulationFactory {
 
     public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage stage){
         GUIGrid myGrid;
+        XMLStyler myStyler = new XMLStyler("media");
+        Map<String, String> initProps = myStyler.getStylePropertiesMap(new File("tests/StyleTest1.XML"));
         HashMap<String, Paint> wrongOrderMap = new HashMap<>();
         wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
         wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
         GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
         GUIGridCell myCell = new GUIGridCell(wrongOrderMap, mySim, myPolygon);
-        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell);
+        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell,initProps);
         return myGrid;
 
     }

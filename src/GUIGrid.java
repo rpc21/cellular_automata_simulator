@@ -3,6 +3,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.util.List;
+import java.util.Map;
 
 public class GUIGrid {
     private StackPane myStackPane;
@@ -13,12 +14,12 @@ public class GUIGrid {
 
     public static final double GUI_GRID_SIZE = 500;
 
-    public GUIGrid(int r, int c, Stage stage, GUIGridCell cell){
+    public GUIGrid(int r, int c, Stage stage, GUIGridCell cell, Map<String,String> initProps){
         myRows = r;
         myCols = c;
         myGUICell = cell;
         myStackPane = new StackPane();
-        myOptions = new GUIGridOptions(stage);
+        myOptions = new GUIGridOptions(stage, initProps);
 
     }
     public void makeGUIGrid(List<Cell> myCells){

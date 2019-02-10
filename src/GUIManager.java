@@ -19,11 +19,9 @@ public class GUIManager {
     private SimulationFactory mySimFact = new SimulationFactory();
     private int numSimulations;
     private Stage myStage;
-    private ScrollPane myScrollPane;
     private String myShape;
 
     public GUIManager (){
-        myScrollPane = new ScrollPane();
         mySimulations = new ArrayList<>();
         myGUIGrids = new ArrayList<>();
         myGUISimPanels = new ArrayList<>();

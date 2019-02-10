@@ -9,6 +9,8 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.Map;
+
 public class GUIGridOptions extends GUIPanel {
 
     private Button myGUIGridOptionsButton;
@@ -17,8 +19,10 @@ public class GUIGridOptions extends GUIPanel {
     private GUIGridEdgeChooser myEdgeChooser;
     private GUIGridNeighborsChooser myNeighborsChooser;
     private VBox myBox;
-    public GUIGridOptions(Stage myStage) {
+    private Map<String,String> myInitialProperties;
+    public GUIGridOptions(Stage myStage, Map<String,String> initProps) {
         makeStyleButton(myStage);
+        myInitialProperties = initProps;
         myBox = addButtons();
     }
 
@@ -41,10 +45,10 @@ public class GUIGridOptions extends GUIPanel {
     }
     private VBox addButtons(){
         VBox myBox = new VBox(20);
-        myShapeChooser = new GUIGridShapeChooser("Rectangle");
-        myBoundryChooser = new GUIGridBoundriesChooser("Lined");
+        myShapeChooser = new GUIGridShapeChooser(myInitialProperties.get(XMLStyler.SHAPE_TYPE_TAG_NAME));
+        myBoundryChooser = new GUIGridBoundriesChooser(myInitialProperties.get(XMLStyler.SHAPE_TYPE_TAG_NAME));
         myEdgeChooser = new GUIGridEdgeChooser("Finite");
-        myNeighborsChooser = new GUIGridNeighborsChooser("Adjacent");
+        myNeighborsChooser = new GUIGridNeighborsChooser(myInitialProperties.get(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
         myBox.getChildren().addAll(myShapeChooser.getDisplay());
         myBox.getChildren().addAll(myBoundryChooser.getDisplay());
         myBox.getChildren().addAll(myEdgeChooser.getDisplay());
