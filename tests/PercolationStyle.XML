@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>hexagon</shape>
-    <neighborsType>HEXAGON</neighborsType>
+    <shape>triangle</shape>
+    <neighborsType>TRIANGLE_12_POINT_UP</neighborsType>
     <edges>basic</edges>
     <outline>no</outline>
     <stateColors>
