@@ -1,78 +1,43 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Slider;
+
 import javafx.scene.control.Spinner;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.HashMap;
 
 public class GUISegregationPanel extends GUISimulationPanel {
-    private Simulation mySimulation;
     private Spinner<Integer> myThresholdSpinner = new Spinner<>();
     private Text myThresh;
-    private Slider myRaceOneSlider;
+    private Spinner<Integer> myRaceOneSpinner;
     private Text myRaceOne;
-    private Text myRaceOneVal;
-    private Slider myEmptySlider;
+    private Spinner<Integer> myRaceTwoSpinner;
+    private Text myRaceTwo;
+    private Spinner<Integer> myEmptySpinner;
     private Text myEmpty;
     private HashMap<String,Double>  myMap = new HashMap<String,Double>();
-    double emptyCurrVal;
-    double redCurrVal;
-    double blueCurrVal;
     int redCurrRatio;
     int blueCurrRatio;
 
     public GUISegregationPanel(Simulation mySim){
         super(mySim);
-        mySimulation = mySim;
-        setUpInitialValues();
-        toFraction(redCurrVal/blueCurrVal);
+        for (String paramName: mySim.getInitialParams().keySet() )
+            myMap.put(new String(paramName), new Double(mySim.getInitialParams().get(paramName)));
+
+        myThresholdSpinner = setUpSpinner(0,100,(int)(myMap.get(SegregationSimulation.THRESHOLD)*100.0));
+        myRaceOneSpinner = setUpSpinner(0,100,(int)(myMap.get(SegregationSimulation.RED_PERCENTAGE)*100.0));
+        myRaceTwoSpinner = setUpSpinner(0,100,(int)(myMap.get(SegregationSimulation.BLUE_PERCENTAGE)*100.0));
+        myEmptySpinner = setUpSpinner(0,100,(int)(myMap.get(SegregationSimulation.EMPTY_PERCENTAGE)*100.0));
+
+        toFraction(myMap.get(SegregationSimulation.RED_PERCENTAGE)/myMap.get(SegregationSimulation.BLUE_PERCENTAGE));
+
         myThresh = setUpLabel("Threshold %");
         myEmpty = setUpLabel("Empty %");
-        myRaceOne = setUpLabel("Red:Blue = ");
-        myRaceOneVal = setUpLabel(redCurrRatio + "/" + blueCurrRatio);
+        myRaceOne = setUpLabel("Red %");
+        myRaceTwo = setUpLabel("Blue %");
 
-        myThresholdSpinner = setUpSpinner(0,100,30);
-        myThresholdSpinner.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myMap.remove(SegregationSimulation.THRESHOLD);
-                myMap.put(SegregationSimulation.THRESHOLD,myThresholdSpinner.getValue() *1.0/100);
-                mySimulation.updateNewParams(myMap);
-            }
-        });
         super.addToStackPane(myThresh,myThresholdSpinner);
+        super.addToStackPane(myRaceOne,myRaceOneSpinner);
+        super.addToStackPane(myRaceTwo,myRaceTwoSpinner);
+        super.addToStackPane(myEmpty,myEmptySpinner);
 
-        myRaceOneSlider = new Slider(0,1.0,redCurrVal/(redCurrVal + blueCurrVal));
-        myRaceOneSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myRaceOneSlider.setValue(myRaceOneSlider.getValue());
-                redCurrVal = (mySim.getMyGrid().getCells().size() - emptyCurrVal * mySim.getMyGrid().getCells().size()) * myRaceOneSlider.getValue()/ (1+ myRaceOneSlider.getValue())/mySim.getMyGrid().getCells().size();
-                blueCurrVal = 1 - redCurrVal - emptyCurrVal;
-                toFraction(redCurrVal/blueCurrVal);
-                myRaceOneVal.setText(redCurrRatio + "/" + blueCurrRatio);
-                myMap.remove(SegregationSimulation.RED_PERCENTAGE,SegregationSimulation.BLUE_PERCENTAGE);
-                myMap.put(SegregationSimulation.RED_PERCENTAGE,redCurrVal);
-                myMap.put(SegregationSimulation.BLUE_PERCENTAGE,blueCurrVal);
-                mySimulation.updateNewParams(myMap);
-            }
-        });
-        super.addToStackPane(myRaceOne,myRaceOneVal,myRaceOneSlider);
-
-        myEmptySlider = new Slider(0,1.0,emptyCurrVal);
-        myEmptySlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                myEmptySlider.setValue(myEmptySlider.getValue());
-                emptyCurrVal = myEmptySlider.getValue();
-                myMap.remove(SegregationSimulation.EMPTY_PERCENTAGE);
-                myMap.put(SegregationSimulation.EMPTY_PERCENTAGE,myEmptySlider.getValue());
-                mySimulation.updateNewParams(myMap);
-            }
-        });
-        super.addToStackPane(myEmpty,myEmptySlider);
 
     }
 
@@ -95,26 +60,13 @@ public class GUISegregationPanel extends GUISimulationPanel {
         }
         redCurrRatio = pfound;
         blueCurrRatio = qfound;
-
-
     }
 
-    private void setUpInitialValues(){
-        double redCount = 0;
-        double emptyCount = 0;
-        double blueCount = 0;
-
-        for (Cell c: mySimulation.getMyGrid().getCells()){ ;
-            if (c.getMyColor() == Color.RED)
-                redCount++;
-            else if (c.getMyColor() == Color.BLUE)
-                blueCount++;
-            else if (c.getMyColor() == Color.WHITE)
-                emptyCount++;
-        }
-        redCurrVal = redCount/(mySimulation.getMyGrid().getCells().size());
-        blueCurrVal =  blueCount/(mySimulation.getMyGrid().getCells().size());
-        emptyCurrVal = emptyCount/(mySimulation.getMyGrid().getCells().size());
-        myEmptySlider = new Slider(0,1,emptyCurrVal);
+    public HashMap<String,Double> getMyParams(){
+        myMap.put(SegregationSimulation.THRESHOLD,1.0*myThresholdSpinner.getValue()/100);
+        myMap.put(SegregationSimulation.EMPTY_PERCENTAGE, 1.0 * myEmptySpinner.getValue() /100);
+        myMap.put(SegregationSimulation.RED_PERCENTAGE,1.0 *myRaceOneSpinner.getValue()/100);
+        myMap.put(SegregationSimulation.BLUE_PERCENTAGE, 1.0 *myRaceTwoSpinner.getValue()/100);
+        return myMap;
     }
 }

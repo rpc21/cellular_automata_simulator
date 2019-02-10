@@ -18,9 +18,9 @@ public enum SpreadingFireState implements CellState {
     private final String myFullState;
     private final Color myCellColor;
 
-    SpreadingFireState(String shortenedName, String fullState, Color cellColor){
+    SpreadingFireState(String shortenedName, String ParamName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myFullState = ParamName;
         myCellColor = cellColor;
     }
 

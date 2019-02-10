@@ -1,3 +1,9 @@
+import javafx.scene.paint.Color;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +26,8 @@ public abstract class Simulation {
     protected Grid myNextGrid;
     protected Map<String, String> credentials;
     protected Map<String, Double> myParameters;
+    protected Map<String, String> stateToColor;
+    protected Map<String, String> myStyleProperties;
 
     protected boolean simulationOver;
 
@@ -59,6 +67,14 @@ public abstract class Simulation {
 
     public Map<String, String> getCredentials(){
         return credentials;
+    }
+
+    public void setColors(HashMap<String, String> myColors){
+        stateToColor = myColors;
+    }
+
+    public Map<String, String> getStateToColorMap(){
+        return stateToColor;
     }
 
     /**
@@ -176,5 +192,9 @@ public abstract class Simulation {
     public List<String> getMyPossibleStates(){
         return myGrid.getCells().get(0).getMyCurrentState().getPossibleValues();
     }
+    public Map<String,Double> getInitialParams(){
+        return myParameters;
+    }
 
 }
+

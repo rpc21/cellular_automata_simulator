@@ -17,9 +17,9 @@ public enum GOLState implements CellState{
     private final String myFullState;
     private final Color myCellColor;
 
-    GOLState(String shortenedName, String fullState, Color cellColor){
+    GOLState(String shortenedName, String paramName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myFullState = paramName;
         myCellColor = cellColor;
     }
 

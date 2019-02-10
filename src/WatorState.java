@@ -13,7 +13,7 @@ public enum WatorState implements CellState {
     private final String myFullState;
     private final Color myCellColor;
 
-   WatorState(String shortenedName, String fullState, Color cellColor){
+    WatorState(String shortenedName, String fullState, Color cellColor){
         myShortenedName = shortenedName;
         myFullState = fullState;
         myCellColor = cellColor;
