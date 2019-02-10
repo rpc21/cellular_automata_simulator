@@ -13,7 +13,7 @@ public class CellularAutomataMain extends Application {
     private Simulation myCurrentSimulation;
 
     private static final String DEFAULT_SIMULATION = "tests/GameOfLifeTest.xml";
-    private static final String DEFAULT_STYLE = "tests/StyleTest1.XML";
+    private static final String DEFAULT_STYLE = "tests/GameOfLifeStyle.XML";
     public static void main(String[] args){
         launch(args);
     }

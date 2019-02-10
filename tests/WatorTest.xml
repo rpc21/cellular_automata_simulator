@@ -10,18 +10,18 @@
     <cellStates>
         <CellRows index="0">
             <CellColumns>FISH</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="1">
-            <CellColumns>EMPTY</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="2">
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
             <CellColumns>SHARK</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
     </cellStates>
     <sharkPercentage>0.1</sharkPercentage>

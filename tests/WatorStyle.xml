@@ -5,9 +5,8 @@
     <edges>ADJACENT</edges>
     <outline>no</outline>
     <stateColors>
-        <color id = "DEAD">BLUE</color>
-        <color id = "ALIVE">ORANGE</color>
+        <color id = "OPEN">BLUE</color>
+        <color id = "SHARK">GRAY</color>
+        <color id = "FISH">GREEN</color>
     </stateColors>
 </data>
-
-

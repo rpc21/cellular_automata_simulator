@@ -19,9 +19,9 @@
             <CellColumns>BLUE</CellColumns>
         </CellRows>
         <CellRows index="0">
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
             <CellColumns>RED</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
     </cellStates>
     <redPercentage>0.2</redPercentage>
