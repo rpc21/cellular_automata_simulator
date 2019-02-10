@@ -9,7 +9,7 @@ public class SegregationCell extends MovableCell{
     public SegregationCell(Location location, SegregationState initialState, Grid currentGrid, Grid nextGrid, Map<String,
                 Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
-        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
+//        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }
 
     @Deprecated

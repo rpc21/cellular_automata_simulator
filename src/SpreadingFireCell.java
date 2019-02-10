@@ -11,7 +11,7 @@ public class SpreadingFireCell extends Cell {
     public SpreadingFireCell(Location location, SpreadingFireState initialState, Grid currentGrid, Grid nextGrid, Map<String,
                 Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
-        myNeighbors = NeighborsDefinitions.ADJACENT;
+//        myNeighbors = NeighborsDefinitions.ADJACENT;
     }
 
     @Deprecated

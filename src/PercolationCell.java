@@ -21,7 +21,7 @@ public class PercolationCell extends Cell {
 //     */
     public PercolationCell(Location location, PercolationState initialState, Grid currentGrid, Grid nextGrid){
         super(location, initialState, currentGrid, nextGrid);
-        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
+//        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }
 
     /**
