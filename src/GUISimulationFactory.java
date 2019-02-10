@@ -25,6 +25,12 @@ public class GUISimulationFactory {
             case Simulation.WATOR_SIMULATION_NAME:
                 testCase = "tests/WatorTest.xml";
                 break;
+            case Simulation.FORAGE_SIMULATION_NAME:
+                testCase = "tests/ForageTest.xml";
+                break;
+            case Simulation.SUGAR_SIMULATION_NAME:
+                testCase = "tests/SugarTest.xml";
+                break;
             default:
                 testCase = "tests/GameOfLifeTest.xml";
                 break;
@@ -48,6 +54,12 @@ public class GUISimulationFactory {
                 break;
             case Simulation.WATOR_SIMULATION_NAME:
                 testCase = "tests/WatorStyle.xml";
+                break;
+            case Simulation.FORAGE_SIMULATION_NAME:
+                testCase = "tests/ForageStyle.xml";
+                break;
+            case Simulation.SUGAR_SIMULATION_NAME:
+                testCase = "tests/SugarStyle.xml";
                 break;
             default:
                 testCase = "tests/GameOfLifeStyle.xml";
@@ -73,6 +85,12 @@ public class GUISimulationFactory {
             case Simulation.WATOR_SIMULATION_NAME:
                 mySimPanel = new GUIWatorPanel(mySim);
                 break;
+            case Simulation.FORAGE_SIMULATION_NAME:
+                mySimPanel = new GUIBlankPanel(mySim);
+                break;
+            case Simulation.SUGAR_SIMULATION_NAME:
+                mySimPanel = new GUIBlankPanel(mySim);
+                break;
             default:
                 mySimPanel = new GUIGameOfLifePanel(mySim);
                 break;
@@ -85,9 +103,6 @@ public class GUISimulationFactory {
         XMLStyler myStyler = new XMLStyler("media");
         Map<String, String> initProps = myStyler.getStylePropertiesMap(new File(makeXMLStyleName(mySim.getMyName())));
         Map<String,Paint> myColors = myStyler.getColorMap(new File(makeXMLStyleName(mySim.getMyName())));
-//        HashMap<String, Paint> wrongOrderMap = new HashMap<>();
-//        wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
-//        wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
         GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
         GUIGridCell myCell = new GUIGridCell(myColors, mySim, myPolygon);
         myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell,initProps);

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GUIGridEdgeChooser extends GUIControlManager{
     private ChoiceBox<Object> myChooser = new ChoiceBox<>();
-    private List<Object> possibleEdges = Arrays.asList("Finite", "Toroidal", "Infinite");
+    private List<Object> possibleEdges = Arrays.asList("finite", "toroidal");
     public GUIGridEdgeChooser(String initialEdge){
         super.setUpChoiceBox(myChooser, initialEdge, possibleEdges);
     }
