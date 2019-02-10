@@ -22,6 +22,10 @@ public abstract class Simulation {
 
     protected boolean simulationOver;
 
+    public Simulation(){
+        myParameters = new HashMap<>();
+        setMyGrid(new BasicGrid(10,10));
+    }
 
     public Simulation(Map<String, Double> params, int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
@@ -145,6 +149,8 @@ public abstract class Simulation {
                 return new SegregationCell(loc, SegregationState.valueOf(state), grid, nextGrid, parameters);
             case WATOR_SIMULATION_NAME:
                 return generateWatorCellByState(loc, WatorState.valueOf(state));
+            case FORAGE_SIMULATION_NAME:
+                return new ForagePatch(loc, ForageState.valueOf(state), (AntGrid) grid, (AntGrid) nextGrid, parameters);
         }
         return new GOLCell(loc, GOLState.valueOf(state), grid, nextGrid);
     }
