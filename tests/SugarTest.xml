@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="simulation">
+    <simulationType>Sugar</simulationType>
+    <title>The Sugar Simulation</title>
+    <author>Dima, Anna and Ryan</author>
+    <rows>3</rows>
+    <columns>3</columns>
+    <GenerateStatesBy>seebelow</GenerateStatesBy>
+    <cellStates>
+        <CellRows index="0">
+            <CellColumns>3</CellColumns>
+            <CellColumns>3</CellColumns>
+            <CellColumns>1</CellColumns>
+        </CellRows>
+        <CellRows index="1">
+            <CellColumns>9</CellColumns>
+            <CellColumns>24</CellColumns>
+            <CellColumns>15</CellColumns>
+        </CellRows>
+        <CellRows index="2">
+            <CellColumns>4</CellColumns>
+            <CellColumns>20</CellColumns>
+            <CellColumns>1</CellColumns>
+        </CellRows>
+    </cellStates>
+    <sugarAgentPercentage>0.5</sugarAgentPercentage>
+    <sugarGrowBackRate>1.0</sugarGrowBackRate>
+    <maxVision>2.0</maxVision>
+    <maxMetabolism>7.0</maxMetabolism>
+    <initSugar>2.0</initSugar>
+</data>

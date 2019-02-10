@@ -30,7 +30,7 @@ public class XMLStyler {
 
     public Simulation setSimulationStyle(File dataFile, Simulation simulation){
         var root = getRootElement(dataFile);
-        simulation.setColors(readStateColors(simulation.getMyPossibleStates(), root));
+        //simulation.setColors(readStateColors(simulation.getMyPossibleStates(), root));
         simulation.myStyleProperties =makeStylePropertiesMap(root);
         return simulation;
     }

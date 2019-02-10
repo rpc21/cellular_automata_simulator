@@ -24,15 +24,15 @@ public class CellularAutomataMain extends Application {
         //String testCase = "tests/SegregationTest.xml";
         //String testCase = "tests/PercolationTest.xml";
         //String testCase = "tests/SpreadingFireTest.xml";
+        String testCase = "tests/SugarTest.xml";
 //        String testCase = "tests/WatorTest.xml";
-//        File Testfile = new File(testCase);
+        File testFile = new File(testCase);
 //
 //        String styleTestCase = "tests/StyleTest1.XML";
 //        File styleFile = new File(styleTestCase);
 //
-//        var simulation = new setUpSimulation().setSimulation(Testfile, styleFile);
         //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
-        File testFile = new File(DEFAULT_SIMULATION);
+//        File testFile = new File(DEFAULT_SIMULATION);
         File styleFile = new File(DEFAULT_STYLE);
         var simulation = new setUpSimulation().setSimulation(testFile, styleFile);
         try{
@@ -40,6 +40,7 @@ public class CellularAutomataMain extends Application {
         }catch (Exception e){
             System.out.println("Invalid Simulation or Style File");
         }
+        System.out.println("Ready to Display");
 
         GUI myGUI = new GUI(stage,myCurrentSimulation);
 
