@@ -218,5 +218,8 @@ public abstract class Simulation {
         }
     }
 
+    public void setMyStyleProperties(Map<String, String> myStyleProperties) {
+        this.myStyleProperties = myStyleProperties;
+    }
 }
 

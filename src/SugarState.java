@@ -3,24 +3,22 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum ForageState implements CellState {
-
-    FOOD("F", "FOOD", Color.RED),
-    NEST("N", "NEST", Color.BROWN),
-    EMPTY("O", "OPEN", Color.LIGHTGREEN),
-    OBSTACLE("O", "OBSTACLE", Color.WHITE);
-
+public enum SugarState implements CellState{
+    PATCH("P", "PATCH", Color.ORANGE);
 
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;
 
-    ForageState(String shortenedName, String fullState, Color cellColor){
+    SugarState(String shortenedName, String paramName, Color cellColor){
         myShortenedName = shortenedName;
-        myFullState = fullState;
+        myFullState = paramName;
         myCellColor = cellColor;
     }
-    public String toString(){ return myFullState;}
+    @Override
+    public String toString() {
+        return myFullState;
+    }
     @Override
     public String getMyShortenedName() {
         return myShortenedName;
@@ -28,7 +26,7 @@ public enum ForageState implements CellState {
 
     @Override
     public Color getMyCellColor() {
-        return myCellColor;
+        return Color.ORANGE;
     }
 
     @Override

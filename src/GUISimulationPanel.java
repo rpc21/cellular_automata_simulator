@@ -1,3 +1,6 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -6,6 +9,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class GUISimulationPanel extends GUIPanel{
     public static String DEFAULT_FONT_NAME = "Copperplate";

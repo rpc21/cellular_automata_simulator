@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="style">
+    <shape>triangle</shape>
+    <neighborsType>adjacent</neighborsType>
+    <outline>no</outline>
+    <edges>basic</edges>
+    <stateColors>
+        <color id = "FOOD">BLUE</color>
+        <color id = "NEST">ORANGE</color>
+        <color id = "OPEN">YELLOW</color>
+        <color id = "OBSTACLE">RED</color>
+    </stateColors>
+</data>

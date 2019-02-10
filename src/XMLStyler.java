@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -10,11 +12,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class XMLStyler {
     public static final String SHAPE_TYPE_TAG_NAME="shape";
     public static final String NEIGHBORS_TYPE_TAG_NAME="neighborsType";
-    public static final String EDGE_TYPE_TAG_NAME="edges";
     public static final String OUTLINE_TAG_NAME="outline";
     public static final String STATE_COLORS_TAG_NAME = "stateColors";
 
@@ -30,28 +32,48 @@ public class XMLStyler {
 
     public Simulation setSimulationStyle(File dataFile, Simulation simulation){
         var root = getRootElement(dataFile);
-        simulation.setColors(readStateColors(simulation.getMyPossibleStates(), root));
-        simulation.myStyleProperties =makeStylePropertiesMap(root);
+        simulation.setColors(readStateColors(root));
+        Map<String, String> map = makeStylePropertiesMap(root);
+        simulation.setMyStyleProperties(map);
+        simulation.updateNeighbors(map);
         return simulation;
+    }
+
+    public Map<String, Paint> getColorMap(File dataFile) {
+        Map<String, Paint> colorMap = new HashMap<String, Paint>();
+        var root = getRootElement(dataFile);
+        NodeList colors = root.getElementsByTagName("color");
+        System.out.println("Num Colors = "+colors.getLength());
+        for (int i = 0; i < colors.getLength(); i++) {
+            Element element = (Element) colors.item(i);
+            String colorval = element.getTextContent();
+            Paint p = Paint.valueOf(colorval);
+            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), p);
+        }
+        return colorMap;
+    }
+    /**
+     * public for visualization to use
+     * @param dataFile
+     * @return the map containing shape, neighbors, outline
+     */
+    public Map<String, String> getStylePropertiesMap(File dataFile){
+        var root = getRootElement(dataFile);
+        return makeStylePropertiesMap(root);
     }
 
     private HashMap<String, String> makeStylePropertiesMap(Element root){
         HashMap<String, String> styleProperties = new HashMap<String, String>();
         readInShape(root, styleProperties);
         readInNeighborsType(root, styleProperties);
-        readInEdges(root, styleProperties);
         readInOutline(root, styleProperties);
+        styleProperties.put(XMLParser.EDGE_TYPE_TAG_NAME, readInEdges(root));
         return styleProperties;
     }
 
     private void readInOutline(Element root, HashMap<String, String> styleProperties){
         String outline = getTextValue(root, OUTLINE_TAG_NAME);
         styleProperties.put(OUTLINE_TAG_NAME, outline);
-    }
-
-    private void readInEdges(Element root, HashMap<String, String> styleProperties){
-        String edges = getTextValue(root, EDGE_TYPE_TAG_NAME);
-        styleProperties.put(EDGE_TYPE_TAG_NAME, edges);
     }
 
     private void readInNeighborsType(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException{
@@ -117,15 +139,15 @@ public class XMLStyler {
         return false;
     }
 
-    private HashMap<String, String> readStateColors(List<String> states, Element root){
-        HashMap<String, String> statesToColors = new HashMap<String, String>();
-        NodeList stateColorsList = root.getElementsByTagName(STATE_COLORS_TAG_NAME);
-        for(String currentState: states){
-            statesToColors.put(currentState,getTextValue(root, currentState));
-            System.out.println(getTextValue(root, currentState));
+    private HashMap<String, String> readStateColors(Element root){
+        Map<String, String> colorMap = new HashMap<String, String>();
+        NodeList colors = root.getElementsByTagName("color");
+        for (int i = 0; i < colors.getLength(); i++) {
+            Element element = (Element) colors.item(i);
+            String colorval = element.getTextContent();
+            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), colorval);
         }
-        return statesToColors;
-
+        return (HashMap)colorMap;
     }
 
     // Get root element of an XML file
@@ -169,5 +191,9 @@ public class XMLStyler {
         catch (ParserConfigurationException e) {
             throw new XMLException(e);
         }
+    }
+
+    private String readInEdges(Element root){
+        return getTextValue(root, XMLParser.EDGE_TYPE_TAG_NAME);
     }
 }

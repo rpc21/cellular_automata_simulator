@@ -1,4 +1,10 @@
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GUISimulationFactory {
     public String makeXMLFileName(String newSim){
@@ -21,6 +27,30 @@ public class GUISimulationFactory {
                 break;
             default:
                 testCase = "tests/GameOfLifeTest.xml";
+                break;
+        }
+        return testCase;
+    }
+    public String makeXMLStyleName(String newSim){
+        String testCase;
+        switch(newSim){
+            case Simulation.GOL_SIMULATION_NAME:
+                testCase = "tests/GameOfLifeStyle.xml";
+                break;
+            case Simulation.SPREADING_FIRE_SIMULATION_NAME:
+                testCase = "tests/SpreadingFireStyle.xml";
+                break;
+            case Simulation.PERCOLATION_SIMULATION_NAME:
+                testCase = "tests/PercolationStyle.xml";
+                break;
+            case Simulation.SEGREGATION_SIMULATION_NAME:
+                testCase = "tests/SegregationStyle.xml";
+                break;
+            case Simulation.WATOR_SIMULATION_NAME:
+                testCase = "tests/WatorStyle.xml";
+                break;
+            default:
+                testCase = "tests/GameOfLifeStyle.xml";
                 break;
         }
         return testCase;
@@ -50,27 +80,34 @@ public class GUISimulationFactory {
         return mySimPanel;
     }
 
-    public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage s){
+    public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage stage){
         GUIGrid myGrid;
-        GUIGridPolygon myPolygon = makeGUIPolygon(newShape,mySim);
-        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),mySim, s,myPolygon);
+        XMLStyler myStyler = new XMLStyler("media");
+        Map<String, String> initProps = myStyler.getStylePropertiesMap(new File(makeXMLStyleName(mySim.getMyName())));
+        Map<String,Paint> myColors = myStyler.getColorMap(new File(makeXMLStyleName(mySim.getMyName())));
+//        HashMap<String, Paint> wrongOrderMap = new HashMap<>();
+//        wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
+//        wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
+        GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
+        GUIGridCell myCell = new GUIGridCell(myColors, mySim, myPolygon);
+        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell,initProps);
         return myGrid;
 
     }
-    public GUIGridPolygon makeGUIPolygon(String newShape, Simulation mySim){
+    public GUIGridPolygon makeGUIPolygon(int rows, int cols, String shape){
         GUIGridPolygon myPolygon;
-        switch(newShape) {
-            case "Rectangle":
-                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+        switch(shape) {
+            case "rectangle":
+                myPolygon = new GUIGridRectangle(rows,cols);
                 break;
-            case "Triangle":
-                myPolygon = new GUIGridTriangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+            case "triangle":
+                myPolygon =  new GUIGridTriangle(rows,cols);
                 break;
-            case "Hexagon":
-                myPolygon = new GUIGridHexagon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+            case "hexagon":
+                myPolygon = new GUIGridHexagon(rows,cols);
                 break;
             default:
-                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
+                myPolygon = new GUIGridRectangle(rows,cols);
                 break;
         }
         return myPolygon;

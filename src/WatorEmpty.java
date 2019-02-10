@@ -35,6 +35,6 @@ public class WatorEmpty extends WatorCell {
 
     @Override
     public String toString() {
-        return "E";
+        return "O";
     }
 }

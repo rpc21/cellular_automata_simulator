@@ -5,16 +5,17 @@
     <author>Dima, Anna and Ryan</author>
     <rows>25</rows>
     <columns>25</columns>
+    <edges>basic</edges>
     <GenerateStatesBy>randomFromPercentages</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
             <CellColumns>TREE</CellColumns>
             <CellColumns>TREE</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="1">
             <CellColumns>FIRE</CellColumns>
-            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>OPEN</CellColumns>
             <CellColumns>FIRE</CellColumns>
         </CellRows>
         <CellRows index="0">

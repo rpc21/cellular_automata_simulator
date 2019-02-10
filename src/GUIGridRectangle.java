@@ -1,15 +1,17 @@
-import javafx.stage.Stage;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
+import java.util.HashMap;
 
 public class GUIGridRectangle extends GUIGridPolygon {
     private double myRectangleLength;
     private double myRectangleHeight;
-    private double myCols;
+    private int myCols;
 
     public GUIGridRectangle(int r, int c) {
-        super(r, c);
+        super(r,c);
         myCols = c;
-        myRectangleLength = GUIGrid.GUI_GRID_SIZE / r;
-        myRectangleHeight = GUIGrid.GUI_GRID_SIZE / c;
+        myRectangleLength = GUIGrid.GUI_GRID_SIZE / (double)r;
+        myRectangleHeight = GUIGrid.GUI_GRID_SIZE / (double)c;
     }
 
     public Double[] getVertices(int r, int c) {
@@ -32,6 +34,7 @@ public class GUIGridRectangle extends GUIGridPolygon {
     public double getHalfWay(){
         return myCols * myRectangleLength/2.0;
     }
+
 
 }
 

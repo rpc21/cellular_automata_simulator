@@ -7,7 +7,7 @@ public class ForageSimulation extends Simulation {
     public static final String MAX_FOOD_PHEROMONES = "maxFoodPheromones";
     public static final String MAX_HOME_PHEROMONES = "maxHomePheromones";
     public static final String NUMBER_OF_ANTS = "numberOfAnts";
-    public static final List<String> FORAGE_DATA_FILES = List.of(MAX_FOOD_PHEROMONES, MAX_HOME_PHEROMONES,
+    public static final List<String> FORAGE_DATA_FIELDS = List.of(MAX_FOOD_PHEROMONES, MAX_HOME_PHEROMONES,
             NUMBER_OF_ANTS);
 
     public ForageSimulation(){

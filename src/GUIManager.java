@@ -19,11 +19,9 @@ public class GUIManager {
     private SimulationFactory mySimFact = new SimulationFactory();
     private int numSimulations;
     private Stage myStage;
-    private ScrollPane myScrollPane;
     private String myShape;
 
     public GUIManager (){
-        myScrollPane = new ScrollPane();
         mySimulations = new ArrayList<>();
         myGUIGrids = new ArrayList<>();
         myGUISimPanels = new ArrayList<>();
@@ -33,7 +31,7 @@ public class GUIManager {
         numSimulations++;
         mySimulations.add(sim);
         myStage = stage;
-        myShape = "Rectangle";
+        myShape = "rectangle";
         myGUIGrids.add(myGUISimulationFactory.makeGUIGrid(myShape, sim,stage));
         myGUIGrids.get(numSimulations - 1).makeGUIGrid(sim.getMyGrid().getCells());
         myGUISimPanels.add(myGUISimulationFactory.makeSimulationPanel(sim.getMyName(), sim));

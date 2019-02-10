@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="simulation">
+    <simulationType>Percolation</simulationType>
+    <title>The Percolation Simulation</title>
+    <author>Dima, Anna and Ryan</author>
+    <rows>5</rows>
+    <columns>5</columns>
+    <edges>basic</edges>
+    <GenerateStatesBy>specified</GenerateStatesBy>
+    <cellStates>
+        <CellRows index="0">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="1">
+        <CellColumns>OPEN</CellColumns>
+        <CellColumns>OPEN</CellColumns>
+        <CellColumns>OPEN</CellColumns>
+        <CellColumns>OPEN</CellColumns>
+        <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="2">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>PERCOLATED</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="3">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="4">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+    </cellStates>
+    <openPercentage>0.7</openPercentage>
+    <closedPercentage>0.2</closedPercentage>
+    <percolatedPercentage>0.1</percolatedPercentage>
+</data>
