@@ -2,7 +2,7 @@ import java.io.File;
 
 public class setUpSimulation {
 
-    public static final String FILETYPE = "xml";
+    public static final String FILETYPE = "media";
     public setUpSimulation(){
     }
     public Simulation setSimulation(File xmlParserFile, File styleFile){

@@ -55,9 +55,10 @@ public class XMLParser {
      */
     public Simulation setSimulation(File dataFile) {
         var root = getRootElement(dataFile);
-//        if (! isValidFile(root, Simulation.DATA_TYPE)) {
-//            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
-//        }
+        if (! isValidFile(root, Simulation.DATA_TYPE)) {
+            System.out.println(root);
+            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
+        }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
         int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
@@ -68,13 +69,15 @@ public class XMLParser {
         HashMap<String, String> theCredentials = getCredentials(root);
         String howToSetInitialStates = getTextValue(root, GEN_STATES_TAG_NAME);
 
+        return initializeSimulation(howToSetInitialStates, simulationParams, additionalParams, specifiedStates, theCredentials);
+    }
+
+    private Simulation initializeSimulation(String howToSetInitialStates, HashMap<String, String> simulationParams, HashMap<String, Double> additionalParams, String[][] specifiedStates, HashMap<String, String> theCredentials){
         SimulationFactory mySimulationFactory = new SimulationFactory();
         Simulation mySim;
-
         if(howToSetInitialStates.equals(RANDOM_STRING)){
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
         }else if(howToSetInitialStates.equals(COMPLETELY_RANDOM_STRING)){
-            //TODO SET THE PERCENTAGES RANDOMLY TO ADD TO 1
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
         }else{
             mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
@@ -91,7 +94,7 @@ public class XMLParser {
             }
             return myCredentials;
         } catch(NullPointerException e){
-            throw new NullPointerException("Invalid author of name");
+            throw new NullPointerException("Invalid author or name");
         }
     }
 

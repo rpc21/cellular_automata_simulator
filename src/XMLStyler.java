@@ -57,8 +57,10 @@ public class XMLStyler {
     private void readInNeighborsType(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException{
         try {
             String neighbors = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME);
-            if (!isValidNeighbors(neighbors)) {
+            if (isValidNeighbors(neighbors)) {
                 styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, neighbors);
+            } else {
+                throw new IllegalArgumentException("neighbors type must be a valid string: " + NeighborsDefinitions.values());
             }
         } catch (IllegalArgumentException e){
             try {//try all lower case
@@ -76,8 +78,13 @@ public class XMLStyler {
     private void readInShape(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException {
         try {
             String shape = getTextValue(root, SHAPE_TYPE_TAG_NAME);
-            if (!isValidShape(shape)) {
+            if (isValidShape(shape)) {
                 styleProperties.put(SHAPE_TYPE_TAG_NAME, shape);
+            }
+            else {
+                System.out.println("not a valid shape!");
+                throw new IllegalArgumentException("shape must be a valid string: " + simulationShapes.values());
+
             }
         } catch(IllegalArgumentException e){
             try {//try all lower case
