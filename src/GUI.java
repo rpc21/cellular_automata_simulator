@@ -72,7 +72,7 @@ public class GUI {
 
     public void step(){
         myManager.updateGUIParts();
-        //myGUIGraph.updateChart(mySimulation.getMyGrid().getCells());
+        myGUIGraph.updateChart(mySimulation.getMyGrid().getCells());
         }
 
     private void addSimulation(){
@@ -84,10 +84,11 @@ public class GUI {
     }
 
 
+
     public void resetWithParams() {
 
         myNode.getChildren().clear();
-        myManager.resetSimulations(myGUIDefaultPanel);
+        myManager.resetSimulations(myGUIDefaultPanel,mySimulation.getCredentials());
         mySimulation = myManager.getPrimarySimulation();
         makeGUIParts(mySimulation);
         for (GUIGrid grid : myManager.getGrids()) {
@@ -98,14 +99,14 @@ public class GUI {
             myNode.getChildren().add(simPanel.getGUISimulationPanel());
     }
 
-//    public void setParameters(){
-//        //pass back changes to neighbors,shapes,gridedge etc
-//        myManager.updateGUIGrid(new HashMap<String, String>());
-//    }
+    public void setParameters(){
+        //neighbors,shape
+    }
 
 
     private void makeGUIParts(Simulation currSim){
-        Credentials myCredentials = new Credentials("lol","hi");
+        Credentials myCredentials = new Credentials("lol",
+                "hi");
         myGUIGraph = new GUIGraph(currSim);
         myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials(),myGUIGraph.getMyChart());
     }

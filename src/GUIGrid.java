@@ -42,6 +42,7 @@ public class GUIGrid {
         myStackPane.getChildren().addAll(cell);
     }
 
+    public String getNeighbors(){ return myOptions.getNeighbors();}
     public Node getGUIStyle(){
         return myOptions.getOptionsButton();
     }

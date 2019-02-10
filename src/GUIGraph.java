@@ -20,7 +20,7 @@ public class GUIGraph {
 
         myChart = new LineChart<Number,Number>(xAxis,yAxis);
         myChart.setTitle("Cell Percentage Distribution");
-        for (String a: mySim.getPercentageFields()) {
+        for (String a: mySim.getMyPossibleStates()) {
             myMap.put(a, new XYChart.Series<>());
             myMap.get(a).setName(a);
             myMap.get(a).getData().add(new XYChart.Data(0,mySim.getInitialParams().get(a)));
@@ -36,25 +36,16 @@ public class GUIGraph {
     }
 
     public void updateChart(List<Cell> myCells) {
-        //would be nice to have a method that accesses list of this sim's cell states
         HashMap<String, Double> paramCountMap = new HashMap<>();
         for (String cellType : myMap.keySet())
             paramCountMap.put(cellType, 0.0);
-
-
         for (Cell c : myCells) {
-            if (c.getMyColor() == GOLState.DEAD.getMyCellColor()) {
-                paramCountMap.put(GOLSimulation.DEAD_PERCENTAGE, paramCountMap.get(GOLSimulation.DEAD_PERCENTAGE) + 1.0);
-            } else {
-                paramCountMap.put(GOLSimulation.ALIVE_PERCENTAGE, paramCountMap.get(GOLSimulation.ALIVE_PERCENTAGE) + 1.0);
-            }
+            paramCountMap.put(c.getMyCurrentState().toString(),paramCountMap.get(c.getMyCurrentState().toString()) + 1.0);
         }
-        paramCountMap.put(GOLSimulation.ALIVE_PERCENTAGE, paramCountMap.get(GOLSimulation.ALIVE_PERCENTAGE) / myCells.size());
-        paramCountMap.put(GOLSimulation.DEAD_PERCENTAGE, paramCountMap.get(GOLSimulation.DEAD_PERCENTAGE) / myCells.size());
-
-
-        myMap.get(GOLSimulation.ALIVE_PERCENTAGE).getData().add(new XYChart.Data(currStep, paramCountMap.get(GOLSimulation.ALIVE_PERCENTAGE)));
-        myMap.get(GOLSimulation.DEAD_PERCENTAGE).getData().add(new XYChart.Data(currStep, paramCountMap.get(GOLSimulation.DEAD_PERCENTAGE)));
+        for (String a: paramCountMap.keySet()) {
+            paramCountMap.put(a, paramCountMap.get(a) / myCells.size());
+            myMap.get(a).getData().add(new XYChart.Data(currStep, paramCountMap.get(a)));
+        }
         currStep++;
     }
 
