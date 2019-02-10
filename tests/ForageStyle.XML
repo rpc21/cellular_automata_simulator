@@ -3,10 +3,11 @@
     <shape>triangle</shape>
     <neighborsType>adjacent</neighborsType>
     <outline>no</outline>
+    <edges>ADJACENT</edges>
     <stateColors>
-        <color id = "FOOD">blue</color>
-        <color id = "NEST">orange</color>
-        <color id = "OPEN">yellow</color>
-        <color id = "OBSTACLE">red</color>
+        <color id = "FOOD">BLUE</color>
+        <color id = "NEST">ORANGE</color>
+        <color id = "OPEN">YELLOW</color>
+        <color id = "OBSTACLE">RED</color>
     </stateColors>
 </data>

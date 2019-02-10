@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -35,15 +37,16 @@ public class XMLStyler {
         return simulation;
     }
 
-    public Map<String, String> getColorMap(File dataFile) {
-        Map<String, String> colorMap = new HashMap<String, String>();
+    public Map<String, Paint> getColorMap(File dataFile) {
+        Map<String, Paint> colorMap = new HashMap<String, Paint>();
         var root = getRootElement(dataFile);
         NodeList colors = root.getElementsByTagName("color");
         System.out.println("Num Colors = "+colors.getLength());
         for (int i = 0; i < colors.getLength(); i++) {
             Element element = (Element) colors.item(i);
             String colorval = element.getTextContent();
-            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), colorval);
+            Paint p = Paint.valueOf(colorval);
+            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), p);
         }
         return colorMap;
     }
@@ -62,6 +65,7 @@ public class XMLStyler {
         readInShape(root, styleProperties);
         readInNeighborsType(root, styleProperties);
         readInOutline(root, styleProperties);
+        styleProperties.put(XMLParser.EDGE_TYPE_TAG_NAME, readInEdges(root));
         return styleProperties;
     }
 
@@ -185,5 +189,9 @@ public class XMLStyler {
         catch (ParserConfigurationException e) {
             throw new XMLException(e);
         }
+    }
+
+    private String readInEdges(Element root){
+        return getTextValue(root, XMLParser.EDGE_TYPE_TAG_NAME);
     }
 }
