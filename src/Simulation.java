@@ -167,7 +167,7 @@ public abstract class Simulation {
             case WATOR_SIMULATION_NAME:
                 return generateWatorCellByState(loc, WatorState.valueOf(state));
             case FORAGE_SIMULATION_NAME:
-                return new ForagePatch(loc, ForageState.valueOf(state), (AntGrid) grid, (AntGrid) nextGrid, parameters);
+                return new ForagePatch(loc, ForageState.valueOf(state.toUpperCase()), (AntGrid) grid, (AntGrid) nextGrid, parameters);
             case SUGAR_SIMULATION_NAME:
                 return new SugarPatch(loc, parameters, grid, state);
         }

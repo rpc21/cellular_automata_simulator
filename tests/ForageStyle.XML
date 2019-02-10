@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>rectangle</shape>
+    <shape>triangle</shape>
     <neighborsType>adjacent</neighborsType>
     <edges>ADJACENT</edges>
     <outline>no</outline>
-    <PATCH>blue</PATCH>
+    <FOOD>blue</FOOD>
+    <NEST>orange</NEST>
+    <OPEN>yellow</OPEN>
+    <OBSTACLE>red</OBSTACLE>
 </data>

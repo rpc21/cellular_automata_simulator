@@ -30,7 +30,7 @@ public class XMLStyler {
 
     public Simulation setSimulationStyle(File dataFile, Simulation simulation){
         var root = getRootElement(dataFile);
-        //simulation.setColors(readStateColors(simulation.getMyPossibleStates(), root));
+        simulation.setColors(readStateColors(simulation.getMyPossibleStates(), root));
         simulation.myStyleProperties =makeStylePropertiesMap(root);
         return simulation;
     }
@@ -119,10 +119,9 @@ public class XMLStyler {
 
     private HashMap<String, String> readStateColors(List<String> states, Element root){
         HashMap<String, String> statesToColors = new HashMap<String, String>();
-        NodeList stateColorsList = root.getElementsByTagName(STATE_COLORS_TAG_NAME);
-        for(String currentState: states){
-            statesToColors.put(currentState,getTextValue(root, currentState));
-            System.out.println(getTextValue(root, currentState));
+        for(String s: states){
+            statesToColors.put(s.toUpperCase(),getTextValue(root, s.toUpperCase()));
+            System.out.println(s + " : " +getTextValue(root, s.toUpperCase()));
         }
         return statesToColors;
 

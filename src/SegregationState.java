@@ -9,7 +9,7 @@ import java.util.List;
  */
 public enum SegregationState implements CellState {
 
-    EMPTY("E", "emptyPercentage",Color.WHITE),
+    EMPTY("O", "emptyPercentage",Color.WHITE),
     RED("A", "redPercentage", Color.RED),
     BLUE("B", "bluePercentage", Color.BLUE),
     TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);
@@ -55,7 +55,7 @@ public enum SegregationState implements CellState {
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i< values().length; i++){
-            arrayList.add(myFullState);
+            arrayList.add(values()[i].myFullState);
         }
         return arrayList;
     }

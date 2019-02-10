@@ -7,7 +7,7 @@ public enum ForageState implements CellState {
 
     FOOD("F", "FOOD", Color.RED),
     NEST("N", "NEST", Color.BROWN),
-    EMPTY("E", "EMPTY", Color.LIGHTGREEN),
+    EMPTY("O", "OPEN", Color.LIGHTGREEN),
     OBSTACLE("O", "OBSTACLE", Color.WHITE);
 
     private final String myShortenedName;
@@ -34,7 +34,7 @@ public enum ForageState implements CellState {
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i< values().length; i++){
-            arrayList.add(myFullState);
+            arrayList.add(values()[i].myFullState);
         }
         return arrayList;
     }

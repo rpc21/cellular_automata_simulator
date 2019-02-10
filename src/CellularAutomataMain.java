@@ -24,16 +24,17 @@ public class CellularAutomataMain extends Application {
         //String testCase = "tests/SegregationTest.xml";
         //String testCase = "tests/PercolationTest.xml";
         //String testCase = "tests/SpreadingFireTest.xml";
-        String testCase = "tests/SugarTest.xml";
+//        String testCase = "tests/SugarTest.xml";
 //        String testCase = "tests/WatorTest.xml";
+        String testCase = "tests/ForageTest.xml";
         File testFile = new File(testCase);
 //
-//        String styleTestCase = "tests/StyleTest1.XML";
-//        File styleFile = new File(styleTestCase);
+        String styleTestCase = "tests/ForageStyle.XML";
+        File styleFile = new File(styleTestCase);
 //
         //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
 //        File testFile = new File(DEFAULT_SIMULATION);
-        File styleFile = new File(DEFAULT_STYLE);
+        //File styleFile = new File(DEFAULT_STYLE);
         var simulation = new setUpSimulation().setSimulation(testFile, styleFile);
         try{
             myCurrentSimulation = simulation;
