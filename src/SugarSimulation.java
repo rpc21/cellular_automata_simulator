@@ -13,6 +13,10 @@ public class SugarSimulation extends Simulation{
         super(parameters, rows, cols);
     }
 
+    public SugarSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
+    }
+
     @Override
     public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
         super.setInitialStates(initialStates, simulationType, parameters);

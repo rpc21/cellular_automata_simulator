@@ -13,6 +13,10 @@ import java.util.List;
  * @author Dima Fayyad, Ryan Culhane, Anna Darwish
  */
 public interface Grid {
+
+    public static final String BASIC_GRID_NAME = "basic";
+    public static final String TOROIDAL_GRID_NAME = "toroidal";
+
     /**
      * Returns the number of rows in this grid.
      * @return the number of rows, or -1 if this grid is unbounded

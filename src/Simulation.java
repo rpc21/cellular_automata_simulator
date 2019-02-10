@@ -36,6 +36,11 @@ public abstract class Simulation {
         setMyGrid(new BasicGrid(10,10));
     }
 
+    public Simulation(Map<String, Double> params, Grid grid){
+        myGrid = grid;
+        myParameters = params;
+    }
+
     public Simulation(Map<String, Double> params, int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
         myParameters = params;
@@ -167,7 +172,7 @@ public abstract class Simulation {
             case WATOR_SIMULATION_NAME:
                 return generateWatorCellByState(loc, WatorState.valueOf(state));
             case FORAGE_SIMULATION_NAME:
-                return new ForagePatch(loc, ForageState.valueOf(state), (AntGrid) grid, (AntGrid) nextGrid, parameters);
+                return new ForagePatch(loc, ForageState.valueOf(state), grid, nextGrid, parameters);
             case SUGAR_SIMULATION_NAME:
                 return new SugarPatch(loc, parameters, grid, state);
         }

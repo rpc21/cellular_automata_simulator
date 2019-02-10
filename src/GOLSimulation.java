@@ -25,6 +25,9 @@ public class GOLSimulation extends Simulation {
         setMyGrid(new BasicGrid(rows, cols));
     }
 
+    public GOLSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
+    }
 
 
     /**

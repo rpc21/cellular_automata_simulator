@@ -10,6 +10,7 @@ public enum ForageState implements CellState {
     EMPTY("E", "EMPTY", Color.LIGHTGREEN),
     OBSTACLE("O", "OBSTACLE", Color.WHITE);
 
+
     private final String myShortenedName;
     private final String myFullState;
     private final Color myCellColor;

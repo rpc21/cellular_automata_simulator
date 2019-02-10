@@ -4,11 +4,11 @@ public class ForageAnt {
 
     private Location myLocation;
     private NeighborsDefinitions myDirection;
-    private AntGrid myGrid;
-    private AntGrid myNextGrid;
+    private Grid myGrid;
+    private Grid myNextGrid;
     private boolean hasFoodItem;
 
-    public ForageAnt(Location myLocation, NeighborsDefinitions myDirection, AntGrid myGrid, AntGrid myNextGrid) {
+    public ForageAnt(Location myLocation, NeighborsDefinitions myDirection, Grid myGrid, Grid myNextGrid) {
         this.myLocation = myLocation;
         this.myDirection = myDirection;
         this.myGrid = myGrid;
@@ -32,7 +32,7 @@ public class ForageAnt {
         }
         myNextLocation = selectLocationOnFood(calculateForwardLocations());
         if (myNextLocation == null){
-            myNextLocation = selectLocationOnFood(myGrid.getPossibleMoves(calculateNeighborLocations()));
+            myNextLocation = selectLocationOnFood(getPossibleMoves(calculateNeighborLocations()));
         }
         if (myNextLocation != null){
             dropHomePheromones();
@@ -95,7 +95,7 @@ public class ForageAnt {
             ((ForagePatch) myGrid.get(myLocation)).topOffPheromones(ForageState.NEST);
         }
         else {
-            Double max = Collections.max(myGrid.getNeighborHomePheromones(myLocation));
+            Double max = Collections.max(getNeighborHomePheromones(myLocation));
             double desired = max - 2.0;
             double d = desired - ((ForagePatch) myGrid.get(myLocation)).getMyHomePheromones();
             if (d > 0){
@@ -109,7 +109,7 @@ public class ForageAnt {
             ((ForagePatch) myNextGrid.get(myLocation)).topOffPheromones(ForageState.FOOD);
         }
         else {
-            Double max = Collections.max(myNextGrid.getNeighborFoodPheromones(myLocation));
+            Double max = Collections.max(getNeighborFoodPheromones(myLocation));
             double desired = max - 2.0;
             double d = desired - ((ForagePatch) myNextGrid.get(myLocation)).getMyFoodPheromones();
             if (d > 0){
@@ -140,7 +140,7 @@ public class ForageAnt {
 
     private Location getNextLocation(List<Location> neighborLocations, Comparator<Location> locationComparator) {
         PriorityQueue<Location> possibleLocations = new PriorityQueue<Location>(locationComparator);
-        possibleLocations.addAll(myGrid.getPossibleMoves(neighborLocations));
+        possibleLocations.addAll(getPossibleMoves(neighborLocations));
         if (possibleLocations.isEmpty()) {
             return null;
         } else {
@@ -204,7 +204,33 @@ public class ForageAnt {
         }
     }
 
-    public void setMyNextGrid(AntGrid myNextGrid) {
+    private List<Location> getPossibleMoves(List<Location> neighborLocations) {
+        ArrayList<Location> possibleLocations = new ArrayList<>();
+        for (Location loc : neighborLocations){
+            if (myGrid.isValid(loc) && ((ForagePatch) myGrid.get(loc)).isValidAntLocation()){
+                possibleLocations.add(loc);
+            }
+        }
+        return possibleLocations;
+    }
+
+    private List<Double> getNeighborHomePheromones(Location location){
+        List<Double> neighborHomePheromones = new ArrayList<>();
+        for (Location loc : myGrid.getValidNeighbors(location, NeighborsDefinitions.BOX_NEIGHBORS)){
+            neighborHomePheromones.add(((ForagePatch) myGrid.get(loc)).getMyHomePheromones());
+        }
+        return neighborHomePheromones;
+    }
+
+    private List<Double> getNeighborFoodPheromones(Location location){
+        List<Double> neighborFoodPheromones = new ArrayList<>();
+        for (Location loc : myGrid.getValidNeighbors(location, NeighborsDefinitions.BOX_NEIGHBORS)){
+            neighborFoodPheromones.add(((ForagePatch) myGrid.get(loc)).getMyFoodPheromones());
+        }
+        return neighborFoodPheromones;
+    }
+
+    public void setMyNextGrid(Grid myNextGrid) {
         this.myNextGrid = myNextGrid;
     }
 }

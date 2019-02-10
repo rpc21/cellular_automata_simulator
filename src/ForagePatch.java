@@ -13,7 +13,7 @@ public class ForagePatch extends Cell{
 //    private AntGrid myNextGrid;
     private int foodItems;
 
-    public ForagePatch(ForagePatch currentPatch, AntGrid nextGrid){
+    public ForagePatch(ForagePatch currentPatch, Grid nextGrid){
         super(currentPatch.getMyLocation(), currentPatch.getMyCurrentState(), currentPatch.getMyGrid(), nextGrid,
                 currentPatch.myParameters);
         myFoodPheromones = currentPatch.myFoodPheromones;
@@ -22,7 +22,7 @@ public class ForagePatch extends Cell{
         myAnts = new ArrayList<>();
     }
 
-    public ForagePatch(Location location, ForageState myCurrentState, AntGrid myCurrentGrid, AntGrid myNextGrid,
+    public ForagePatch(Location location, ForageState myCurrentState, Grid myCurrentGrid, Grid myNextGrid,
                        Map<String, Double> parameters) {
         super(location, myCurrentState, myCurrentGrid, myNextGrid, parameters);
         myAnts = new ArrayList<>();
@@ -30,7 +30,7 @@ public class ForagePatch extends Cell{
         initializePheromones();
     }
 
-    public void updateState(AntGrid nextGrid) {
+    public void updateState(Grid nextGrid) {
         for (ForageAnt ant: myAnts){
             ant.setMyNextGrid(nextGrid);
             ant.act();
@@ -40,8 +40,7 @@ public class ForagePatch extends Cell{
     private void initializeAnts() {
         if (myCurrentState == ForageState.NEST){
             for (int i = 0; i < (int) (double) myParameters.get(ForageSimulation.NUMBER_OF_ANTS); i++){
-                myAnts.add(new ForageAnt(myLocation, generateRandomDirection(), (AntGrid) myGrid,
-                        (AntGrid) myNextGrid));
+                myAnts.add(new ForageAnt(myLocation, generateRandomDirection(), myGrid, myNextGrid));
             }
         }
     }

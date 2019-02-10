@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SegregationSimulation extends Simulation{
 
@@ -21,6 +22,10 @@ public class SegregationSimulation extends Simulation{
     public SegregationSimulation(HashMap<String, Double> params, int rows, int cols){
         super(params, rows, cols);
         setMyGrid(new BasicGrid(rows, cols));
+    }
+
+    public SegregationSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
     }
 
     @Override
