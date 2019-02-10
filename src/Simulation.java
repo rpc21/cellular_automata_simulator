@@ -204,13 +204,13 @@ public abstract class Simulation {
     public void updateNeighbors(Map<String, String> styleProperties){
         for (Cell cell : myGrid.getCells()){
             cell.setMyNeighbors(NeighborsDefinitions.valueOf(styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,
-                    NeighborsDefinitions.ADJACENT.toString())));
+                    NeighborsDefinitions.ADJACENT.toString()).toUpperCase()));
         }
     }
 
     public void updateNeighbors(String neighborsString){
         for (Cell cell : myGrid.getCells()){
-            cell.setMyNeighbors(NeighborsDefinitions.valueOf(neighborsString));
+            cell.setMyNeighbors(NeighborsDefinitions.valueOf(neighborsString.toUpperCase()));
         }
     }
 
