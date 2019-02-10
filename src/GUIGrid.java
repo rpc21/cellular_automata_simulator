@@ -13,22 +13,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class GUIGrid {
-    private StackPane myStackPane = new StackPane();
+public class GUIGrid {
+    private StackPane myStackPane;
     private int myRows;
     private int myCols;
+    private GUIGridPolygon myPolygon;
     private Simulation mySim;
     private GUIGridOptions myOptions;
-
+    private GUISimulationFactory myFactory = new GUISimulationFactory();
     private LinkedList<Color> myPossibleColors;
     protected HashMap<Color,String> myMap = new HashMap<Color,String>();
     protected HashMap<String,Color> revMap;
     public static final double GUI_GRID_SIZE = 500;
 
-    public GUIGrid(int r, int c, Simulation sim, Stage stage){
+    public GUIGrid(int r, int c, Simulation sim, Stage stage, GUIGridPolygon polygon){
         myRows = r;
         myCols = c;
         mySim = sim;
+        myPolygon = polygon;
+        myStackPane = new StackPane();
         HashMap<String,Color> wrongOrderMap = new HashMap<>();
         wrongOrderMap.put("ALIVE", GOLState.ALIVE.getMyCellColor());
         wrongOrderMap.put("DEAD", GOLState.DEAD.getMyCellColor());
@@ -40,15 +43,16 @@ public abstract class GUIGrid {
     }
     public void makeGUIGrid(List<Cell> myCells){
         myStackPane.getChildren().clear();
+        myPolygon = myFactory.makeGUIPolygon(myOptions.getShape(),mySim);
         int r = 0, c = 0;
         while (r <  myRows){
             while (c < myCols){
                 final int  rCopy = r;
                 final int  cCopy = c;
                 Polygon currPolygon = new Polygon();
-                currPolygon.getPoints().addAll(getVertices(r,c));
-                currPolygon.setTranslateX((getX(r,c)));
-                currPolygon.setTranslateY(getY(r,c));
+                currPolygon.getPoints().addAll(myPolygon.getVertices(r,c));
+                currPolygon.setTranslateX((myPolygon.getX(r,c)));
+                currPolygon.setTranslateY(myPolygon.getY(r,c));
                 currPolygon.setFill(myCells.get(r * myRows + c).getMyColor());
                 currPolygon.setOnMousePressed(new EventHandler<MouseEvent>() {
                     @Override
@@ -61,7 +65,7 @@ public abstract class GUIGrid {
                         warnSimulation(rCopy,cCopy,currPolygon.getFill());
                     }
                 });
-                currPolygon.setStroke(myOptions.getStroke());
+                currPolygon.setStroke(myOptions.getStroke(currPolygon.getFill()));
                 populateGUIGrid(currPolygon,c,r);
                 c = c + 1;
             }
@@ -73,14 +77,9 @@ public abstract class GUIGrid {
     public Node getGUIStyle(){
         return myOptions.getOptionsButton();
     }
-
-    public abstract Double[] getVertices(int r, int c);
-
-    public abstract double getX(int r, int c);
-
-    public abstract double getY(int r, int c);
-
-    public abstract double getHalfWay();
+    public double getHalfway(){
+        return myPolygon.getHalfWay();
+    }
 
     public StackPane getGUIGrid(){
         return myStackPane;

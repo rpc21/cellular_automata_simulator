@@ -1,6 +1,7 @@
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,9 +18,9 @@ public class GUIGridBoundriesChooser extends GUIControlManager{
         myList.add(myChooser);
         return myList;
     }
-    public Color value(){
+    public Paint determineStroke(Paint c){
         if (myChooser.getValue().toString().equals("None"))
-            return Color.TRANSPARENT;
+            return c;
         else
             return Color.BLACK;
     }

@@ -59,13 +59,6 @@ public class GUIManager {
     }
 
 
-//    public void updateGUIGrid(HashMap<String,String> myProperties){
-//        for (int i = 0; i < numSimulations; i++) {
-//            myGUIGrids.set(i, myGUISimulationFactory.makeGUIGrid(myProperties.get("Shape"), mySimulations.get(i)));
-//            myGUIGrids.get(i).makeGUIGrid(mySimulations.get(i).getMyGrid().getCells());
-//        }
-//        managePositions();
-//    }
 
     public void updateGUIParts(){
         for (int i = 0; i < numSimulations; i ++ ){
@@ -123,7 +116,7 @@ public class GUIManager {
             gridOne.setScaleY(1.0);
             StackPane panelOne = myGUISimPanels.get(0).getGUISimulationPanel();
             gridOne.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + 100);
-            gridOne.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - myGUIGrids.get(0).getHalfWay());
+            gridOne.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - myGUIGrids.get(0).getHalfway());
             myGUIGrids.get(0).getGUIStyle().setLayoutY(gridOne.getLayoutY() + gridOne.getTranslateY() + gridOne.getBoundsInParent().getHeight() + 30);
             myGUIGrids.get(0).getGUIStyle().setLayoutX(gridOne.getLayoutX() + gridOne.getTranslateX());
             panelOne.setLayoutY(gridOne.getLayoutY());
@@ -137,7 +130,7 @@ public class GUIManager {
             gridTwo.setScaleX(0.5);
             gridTwo.setScaleY(0.5);
             gridOne.setLayoutY(CellularAutomataMain.WINDOW_SIZE/2 - GUIGrid.GUI_GRID_SIZE/2 + 100);
-            gridOne.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - 0.5 * myGUIGrids.get(0).getHalfWay());
+            gridOne.setLayoutX(CellularAutomataMain.WINDOW_SIZE/2 - 0.5 * myGUIGrids.get(0).getHalfway());
             myGUIGrids.get(0).getGUIStyle().setLayoutY(gridOne.getLayoutY() + gridOne.getTranslateY() + gridOne.getBoundsInParent().getHeight() + 30);
             myGUIGrids.get(0).getGUIStyle().setLayoutX(gridOne.getLayoutX() + gridOne.getTranslateX());
             panelOne.setLayoutY(gridOne.getLayoutY());

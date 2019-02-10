@@ -56,6 +56,7 @@ public class GUI {
         myNode = new Group();
         myManager.addSimulation(sim,myNode,s);
         render();
+        makeDefaultPanel(sim);
         makeGUIParts(sim);
     }
     private void render(){
@@ -84,6 +85,7 @@ public class GUI {
 
 
     public void resetWithParams() {
+
         myNode.getChildren().clear();
         myManager.resetSimulations(myGUIDefaultPanel);
         mySimulation = myManager.getPrimarySimulation();
@@ -103,14 +105,16 @@ public class GUI {
 
 
     private void makeGUIParts(Simulation currSim){
+        Credentials myCredentials = new Credentials("lol","hi");
+        myGUIGraph = new GUIGraph(currSim);
+        myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials(),myGUIGraph.getMyChart());
+    }
 
+    private void makeDefaultPanel(Simulation currSim){
         myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myRemoveSimFunction, myAnimation,myFrame,
                 currSim.getMyName(),currSim.getMyGrid().getNumRows(),currSim.getMyGrid().getNumCols());
         myGUIDefaultPanel.getGUIDefaultPanel().setLayoutY(myManager.getGrids().get(0).getGUIGrid().getLayoutY());
         myGUIDefaultPanel.getGUIDefaultPanel().setTranslateY(myManager.getGrids().get(0).getGUIGrid().getTranslateY());
-        Credentials myCredentials = new Credentials("lol","hi");
-        myGUIGraph = new GUIGraph(currSim);
-        myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials(),myGUIGraph.getMyChart());
     }
 
 

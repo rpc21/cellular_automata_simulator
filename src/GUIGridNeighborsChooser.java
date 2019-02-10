@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GUIGridNeighborsChooser extends GUIControlManager{
     private ChoiceBox<Object> myChooser = new ChoiceBox<>();
-    private List<Object> possibleNeighbors = Arrays.asList("Adjacent");
+    private List<Object> possibleNeighbors = Arrays.asList("Adjacent", "Corner", "Edge", "Knight");
     public GUIGridNeighborsChooser(String initialNeighbor){
         super.setUpChoiceBox(myChooser, initialNeighbor, possibleNeighbors);
     }

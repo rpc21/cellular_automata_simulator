@@ -1,15 +1,15 @@
 import javafx.stage.Stage;
 
-public class GUIRectangleGrid extends GUIGrid {
+public class GUIGridRectangle extends GUIGridPolygon {
     private double myRectangleLength;
     private double myRectangleHeight;
     private double myCols;
 
-    public GUIRectangleGrid(int r, int c, Simulation sim, Stage s) {
-        super(r, c, sim,s);
+    public GUIGridRectangle(int r, int c) {
+        super(r, c);
         myCols = c;
-        myRectangleLength = GUI_GRID_SIZE / r;
-        myRectangleHeight = GUI_GRID_SIZE / c;
+        myRectangleLength = GUIGrid.GUI_GRID_SIZE / r;
+        myRectangleHeight = GUIGrid.GUI_GRID_SIZE / c;
     }
 
     public Double[] getVertices(int r, int c) {

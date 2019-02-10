@@ -52,21 +52,28 @@ public class GUISimulationFactory {
 
     public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage s){
         GUIGrid myGrid;
+        GUIGridPolygon myPolygon = makeGUIPolygon(newShape,mySim);
+        myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),mySim, s,myPolygon);
+        return myGrid;
+
+    }
+    public GUIGridPolygon makeGUIPolygon(String newShape, Simulation mySim){
+        GUIGridPolygon myPolygon;
         switch(newShape) {
             case "Rectangle":
-                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim, s);
+                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
                 break;
             case "Triangle":
-                myGrid = new GUITriangleGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim, s);
+                myPolygon = new GUIGridTriangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
                 break;
             case "Hexagon":
-                myGrid = new GUIHexagonGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(), mySim, s);
+                myPolygon = new GUIGridHexagon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
                 break;
             default:
-                myGrid = new GUIRectangleGrid(mySim.getMyGrid().getNumRows(),mySim.getMyGrid().getNumCols(), mySim, s);
+                myPolygon = new GUIGridRectangle(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols());
                 break;
         }
-        return myGrid;
+        return myPolygon;
 
     }
 }

@@ -18,4 +18,7 @@ public class GUIGridShapeChooser extends GUIControlManager{
         myList.add(myChooser);
         return myList;
     }
+    public String getShape(){
+        return myChooser.getValue().toString();
+    }
 }

@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -55,8 +56,12 @@ public class GUIGridOptions extends GUIPanel {
         return myGUIGridOptionsButton;
     }
 
-    public Color getStroke(){
-        return myBoundryChooser.value();
+    public String getShape(){
+        return myShapeChooser.getShape();
+    }
+
+    public Paint getStroke(Paint c){
+        return myBoundryChooser.determineStroke(c);
     }
 }
 
