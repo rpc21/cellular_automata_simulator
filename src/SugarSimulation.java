@@ -4,9 +4,13 @@ public class SugarSimulation extends Simulation{
 
     public static final String SUGAR_AGENT_PERCENTAGE = "sugarAgentPercentage";
     public static final String SUGAR_GROW_BACK_RATE = "sugarGrowBackRate";
+    public static final String MAX_VISION = "maxVision";
+    public static final String MAX_METABOLISM = "maxMetabolism";
+    public static final String INIT_SUGAR = "initSugar";
     private List<SugarAgent> mySugarAgents;
+    private int sugarMax;
 
-    public static final List<String> SUGAR_DATA_FIELDS = List.of(SUGAR_AGENT_PERCENTAGE);
+    public static final List<String> SUGAR_DATA_FIELDS = List.of(SUGAR_AGENT_PERCENTAGE, SUGAR_GROW_BACK_RATE, MAX_VISION, MAX_METABOLISM, INIT_SUGAR);
 
 
     public SugarSimulation(int rows, int cols, Map<String, Double> parameters){
@@ -17,6 +21,16 @@ public class SugarSimulation extends Simulation{
     public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
         super.setInitialStates(initialStates, simulationType, parameters);
         initializeSugarAgents();
+        sugarMax = sugarMax();
+    }
+
+    private int sugarMax(){
+        int currMax = 0;
+        for (Cell cell : myGrid.getCells()){
+            currMax = Math.max(((SugarPatch) cell).getSugar(), currMax);
+        }
+        return currMax;
+
     }
 
     private void initializeSugarAgents() {

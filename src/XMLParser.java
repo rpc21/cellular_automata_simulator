@@ -35,6 +35,7 @@ public class XMLParser {
     public static final String CELL_ROWS_TAG_NAME="CellRows";
     public static final String CELL_COLUMNS_TAG_NAME="CellColumns";
     public static final String GEN_STATES_TAG_NAME="GenerateStatesBy";
+    public static final String EDGE_TYPE_TAG_NAME="edges";
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
     // keep only one documentBuilder because it is expensive to make and can reset it before parsing
@@ -103,6 +104,9 @@ public class XMLParser {
         for (var field : Simulation.DATA_FIELDS) {
             simulationParams.put(field, getTextValue(root, field));
         }
+        String edgetype = readInEdges(root);
+        simulationParams.put(EDGE_TYPE_TAG_NAME, edgetype);
+        System.out.println(simulationParams);
         return simulationParams;
     }
 
@@ -121,20 +125,21 @@ public class XMLParser {
     }
 
     private List<String> getSimulationDataFields(String simulationType){
-        if (simulationType.equals(Simulation.GOL_SIMULATION_NAME)){
-            return GOLSimulation.GOL_DATA_FIELDS;
-        }
-        else if (simulationType.equals(Simulation.SPREADING_FIRE_SIMULATION_NAME)){
-            return SpreadingFireSimulation.SPREADING_FIRE_DATA_FIELDS;
-        }
-        else if (simulationType.equals(Simulation.PERCOLATION_SIMULATION_NAME)){
-            return PercolationSimulation.PERCOLATION_DATA_FIELDS;
-        }
-        else if (simulationType.equals(Simulation.SEGREGATION_SIMULATION_NAME)){
-            return SegregationSimulation.SEGREGATION_DATA_FIELDS;
-        }
-        else if (simulationType.equals(Simulation.WATOR_SIMULATION_NAME)){
-            return WatorSimulation.WATOR_DATA_FIELDS;
+        switch (simulationType) {
+            case Simulation.GOL_SIMULATION_NAME:
+                return GOLSimulation.GOL_DATA_FIELDS;
+            case Simulation.SPREADING_FIRE_SIMULATION_NAME:
+                return SpreadingFireSimulation.SPREADING_FIRE_DATA_FIELDS;
+            case Simulation.PERCOLATION_SIMULATION_NAME:
+                return PercolationSimulation.PERCOLATION_DATA_FIELDS;
+            case Simulation.SEGREGATION_SIMULATION_NAME:
+                return SegregationSimulation.SEGREGATION_DATA_FIELDS;
+            case Simulation.WATOR_SIMULATION_NAME:
+                return WatorSimulation.WATOR_DATA_FIELDS;
+            case Simulation.SUGAR_SIMULATION_NAME:
+                return SugarSimulation.SUGAR_DATA_FIELDS;
+            case Simulation.FORAGE_SIMULATION_NAME:
+                return ForageSimulation.FORAGE_DATA_FIELDS;
         }
         return GOLSimulation.GOL_DATA_FIELDS;
     }
@@ -167,17 +172,19 @@ public class XMLParser {
             int colCount = 0;
             for (int j = 0; j < columnsList.getLength(); j++) {
                 Node state = columnsList.item(j);
-                addCellToInitialStatesArray(state, specifiedStates, i, colCount);
+                int increment = addCellToInitialStatesArray(state, specifiedStates, i, colCount);
+                colCount = colCount+increment;
             }
         }
     }
 
-    private void addCellToInitialStatesArray(Node state, String[][] specifiedStates, int i, int colCount){
+    private int addCellToInitialStatesArray(Node state, String[][] specifiedStates, int i, int colCount){
         if (CELL_COLUMNS_TAG_NAME.equals(state.getNodeName())) {
             System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
             specifiedStates[i][colCount] = state.getTextContent();
-            colCount++;
+            return 1;
         }
+        return 0;
     }
 
     // Get root element of an XML file
@@ -226,6 +233,10 @@ public class XMLParser {
         catch (ParserConfigurationException e) {
             throw new XMLException(e);
         }
+    }
+
+    private String readInEdges(Element root){
+        return getTextValue(root, EDGE_TYPE_TAG_NAME);
     }
 
 }

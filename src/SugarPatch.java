@@ -11,6 +11,7 @@ public class SugarPatch extends Cell{
     private int myGrowBackRate;
 
     public SugarPatch(Location location, Map<String, Double> parameters, Grid grid, String state){
+        myCurrentState = SugarState.PATCH;
         myLocation = location;
         myParameters = parameters;
         myGrid = grid;
@@ -60,4 +61,7 @@ public class SugarPatch extends Cell{
             return "D";
         }
     }
+
+
+
 }

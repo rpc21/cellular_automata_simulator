@@ -4,7 +4,6 @@
     <neighborsType>adjacent</neighborsType>
     <outline>no</outline>
     <stateColors>
-        <color id = "DEAD">blue</color>
-        <color id = "ALIVE">orange</color>
+        <color id = "PATCH">blue</color>
     </stateColors>
 </data>
