@@ -76,7 +76,7 @@ public class GUIManager {
         for (int i = 0; i < numSimulations; i ++ ){
             mySimulations.get(i).updateGrid();
             myGUIGrids.get(i).makeGUIGrid(mySimulations.get(i).getMyGrid().getCells());
-            mySimulations.get(i).updateNeighbors(myGUIGrids.get(i).getNeighbors());
+            //mySimulations.get(i).updateNeighbors(myGUIGrids.get(i).getNeighbors());
         }
     }
 

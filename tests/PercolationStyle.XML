@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>hexagon</shape>
+    <shape>rectangle</shape>
     <neighborsType>HEXAGON</neighborsType>
     <edges>basic</edges>
     <outline>no</outline>
