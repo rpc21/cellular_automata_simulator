@@ -58,8 +58,10 @@ public enum SegregationState implements CellState {
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i< values().length; i++){
-            arrayList.add(values()[i].myFullState);
+            if (!values()[i].myFullState.equals("TO_BE_MOVED"))
+                arrayList.add(values()[i].myFullState);
         }
+
         return arrayList;
     }
 }

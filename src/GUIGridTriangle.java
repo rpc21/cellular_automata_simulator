@@ -57,5 +57,13 @@ public class GUIGridTriangle extends GUIGridPolygon{
         p.getPoints().addAll(getVertices(r,c));
         return p;
     }
+    public Polygon getInnerPolygon(){
+        Double[] arr = {myTriangleHeight/2.0, 0.0, myTriangleHeight, myTriangleHeight/2.0,
+                myTriangleHeight/2.0, myTriangleHeight, 0.0, myTriangleHeight/2.0};
+        Polygon p = new Polygon();
+        p.getPoints().addAll(arr);
+        p.setFill(Color.DARKMAGENTA);
+        return p;
+    }
 
 }

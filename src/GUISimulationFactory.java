@@ -101,7 +101,12 @@ public class GUISimulationFactory {
     public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage stage){
         GUIGrid myGrid;
         XMLStyler myStyler = new XMLStyler("media");
+        System.out.println( "@@@"  + mySim.getMyName());
         Map<String, String> initProps = myStyler.getStylePropertiesMap(new File(makeXMLStyleName(mySim.getMyName())));
+
+        System.out.println("%%%%" + initProps.keySet().contains(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
+        System.out.println(initProps.get(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
+
         Map<String,Paint> myColors = myStyler.getColorMap(new File(makeXMLStyleName(mySim.getMyName())));
         GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
         GUIGridCell myCell = new GUIGridCell(myColors, mySim, myPolygon);
