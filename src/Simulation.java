@@ -196,7 +196,7 @@ public abstract class Simulation {
     }
 
     public List<String> getMyPossibleStates(){
-        return myGrid.getCells().get(0).getMyCurrentState().getPossibleValues();
+        return myGrid.getCells().get(0).getCurrentCellState().getPossibleValues();
     }
     public Map<String,Double> getInitialParams(){
         return myParameters;
@@ -222,5 +222,6 @@ public abstract class Simulation {
     public void setMyStyleProperties(Map<String, String> myStyleProperties) {
         this.myStyleProperties = myStyleProperties;
     }
+
 }
 

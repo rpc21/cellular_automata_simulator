@@ -112,7 +112,11 @@ public abstract class Cell {
      * Getter for the current state of the cell
      * @return the current state of the cell
      */
-    public CellState getMyCurrentState() {
+    public String getMyCurrentState() {
+        return myCurrentState.toString();
+    }
+
+    public CellState getCurrentCellState(){
         return myCurrentState;
     }
 
@@ -215,5 +219,9 @@ public abstract class Cell {
         else{
             myNeighbors = NeighborsDefinitions.FLIPPED_HEXAGON;
         }
+    }
+
+    public boolean containsAgent(){
+        return false;
     }
 }

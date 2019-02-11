@@ -9,6 +9,7 @@ public class SugarPatch extends Cell{
     private int amountOfSugar;
     private int maximumSugarCapacity;
     private int myGrowBackRate;
+    private static int maxAmountOfSugar = 0;
 
     public SugarPatch(Location location, Map<String, Double> parameters, Grid grid, String state){
         myCurrentState = SugarState.PATCH;
@@ -17,11 +18,15 @@ public class SugarPatch extends Cell{
         myGrid = grid;
         mySugarAgents = new ArrayList<>();
         maximumSugarCapacity = Integer.parseInt(state);
+        maxAmountOfSugar = Math.max(maxAmountOfSugar, maximumSugarCapacity);
         amountOfSugar = maximumSugarCapacity;
         myGrowBackRate = (int) (double) parameters.get(SugarSimulation.SUGAR_GROW_BACK_RATE);
     }
 
-
+    public String getMyCurrentState(){
+        double opacity = amountOfSugar * 1.0 / maxAmountOfSugar;
+        return "" + opacity;
+    }
 
     @Override
     public void calculateNewState() {
@@ -62,6 +67,10 @@ public class SugarPatch extends Cell{
         }
     }
 
+    @Override
+    public boolean containsAgent(){
+        return !mySugarAgents.isEmpty();
+    }
 
 
 }
