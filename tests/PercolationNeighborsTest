@@ -3,8 +3,8 @@
     <simulationType>Percolation</simulationType>
     <title>The Percolation Simulation</title>
     <author>Dima, Anna and Ryan</author>
-    <rows>5</rows>
-    <columns>5</columns>
+    <rows>11</rows>
+    <columns>11</columns>
     <edges>basic</edges>
     <GenerateStatesBy>specified</GenerateStatesBy>
     <cellStates>
@@ -14,18 +14,36 @@
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="1">
-        <CellColumns>OPEN</CellColumns>
-        <CellColumns>OPEN</CellColumns>
-        <CellColumns>OPEN</CellColumns>
-        <CellColumns>OPEN</CellColumns>
-        <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="2">
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
-            <CellColumns>PERCOLATED</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
         </CellRows>
@@ -35,8 +53,98 @@
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
         </CellRows>
         <CellRows index="4">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="5">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>PERCOLATED</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="6">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="7">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="8">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="9">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+        </CellRows>
+        <CellRows index="10">
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
+            <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>
             <CellColumns>OPEN</CellColumns>

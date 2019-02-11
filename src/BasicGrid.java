@@ -60,7 +60,12 @@ public class BasicGrid implements Grid{
      */
     @Override
     public int getNumCols() {
-        return myGrid[0].length;
+        try{
+            return myGrid[0].length;
+        } catch(ArrayIndexOutOfBoundsException e){
+            return 0;
+        }
+
     }
 
     /**
