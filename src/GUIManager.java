@@ -1,18 +1,12 @@
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static javafx.scene.control.ScrollPane.ScrollBarPolicy.ALWAYS;
 
 public class GUIManager {
     private List<Simulation> mySimulations;
@@ -62,7 +56,7 @@ public class GUIManager {
         numSimulations--;
         managePositions();
     }
-    public void updateNeighbors(){
+    private void updateNeighbors(){
         for (int i = 0; i < numSimulations; i++){
             Simulation currSim = mySimulations.get(i);
             GUIGrid currGrid = myGUIGrids.get(i);
@@ -77,7 +71,6 @@ public class GUIManager {
             mySimulations.get(i).updateNeighbors(myGUIGrids.get(i).getNeighbors());
             mySimulations.get(i).updateGrid();
             myGUIGrids.get(i).makeGUIGrid(mySimulations.get(i).getMyGrid().getCells());
-            System.out.println(myGUIGrids.get(i).getNeighbors());
         }
     }
 
