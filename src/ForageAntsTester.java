@@ -13,7 +13,7 @@ public class ForageAntsTester {
         basicParameters.put("simulationType", Simulation.FORAGE_SIMULATION_NAME);
 
         HashMap<String, Double> simulationSpecificParameters = new HashMap<>();
-        simulationSpecificParameters.put(ForageSimulation.NUMBER_OF_ANTS, 20.0D);
+        simulationSpecificParameters.put(ForageSimulation.NUMBER_OF_ANTS, 2.0D);
         simulationSpecificParameters.put(ForageSimulation.MAX_FOOD_PHEROMONES, 10.0D);
         simulationSpecificParameters.put(ForageSimulation.MAX_HOME_PHEROMONES, 10.0D);
 

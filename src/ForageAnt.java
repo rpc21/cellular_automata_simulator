@@ -139,11 +139,27 @@ public class ForageAnt {
     }
 
     private Location getNextLocation(List<Location> neighborLocations, Comparator<Location> locationComparator) {
-        PriorityQueue<Location> possibleLocations = new PriorityQueue<Location>(locationComparator);
+        PriorityQueue<Location> possibleLocations = new PriorityQueue<>(locationComparator);
         possibleLocations.addAll(getPossibleMoves(neighborLocations));
         if (possibleLocations.isEmpty()) {
             return null;
         } else {
+            return implementRandomChoice(possibleLocations);
+        }
+    }
+
+    private Location implementRandomChoice(PriorityQueue<Location> possibleLocations) {
+        double randomNumber = Math.random();
+        if (possibleLocations.size() >= 3 && randomNumber <= 0.20D){
+            possibleLocations.poll();
+            possibleLocations.poll();
+            return  possibleLocations.poll();
+        }
+        else if (possibleLocations.size() >= 2 && randomNumber <= 0.5){
+            possibleLocations.poll();
+            return possibleLocations.poll();
+        }
+        else{
             return possibleLocations.poll();
         }
     }

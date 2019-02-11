@@ -26,5 +26,5 @@
     </cellStates>
     <maxFoodPheromones>20.0</maxFoodPheromones>
     <maxHomePheromones>10.0</maxHomePheromones>
-    <numberOfAnts>10.0</numberOfAnts>
+    <numberOfAnts>3.0</numberOfAnts>
 </data>
