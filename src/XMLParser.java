@@ -181,9 +181,12 @@ public class XMLParser {
 
     private int addCellToInitialStatesArray(Node state, String[][] specifiedStates, int i, int colCount){
         if (CELL_COLUMNS_TAG_NAME.equals(state.getNodeName())) {
-            System.out.println("(" + i + "," + colCount + ") " + state.getTextContent());
-            specifiedStates[i][colCount] = state.getTextContent();
-            return 1;
+            try{
+                specifiedStates[i][colCount] = state.getTextContent();
+                return 1;
+            }catch(IndexOutOfBoundsException e){
+                throw new IndexOutOfBoundsException("Out of Bounds");
+            }
         }
         return 0;
     }
