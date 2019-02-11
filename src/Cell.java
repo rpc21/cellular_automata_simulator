@@ -181,6 +181,7 @@ public abstract class Cell {
         }
         else{
             myNeighbors = neighbors;
+            System.out.println("cell is updated to have: "+myNeighbors);
         }
     }
 

@@ -74,9 +74,10 @@ public class GUIManager {
 
     public void updateGUIParts(){
         for (int i = 0; i < numSimulations; i ++ ){
+            mySimulations.get(i).updateNeighbors(myGUIGrids.get(i).getNeighbors());
             mySimulations.get(i).updateGrid();
             myGUIGrids.get(i).makeGUIGrid(mySimulations.get(i).getMyGrid().getCells());
-            //mySimulations.get(i).updateNeighbors(myGUIGrids.get(i).getNeighbors());
+            System.out.println(myGUIGrids.get(i).getNeighbors());
         }
     }
 

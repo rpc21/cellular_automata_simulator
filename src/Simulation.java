@@ -219,7 +219,9 @@ public abstract class Simulation {
 
     public void updateNeighbors(String neighborsString){
         for (Cell cell : myGrid.getCells()){
+            System.out.println("Updating nieghbors type to : "+neighborsString.toUpperCase());
             cell.setMyNeighbors(NeighborsDefinitions.valueOf(neighborsString.toUpperCase()));
+            System.out.println(cell.myNeighbors);
         }
     }
 
