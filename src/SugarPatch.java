@@ -67,6 +67,10 @@ public class SugarPatch extends Cell{
         return amountOfSugar;
     }
 
+    public void setSugar(int newSugar){
+        amountOfSugar = newSugar;
+    }
+
     @Override
     public boolean isEmpty(){
         return mySugarAgents.isEmpty();
