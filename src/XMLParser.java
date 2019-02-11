@@ -1,3 +1,4 @@
+import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -8,10 +9,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.MissingFormatArgumentException;
-import java.util.Random;
+import java.security.InvalidParameterException;
+import java.util.*;
 
 
 /**
@@ -23,6 +22,8 @@ import java.util.Random;
  *
  * Author:
  * @author Dima Fayyad
+ *
+ * Note: Defaults set for the Game of Life simulation
  */
 public class XMLParser {
     // Readable error message that can be displayed by the GUI
@@ -58,7 +59,6 @@ public class XMLParser {
     public Simulation setSimulation(File dataFile){
         var root = getRootElement(dataFile);
         if (!isValidFile(root, Simulation.DATA_TYPE)) {
-            System.out.println(root);
             throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
         }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
@@ -85,6 +85,7 @@ public class XMLParser {
             } else if (isValidStatesArray(specifiedStates, simulationParams)){
                 mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
             } else {
+                System.out.println("Invalid state information provided. Initial states randomly set");
                 mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
             }
             mySim.setCredentials(theCredentials);
@@ -95,6 +96,10 @@ public class XMLParser {
     }
 
     private boolean isValidStatesArray(String[][] specifiedStates, HashMap<String, String> simulationParams){
+        for(String[] row:specifiedStates){
+            for(String state:row){ if(!isValidState(state, simulationParams.get("simulationType"))){
+                return false; } }
+        }
         return (Integer.parseInt(simulationParams.get("rows"))==specifiedStates.length &&
                 Integer.parseInt(simulationParams.get("rows"))==specifiedStates[0].length);
     }
@@ -118,7 +123,6 @@ public class XMLParser {
         }
         String edgetype = readInEdges(root);
         simulationParams.put(EDGE_TYPE_TAG_NAME, edgetype);
-        System.out.println(simulationParams);
         return simulationParams;
     }
 
@@ -138,7 +142,7 @@ public class XMLParser {
 
     }
 
-    private List<String> getSimulationDataFields(String simulationType){
+    private List<String> getSimulationDataFields(String simulationType) {
         switch (simulationType) {
             case Simulation.GOL_SIMULATION_NAME:
                 return GOLSimulation.GOL_DATA_FIELDS;
@@ -158,15 +162,41 @@ public class XMLParser {
         return GOLSimulation.GOL_DATA_FIELDS;
     }
 
+    private List<String> getSimulationStates(String simulationType){
+        switch (simulationType) {
+            case Simulation.GOL_SIMULATION_NAME:
+                return GOLState.DEAD.getPossibleValues();
+            case Simulation.SPREADING_FIRE_SIMULATION_NAME:
+                return SpreadingFireState.FIRE.getPossibleValues();
+            case Simulation.PERCOLATION_SIMULATION_NAME:
+                return PercolationState.OPEN.getPossibleValues();
+            case Simulation.SEGREGATION_SIMULATION_NAME:
+                return SegregationState.RED.getPossibleValues();
+            case Simulation.WATOR_SIMULATION_NAME:
+                return WatorState.EMPTY.getPossibleValues();
+            case Simulation.SUGAR_SIMULATION_NAME:
+                return SugarState.LIGHT_PATCH.getPossibleValues();
+            case Simulation.FORAGE_SIMULATION_NAME:
+                return ForageState.NEST.getPossibleValues();
+        }
+        return GOLState.DEAD.getPossibleValues();
+    }
+
     //expect states to be Strings
     private String[][] parseGrid(Element root, int rows, int cols, String simulationType){
         String[][] specifiedStates = new String[rows][cols];
         try {
             specifiedStates = parseRows(root, rows, cols);
         } catch(NullPointerException e){
-            throw new NullPointerException("No initial states specified");
+            //throw new NullPointerException("No initial states specified");
+            return specifiedStates; //Not inputting states is valid
         }
         return specifiedStates;
+    }
+
+    private boolean isValidState(String state, String simulationType){
+        List<String> states = getSimulationStates(simulationType);
+        return(states.contains(state));
     }
 
     private String[][] parseRows(Element root, int rows, int cols){
