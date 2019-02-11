@@ -17,7 +17,8 @@ public class SugarSimulation extends Simulation{
     private int sugarMax;
 
     public static final List<String> SUGAR_DATA_FIELDS = List.of(SUGAR_AGENT_PERCENTAGE, SUGAR_GROW_BACK_RATE,
-            MAX_VISION, MAX_METABOLISM, INIT_SUGAR, MAX_SUGAR);
+            MAX_VISION, MAX_METABOLISM, INIT_SUGAR, MAX_SUGAR, LIGHT_PATCH_PERCENTAGE, MEDIUM_LIGHT_PERCENTAGE, MEDIUM_PERCENTAGE,
+            MEDIUM_DARK_PERCENTAGE, DARK_PERCENTAGE);
 
 
     public SugarSimulation(int rows, int cols, Map<String, Double> parameters){
@@ -50,7 +51,7 @@ public class SugarSimulation extends Simulation{
         mySugarAgents = new ArrayList<>();
         List<Cell> allCells = myGrid.getCells();
         Collections.shuffle(allCells);
-        for (int i = 0; i < (int) (allCells.size() * myParameters.getOrDefault(SUGAR_AGENT_PERCENTAGE, 10.0D)); i++){
+        for (int i = 0; i < (int) (allCells.size() * myParameters.getOrDefault(SUGAR_AGENT_PERCENTAGE, 0.1D)); i++){
             mySugarAgents.add(new SugarAgent(allCells.get(i).getMyLocation(), myParameters, myGrid));
         }
     }
@@ -97,7 +98,7 @@ public class SugarSimulation extends Simulation{
 
     @Override
     public List<String> getPercentageFields() {
-        return List.of(SUGAR_AGENT_PERCENTAGE, LIGHT_PATCH_PERCENTAGE, MEDIUM_LIGHT_PERCENTAGE, MEDIUM_PERCENTAGE,
+        return List.of(LIGHT_PATCH_PERCENTAGE, MEDIUM_LIGHT_PERCENTAGE, MEDIUM_PERCENTAGE,
                 MEDIUM_DARK_PERCENTAGE, DARK_PERCENTAGE);
     }
 

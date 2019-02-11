@@ -12,15 +12,15 @@ public class SugarPatch extends Cell{
     private static int maxAmountOfSugar = 0;
 
     public SugarPatch(Location location, Map<String, Double> parameters, Grid grid, String state){
-        myCurrentState = SugarState.DARK_PATCH;
+        myCurrentState = SugarState.valueOf(state);
         myLocation = location;
         myParameters = parameters;
         myGrid = grid;
         mySugarAgents = new ArrayList<>();
-        maximumSugarCapacity = Integer.parseInt(state);
-        maxAmountOfSugar = Math.max(maxAmountOfSugar, maximumSugarCapacity);
+        maxAmountOfSugar = (int) (double) parameters.getOrDefault(SugarSimulation.MAX_SUGAR,25.0D);
+        maximumSugarCapacity = mapStateToSugar(state);
         amountOfSugar = maximumSugarCapacity;
-        myGrowBackRate = (int) (double) parameters.get(SugarSimulation.SUGAR_GROW_BACK_RATE);
+        myGrowBackRate = (int) (double) parameters.getOrDefault(SugarSimulation.SUGAR_GROW_BACK_RATE, 7.0D);
     }
 
     public String getMyCurrentState(){
@@ -93,6 +93,25 @@ public class SugarPatch extends Cell{
     @Override
     public boolean containsAgent(){
         return !mySugarAgents.isEmpty();
+    }
+
+    private int mapStateToSugar(String newState) {
+        if(newState.equals(SugarState.LIGHT_PATCH.toString())){
+            maximumSugarCapacity = maxAmountOfSugar / 5;
+        }
+        else if (newState.equals(SugarState.MEDIUM_LIGHT_PATCH.toString())){
+            maximumSugarCapacity = maxAmountOfSugar * 2 / 5;
+        }
+        else if (newState.equals(SugarState.MEDIUM_PATCH.toString())){
+            maximumSugarCapacity = maxAmountOfSugar * 3 / 5;
+        }
+        else if (newState.equals(SugarState.MEDIUM_DARK_PATCH.toString())){
+            maximumSugarCapacity = maxAmountOfSugar * 4 / 5;
+        }
+        else{
+            maximumSugarCapacity = maxAmountOfSugar;
+        }
+        return maximumSugarCapacity;
     }
 
 
