@@ -92,8 +92,8 @@ public class SegregationCell extends MovableCell{
         double numOther = 0;
         for(Location l:locationList){
             SegregationCell tempCell =(SegregationCell)myGrid.get(l);
-            if(tempCell.getMyCurrentState() == myCurrentState){ numSame++; }
-            else if (tempCell.getMyCurrentState() != myCurrentState && tempCell.getMyCurrentState() != SegregationState.EMPTY){
+            if(tempCell.getCurrentCellState() == myCurrentState){ numSame++; }
+            else if (tempCell.getCurrentCellState() != myCurrentState && tempCell.getCurrentCellState() != SegregationState.EMPTY){
                 numOther++;
             }
         }

@@ -33,5 +33,9 @@ public class SugarTester {
             sugarTest.getMyGrid().printGrid();
             System.out.println("====================================");
         }
+
+        for (Cell cell : sugarTest.getMyGrid().getCells()){
+            System.out.println(cell.getMyCurrentState());
+        }
     }
 }

@@ -8,13 +8,10 @@ public class ForagePatch extends Cell{
     private List<ForageAnt> myAnts;
     private double myFoodPheromones;
     private double myHomePheromones;
-//    private ForageState myCurrentState;
-//    private AntGrid myCurrentGrid;
-//    private AntGrid myNextGrid;
     private int foodItems;
 
     public ForagePatch(ForagePatch currentPatch, Grid nextGrid){
-        super(currentPatch.getMyLocation(), currentPatch.getMyCurrentState(), currentPatch.getMyGrid(), nextGrid,
+        super(currentPatch.myLocation, currentPatch.myCurrentState, currentPatch.myGrid, nextGrid,
                 currentPatch.myParameters);
         myFoodPheromones = currentPatch.myFoodPheromones;
         myHomePheromones = currentPatch.myHomePheromones;
@@ -131,5 +128,10 @@ public class ForagePatch extends Cell{
 
     public void addFoodItem(){
         foodItems += 1;
+    }
+
+    @Override
+    public boolean containsAgent(){
+        return !myAnts.isEmpty();
     }
 }

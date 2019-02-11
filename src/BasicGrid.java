@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +85,7 @@ public class BasicGrid implements Grid{
             myGrid[loc.getRow()][loc.getCol()] = obj;
         }
         else{
-            //TODO: Throw exception that tried to access an invalid location
+            throw new ArrayIndexOutOfBoundsException();
         }
     }
 
@@ -98,7 +99,7 @@ public class BasicGrid implements Grid{
             myGrid[loc.getRow()][loc.getCol()] = new WatorEmpty(loc);
         }
         else {
-            //TODO: Throw exception that tried to access an invalid location
+            throw new ArrayIndexOutOfBoundsException();
         }
     }
 
@@ -109,8 +110,12 @@ public class BasicGrid implements Grid{
      */
     @Override
     public Cell get(Location loc) {
-        return myGrid[loc.getRow()][loc.getCol()];
-        //TODO: Throw exception that tried to access an invalid location
+        if (isValid(loc)) {
+            return myGrid[loc.getRow()][loc.getCol()];
+        }
+        else{
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 
     /**
@@ -177,11 +182,12 @@ public class BasicGrid implements Grid{
      */
     @Override
     public ArrayList<Location> getEmptyAdjacentLocations(Location loc) {
-        //TODO: Throw exception that tried to access an invalid location
         ArrayList<Location> emptyAdjacentLocations = new ArrayList<>();
-        for (Location location : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)){
-            if (get(location).isEmpty()){
-                emptyAdjacentLocations.add(location);
+        if (isValid(loc)) {
+            for (Location location : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)) {
+                if (get(location).isEmpty()) {
+                    emptyAdjacentLocations.add(location);
+                }
             }
         }
         return emptyAdjacentLocations;
@@ -194,14 +200,15 @@ public class BasicGrid implements Grid{
      */
     @Override
     public ArrayList<Location> getOccupiedAdjacentLocations(Location loc) {
-        //TODO: Throw exception that tried to access an invalid location
-        ArrayList<Location> emptyAdjacentLocations = new ArrayList<>();
-        for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)){
-            if (!get(l).isEmpty()){
-                emptyAdjacentLocations.add(l);
+        ArrayList<Location> occupiedAdjacentLocations = new ArrayList<>();
+        if (isValid(loc)) {
+            for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)) {
+                if (!get(l).isEmpty()) {
+                    occupiedAdjacentLocations.add(l);
+                }
             }
         }
-        return emptyAdjacentLocations;
+        return occupiedAdjacentLocations;
     }
 
     /**
