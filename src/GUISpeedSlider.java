@@ -35,7 +35,7 @@ public class GUISpeedSlider extends GUIControlManager{
 
     private void fire(){
         mySlider.setValue(mySlider.getValue());
-        resetAnimation(mySlider.getValue() * -1/FRAMES_PER_SECOND);
+        resetAnimation(mySlider.getValue() * -1.0/FRAMES_PER_SECOND);
     }
 
     private void resetAnimation(double duration){
