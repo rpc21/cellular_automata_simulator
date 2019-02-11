@@ -9,7 +9,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 
 public class CellularAutomataMain extends Application {
-    public static final int WINDOW_SIZE = 1000;
+    public static final int WINDOW_SIZE = 750;
     private Simulation myCurrentSimulation;
 
     private static final String DEFAULT_SIMULATION = "tests/GameOfLifeTest.xml";

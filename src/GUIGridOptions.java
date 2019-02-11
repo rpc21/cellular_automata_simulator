@@ -13,14 +13,15 @@ public class GUIGridOptions extends GUIPanel {
     private Button myGUIGridOptionsButton;
     private GUIGridShapeChooser myShapeChooser;
     private GUIGridBoundriesChooser myBoundryChooser;
-    private GUIGridEdgeChooser myEdgeChooser;
     private GUIGridNeighborsChooser myNeighborsChooser;
     private VBox myBox;
+    private Scene dialogScene;
     private Map<String,String> myInitialProperties;
     public GUIGridOptions(Stage myStage, Map<String,String> initProps) {
         makeStyleButton(myStage);
         myInitialProperties = initProps;
         myBox = addButtons();
+        dialogScene = new Scene(myBox, 300, 200);
     }
 
     private void makeStyleButton(Stage primaryStage) {
@@ -33,8 +34,6 @@ public class GUIGridOptions extends GUIPanel {
                         final Stage dialog = new Stage();
                         dialog.initModality(Modality.APPLICATION_MODAL);
                         dialog.initOwner(primaryStage);
-                        myBox = addButtons();
-                        Scene dialogScene = new Scene(myBox, 300, 200);
                         dialog.setScene(dialogScene);
                         dialog.show();
                     }
@@ -43,12 +42,10 @@ public class GUIGridOptions extends GUIPanel {
     private VBox addButtons(){
         VBox myBox = new VBox(20);
         myShapeChooser = new GUIGridShapeChooser(myInitialProperties.get(XMLStyler.SHAPE_TYPE_TAG_NAME));
-        myBoundryChooser = new GUIGridBoundriesChooser(myInitialProperties.get(XMLStyler.SHAPE_TYPE_TAG_NAME));
-        myEdgeChooser = new GUIGridEdgeChooser("Finite");
+        myBoundryChooser = new GUIGridBoundriesChooser(myInitialProperties.get(XMLStyler.OUTLINE_TAG_NAME));
         myNeighborsChooser = new GUIGridNeighborsChooser(myInitialProperties.get(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
         myBox.getChildren().addAll(myShapeChooser.getDisplay());
         myBox.getChildren().addAll(myBoundryChooser.getDisplay());
-        myBox.getChildren().addAll(myEdgeChooser.getDisplay());
         myBox.getChildren().addAll(myNeighborsChooser.getDisplay());
         return myBox;
     }
