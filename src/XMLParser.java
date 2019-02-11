@@ -134,7 +134,11 @@ public class XMLParser {
             HashMap<String, Double> parameters = new HashMap<String, Double>();
             List<String> simulationFields = getSimulationDataFields(simulationType);
             for (var field : simulationFields) {
-                parameters.put(field, Double.parseDouble(getTextValue(root, field)));
+                try{
+                    parameters.put(field, Double.parseDouble(getTextValue(root, field)));
+                }catch(NumberFormatException e){
+                    parameters.put(field, 0.0D);
+                }
             }
             return parameters;
         } catch(NullPointerException e){
