@@ -1,3 +1,4 @@
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import java.util.HashMap;
@@ -33,6 +34,15 @@ public class GUIGridRectangle extends GUIGridPolygon {
 
     public double getHalfWay(){
         return myCols * myRectangleLength/2.0;
+    }
+
+    public Polygon getInnerPolygon(){
+        Double[] arr = {myRectangleLength/2.0, 0.0, myRectangleLength, myRectangleHeight/2.0,
+                myRectangleLength/2.0, myRectangleHeight, 0.0, myRectangleHeight/2.0};
+        Polygon p = new Polygon();
+        p.getPoints().addAll(arr);
+        p.setFill(Color.DARKMAGENTA);
+        return p;
     }
 
 

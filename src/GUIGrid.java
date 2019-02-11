@@ -31,8 +31,8 @@ public class GUIGrid {
                 boolean hasBorder = myOptions.getStroke();
                 String polygon = myOptions.getShape();
                 StackPane currStackPane = myGUICell.setUpCell(r,c, currState, hasBorder, polygon);
-//                if (myCells.get(r*myRows + c).hasAgent())
-//                    addAgent(currStackPane);
+                if (myCells.get(r*myRows + c).containsAgent())
+                    myGUICell.addAgent(currStackPane);
                 populateGUIGrid(currStackPane);
                 c = c + 1;
             }
@@ -53,6 +53,7 @@ public class GUIGrid {
     public double getHalfway(){
         return myGUICell.getHalfWay();
     }
+
 
 
 

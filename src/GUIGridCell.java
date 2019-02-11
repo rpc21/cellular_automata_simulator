@@ -82,4 +82,9 @@ public class GUIGridCell {
         return tempMap;
 
     }
+
+    public void addAgent(StackPane sp){
+        Polygon innerPolygon = myPolygon.getInnerPolygon();
+        sp.getChildren().addAll(innerPolygon);
+    }
 }
