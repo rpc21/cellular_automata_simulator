@@ -15,8 +15,8 @@ public class GUISimulationPanel extends GUIPanel{
     public static String DEFAULT_FONT_NAME = "Copperplate";
 
 
-    private static final int DEFAULT_CONTROL_OFFSET = 0;
-    private static final int DEFAULT_CONTROL_SPACING = 40;
+    private static final int DEFAULT_CONTROL_OFFSET = 120;
+    private static final int DEFAULT_CONTROL_SPACING = 50;
     private static final int DEFAULT_LABEL_SPACING = 20;
 
     private HashMap<String,Double> myParamsMap = new HashMap<String,Double>();
@@ -33,14 +33,11 @@ public class GUISimulationPanel extends GUIPanel{
     }
 
     protected void addToStackPane(Text t, Control c){
-        int num_vertical_spacings;
-        if (myStackPane.getChildren().size() % 2 == 0)
-            num_vertical_spacings = myStackPane.getChildren().size();
-        else
-            num_vertical_spacings = myStackPane.getChildren().size() - 1;
+        int num_vertical_spacings = (myStackPane.getChildren().size()/2) % 4;
+        int num_horiz_spacings = (int)(myStackPane.getChildren().size()/8);
         myStackPane.getChildren().addAll(t,c);
-        t.setTranslateX(DEFAULT_LABEL_SPACING);
-        c.setTranslateX(DEFAULT_LABEL_SPACING);
+        t.setTranslateX(DEFAULT_CONTROL_OFFSET * num_horiz_spacings);
+        c.setTranslateX(DEFAULT_CONTROL_OFFSET * num_horiz_spacings);
         t.setTranslateY(num_vertical_spacings * DEFAULT_CONTROL_SPACING);
         c.setTranslateY(num_vertical_spacings * DEFAULT_CONTROL_SPACING + DEFAULT_LABEL_SPACING);
     }

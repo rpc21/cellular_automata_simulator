@@ -18,85 +18,85 @@ public class CellularAutomataMain extends Application {
         launch(args);
     }
 
+//    @Override
+//    public void start(Stage stage) {
+//        //String testCase = "tests/GameOfLifeTest.xml";
+//        //String testCase = "tests/SegregationTest.xml";
+//        //String testCase = "tests/GOLTest.xml";
+//        //String testCase = "tests/GameOfLifeTest.xml";
+//        //String testCase = "tests/PercolationTest.xml";
+//        //String testCase = "tests/SpreadingFireTest.xml";
+//        //String testCase = "tests/SugarTest.xml";
+//        //String testCase = "tests/WatorTest.xml";
+//        //String testCase = "tests/ForageTest.xml";
+//        String testCase = "tests/PercolationNeighborsTest";
+//        File testFile = new File(testCase);
+////
+//        //String styleTestCase = "tests/ForageStyle.XML";
+//       //String styleTestCase = "tests/SegregationStyle.XML";
+//        //String styleTestCase = "tests/GameOfLifeStyle.XML";
+//        String styleTestCase = "tests/PercolationStyle.XML";
+//        //String styleTestCase = "tests/SpreadingFireStyle.XML";
+//        //String styleTestCase = "tests/SugarStyle.XML";
+//        //String styleTestCase = "tests/GameOfLifeStyle.XML";
+//        File styleFile = new File(styleTestCase);
+////
+//        //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
+////        File testFile = new File(DEFAULT_SIMULATION);
+//        //File styleFile = new File(DEFAULT_STYLE);
+//        var simulation = new setUpSimulation().setSimulation(testFile, styleFile);
+//        try{
+//            myCurrentSimulation = simulation;
+//        }catch (Exception e){
+//            System.out.println("Invalid Simulation or Style File");
+//        }
+//        System.out.println("Ready to Display");
+//
+//        GUI myGUI = new GUI(stage,myCurrentSimulation);
+//
+//    }
+
+    // kind of data files to look for
+    public static final String DATA_FILE_EXTENSION = "*.xml";
+
+    // NOTE: generally accepted behavior that the chooser remembers where user left it last
+    private FileChooser myChooser = makeChooser(DATA_FILE_EXTENSION);
+
+
     @Override
-    public void start(Stage stage) {
-        //String testCase = "tests/GameOfLifeTest.xml";
-        //String testCase = "tests/SegregationTest.xml";
-        //String testCase = "tests/GOLTest.xml";
-        //String testCase = "tests/GameOfLifeTest.xml";
-        //String testCase = "tests/PercolationTest.xml";
-        //String testCase = "tests/SpreadingFireTest.xml";
-        //String testCase = "tests/SugarTest.xml";
-        //String testCase = "tests/WatorTest.xml";
-        //String testCase = "tests/ForageTest.xml";
-        String testCase = "tests/PercolationNeighborsTest";
-        File testFile = new File(testCase);
-//
-        //String styleTestCase = "tests/ForageStyle.XML";
-       //String styleTestCase = "tests/SegregationStyle.XML";
-        //String styleTestCase = "tests/GameOfLifeStyle.XML";
-        String styleTestCase = "tests/PercolationStyle.XML";
-        //String styleTestCase = "tests/SpreadingFireStyle.XML";
-        //String styleTestCase = "tests/SugarStyle.XML";
-        //String styleTestCase = "tests/GameOfLifeStyle.XML";
-        File styleFile = new File(styleTestCase);
-//
-        //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
-//        File testFile = new File(DEFAULT_SIMULATION);
-        //File styleFile = new File(DEFAULT_STYLE);
-        var simulation = new setUpSimulation().setSimulation(testFile, styleFile);
-        try{
-            myCurrentSimulation = simulation;
-        }catch (Exception e){
-            System.out.println("Invalid Simulation or Style File");
+    public void start (Stage primaryStage) throws Exception {
+        var dataFile = myChooser.showOpenDialog(primaryStage);
+        var styleFile = myChooser.showOpenDialog(primaryStage);
+        while (dataFile != null) {
+            try {
+                var simulation = new setUpSimulation().setSimulation(dataFile, styleFile);
+                new Alert(AlertType.INFORMATION, simulation.toString()).showAndWait();
+                try{
+                    myCurrentSimulation = simulation;
+                    GUI myGUI = new GUI(primaryStage,myCurrentSimulation);
+                }catch (Exception e){
+                    throw new Exception("Select a valid file");
+                }
+
+            }
+            catch (XMLException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+            dataFile = myChooser.showOpenDialog(primaryStage);
         }
-        System.out.println("Ready to Display");
-
-        GUI myGUI = new GUI(stage,myCurrentSimulation);
-
+        // nothing selected, so quit the application
+        //Platform.exit();
     }
 
-//    // kind of data files to look for
-//    public static final String DATA_FILE_EXTENSION = "*.xml";
-//
-//    // NOTE: generally accepted behavior that the chooser remembers where user left it last
-//    private FileChooser myChooser = makeChooser(DATA_FILE_EXTENSION);
-//
-//
-//    @Override
-//    public void start (Stage primaryStage) throws Exception {
-//        var dataFile = myChooser.showOpenDialog(primaryStage);
-//        var styleFile = myChooser.showOpenDialog(primaryStage);
-//        while (dataFile != null) {
-//            try {
-//                var simulation = new setUpSimulation().setSimulation(dataFile, styleFile);
-//                new Alert(AlertType.INFORMATION, simulation.toString()).showAndWait();
-//                try{
-//                    myCurrentSimulation = simulation;
-//                    GUI myGUI = new GUI(primaryStage,myCurrentSimulation);
-//                }catch (Exception e){
-//                    throw new Exception("Select a valid file");
-//                }
-//
-//            }
-//            catch (XMLException e) {
-//                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
-//            }
-//            dataFile = myChooser.showOpenDialog(primaryStage);
-//        }
-//        // nothing selected, so quit the application
-//        //Platform.exit();
-//    }
-//
-//    // set some sensible defaults when the FileChooser is created
-//    private FileChooser makeChooser (String extensionAccepted) {
-//        var result = new FileChooser();
-//        result.setTitle("Open Data File");
-//        // pick a reasonable place to start searching for files
-//        result.setInitialDirectory(new File(System.getProperty("user.dir")));
-//        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Text Files", extensionAccepted));
-//        return result;
-//    }
-//
-//
+    // set some sensible defaults when the FileChooser is created
+    private FileChooser makeChooser (String extensionAccepted) {
+        var result = new FileChooser();
+        result.setTitle("Open Data File");
+        // pick a reasonable place to start searching for files
+        result.setInitialDirectory(new File(System.getProperty("user.dir")));
+        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Text Files", extensionAccepted));
+        return result;
+    }
+
+
 }

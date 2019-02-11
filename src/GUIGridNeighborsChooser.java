@@ -7,11 +7,14 @@ import java.util.List;
 
 public class GUIGridNeighborsChooser extends GUIControlManager{
     private ChoiceBox<Object> myChooser = new ChoiceBox<>();
-    private List<Object> possibleNeighbors = Arrays.asList("adjacent", "box_neighbors", "diagnol", "knight",
-            "i_formation","hexagon");
+    private List<Object> possibleNeighbors = List.of("adjacent", "box_neighbors", "diagonal", "knight", "i_formation",
+            "triangle_12_point_up", "hexagon" );
+
     public GUIGridNeighborsChooser(String initialNeighbor){
-        super.setUpChoiceBox(myChooser, initialNeighbor, possibleNeighbors);
-        myChooser.setValue("adjacent");
+        System.out.println("****" + initialNeighbor);
+        String holder = initialNeighbor.toLowerCase();
+        super.setUpChoiceBox(myChooser, holder, possibleNeighbors);
+//        myChooser.setValue("adjacent");
     }
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
