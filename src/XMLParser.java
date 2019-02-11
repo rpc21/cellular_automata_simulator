@@ -38,6 +38,8 @@ public class XMLParser {
     public static final String CELL_COLUMNS_TAG_NAME="CellColumns";
     public static final String GEN_STATES_TAG_NAME="GenerateStatesBy";
     public static final String EDGE_TYPE_TAG_NAME="edges";
+    public static final int defaultColumns = 10;
+    public static final int defaultRows = 10;
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
     // keep only one documentBuilder because it is expensive to make and can reset it before parsing
@@ -63,9 +65,19 @@ public class XMLParser {
         }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
-        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
-        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
-
+        int rows,cols;
+        try{
+            cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
+        }catch(NumberFormatException e){
+            cols = defaultColumns;
+            simulationParams.put(COLUMN_TAG_NAME, String.valueOf(cols));
+        }
+        try{
+            rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
+        }catch(NumberFormatException e){
+            rows = defaultRows;
+            simulationParams.put(ROW_TAG_NAME, String.valueOf(rows));
+        }
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);
         HashMap<String, String> theCredentials = getCredentials(root);
