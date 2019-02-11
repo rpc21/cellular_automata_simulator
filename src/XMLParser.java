@@ -100,8 +100,12 @@ public class XMLParser {
             for(String state:row){ if(!isValidState(state, simulationParams.get("simulationType"))){
                 return false; } }
         }
-        return (Integer.parseInt(simulationParams.get("rows"))==specifiedStates.length &&
-                Integer.parseInt(simulationParams.get("rows"))==specifiedStates[0].length);
+        try {
+            return (Integer.parseInt(simulationParams.get("rows")) == specifiedStates.length &&
+                    Integer.parseInt(simulationParams.get("rows")) == specifiedStates[0].length);
+        }catch(ArrayIndexOutOfBoundsException e){
+            return false;
+        }
     }
 
     private HashMap<String, String> getCredentials(Element root) {
@@ -121,8 +125,7 @@ public class XMLParser {
         for (var field : Simulation.DATA_FIELDS) {
             simulationParams.put(field, getTextValue(root, field));
         }
-        String edgetype = readInEdges(root);
-        simulationParams.put(EDGE_TYPE_TAG_NAME, edgetype);
+        simulationParams.put(EDGE_TYPE_TAG_NAME, readInEdges(root));
         return simulationParams;
     }
 
@@ -228,7 +231,9 @@ public class XMLParser {
                 specifiedStates[i][colCount] = state.getTextContent();
                 return 1;
             }catch(IndexOutOfBoundsException e){
-                throw new IndexOutOfBoundsException("Out of Bounds");
+                System.out.println("Rows and Columns set do not match initial states");
+                return 0;
+                //throw new IndexOutOfBoundsException("THIS IS OUT OF BOUNDS");
             }
         }
         return 0;
