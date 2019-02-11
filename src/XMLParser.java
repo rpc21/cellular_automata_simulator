@@ -75,17 +75,28 @@ public class XMLParser {
     }
 
     private Simulation initializeSimulation(String howToSetInitialStates, HashMap<String, String> simulationParams, HashMap<String, Double> additionalParams, String[][] specifiedStates, HashMap<String, String> theCredentials){
-        SimulationFactory mySimulationFactory = new SimulationFactory();
-        Simulation mySim;
-        if(howToSetInitialStates.equals(RANDOM_STRING)){
-            mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
-        }else if(howToSetInitialStates.equals(COMPLETELY_RANDOM_STRING)){
-            mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
-        }else{
-            mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
+        try {
+            SimulationFactory mySimulationFactory = new SimulationFactory();
+            Simulation mySim;
+            if (howToSetInitialStates.equals(RANDOM_STRING)) {
+                mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams);
+            } else if (howToSetInitialStates.equals(COMPLETELY_RANDOM_STRING)) {
+                mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
+            } else if (isValidStatesArray(specifiedStates, simulationParams)){
+                mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, specifiedStates);
+            } else {
+                mySim = mySimulationFactory.generateSimulation(simulationParams, additionalParams, COMPLETELY_RANDOM_STRING);
+            }
+            mySim.setCredentials(theCredentials);
+            return mySim;
+        }catch(NullPointerException e){
+            throw new NullPointerException("Simulation could not be initialized from the given parameters");
         }
-        mySim.setCredentials(theCredentials);
-        return mySim;
+    }
+
+    private boolean isValidStatesArray(String[][] specifiedStates, HashMap<String, String> simulationParams){
+        return (Integer.parseInt(simulationParams.get("rows"))==specifiedStates.length &&
+                Integer.parseInt(simulationParams.get("rows"))==specifiedStates[0].length);
     }
 
     private HashMap<String, String> getCredentials(Element root) {
@@ -121,6 +132,8 @@ public class XMLParser {
             return parameters;
         } catch(NullPointerException e){
             throw new NullPointerException("Field is missing");
+        } catch(NumberFormatException e){
+            throw new NumberFormatException("Double required for simulation parameters");
         }
 
     }
@@ -240,7 +253,11 @@ public class XMLParser {
     }
 
     private String readInEdges(Element root){
-        return getTextValue(root, EDGE_TYPE_TAG_NAME);
+        try {
+            return getTextValue(root, EDGE_TYPE_TAG_NAME);
+        }catch(NullPointerException e){
+            throw new NullPointerException("No Edge Type specified");
+        }
     }
 
 }

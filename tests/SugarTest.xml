@@ -6,6 +6,7 @@
     <rows>3</rows>
     <columns>3</columns>
     <edges>basic</edges>
+    <maxSugar>25</maxSugar>
     <GenerateStatesBy>seebelow</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
