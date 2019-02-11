@@ -53,6 +53,8 @@ public class GUIGridOptions extends GUIPanel {
         return myBox;
     }
     public String getNeighbors(){ return myNeighborsChooser.getNeighbors();}
+
+
     public Button getOptionsButton(){
         return myGUIGridOptionsButton;
     }

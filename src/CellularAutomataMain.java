@@ -56,7 +56,7 @@ public class CellularAutomataMain extends Application {
 
     }
 
-//    // kind of data files to look for
+    // kind of data files to look for
 //    public static final String DATA_FILE_EXTENSION = "*.xml";
 //
 //    // NOTE: generally accepted behavior that the chooser remembers where user left it last
@@ -97,6 +97,6 @@ public class CellularAutomataMain extends Application {
 //        result.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Text Files", extensionAccepted));
 //        return result;
 //    }
-//
-//
+
+
 }

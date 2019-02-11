@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GUI {
     private Stage myStage;
@@ -42,19 +43,17 @@ public class GUI {
         }
     };
 
-
-
     public static final int STAGE_SIZE = 1000;
     private static final String STAGE_TITLE = "Cellular Automata Simulation";
     private static final Color BACKGROUND_COLOR = Color.LIGHTSKYBLUE;
     private static final int FRAMES_PER_SECOND = 60;
     private static final double MILLISECOND_DELAY = 10000 / FRAMES_PER_SECOND;
 
-    public GUI(Stage s, Simulation sim){
-        myStage = s;
+    public GUI(Stage stage, Simulation sim){
+        myStage = stage;
         mySimulation = sim;
         myNode = new Group();
-        myManager.addSimulation(sim,myNode,s);
+        myManager.addSimulation(sim,myNode,stage);
         render();
         makeDefaultPanel(sim);
         makeGUIParts(sim);
@@ -73,7 +72,7 @@ public class GUI {
     public void step(){
         myManager.updateGUIParts();
         myGUIGraph.updateChart(mySimulation.getMyGrid().getCells());
-        }
+    }
 
     private void addSimulation(){
         myManager.addSimulation(mySimulation,myNode,myStage);
@@ -82,7 +81,6 @@ public class GUI {
     private void removeSimulation(){
         myManager.removeSimulation(myNode);
     }
-
 
 
     public void resetWithParams() {
@@ -97,10 +95,6 @@ public class GUI {
         }
         for (GUISimulationPanel simPanel : myManager.getPanels())
             myNode.getChildren().add(simPanel.getGUISimulationPanel());
-    }
-
-    public void setParameters(){
-        //neighbors,shape
     }
 
 

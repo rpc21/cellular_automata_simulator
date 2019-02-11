@@ -13,8 +13,8 @@ public class GUISegregationPanel extends GUISimulationPanel {
     private Spinner<Integer> myEmptySpinner;
     private Text myEmpty;
     private HashMap<String,Double>  myMap = new HashMap<String,Double>();
-    int redCurrRatio;
-    int blueCurrRatio;
+//    private int redCurrRatio;
+//    int blueCurrRatio;
 
     public GUISegregationPanel(Simulation mySim){
         super(mySim);
@@ -26,7 +26,7 @@ public class GUISegregationPanel extends GUISimulationPanel {
         myRaceTwoSpinner = setUpSpinner(0,100,(int)(myMap.get(SegregationSimulation.BLUE_PERCENTAGE)*100.0));
         myEmptySpinner = setUpSpinner(0,100,(int)(myMap.get(SegregationSimulation.EMPTY_PERCENTAGE)*100.0));
 
-        toFraction(myMap.get(SegregationSimulation.RED_PERCENTAGE)/myMap.get(SegregationSimulation.BLUE_PERCENTAGE));
+        //toFraction(myMap.get(SegregationSimulation.RED_PERCENTAGE)/myMap.get(SegregationSimulation.BLUE_PERCENTAGE));
 
         myThresh = setUpLabel("Threshold %");
         myEmpty = setUpLabel("Empty %");
@@ -41,26 +41,26 @@ public class GUISegregationPanel extends GUISimulationPanel {
 
     }
 
-    private void toFraction(double x) {
-        final double eps = 0.01;
-        int pfound = (int) Math.round(x);
-        int qfound = 1;
-        double errorfound = Math.abs(x - pfound);
-        for (int q = 2; q < 100 && errorfound > eps; ++q) {
-            int p = (int) (x * q);
-            for (int i = 0; i < 2; ++i) { // below and above x
-                double error = Math.abs(x - ((double) p / q));
-                if (error < errorfound) {
-                    pfound = p;
-                    qfound = q;
-                    errorfound = error;
-                }
-                ++p;
-            }
-        }
-        redCurrRatio = pfound;
-        blueCurrRatio = qfound;
-    }
+//    private void toFraction(double x) {
+//        final double eps = 0.01;
+//        int pfound = (int) Math.round(x);
+//        int qfound = 1;
+//        double errorfound = Math.abs(x - pfound);
+//        for (int q = 2; q < 100 && errorfound > eps; ++q) {
+//            int p = (int) (x * q);
+//            for (int i = 0; i < 2; ++i) { // below and above x
+//                double error = Math.abs(x - ((double) p / q));
+//                if (error < errorfound) {
+//                    pfound = p;
+//                    qfound = q;
+//                    errorfound = error;
+//                }
+//                ++p;
+//            }
+//        }
+//        redCurrRatio = pfound;
+//        blueCurrRatio = qfound;
+//    }
 
     public HashMap<String,Double> getMyParams(){
         myMap.put(SegregationSimulation.THRESHOLD,1.0*myThresholdSpinner.getValue()/100);

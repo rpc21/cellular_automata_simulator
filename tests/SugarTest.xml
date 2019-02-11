@@ -3,10 +3,11 @@
     <simulationType>Sugar</simulationType>
     <title>The Sugar Simulation</title>
     <author>Dima, Anna and Ryan</author>
-    <rows>3</rows>
-    <columns>3</columns>
+    <rows>99</rows>
+    <columns>99</columns>
     <edges>basic</edges>
-    <GenerateStatesBy>seebelow</GenerateStatesBy>
+    <maxSugar>25.0</maxSugar>
+    <GenerateStatesBy>randomFromPercentages</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
             <CellColumns>3</CellColumns>
@@ -25,8 +26,13 @@
         </CellRows>
     </cellStates>
     <sugarAgentPercentage>0.5</sugarAgentPercentage>
-    <sugarGrowBackRate>1.0</sugarGrowBackRate>
+    <sugarGrowBackRate>0.0</sugarGrowBackRate>
     <maxVision>2.0</maxVision>
     <maxMetabolism>7.0</maxMetabolism>
     <initSugar>2.0</initSugar>
+    <light_patchPercentage>0.1</light_patchPercentage>
+    <medium_light_patchPercentage>0.1</medium_light_patchPercentage>
+    <medium_patchPercentage>0.1</medium_patchPercentage>
+    <medium_dark_patchPercentage>0.1</medium_dark_patchPercentage>
+    <dark_patchPercentage>0.1</dark_patchPercentage>
 </data>

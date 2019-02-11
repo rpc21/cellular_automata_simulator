@@ -196,7 +196,11 @@ public abstract class Simulation {
     }
 
     public List<String> getMyPossibleStates(){
-        return myGrid.getCells().get(0).getCurrentCellState().getPossibleValues();
+        try{
+            return myGrid.getCells().get(0).getCurrentCellState().getPossibleValues();
+        }catch(IndexOutOfBoundsException e){
+            throw new IndexOutOfBoundsException("No states");
+        }
     }
     public Map<String,Double> getInitialParams(){
         return myParameters;

@@ -11,8 +11,8 @@ public class SimulationFactory {
         return mySimulation;
     }
 
-    public Simulation generateSimulation(HashMap<String, String> basicParameters,
-                                          HashMap<String, Double> simulationSpecificParameters){
+    public Simulation generateSimulation(Map<String, String> basicParameters,
+                                          Map<String, Double> simulationSpecificParameters){
         for (String a: basicParameters.keySet())
             System.out.println(a + basicParameters.get(a));
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
@@ -27,12 +27,11 @@ public class SimulationFactory {
      * Credentials also passed in
      * @param basicParameters
      * @param simulationSpecificParameters
-     * @param InitialStatesType
      * @param credentials
      * @return
      */
-    public Simulation generateSimulation(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters, String InitialStatesType,Map<String, String> credentials){
-        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters, InitialStatesType);
+    public Simulation generateSimulation(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters, Map<String, String> credentials){
+        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters);
         myNewSimulation.setCredentials(credentials);
         return myNewSimulation;
     }
@@ -62,6 +61,11 @@ public class SimulationFactory {
                         key.split("P")[0].toUpperCase();
                 index++;
             }
+        }
+        while(index<gridLocations.size()){
+            initialStates[gridLocations.get(index).getRow()][gridLocations.get(index).getCol()] =
+                    mySimulation.getPercentageFields().get(0).split("P")[0].toUpperCase();
+            index++;
         }
         return  initialStates;
 
@@ -122,10 +126,15 @@ public class SimulationFactory {
     private void generateRandomStatePercentages(Simulation mySimulation, Map<String, Double> additionalParams){
         double maxPercentValue=1;
         double minPercentValue=0;
-        for (String key : mySimulation.getPercentageFields()){
+        for(int i=0;i<mySimulation.getPercentageFields().size()-1;i++){
+            String key = mySimulation.getPercentageFields().get(i);
             double percentState = getRandomInRange(minPercentValue, maxPercentValue);
             additionalParams.put(key, percentState);
             maxPercentValue = maxPercentValue - percentState;
         }
+        String key = mySimulation.getPercentageFields().get(mySimulation.getPercentageFields().size()-1);
+        double percentState = maxPercentValue;
+        additionalParams.put(key, percentState);
+
     }
 }
