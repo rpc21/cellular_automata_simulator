@@ -7,6 +7,10 @@ public class ForageSimulation extends Simulation {
     public static final String MAX_FOOD_PHEROMONES = "maxFoodPheromones";
     public static final String MAX_HOME_PHEROMONES = "maxHomePheromones";
     public static final String NUMBER_OF_ANTS = "numberOfAnts";
+    public static final String FOOD_PERCENTAGE = "foodPercentage";
+    public static final String NEST_PERCENTAGE = "nestPercentage";
+    public static final String EMPTY_PERCENTAGE = "emptyPercentage";
+    public static final String OBSTACLE_PERCENTAGE = "obstaclePercentage";
     public static final List<String> FORAGE_DATA_FIELDS = List.of(MAX_FOOD_PHEROMONES, MAX_HOME_PHEROMONES,
             NUMBER_OF_ANTS);
 
@@ -47,7 +51,7 @@ public class ForageSimulation extends Simulation {
 
     @Override
     public List<String> getPercentageFields() {
-        return null;
+        return List.of(FOOD_PERCENTAGE,NEST_PERCENTAGE,OBSTACLE_PERCENTAGE,EMPTY_PERCENTAGE);
     }
 
     @Override

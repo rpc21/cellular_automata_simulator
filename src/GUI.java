@@ -3,6 +3,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.HashMap;
@@ -67,6 +68,10 @@ public class GUI {
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(myFrame);
+        Scale scale = new Scale(0.60,0.60);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        myScene.getRoot().getTransforms().setAll(scale);
     }
 
     public void step(){
