@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum SugarState implements CellState{
-    LIGHT_PATCH(),
-    MEDIUM_LIGHT_PATCH(),
-    MEDIUM_PATCH(),
-    MEDIUM_DARK_PATCH(),
-    DARK_PATCH();
-
+    LIGHT_PATCH("LP", "LIGHT_PATCH", Color.WHITE),
+    MEDIUM_LIGHT_PATCH("ML", "MEDIUM_LIGHT_PATCH", Color.LIGHTGREEN),
+    MEDIUM_PATCH("MP", "MEDIUM_PATCH", Color.GREEN),
+    MEDIUM_DARK_PATCH("MD", "MEDIUM_DARK_PATCH", Color.DARKGREEN),
+    DARK_PATCH("DP", "DARK_PATCH", Color.BLACK);
 
     private final String myShortenedName;
     private final String myFullState;

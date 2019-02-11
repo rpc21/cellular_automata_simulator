@@ -12,7 +12,7 @@ public class SugarPatch extends Cell{
     private static int maxAmountOfSugar = 0;
 
     public SugarPatch(Location location, Map<String, Double> parameters, Grid grid, String state){
-        myCurrentState = SugarState.PATCH;
+        myCurrentState = SugarState.DARK_PATCH;
         myLocation = location;
         myParameters = parameters;
         myGrid = grid;
@@ -24,8 +24,7 @@ public class SugarPatch extends Cell{
     }
 
     public String getMyCurrentState(){
-        double opacity = amountOfSugar * 1.0 / maxAmountOfSugar;
-        return "" + opacity;
+        return myCurrentState.toString();
     }
 
     @Override
@@ -34,6 +33,26 @@ public class SugarPatch extends Cell{
             mySugarAgents.remove(0);
         }
         amountOfSugar = Math.min(amountOfSugar + myGrowBackRate, maximumSugarCapacity);
+        myCurrentState = assignStateBasedOnSugar();
+    }
+
+    private CellState assignStateBasedOnSugar() {
+        double opacity = amountOfSugar * 1.0 / maxAmountOfSugar;
+        if (opacity <= 0.20D){
+            return SugarState.LIGHT_PATCH;
+        }
+        else if(opacity <= 0.40D){
+            return SugarState.MEDIUM_LIGHT_PATCH;
+        }
+        else if (opacity <= 0.60D){
+            return SugarState.MEDIUM_PATCH;
+        }
+        else if (opacity <= 0.80D){
+            return SugarState.MEDIUM_DARK_PATCH;
+        }
+        else{
+            return SugarState.DARK_PATCH;
+        }
     }
 
     public void addSugarAgent(SugarAgent agent){

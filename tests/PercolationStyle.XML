@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>triangle</shape>
-    <neighborsType>TRIANGLE_12_POINT_UP</neighborsType>
+    <shape>rectangle</shape>
+    <neighborsType>adjacent</neighborsType>
     <edges>basic</edges>
     <outline>no</outline>
     <stateColors>
