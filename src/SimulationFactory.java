@@ -11,8 +11,8 @@ public class SimulationFactory {
         return mySimulation;
     }
 
-    public Simulation generateSimulation(HashMap<String, String> basicParameters,
-                                          HashMap<String, Double> simulationSpecificParameters){
+    public Simulation generateSimulation(Map<String, String> basicParameters,
+                                          Map<String, Double> simulationSpecificParameters){
         for (String a: basicParameters.keySet())
             System.out.println(a + basicParameters.get(a));
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
@@ -27,12 +27,11 @@ public class SimulationFactory {
      * Credentials also passed in
      * @param basicParameters
      * @param simulationSpecificParameters
-     * @param InitialStatesType
      * @param credentials
      * @return
      */
-    public Simulation generateSimulation(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters, String InitialStatesType,Map<String, String> credentials){
-        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters, InitialStatesType);
+    public Simulation generateSimulation(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters, Map<String, String> credentials){
+        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters);
         myNewSimulation.setCredentials(credentials);
         return myNewSimulation;
     }
