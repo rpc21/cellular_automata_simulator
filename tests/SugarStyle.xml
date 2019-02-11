@@ -5,6 +5,10 @@
     <outline>no</outline>
     <edges>basic</edges>
     <stateColors>
-        <color id = "PATCH">BLUE</color>
+        <color id = "LIGHT_PATCH">WHITE</color>
+        <color id = "MEDIUM_LIGHT_PATCH">LIGHTGREEN</color>
+        <color id = "MEDIUM_PATCH">GREEN</color>
+        <color id = "MEDIUM_DARK_PATCH">DARKGREEN</color>
+        <color id = "DARK_PATCH">BLACK</color>
     </stateColors>
 </data>
