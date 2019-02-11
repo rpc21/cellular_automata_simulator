@@ -62,7 +62,6 @@ public class SimulationFactory {
                 index++;
             }
         }
-        //TODO: Make sure we process the entire list, add default cells to the simulations
         return  initialStates;
 
     }
