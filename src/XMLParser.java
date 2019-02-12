@@ -60,30 +60,40 @@ public class XMLParser {
      */
     public Simulation setSimulation(File dataFile){
         var root = getRootElement(dataFile);
-        if (!isValidFile(root, Simulation.DATA_TYPE)) {
-            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
-        }
+        if (!isValidFile(root, Simulation.DATA_TYPE)) { throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE); }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
-        int rows,cols;
-        try{
-            cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
-        }catch(NumberFormatException e){
-            cols = defaultColumns;
-            simulationParams.put(COLUMN_TAG_NAME, String.valueOf(cols));
-        }
-        try{
-            rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
-        }catch(NumberFormatException e){
-            rows = defaultRows;
-            simulationParams.put(ROW_TAG_NAME, String.valueOf(rows));
-        }
+        validateRowsAndColumns(simulationParams);
+        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
+        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);
         HashMap<String, String> theCredentials = getCredentials(root);
         String howToSetInitialStates = getTextValue(root, GEN_STATES_TAG_NAME);
 
         return initializeSimulation(howToSetInitialStates, simulationParams, additionalParams, specifiedStates, theCredentials);
+    }
+
+    private void validateRowsAndColumns(HashMap<String, String> simulationParams){
+        int rows,cols;
+        try{
+            if(Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME))<defaultColumns){
+                cols = defaultColumns;
+                simulationParams.put(COLUMN_TAG_NAME, String.valueOf(cols));
+            }
+        }catch(NumberFormatException e){
+            cols = defaultColumns;
+            simulationParams.put(COLUMN_TAG_NAME, String.valueOf(cols));
+        }
+        try{
+            if(Integer.parseInt(simulationParams.get(ROW_TAG_NAME))<defaultRows){
+                rows = defaultRows;
+                simulationParams.put(ROW_TAG_NAME, String.valueOf(rows));
+            }
+        }catch(NumberFormatException e){
+            rows = defaultRows;
+            simulationParams.put(ROW_TAG_NAME, String.valueOf(rows));
+        }
     }
 
     private Simulation initializeSimulation(String howToSetInitialStates, HashMap<String, String> simulationParams, HashMap<String, Double> additionalParams, String[][] specifiedStates, HashMap<String, String> theCredentials){
