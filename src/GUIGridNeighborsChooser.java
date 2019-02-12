@@ -11,10 +11,7 @@ public class GUIGridNeighborsChooser extends GUIControlManager{
             "TRIANGLE_12_POINT_UP", "HEXAGON" );
 
     public GUIGridNeighborsChooser(String initialNeighbor){
-        System.out.println("****" + initialNeighbor);
-        String holder = initialNeighbor.toLowerCase();
-        super.setUpChoiceBox(myChooser, holder, possibleNeighbors);
-//        myChooser.setValue("adjacent");
+        super.setUpChoiceBox(myChooser, initialNeighbor, possibleNeighbors);
     }
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();

@@ -19,7 +19,7 @@ public class GUIDefaultPanel extends GUIPanel {
     GUISimulationNameChooser mySimChooser;
     GUIResetButton myResetButton;
 
-    private static final double STACKPANE_OFFSET = GUI.STAGE_SIZE/2 + GUIGrid.GUI_GRID_SIZE/2;
+    private static final double STACKPANE_OFFSET = GUI.STAGE_SIZE/2 + GUIGrid.GUI_GRID_SIZE/2 + 30;
     private static final int DEFAULT_CONTROL_OFFSET = 10;
     public static final int DEFAULT_CONTROL_SPACING = 40;
 

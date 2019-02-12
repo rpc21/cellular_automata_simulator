@@ -44,7 +44,7 @@ public class GUI {
         }
     };
 
-    public static final int STAGE_SIZE = 1000;
+    public static final int STAGE_SIZE = 750;
     private static final String STAGE_TITLE = "Cellular Automata Simulation";
     private static final Color BACKGROUND_COLOR = Color.LIGHTSKYBLUE;
     private static final int FRAMES_PER_SECOND = 60;
@@ -68,7 +68,7 @@ public class GUI {
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(myFrame);
-        Scale scale = new Scale(0.60,0.60);
+        Scale scale = new Scale(0.75, 0.75);
         scale.setPivotX(0);
         scale.setPivotY(0);
         myScene.getRoot().getTransforms().setAll(scale);
@@ -104,8 +104,8 @@ public class GUI {
 
 
     private void makeGUIParts(Simulation currSim){
-        Credentials myCredentials = new Credentials("lol",
-                "hi");
+        Credentials myCredentials = new Credentials(mySimulation.getCredentials().get(Simulation.TITLE_CREDENTIAL),
+                mySimulation.getCredentials().get(Simulation.AUTHOR_CREDENTIAL));
         myGUIGraph = new GUIGraph(currSim);
         myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials(),myGUIGraph.getMyChart());
     }
@@ -113,6 +113,8 @@ public class GUI {
     private void makeDefaultPanel(Simulation currSim){
         myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myRemoveSimFunction, myAnimation,myFrame,
                 currSim.getMyName(),currSim.getMyGrid().getNumRows(),currSim.getMyGrid().getNumCols());
+        myGUIDefaultPanel.getGUIDefaultPanel().setLayoutX(myManager.getGrids().get(0).getGUIGrid().getLayoutX() +
+                myManager.getGrids().get(0).getGUIGrid().getTranslateX() + GUIGrid.GUI_GRID_SIZE + 40);
         myGUIDefaultPanel.getGUIDefaultPanel().setLayoutY(myManager.getGrids().get(0).getGUIGrid().getLayoutY());
         myGUIDefaultPanel.getGUIDefaultPanel().setTranslateY(myManager.getGrids().get(0).getGUIGrid().getTranslateY());
     }
