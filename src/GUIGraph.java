@@ -11,11 +11,14 @@ public class GUIGraph {
     private HashMap<String,XYChart.Series> myMap = new HashMap<>();
     private LineChart<Number,Number> myChart;
     private int currStep = 0;
+    private static final int CHART_HEIGHT = 280;
+    private static final int MAX_STEPS = 50;
+    private static final double Y_STEP = 0.01;
 
     public GUIGraph(Simulation mySim){
-        NumberAxis xAxis = new NumberAxis(0,50,1);
+        NumberAxis xAxis = new NumberAxis(0,MAX_STEPS,1);
         xAxis.setLabel("Cycle");
-        NumberAxis yAxis = new NumberAxis(0,1,0.01);
+        NumberAxis yAxis = new NumberAxis(0,1,Y_STEP);
         yAxis.setLabel("Cell Percentage");
 
         myChart = new LineChart<Number,Number>(xAxis,yAxis);
@@ -30,7 +33,7 @@ public class GUIGraph {
     }
 
     public LineChart<Number,Number> getMyChart(){
-        myChart.setMaxHeight(280);
+        myChart.setMaxHeight(CHART_HEIGHT);
         myChart.setMinWidth(GUI.STAGE_SIZE * 1.0/GUI.SCALE);
         return myChart;
     }

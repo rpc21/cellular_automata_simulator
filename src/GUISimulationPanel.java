@@ -14,17 +14,20 @@ import java.util.List;
 public class GUISimulationPanel extends GUIPanel{
     public static String DEFAULT_FONT_NAME = "Copperplate";
 
-
     private static final int DEFAULT_CONTROL_OFFSET = 120;
     private static final int DEFAULT_CONTROL_SPACING = 50;
     private static final int DEFAULT_LABEL_SPACING = 20;
 
+    private static final int FONT_SIZE = 15;
+    private static final int NUM_NODES_PER_COL = 8;
+    private static final int NUM_CONTROL_GROUPS_PER_COL = 4;
+
     private HashMap<String,Double> myParamsMap = new HashMap<String,Double>();
     private StackPane myStackPane;
-    private Simulation mySimulation;
+    private String mySimulationName;
 
-    public GUISimulationPanel(Simulation mySim){
-        mySimulation = mySim;
+    public GUISimulationPanel(String mySimName){
+        mySimulationName = mySimName;
         myStackPane = new StackPane();
 
     }
@@ -33,8 +36,8 @@ public class GUISimulationPanel extends GUIPanel{
     }
 
     protected void addToStackPane(Text t, Control c){
-        int num_vertical_spacings = (myStackPane.getChildren().size()/2) % 4;
-        int num_horiz_spacings = (int)(myStackPane.getChildren().size()/8);
+        int num_vertical_spacings = (myStackPane.getChildren().size()/2) % NUM_CONTROL_GROUPS_PER_COL;
+        int num_horiz_spacings = (int)(myStackPane.getChildren().size()/NUM_NODES_PER_COL);
         myStackPane.getChildren().addAll(t,c);
         t.setTranslateX(DEFAULT_CONTROL_OFFSET * num_horiz_spacings);
         c.setTranslateX(DEFAULT_CONTROL_OFFSET * num_horiz_spacings);
@@ -45,19 +48,13 @@ public class GUISimulationPanel extends GUIPanel{
     protected Text setUpLabel(String text){
         Text myText = new Text(text);
         myText.setTextAlignment(TextAlignment.LEFT);
-        myText.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, 15));
+        myText.setFont(Font.font(GUISimulationPanel.DEFAULT_FONT_NAME, FONT_SIZE));
         return myText;
     }
 
-    protected double getCurrentCount(Color col){
-        int count = 0;
-        for (Cell c: mySimulation.getMyGrid().getCells())
-            if (c.getMyColor().equals(col))
-                count++;
-        return 1.0 * count/mySimulation.getMyGrid().getCells().size();
-    }
+
     public String getName(){
-        return mySimulation.getMyName();
+        return mySimulationName;
     }
 
 

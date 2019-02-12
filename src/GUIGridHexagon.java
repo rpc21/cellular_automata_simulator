@@ -26,7 +26,8 @@ public class GUIGridHexagon extends GUIGridPolygon{
                             myApothemLength,       myApothemLength * 4 / Math.sqrt(3),
                             0.0,                   Math.sqrt(3) * myApothemLength,
                             0.0,                   myApothemLength / Math.sqrt(3)};
-    };
+    }
+
 
     public double getX(int r, int c){
         if (r % 2 == 1)
@@ -43,13 +44,10 @@ public class GUIGridHexagon extends GUIGridPolygon{
         return myCols * myApothemLength + myApothemLength/2.0;
     }
 
-    public Polygon getInnerPolygon(){
+    protected Double[] getInnerVertices(){
         Double[] arr = {myApothemLength/2.0, 0.0, myApothemLength, myApothemLength/2.0,
                 myApothemLength/2.0, myApothemLength, 0.0, myApothemLength/2.0};
-        Polygon p = new Polygon();
-        p.getPoints().addAll(arr);
-        p.setFill(Color.DARKMAGENTA);
-        return p;
+        return arr;
     }
 
 }

@@ -2,7 +2,7 @@
 <data media="style">
     <shape>hexagon</shape>
     <neighborsType>HEXAGON</neighborsType>
-    <edges>basic</edges>
+    <edges>toroidal</edges>
     <outline>no</outline>
     <stateColors>
         <color id = "OPEN">WHITE</color>

@@ -1,12 +1,12 @@
-import javafx.scene.paint.Color;
+
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GUISimulationFactory {
+    private static final String STYLER_NAME = "media";
     public String makeXMLFileName(String newSim){
         String testCase;
         switch(newSim){
@@ -37,7 +37,7 @@ public class GUISimulationFactory {
         }
         return testCase;
     }
-    public String makeXMLStyleName(String newSim){
+    private String makeXMLStyleName(String newSim){
         String testCase;
         switch(newSim){
             case Simulation.GOL_SIMULATION_NAME:
@@ -71,44 +71,41 @@ public class GUISimulationFactory {
         GUISimulationPanel mySimPanel;
         switch(newSim){
             case Simulation.GOL_SIMULATION_NAME:
-                mySimPanel = new GUIGameOfLifePanel(mySim);
+                mySimPanel = new GUIGameOfLifePanel(newSim,mySim.getInitialParams());
                 break;
             case Simulation.SPREADING_FIRE_SIMULATION_NAME:
-                mySimPanel = new GUISpreadingFirePanel(mySim);
+                mySimPanel = new GUISpreadingFirePanel(newSim,mySim.getInitialParams());
                 break;
             case Simulation.PERCOLATION_SIMULATION_NAME:
-                mySimPanel = new GUIPercolationPanel(mySim);
+                mySimPanel = new GUIPercolationPanel(newSim,mySim.getInitialParams());
                 break;
             case Simulation.SEGREGATION_SIMULATION_NAME:
-                mySimPanel = new GUISegregationPanel(mySim);
+                mySimPanel = new GUISegregationPanel(newSim,mySim.getInitialParams());
                 break;
             case Simulation.WATOR_SIMULATION_NAME:
-                mySimPanel = new GUIWatorPanel(mySim);
+                mySimPanel = new GUIWatorPanel(newSim,mySim.getInitialParams());
                 break;
             case Simulation.FORAGE_SIMULATION_NAME:
-                mySimPanel = new GUIBlankPanel(mySim);
+                mySimPanel = new GUIBlankPanel(newSim,mySim.getInitialParams());
                 break;
             case Simulation.SUGAR_SIMULATION_NAME:
-                mySimPanel = new GUIBlankPanel(mySim);
+                mySimPanel = new GUIBlankPanel(newSim,mySim.getInitialParams());
                 break;
             default:
-                mySimPanel = new GUIGameOfLifePanel(mySim);
+                mySimPanel = new GUIGameOfLifePanel(newSim,mySim.getInitialParams());
                 break;
         }
         return mySimPanel;
     }
 
-    public GUIGrid makeGUIGrid(String newShape, Simulation mySim, Stage stage){
+    public GUIGrid makeGUIGrid(Simulation mySim, Stage stage){
         GUIGrid myGrid;
-        XMLStyler myStyler = new XMLStyler("media");
-        System.out.println( "@@@"  + mySim.getMyName());
+        XMLStyler myStyler = new XMLStyler(STYLER_NAME);
+
         Map<String, String> initProps = myStyler.getStylePropertiesMap(new File(makeXMLStyleName(mySim.getMyName())));
-
-        System.out.println("%%%%" + initProps.keySet().contains(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
-        System.out.println(initProps.get(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
-
         Map<String,Paint> myColors = myStyler.getColorMap(new File(makeXMLStyleName(mySim.getMyName())));
-        GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
+
+        GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),initProps.get(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
         GUIGridCell myCell = new GUIGridCell(myColors, mySim, myPolygon);
         myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell,initProps);
         return myGrid;
