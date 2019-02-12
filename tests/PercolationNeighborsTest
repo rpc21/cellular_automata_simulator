@@ -5,7 +5,7 @@
     <author>Dima, Anna and Ryan</author>
     <rows>11</rows>
     <columns>11</columns>
-    <edges>basic</edges>
+    <edges>toroidal</edges>
     <GenerateStatesBy>specified</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">

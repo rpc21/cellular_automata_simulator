@@ -1,3 +1,4 @@
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import org.w3c.dom.Element;
@@ -10,15 +11,21 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class XMLStyler {
+public class XMLStyler extends XMLParserGeneral{
     public static final String SHAPE_TYPE_TAG_NAME="shape";
     public static final String NEIGHBORS_TYPE_TAG_NAME="neighborsType";
     public static final String OUTLINE_TAG_NAME="outline";
     public static final String STATE_COLORS_TAG_NAME = "stateColors";
+    public static final String defaultShape = "rectangle";
+    public static final String defaultNeighbors = "ADJACENT";
+    public static final String GRID_LINE_ON = "yes";
+    public static final String GRID_LINE_OFF = "no";
+    public static final String defaultGridLineSetting = GRID_LINE_ON;
+    public static final String COLOR = "color";
+    public static final String ID = "id";
+    private Queue<Paint> DEFAULT_COLORS= new LinkedList<>(List.of(Color.ALICEBLUE, Color.BISQUE, Color.BLANCHEDALMOND, Color.HONEYDEW, Color.LINEN));
 
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
@@ -26,32 +33,34 @@ public class XMLStyler {
     private final DocumentBuilder DOCUMENT_BUILDER;
 
     public XMLStyler (String type) {
+        super(type);
         DOCUMENT_BUILDER = getDocumentBuilder();
         TYPE_ATTRIBUTE = type;
     }
 
     public Simulation setSimulationStyle(File dataFile, Simulation simulation){
         var root = getRootElement(dataFile);
-        simulation.setColors(readStateColors(root));
+        simulation.setColors(readStateColors(root, simulation));
         Map<String, String> map = makeStylePropertiesMap(root);
         simulation.setMyStyleProperties(map);
         simulation.updateNeighbors(map);
         return simulation;
     }
 
-    public Map<String, Paint> getColorMap(File dataFile) {
+    public Map<String, Paint> getColorMap(File dataFile, Simulation mySim) {
         Map<String, Paint> colorMap = new HashMap<String, Paint>();
         var root = getRootElement(dataFile);
-        NodeList colors = root.getElementsByTagName("color");
-        System.out.println("Num Colors = "+colors.getLength());
+        NodeList colors = root.getElementsByTagName(COLOR);
         for (int i = 0; i < colors.getLength(); i++) {
             Element element = (Element) colors.item(i);
             String colorval = element.getTextContent();
             Paint p = Paint.valueOf(colorval);
-            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), p);
+            colorMap.put(element.getAttributes().getNamedItem(ID).getNodeValue(), p);
         }
+        validateColorMap(colorMap, mySim);
         return colorMap;
     }
+
     /**
      * public for visualization to use
      * @param dataFile
@@ -72,8 +81,20 @@ public class XMLStyler {
     }
 
     private void readInOutline(Element root, HashMap<String, String> styleProperties){
-        String outline = getTextValue(root, OUTLINE_TAG_NAME);
-        styleProperties.put(OUTLINE_TAG_NAME, outline);
+        try {
+            String outline = getTextValue(root, OUTLINE_TAG_NAME);
+            if (isValidOutlineOption(outline)) {
+                styleProperties.put(OUTLINE_TAG_NAME, outline);
+            } else {
+                styleProperties.put(OUTLINE_TAG_NAME, defaultGridLineSetting);
+            }
+        }catch(NullPointerException e){
+            styleProperties.put(OUTLINE_TAG_NAME, defaultGridLineSetting);
+        }
+    }
+
+    private boolean isValidOutlineOption(String outline){
+        return (outline.equals(GRID_LINE_ON) || outline.equals(GRID_LINE_OFF));
     }
 
     private void readInNeighborsType(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException{
@@ -82,17 +103,18 @@ public class XMLStyler {
             if (isValidNeighbors(neighbors)) {
                 styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, neighbors);
             } else {
-                throw new IllegalArgumentException("neighbors type must be a valid string: " + NeighborsDefinitions.values());
+                styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, defaultNeighbors);
             }
         } catch (IllegalArgumentException e){
             try {//try all lower case
-                String lowerCaseName = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME).toLowerCase();
-                if(isValidNeighbors(lowerCaseName)){
-                    styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, lowerCaseName);
+                String upperCaseName = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME).toUpperCase();
+                if(isValidNeighbors(upperCaseName)){
+                    styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, upperCaseName);
                 }
             }
             catch (IllegalArgumentException ee) {
-                throw new IllegalArgumentException("neighbors type must be a valid string: " + NeighborsDefinitions.values());
+                System.out.print("Not a valid neighbors option. Default used.");
+                styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, defaultNeighbors);
             }
         }
     }
@@ -100,14 +122,7 @@ public class XMLStyler {
     private void readInShape(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException {
         try {
             String shape = getTextValue(root, SHAPE_TYPE_TAG_NAME);
-            if (isValidShape(shape)) {
-                styleProperties.put(SHAPE_TYPE_TAG_NAME, shape);
-            }
-            else {
-                System.out.println("not a valid shape!");
-                throw new IllegalArgumentException("shape must be a valid string: " + simulationShapes.values());
-
-            }
+            styleProperties.put(SHAPE_TYPE_TAG_NAME, shape);
         } catch(IllegalArgumentException e){
             try {//try all lower case
                 String lowerCaseName = getTextValue(root, SHAPE_TYPE_TAG_NAME).toLowerCase();
@@ -116,7 +131,8 @@ public class XMLStyler {
                 }
             }
             catch (IllegalArgumentException ee) {
-                throw new IllegalArgumentException("shape must be a valid string: " + simulationShapes.values());
+                styleProperties.put(SHAPE_TYPE_TAG_NAME, defaultShape);
+                System.out.println("Not a valid shape specified. Default rectangle used.");
             }
         }
     }
@@ -139,57 +155,29 @@ public class XMLStyler {
         return false;
     }
 
-    private HashMap<String, String> readStateColors(Element root){
+    private HashMap<String, String> readStateColors(Element root, Simulation simulation){
         Map<String, String> colorMap = new HashMap<String, String>();
-        NodeList colors = root.getElementsByTagName("color");
+        NodeList colors = root.getElementsByTagName(COLOR);
         for (int i = 0; i < colors.getLength(); i++) {
             Element element = (Element) colors.item(i);
             String colorval = element.getTextContent();
-            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), colorval);
+            colorMap.put(element.getAttributes().getNamedItem(ID).getNodeValue(), colorval);
         }
         return (HashMap)colorMap;
     }
 
-    // Get root element of an XML file
-    private Element getRootElement (File xmlFile) {
-        try {
-            DOCUMENT_BUILDER.reset();
-            var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-            return xmlDocument.getDocumentElement();
-        }
-        catch (SAXException | IOException e) {
-            throw new XMLException(e);
-        }
-    }
-
-    // Returns if this is a valid XML file for the specified object type
-    private boolean isValidFile (Element root, String type) {
-        return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
-    }
-
-    // Get value of Element's attribute
-    private String getAttribute (Element e, String attributeName) {
-        return e.getAttribute(attributeName);
-    }
-
-    // Get value of Element's text
-    private String getTextValue (Element e, String tagName) {
-        var nodeList = e.getElementsByTagName(tagName);
-        if (nodeList != null && nodeList.getLength() > 0) {
-            return nodeList.item(0).getTextContent();
-        }
-        else {
-            // FIXME: empty string or null, is it an error to not find the text value?
-            return "";
-        }
-    }
-
-    private DocumentBuilder getDocumentBuilder () {
-        try {
-            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        }
-        catch (ParserConfigurationException e) {
-            throw new XMLException(e);
+    private void validateColorMap(Map<String, Paint> colorMap, Simulation simulation){
+        try{
+            List<String> states = simulation.getMyGrid().getCells().get(0).getCurrentCellState().getPossibleValues();
+            for(String state: states){
+                if (!colorMap.containsKey(state)){
+                    Paint color = DEFAULT_COLORS.poll();
+                    colorMap.put(state, color);
+                    DEFAULT_COLORS.add(color);
+                }
+            }
+        }catch(NullPointerException e){
+            throw new NullPointerException("Unable to validate color map");
         }
     }
 

@@ -25,7 +25,7 @@ import java.util.*;
  *
  * Note: Defaults set for the Game of Life simulation
  */
-public class XMLParser {
+public class XMLParser extends XMLParserGeneral{
     // Readable error message that can be displayed by the GUI
 
     public static final String ERROR_MESSAGE = "XML file does not represent %s";
@@ -49,6 +49,7 @@ public class XMLParser {
      * Create a parser for XML files of given type.
      */
     public XMLParser (String type) {
+        super(type);
         DOCUMENT_BUILDER = getDocumentBuilder();
         TYPE_ATTRIBUTE = type;
     }
@@ -60,30 +61,40 @@ public class XMLParser {
      */
     public Simulation setSimulation(File dataFile){
         var root = getRootElement(dataFile);
-        if (!isValidFile(root, Simulation.DATA_TYPE)) {
-            throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE);
-        }
+        if (!isValidFile(root, Simulation.DATA_TYPE)) { throw new XMLException(ERROR_MESSAGE, Simulation.DATA_TYPE); }
         HashMap<String, String> simulationParams = getBasicSimulationParams(root);
         String simulationType = simulationParams.get(SIMULATION_TYPE_TAG_NAME);
-        int rows,cols;
-        try{
-            cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
-        }catch(NumberFormatException e){
-            cols = defaultColumns;
-            simulationParams.put(COLUMN_TAG_NAME, String.valueOf(cols));
-        }
-        try{
-            rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
-        }catch(NumberFormatException e){
-            rows = defaultRows;
-            simulationParams.put(ROW_TAG_NAME, String.valueOf(rows));
-        }
+        validateRowsAndColumns(simulationParams);
+        int rows = Integer.parseInt(simulationParams.get(ROW_TAG_NAME));
+        int cols = Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME));
         String[][] specifiedStates = parseGrid(root, rows, cols, simulationType);
         HashMap<String, Double> additionalParams = parseAdditionalParams(root, simulationType);
         HashMap<String, String> theCredentials = getCredentials(root);
         String howToSetInitialStates = getTextValue(root, GEN_STATES_TAG_NAME);
 
         return initializeSimulation(howToSetInitialStates, simulationParams, additionalParams, specifiedStates, theCredentials);
+    }
+
+    private void validateRowsAndColumns(HashMap<String, String> simulationParams){
+        int rows,cols;
+        try{
+            if(Integer.parseInt(simulationParams.get(COLUMN_TAG_NAME))<defaultColumns){
+                cols = defaultColumns;
+                simulationParams.put(COLUMN_TAG_NAME, String.valueOf(cols));
+            }
+        }catch(NumberFormatException e){
+            cols = defaultColumns;
+            simulationParams.put(COLUMN_TAG_NAME, String.valueOf(cols));
+        }
+        try{
+            if(Integer.parseInt(simulationParams.get(ROW_TAG_NAME))<defaultRows){
+                rows = defaultRows;
+                simulationParams.put(ROW_TAG_NAME, String.valueOf(rows));
+            }
+        }catch(NumberFormatException e){
+            rows = defaultRows;
+            simulationParams.put(ROW_TAG_NAME, String.valueOf(rows));
+        }
     }
 
     private Simulation initializeSimulation(String howToSetInitialStates, HashMap<String, String> simulationParams, HashMap<String, Double> additionalParams, String[][] specifiedStates, HashMap<String, String> theCredentials){
@@ -255,54 +266,6 @@ public class XMLParser {
         return 0;
     }
 
-    // Get root element of an XML file
-    private Element getRootElement (File xmlFile) {
-        try {
-            DOCUMENT_BUILDER.reset();
-            var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-            return xmlDocument.getDocumentElement();
-        }
-        catch (SAXException | IOException e) {
-            throw new XMLException(e);
-        }
-    }
-
-    // Returns if this is a valid XML file for the specified object type
-    private boolean isValidFile (Element root, String type) {
-        return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
-    }
-
-    // Get value of Element's attribute
-    private String getAttribute (Element e, String attributeName) {
-        try {
-            return e.getAttribute(attributeName);
-        }catch(NullPointerException exc){
-            throw new NullPointerException("No such attribute");
-        }
-    }
-
-    // Get value of Element's text
-    private String getTextValue (Element e, String tagName) throws NullPointerException {
-        try{
-            var nodeList = e.getElementsByTagName(tagName);
-            if (nodeList != null && nodeList.getLength() > 0) {
-                return nodeList.item(0).getTextContent();
-            }
-        }catch(NullPointerException exc){
-            throw new NullPointerException("No such field" + tagName);
-        }
-        return "";
-    }
-
-    private DocumentBuilder getDocumentBuilder () {
-        try {
-            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        }
-        catch (ParserConfigurationException e) {
-            throw new XMLException(e);
-        }
-    }
-
     private String readInEdges(Element root){
         try {
             return getTextValue(root, EDGE_TYPE_TAG_NAME);
@@ -310,5 +273,54 @@ public class XMLParser {
             throw new NullPointerException("No Edge Type specified");
         }
     }
+//    // Get root element of an XML file
+//    private Element getRootElement (File xmlFile) {
+//        try {
+//            DOCUMENT_BUILDER.reset();
+//            var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
+//            return xmlDocument.getDocumentElement();
+//        }
+//        catch (SAXException | IOException e) {
+//            throw new XMLException(e);
+//        }
+//    }
+//
+//    // Returns if this is a valid XML file for the specified object type
+//    private boolean isValidFile (Element root, String type) {
+//        return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
+//    }
+//
+//    // Get value of Element's attribute
+//    private String getAttribute (Element e, String attributeName) {
+//        try {
+//            return e.getAttribute(attributeName);
+//        }catch(NullPointerException exc){
+//            throw new NullPointerException("No such attribute");
+//        }
+//    }
+//
+//    // Get value of Element's text
+//    private String getTextValue (Element e, String tagName) throws NullPointerException {
+//        try{
+//            var nodeList = e.getElementsByTagName(tagName);
+//            if (nodeList != null && nodeList.getLength() > 0) {
+//                return nodeList.item(0).getTextContent();
+//            }
+//        }catch(NullPointerException exc){
+//            throw new NullPointerException("No such field" + tagName);
+//        }
+//        return "";
+//    }
+//
+//    private DocumentBuilder getDocumentBuilder () {
+//        try {
+//            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
+//        }
+//        catch (ParserConfigurationException e) {
+//            throw new XMLException(e);
+//        }
+//    }
+
+
 
 }

@@ -9,7 +9,7 @@ public class GUIGridNeighborsChooser extends GUIControlManager{
     private List<Object> possibleNeighbors = List.of("ADJACENT", "BOX_NEIGHBORS", "DIAGONAL", "KNIGHT", "I_FORMATION",
             "TRIANGLE_12_POINT_UP", "HEXAGON" );
 
-    public GUIGridNeighborsChooser(String initialNeighbor){
+    public GUIGridNeighborsChooser(String initialNeighbor) {
         super.setUpChoiceBox(myChooser, initialNeighbor, possibleNeighbors);
     }
     public List<Node> getDisplay(){

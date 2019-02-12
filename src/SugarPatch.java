@@ -5,6 +5,12 @@ import java.util.Map;
 public class SugarPatch extends Cell{
 
     public static final String MAXIMUM_SUGAR_CAPACITY = "maximumSugarCapacity";
+    public static final double MAX_SUGAR_DEFAULT_VALUE = 25.0D;
+    public static final double GROW_BACK_RATE_DEFAULT = 7.0D;
+    public static final double LIGHT_OPACITY_CUTOFF = 0.20D;
+    public static final double MEDIUM_LIGHT_OPACITY_CUTOFF = 0.40D;
+    public static final double MEDIUM_OPACITY_CUTOFF = 0.60D;
+    public static final double MEDIUM_DARK_OPACITY_CUTOFF = 0.80D;
     private List<SugarAgent> mySugarAgents;
     private int amountOfSugar;
     private int maximumSugarCapacity;
@@ -17,10 +23,10 @@ public class SugarPatch extends Cell{
         myParameters = parameters;
         myGrid = grid;
         mySugarAgents = new ArrayList<>();
-        maxAmountOfSugar = (int) (double) parameters.getOrDefault(SugarSimulation.MAX_SUGAR,25.0D);
+        maxAmountOfSugar = (int) (double) parameters.getOrDefault(SugarSimulation.MAX_SUGAR, MAX_SUGAR_DEFAULT_VALUE);
         maximumSugarCapacity = mapStateToSugar(state);
         amountOfSugar = maximumSugarCapacity;
-        myGrowBackRate = (int) (double) parameters.getOrDefault(SugarSimulation.SUGAR_GROW_BACK_RATE, 7.0D);
+        myGrowBackRate = (int) (double) parameters.getOrDefault(SugarSimulation.SUGAR_GROW_BACK_RATE, GROW_BACK_RATE_DEFAULT);
     }
 
     public String getMyCurrentState(){
@@ -38,16 +44,16 @@ public class SugarPatch extends Cell{
 
     private CellState assignStateBasedOnSugar() {
         double opacity = amountOfSugar * 1.0 / maxAmountOfSugar;
-        if (opacity <= 0.20D){
+        if (opacity <= LIGHT_OPACITY_CUTOFF){
             return SugarState.LIGHT_PATCH;
         }
-        else if(opacity <= 0.40D){
+        else if(opacity <= MEDIUM_LIGHT_OPACITY_CUTOFF){
             return SugarState.MEDIUM_LIGHT_PATCH;
         }
-        else if (opacity <= 0.60D){
+        else if (opacity <= MEDIUM_OPACITY_CUTOFF){
             return SugarState.MEDIUM_PATCH;
         }
-        else if (opacity <= 0.80D){
+        else if (opacity <= MEDIUM_DARK_OPACITY_CUTOFF){
             return SugarState.MEDIUM_DARK_PATCH;
         }
         else{

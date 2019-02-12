@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="simulation">
+    <simulationType>Spreading Fire</simulationType>
+    <title>The Spreading Fire Simulation</title>
+    <author>Dima, Anna and Ryan</author>
+    <rows>3</rows>
+    <columns>3</columns>
+    <edges>basic</edges>
+    <GenerateStatesBy>randomFromPercentages</GenerateStatesBy>
+    <cellStates>
+        <CellRows index="0">
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+        </CellRows>
+        <CellRows index="1">
+            <CellColumns>FIRE</CellColumns>
+            <CellColumns>EMPTY</CellColumns>
+            <CellColumns>FIRE</CellColumns>
+        </CellRows>
+        <CellRows index="0">
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>TREE</CellColumns>
+            <CellColumns>TREE</CellColumns>
+        </CellRows>
+    </cellStates>
+    <treePercentage>0.1</treePercentage>
+    <firePercentage>0.4</firePercentage>
+    <emptyPercentage>0.5</emptyPercentage>
+    <probCatch>0.0</probCatch>
+</data>

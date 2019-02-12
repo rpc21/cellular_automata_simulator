@@ -14,8 +14,8 @@ public class WatorShark extends WatorCell {
         super(loc, grid, nextGrid, parameters);
         myCurrentState = WatorState.SHARK;
         turnsSinceLastAte = 0;
-        starveTime = (int) (parameters.get(WatorSimulation.STARVE_TIME) + 0.0);
-        turnsUntilCanBreed = (int) (parameters.get(WatorSimulation.SHARK_BREED_TIME) + 0.0);
+        starveTime = (int) (double) (parameters.get(WatorSimulation.STARVE_TIME));
+        turnsUntilCanBreed = (int) (double) (parameters.get(WatorSimulation.SHARK_BREED_TIME));
     }
 
     @Override

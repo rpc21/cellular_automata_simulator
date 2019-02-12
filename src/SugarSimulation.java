@@ -13,6 +13,7 @@ public class SugarSimulation extends Simulation{
     public static final String MEDIUM_PERCENTAGE = "medium_patchPercentage";
     public static final String MEDIUM_DARK_PERCENTAGE = "medium_dark_patchPercentage";
     public static final String DARK_PERCENTAGE = "dark_patchPercentage";
+    public static final double SUGAR_AGENT_DEFAULT_PERCENTAGE = 0.1D;
     private List<SugarAgent> mySugarAgents;
     private int sugarMax;
 
@@ -23,12 +24,12 @@ public class SugarSimulation extends Simulation{
 
     public SugarSimulation(int rows, int cols, Map<String, Double> parameters){
         super(parameters, rows, cols);
-        sugarMax = (int) (double) parameters.getOrDefault(MAX_SUGAR, 25.0D);
+        sugarMax = (int) (double) parameters.getOrDefault(MAX_SUGAR, SugarPatch.MAX_SUGAR_DEFAULT_VALUE);
     }
 
     public SugarSimulation(Map<String, Double> params, Grid grid){
         super(params, grid);
-        sugarMax = (int) (double) params.getOrDefault(MAX_SUGAR, 25.0D);
+        sugarMax = (int) (double) params.getOrDefault(MAX_SUGAR, SugarPatch.MAX_SUGAR_DEFAULT_VALUE);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class SugarSimulation extends Simulation{
         mySugarAgents = new ArrayList<>();
         List<Cell> allCells = myGrid.getCells();
         Collections.shuffle(allCells);
-        for (int i = 0; i < (int) (allCells.size() * myParameters.getOrDefault(SUGAR_AGENT_PERCENTAGE, 0.1D)); i++){
+        for (int i = 0; i < (int) (allCells.size() * myParameters.getOrDefault(SUGAR_AGENT_PERCENTAGE, SUGAR_AGENT_DEFAULT_PERCENTAGE)); i++){
             mySugarAgents.add(new SugarAgent(allCells.get(i).getMyLocation(), myParameters, myGrid));
         }
     }

@@ -1,6 +1,13 @@
 import java.util.*;
 
 public class SimulationFactory {
+    public static final String THE_MAGIC_LETTER_UPON_WHICH_ALL_OUR_CODE_IS_HINGED = "P";
+    public static final String SIMULATION_TYPE = "simulationType";
+    public static final String ROWS = "rows";
+    public static final String COLUMNS = "columns";
+    public static final String EDGES = "edges";
+    public static final String DEFAULT_NUMBER_OF_ROWS = "10";
+    public static final String DEFAULT_NUMBER_OF_COLS = "10";
     private Random dice = new Random();
 
     public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String[][] initialStates){
@@ -48,6 +55,9 @@ public class SimulationFactory {
     private String[][] createInitialStatesFromPercentages(Simulation mySimulation,
                                                           Map<String, Double> simulationSpecificParameters) {
 
+        if (!simulationSpecificParameters.keySet().containsAll(mySimulation.getPercentageFields())){
+            return createInitialStatesFromRandomPercentages(mySimulation, simulationSpecificParameters);
+        }
         int rows = mySimulation.getMyGrid().getNumRows();
         int cols = mySimulation.getMyGrid().getNumCols();
         ArrayList<Location> gridLocations = getShuffledGridLocations(rows, cols);
@@ -58,7 +68,7 @@ public class SimulationFactory {
             currentMaxIndex += (int) Math.ceil(simulationSpecificParameters.get(key) * gridLocations.size());
             while (index < currentMaxIndex && index < gridLocations.size()){
                 initialStates[gridLocations.get(index).getRow()][gridLocations.get(index).getCol()] =
-                        key.split("P")[0].toUpperCase();
+                        key.split(THE_MAGIC_LETTER_UPON_WHICH_ALL_OUR_CODE_IS_HINGED)[0].toUpperCase();
                 index++;
             }
         }
@@ -77,10 +87,10 @@ public class SimulationFactory {
     }
 
     private Simulation getSimulationWithEmptyGrid(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters) {
-        String simulationType = basicParameters.get("simulationType");
-        int rows = Integer.parseInt(basicParameters.getOrDefault("rows", "10"));
-        int cols = Integer.parseInt(basicParameters.getOrDefault("columns", "10"));
-        String gridType = basicParameters.getOrDefault("gridType", Grid.BASIC_GRID_NAME);
+        String simulationType = basicParameters.get(SIMULATION_TYPE);
+        int rows = Integer.parseInt(basicParameters.getOrDefault(ROWS, DEFAULT_NUMBER_OF_ROWS));
+        int cols = Integer.parseInt(basicParameters.getOrDefault(COLUMNS, DEFAULT_NUMBER_OF_COLS));
+        String gridType = basicParameters.getOrDefault(EDGES, Grid.BASIC_GRID_NAME);
         Grid grid = new GridFactory().generateGrid(gridType, rows, cols);
         return selectSimulationConstructor(simulationType, grid, simulationSpecificParameters);
     }

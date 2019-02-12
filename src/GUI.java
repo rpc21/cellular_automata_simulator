@@ -67,6 +67,7 @@ public class GUI {
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(myFrame);
+
         Scale scale = new Scale(SCALE, SCALE);
         scale.setPivotX(0);
         scale.setPivotY(0);

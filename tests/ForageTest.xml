@@ -3,10 +3,10 @@
     <simulationType>Forage</simulationType>
     <title>The Forage Simulation</title>
     <author>Dima, Anna and Ryan</author>
-    <rows>3</rows>
-    <columns>3</columns>
+    <rows>20</rows>
+    <columns>20</columns>
     <edges>basic</edges>
-    <GenerateStatesBy>seebelow</GenerateStatesBy>
+    <GenerateStatesBy>randomFromPercentages</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
             <CellColumns>NEST</CellColumns>
@@ -26,5 +26,7 @@
     </cellStates>
     <maxFoodPheromones>20.0</maxFoodPheromones>
     <maxHomePheromones>10.0</maxHomePheromones>
-    <numberOfAnts>10.0</numberOfAnts>
+    <numberOfAnts>60.0</numberOfAnts>
+    <emptyPercentage>0.8</emptyPercentage>
+    <obstaclePercentage>0.2</obstaclePercentage>
 </data>
