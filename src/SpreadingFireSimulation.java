@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpreadingFireSimulation extends Simulation {
     public static final String TREE_PERCENTAGE = "treePercentage";
@@ -21,6 +22,10 @@ public class SpreadingFireSimulation extends Simulation {
     public SpreadingFireSimulation(HashMap<String, Double> params, int rows, int cols){
         super(params, rows, cols);
         setMyGrid(new BasicGrid(rows, cols));
+    }
+
+    public SpreadingFireSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
     }
 
     /**
@@ -45,5 +50,10 @@ public class SpreadingFireSimulation extends Simulation {
     @Override
     public List<String> getPercentageFields() {
         return List.of(TREE_PERCENTAGE, EMPTY_PERCENTAGE, FIRE_PERCENTAGE);
+    }
+
+    @Override
+    public void updateNeighbors(Map<String, String> styleProperties){
+        super.updateNeighbors(styleProperties, NeighborsDefinitions.ADJACENT);
     }
 }

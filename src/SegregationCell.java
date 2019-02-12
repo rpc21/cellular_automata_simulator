@@ -9,7 +9,7 @@ public class SegregationCell extends MovableCell{
     public SegregationCell(Location location, SegregationState initialState, Grid currentGrid, Grid nextGrid, Map<String,
                 Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
-        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
+//        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }
 
     @Deprecated
@@ -92,8 +92,8 @@ public class SegregationCell extends MovableCell{
         double numOther = 0;
         for(Location l:locationList){
             SegregationCell tempCell =(SegregationCell)myGrid.get(l);
-            if(tempCell.getMyCurrentState() == myCurrentState){ numSame++; }
-            else if (tempCell.getMyCurrentState() != myCurrentState && tempCell.getMyCurrentState() != SegregationState.EMPTY){
+            if(tempCell.getCurrentCellState() == myCurrentState){ numSame++; }
+            else if (tempCell.getCurrentCellState() != myCurrentState && tempCell.getCurrentCellState() != SegregationState.EMPTY){
                 numOther++;
             }
         }

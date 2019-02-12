@@ -1,5 +1,6 @@
 public enum simulationShapes {
     square("square"),
+    rectangle("rectangle"),
     triangle("triangle"),
     hexagon("hexagon");
 

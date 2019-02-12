@@ -5,6 +5,7 @@
     <author>Dima, Anna and Ryan</author>
     <rows>25</rows>
     <columns>25</columns>
+    <edges>basic</edges>
     <GenerateStatesBy>randomFromPercentages</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">

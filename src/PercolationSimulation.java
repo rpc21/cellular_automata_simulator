@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PercolationSimulation extends Simulation {
     public static final String OPEN_PERCENTAGE = "openPercentage";
@@ -17,6 +18,10 @@ public class PercolationSimulation extends Simulation {
     public PercolationSimulation(HashMap<String, Double> params, int rows, int cols){
         super(params, rows, cols);
         setMyGrid(new BasicGrid(rows, cols));
+    }
+
+    public PercolationSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
     }
 
     @Override
@@ -37,5 +42,10 @@ public class PercolationSimulation extends Simulation {
     @Override
     public List<String> getPercentageFields() {
         return List.of(OPEN_PERCENTAGE, CLOSED_PERCENTAGE, PERCOLATED_PERCENTAGE);
+    }
+
+    @Override
+    public void updateNeighbors(Map<String, String> styleProperties){
+        super.updateNeighbors(styleProperties, NeighborsDefinitions.BOX_NEIGHBORS);
     }
 }

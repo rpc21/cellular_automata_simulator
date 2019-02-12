@@ -1,9 +1,13 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class SimulationFactory {
+    public static final String THE_MAGIC_LETTER_UPON_WHICH_ALL_OUR_CODE_IS_HINGED = "P";
+    public static final String SIMULATION_TYPE = "simulationType";
+    public static final String ROWS = "rows";
+    public static final String COLUMNS = "columns";
+    public static final String EDGES = "edges";
+    public static final String DEFAULT_NUMBER_OF_ROWS = "10";
+    public static final String DEFAULT_NUMBER_OF_COLS = "10";
     private Random dice = new Random();
 
     public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String[][] initialStates){
@@ -11,22 +15,36 @@ public class SimulationFactory {
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(),
                 simulationSpecificParameters);
-
         return mySimulation;
     }
 
-    public Simulation generateSimulation(HashMap<String, String> basicParameters,
-                                         HashMap<String, Double> simulationSpecificParameters){
+    public Simulation generateSimulation(Map<String, String> basicParameters,
+                                          Map<String, Double> simulationSpecificParameters){
         for (String a: basicParameters.keySet())
             System.out.println(a + basicParameters.get(a));
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
         mySimulation.setInitialStates(initialStates, mySimulation.getMyName(), simulationSpecificParameters);
+        mySimulation.setMyStyleProperties(basicParameters);
+        mySimulation.updateNeighbors(basicParameters);
         return mySimulation;
     }
 
-    public Simulation generateSimulation(HashMap<String, String> basicParameters,
-                                         HashMap<String, Double> simulationSpecificParameters, String InitialStatesType){
+    /**
+     * Credentials also passed in
+     * @param basicParameters
+     * @param simulationSpecificParameters
+     * @param credentials
+     * @return
+     */
+    public Simulation generateSimulation(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters, Map<String, String> credentials){
+        Simulation myNewSimulation = generateSimulation(basicParameters, simulationSpecificParameters);
+        myNewSimulation.setCredentials(credentials);
+        return myNewSimulation;
+    }
+
+    public Simulation generateSimulation(Map<String, String> basicParameters,
+                                         Map<String, Double> simulationSpecificParameters, String InitialStatesType){
 
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromRandomPercentages(mySimulation, simulationSpecificParameters);
@@ -34,8 +52,12 @@ public class SimulationFactory {
         return mySimulation;
     }
 
-    private String[][] createInitialStatesFromPercentages(Simulation mySimulation, HashMap<String, Double> simulationSpecificParameters) {
+    private String[][] createInitialStatesFromPercentages(Simulation mySimulation,
+                                                          Map<String, Double> simulationSpecificParameters) {
 
+        if (!simulationSpecificParameters.keySet().containsAll(mySimulation.getPercentageFields())){
+            return createInitialStatesFromRandomPercentages(mySimulation, simulationSpecificParameters);
+        }
         int rows = mySimulation.getMyGrid().getNumRows();
         int cols = mySimulation.getMyGrid().getNumCols();
         ArrayList<Location> gridLocations = getShuffledGridLocations(rows, cols);
@@ -46,25 +68,31 @@ public class SimulationFactory {
             currentMaxIndex += (int) Math.ceil(simulationSpecificParameters.get(key) * gridLocations.size());
             while (index < currentMaxIndex && index < gridLocations.size()){
                 initialStates[gridLocations.get(index).getRow()][gridLocations.get(index).getCol()] =
-                        key.split("P")[0].toUpperCase();
+                        key.split(THE_MAGIC_LETTER_UPON_WHICH_ALL_OUR_CODE_IS_HINGED)[0].toUpperCase();
                 index++;
             }
         }
-        //TODO: Make sure we process the entire list, add default cells to the simulations
+        while(index<gridLocations.size()){
+            initialStates[gridLocations.get(index).getRow()][gridLocations.get(index).getCol()] =
+                    mySimulation.getPercentageFields().get(0).split("P")[0].toUpperCase();
+            index++;
+        }
         return  initialStates;
 
     }
 
-    private String[][] createInitialStatesFromRandomPercentages(Simulation mySimulation, HashMap<String, Double> simulationSpecificParameters) {
+    private String[][] createInitialStatesFromRandomPercentages(Simulation mySimulation, Map<String, Double> simulationSpecificParameters) {
         generateRandomStatePercentages(mySimulation, simulationSpecificParameters);
         return createInitialStatesFromPercentages(mySimulation, simulationSpecificParameters);
     }
 
-    private Simulation getSimulationWithEmptyGrid(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters) {
-        String simulationType = basicParameters.get("simulationType");
-        int rows = Integer.parseInt(basicParameters.get("rows"));
-        int cols = Integer.parseInt(basicParameters.get("columns"));
-        return selectSimulationConstructor(simulationType, rows, cols, simulationSpecificParameters);
+    private Simulation getSimulationWithEmptyGrid(Map<String, String> basicParameters, Map<String, Double> simulationSpecificParameters) {
+        String simulationType = basicParameters.get(SIMULATION_TYPE);
+        int rows = Integer.parseInt(basicParameters.getOrDefault(ROWS, DEFAULT_NUMBER_OF_ROWS));
+        int cols = Integer.parseInt(basicParameters.getOrDefault(COLUMNS, DEFAULT_NUMBER_OF_COLS));
+        String gridType = basicParameters.getOrDefault(EDGES, Grid.BASIC_GRID_NAME);
+        Grid grid = new GridFactory().generateGrid(gridType, rows, cols);
+        return selectSimulationConstructor(simulationType, grid, simulationSpecificParameters);
     }
 
 
@@ -79,24 +107,25 @@ public class SimulationFactory {
         return gridLocations;
     }
 
-    private Simulation selectSimulationConstructor(String simulationType, int rows, int cols, HashMap<String, Double> simulationSpecificParameters){
+    private Simulation selectSimulationConstructor(String simulationType, Grid grid,
+                                                   Map<String, Double> simulationSpecificParameters){
         switch (simulationType) {
             case Simulation.GOL_SIMULATION_NAME:
-                return new GOLSimulation(simulationSpecificParameters, rows, cols);
+                return new GOLSimulation(simulationSpecificParameters, grid);
             case Simulation.SPREADING_FIRE_SIMULATION_NAME:
-                return new SpreadingFireSimulation(simulationSpecificParameters, rows, cols);
+                return new SpreadingFireSimulation(simulationSpecificParameters, grid);
             case Simulation.PERCOLATION_SIMULATION_NAME:
-                return new PercolationSimulation(simulationSpecificParameters, rows, cols);
+                return new PercolationSimulation(simulationSpecificParameters, grid);
             case Simulation.SEGREGATION_SIMULATION_NAME:
-                return new SegregationSimulation(simulationSpecificParameters, rows, cols);
+                return new SegregationSimulation(simulationSpecificParameters, grid);
             case Simulation.WATOR_SIMULATION_NAME:
-                return new WatorSimulation(simulationSpecificParameters, rows, cols);
+                return new WatorSimulation(simulationSpecificParameters, grid);
             case Simulation.FORAGE_SIMULATION_NAME:
-                return new ForageSimulation(simulationSpecificParameters, rows, cols);
+                return new ForageSimulation(simulationSpecificParameters, grid);
             case Simulation.SUGAR_SIMULATION_NAME:
-                return new SugarSimulation(rows, cols, simulationSpecificParameters);
+                return new SugarSimulation(simulationSpecificParameters, grid);
         }
-        return new GOLSimulation(simulationSpecificParameters, rows, cols);
+        return new GOLSimulation(simulationSpecificParameters, grid);
     }
 
 
@@ -104,13 +133,18 @@ public class SimulationFactory {
         return min + (max - min) * dice.nextDouble();
     }
 
-    private void generateRandomStatePercentages(Simulation mySimulation, HashMap<String, Double> additionalParams){
+    private void generateRandomStatePercentages(Simulation mySimulation, Map<String, Double> additionalParams){
         double maxPercentValue=1;
         double minPercentValue=0;
-        for (String key : mySimulation.getPercentageFields()){
+        for(int i=0;i<mySimulation.getPercentageFields().size()-1;i++){
+            String key = mySimulation.getPercentageFields().get(i);
             double percentState = getRandomInRange(minPercentValue, maxPercentValue);
             additionalParams.put(key, percentState);
             maxPercentValue = maxPercentValue - percentState;
         }
+        String key = mySimulation.getPercentageFields().get(mySimulation.getPercentageFields().size()-1);
+        double percentState = maxPercentValue;
+        additionalParams.put(key, percentState);
+
     }
 }

@@ -25,7 +25,7 @@ public abstract class WatorCell extends Cell {
         myGrid = currentGrid;
         myNextGrid = nextGrid;
         myParameters = parameters;
-        myNeighbors = NeighborsDefinitions.ADJACENT;
+//        myNeighbors = NeighborsDefinitions.ADJACENT;
 //        turnsUntilCanBreed = (int) (parameters.get("breedTime") + Math.random() * 3);
     }
 
@@ -50,4 +50,11 @@ public abstract class WatorCell extends Cell {
     }
 
     public abstract void step();
+
+    public void updateNeighbors(Map<String, String> styleProperties){
+        for (Cell cell : myGrid.getCells()){
+            cell.setMyNeighbors(NeighborsDefinitions.valueOf(styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,
+                    NeighborsDefinitions.ADJACENT.toString())));
+        }
+    }
 }

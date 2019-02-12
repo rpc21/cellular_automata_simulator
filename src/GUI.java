@@ -3,9 +3,9 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.util.HashMap;
 
 public class GUI {
     private Stage myStage;
@@ -42,19 +42,18 @@ public class GUI {
         }
     };
 
-
-
-    public static final int STAGE_SIZE = 1000;
+    public static final int STAGE_SIZE = 600;
+    public static final double SCALE = 0.60;
     private static final String STAGE_TITLE = "Cellular Automata Simulation";
     private static final Color BACKGROUND_COLOR = Color.LIGHTSKYBLUE;
     private static final int FRAMES_PER_SECOND = 60;
     private static final double MILLISECOND_DELAY = 10000 / FRAMES_PER_SECOND;
 
-    public GUI(Stage s, Simulation sim){
-        myStage = s;
+    public GUI(Stage stage, Simulation sim){
+        myStage = stage;
         mySimulation = sim;
         myNode = new Group();
-        myManager.addSimulation(sim,myNode,s);
+        myManager.addSimulation(sim,myNode,stage);
         render();
         makeDefaultPanel(sim);
         makeGUIParts(sim);
@@ -68,12 +67,17 @@ public class GUI {
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(myFrame);
+
+        Scale scale = new Scale(SCALE, SCALE);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        myScene.getRoot().getTransforms().setAll(scale);
     }
 
     public void step(){
         myManager.updateGUIParts();
-        //myGUIGraph.updateChart(mySimulation.getMyGrid().getCells());
-        }
+        myGUIGraph.updateChart(mySimulation.getMyGrid().getCells());
+    }
 
     private void addSimulation(){
         myManager.addSimulation(mySimulation,myNode,myStage);
@@ -87,7 +91,7 @@ public class GUI {
     public void resetWithParams() {
 
         myNode.getChildren().clear();
-        myManager.resetSimulations(myGUIDefaultPanel);
+        myManager.resetSimulations(myGUIDefaultPanel,mySimulation.getCredentials());
         mySimulation = myManager.getPrimarySimulation();
         makeGUIParts(mySimulation);
         for (GUIGrid grid : myManager.getGrids()) {
@@ -98,14 +102,10 @@ public class GUI {
             myNode.getChildren().add(simPanel.getGUISimulationPanel());
     }
 
-//    public void setParameters(){
-//        //pass back changes to neighbors,shapes,gridedge etc
-//        myManager.updateGUIGrid(new HashMap<String, String>());
-//    }
-
 
     private void makeGUIParts(Simulation currSim){
-        Credentials myCredentials = new Credentials("lol","hi");
+        Credentials myCredentials = new Credentials(mySimulation.getCredentials().get(Simulation.TITLE_CREDENTIAL),
+                mySimulation.getCredentials().get(Simulation.AUTHOR_CREDENTIAL));
         myGUIGraph = new GUIGraph(currSim);
         myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials(),myGUIGraph.getMyChart());
     }
@@ -113,6 +113,8 @@ public class GUI {
     private void makeDefaultPanel(Simulation currSim){
         myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myRemoveSimFunction, myAnimation,myFrame,
                 currSim.getMyName(),currSim.getMyGrid().getNumRows(),currSim.getMyGrid().getNumCols());
+        myGUIDefaultPanel.getGUIDefaultPanel().setLayoutX(myManager.getGrids().get(0).getGUIGrid().getLayoutX() +
+                myManager.getGrids().get(0).getGUIGrid().getTranslateX() + GUIGrid.GUI_GRID_SIZE + 40);
         myGUIDefaultPanel.getGUIDefaultPanel().setLayoutY(myManager.getGrids().get(0).getGUIGrid().getLayoutY());
         myGUIDefaultPanel.getGUIDefaultPanel().setTranslateY(myManager.getGrids().get(0).getGUIGrid().getTranslateY());
     }

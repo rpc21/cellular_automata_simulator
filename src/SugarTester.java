@@ -6,6 +6,8 @@ public class SugarTester {
 //        System.out.println(NeighborsDefinitions.values());
 //        System.out.println(GOLState.ALIVE);
 
+        NeighborsDefinitions nd = NeighborsDefinitions.valueOf(NeighborsDefinitions.BOX_NEIGHBORS.toString());
+
         HashMap<String, String> basicParameters = new HashMap<>();
         basicParameters.put("rows", "4");
         basicParameters.put("columns", "4");
@@ -30,6 +32,10 @@ public class SugarTester {
             sugarTest.updateGrid();
             sugarTest.getMyGrid().printGrid();
             System.out.println("====================================");
+        }
+
+        for (Cell cell : sugarTest.getMyGrid().getCells()){
+            System.out.println(cell.getMyCurrentState());
         }
     }
 }

@@ -10,11 +10,6 @@ import java.util.List;
  */
 public class GOLCell extends Cell{
 
-    //Game of Life defines neighbors to be the 4 adjacent neighbors and 4 diagonal neighbors as specified below
-    private static int[] GOL_CELL_ROW_NEIGHBORS = {-1, 0, 1, -1, 1, -1, 0, 1};
-    private static int[] GOL_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
-
-
     public GOLCell(Location location, GOLState initialState, Grid currentGrid, Grid nextGrid,
                    HashMap<String, Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
@@ -28,7 +23,6 @@ public class GOLCell extends Cell{
      */
     public GOLCell(Location location, GOLState initialState, Grid currentGrid, Grid nextGrid){
         super(location, initialState, currentGrid, nextGrid);
-        myNeighbors = NeighborsDefinitions.BOX_NEIGHBORS;
     }
 
     /**

@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WatorSimulation extends Simulation {
     public static final String SHARK_PERCENTAGE = "sharkPercentage";
@@ -17,6 +18,10 @@ public class WatorSimulation extends Simulation {
         setMyGrid(new WrapAroundGrid(rows, cols));
     }
 
+    public WatorSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
+    }
+
     @Override
     public boolean isOver() {
         return myGrid.getOccupiedLocations().size() == 0;
@@ -27,7 +32,6 @@ public class WatorSimulation extends Simulation {
         for (Location loc : myGrid.getOccupiedLocations()){
            ((WatorCell) myGrid.get(loc)).step();
         }
-//        myGrid.printGrid();
     }
 
     @Override
@@ -41,11 +45,10 @@ public class WatorSimulation extends Simulation {
     }
 
     @Override
-    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters) {
+    public void setInitialStates(String[][] initialStates, String simulationType, Map<String, Double> parameters) {
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
-//                System.out.println("Creating a "+simulationType+" cell");
                 Cell newCell = generateWATORSpecificCell(simulationType, thisLocation, initialStates[i][j],
                         myGrid, myNextGrid, parameters);
                 System.out.println(newCell + " to be inserted at "+ i + ", "+j);
@@ -58,10 +61,7 @@ public class WatorSimulation extends Simulation {
     }
 
     private Cell generateWATORSpecificCell(String simulationType, Location thisLocation, String state, Grid grid,
-                                           Grid nextGrid,
-                                           HashMap<String, Double> parameters) {
-//        System.out.println(state);
-//        System.out.println(state + " " + WatorState.valueOf(state));
+                                           Grid nextGrid, Map<String, Double> parameters) {
         if (WatorState.valueOf(state) == WatorState.FISH){
             return new WatorFish(thisLocation, grid, nextGrid, parameters);
         }
@@ -71,5 +71,10 @@ public class WatorSimulation extends Simulation {
         else{
             return new WatorEmpty(thisLocation);
         }
+    }
+
+    @Override
+    public void updateNeighbors(Map<String, String> styleProperties){
+        super.updateNeighbors(styleProperties, NeighborsDefinitions.ADJACENT);
     }
 }

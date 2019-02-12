@@ -26,7 +26,7 @@ public abstract class GUIControlManager extends GUIPanel {
         s.setValue(initVal);
         s.setMin(lowVal);
         s.setMax(maxVal);
-        s.setOnMouseDragReleased(value);
+        s.setOnMouseClicked(value);
     }
     protected void setUpLabel(Text t){
         t.setFont(Font.font(DEFAULT_FONT_NAME, CONTROL_TEXT_SIZE));

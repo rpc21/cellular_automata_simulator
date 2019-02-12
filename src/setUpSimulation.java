@@ -1,4 +1,8 @@
+import javafx.scene.paint.Paint;
+
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class setUpSimulation {
 
@@ -11,6 +15,8 @@ public class setUpSimulation {
 
         Simulation mySimulation = xmlParser.setSimulation(xmlParserFile);
         xmlStyler.setSimulationStyle(styleFile, mySimulation);
+        //Map<String, Paint> s = xmlStyler.getColorMap(new File("tests/COLORTEST.xml"));
+        System.out.println(xmlStyler.getStylePropertiesMap(new File("tests/StyleTest1.xml")));
         return mySimulation;
     }
 

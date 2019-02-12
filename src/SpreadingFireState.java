@@ -30,7 +30,7 @@ public enum SpreadingFireState implements CellState {
      */
     @Override
     public String toString() {
-        return myShortenedName;
+        return myFullState;
     }
 
     /**
@@ -55,7 +55,7 @@ public enum SpreadingFireState implements CellState {
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i< values().length; i++){
-            arrayList.add(myFullState);
+            arrayList.add(values()[i].myFullState);
         }
         return arrayList;
     }

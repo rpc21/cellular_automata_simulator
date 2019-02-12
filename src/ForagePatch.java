@@ -5,16 +5,15 @@ import java.util.Map;
 
 public class ForagePatch extends Cell{
 
+    public static final double DEFAULT_NUMBER_OF_ANTS = 10.0;
+    public static final double MAX_PHEROMONES_DEFAULT_VALUE = 10.0;
     private List<ForageAnt> myAnts;
     private double myFoodPheromones;
     private double myHomePheromones;
-//    private ForageState myCurrentState;
-//    private AntGrid myCurrentGrid;
-//    private AntGrid myNextGrid;
     private int foodItems;
 
-    public ForagePatch(ForagePatch currentPatch, AntGrid nextGrid){
-        super(currentPatch.getMyLocation(), currentPatch.getMyCurrentState(), currentPatch.getMyGrid(), nextGrid,
+    public ForagePatch(ForagePatch currentPatch, Grid nextGrid){
+        super(currentPatch.myLocation, currentPatch.myCurrentState, currentPatch.myGrid, nextGrid,
                 currentPatch.myParameters);
         myFoodPheromones = currentPatch.myFoodPheromones;
         myHomePheromones = currentPatch.myHomePheromones;
@@ -22,7 +21,7 @@ public class ForagePatch extends Cell{
         myAnts = new ArrayList<>();
     }
 
-    public ForagePatch(Location location, ForageState myCurrentState, AntGrid myCurrentGrid, AntGrid myNextGrid,
+    public ForagePatch(Location location, ForageState myCurrentState, Grid myCurrentGrid, Grid myNextGrid,
                        Map<String, Double> parameters) {
         super(location, myCurrentState, myCurrentGrid, myNextGrid, parameters);
         myAnts = new ArrayList<>();
@@ -30,7 +29,7 @@ public class ForagePatch extends Cell{
         initializePheromones();
     }
 
-    public void updateState(AntGrid nextGrid) {
+    public void updateState(Grid nextGrid) {
         for (ForageAnt ant: myAnts){
             ant.setMyNextGrid(nextGrid);
             ant.act();
@@ -39,9 +38,8 @@ public class ForagePatch extends Cell{
 
     private void initializeAnts() {
         if (myCurrentState == ForageState.NEST){
-            for (int i = 0; i < (int) (double) myParameters.get(ForageSimulation.NUMBER_OF_ANTS); i++){
-                myAnts.add(new ForageAnt(myLocation, generateRandomDirection(), (AntGrid) myGrid,
-                        (AntGrid) myNextGrid));
+            for (int i = 0; i < (int) (double) myParameters.getOrDefault(ForageSimulation.NUMBER_OF_ANTS, DEFAULT_NUMBER_OF_ANTS); i++){
+                myAnts.add(new ForageAnt(myLocation, generateRandomDirection(), myGrid, myNextGrid));
             }
         }
     }
@@ -61,15 +59,15 @@ public class ForagePatch extends Cell{
                 break;
             case FOOD:
                 myHomePheromones = 0.0D;
-                myFoodPheromones = myParameters.get(ForageSimulation.MAX_FOOD_PHEROMONES);
+                myFoodPheromones = myParameters.getOrDefault(ForageSimulation.MAX_FOOD_PHEROMONES, MAX_PHEROMONES_DEFAULT_VALUE);
                 foodItems = Integer.MAX_VALUE;
                 break;
             case EMPTY:
-                myHomePheromones = myParameters.get(ForageSimulation.MAX_HOME_PHEROMONES) * 0.25;
-                myFoodPheromones = myParameters.get(ForageSimulation.MAX_FOOD_PHEROMONES) * 0.25;
+                myHomePheromones = myParameters.getOrDefault(ForageSimulation.MAX_HOME_PHEROMONES, 0.0) * 0.25;
+                myFoodPheromones = myParameters.getOrDefault(ForageSimulation.MAX_FOOD_PHEROMONES, 0.0) * 0.25;
                 break;
             case NEST:
-                myHomePheromones = myParameters.get(ForageSimulation.MAX_HOME_PHEROMONES);
+                myHomePheromones = myParameters.getOrDefault(ForageSimulation.MAX_HOME_PHEROMONES, MAX_PHEROMONES_DEFAULT_VALUE);
                 myFoodPheromones = 0.0D;
                 break;
         }
@@ -77,9 +75,9 @@ public class ForagePatch extends Cell{
 
     public void topOffPheromones(ForageState homeOrFood){
         if (homeOrFood == ForageState.NEST)
-            myHomePheromones = myParameters.get(ForageSimulation.MAX_HOME_PHEROMONES);
+            myHomePheromones = myParameters.getOrDefault(ForageSimulation.MAX_HOME_PHEROMONES,MAX_PHEROMONES_DEFAULT_VALUE);
         else if (homeOrFood == ForageState.FOOD){
-            myFoodPheromones = myParameters.get(ForageSimulation.MAX_FOOD_PHEROMONES);
+            myFoodPheromones = myParameters.getOrDefault(ForageSimulation.MAX_FOOD_PHEROMONES, MAX_PHEROMONES_DEFAULT_VALUE);
         }
     }
 
@@ -94,7 +92,8 @@ public class ForagePatch extends Cell{
     }
 
     public boolean isValidPlaceToMove(){
-        return isValidAntLocation() && myAnts.size() < myParameters.get(ForageSimulation.NUMBER_OF_ANTS) / 2;
+        return isValidAntLocation() && myAnts.size() < myParameters.getOrDefault(ForageSimulation.NUMBER_OF_ANTS,
+                DEFAULT_NUMBER_OF_ANTS) / 2;
     }
 
     public boolean hasFoodSource(){
@@ -132,5 +131,10 @@ public class ForagePatch extends Cell{
 
     public void addFoodItem(){
         foodItems += 1;
+    }
+
+    @Override
+    public boolean containsAgent(){
+        return !myAnts.isEmpty();
     }
 }

@@ -7,32 +7,35 @@ public class ForageSimulation extends Simulation {
     public static final String MAX_FOOD_PHEROMONES = "maxFoodPheromones";
     public static final String MAX_HOME_PHEROMONES = "maxHomePheromones";
     public static final String NUMBER_OF_ANTS = "numberOfAnts";
-    public static final List<String> FORAGE_DATA_FILES = List.of(MAX_FOOD_PHEROMONES, MAX_HOME_PHEROMONES,
-            NUMBER_OF_ANTS);
+    public static final String EMPTY_PERCENTAGE = "emptyPercentage";
+    public static final String OBSTACLE_PERCENTAGE = "obstaclePercentage";
+    public static final List<String> FORAGE_DATA_FIELDS = List.of(MAX_FOOD_PHEROMONES, MAX_HOME_PHEROMONES,
+            NUMBER_OF_ANTS, EMPTY_PERCENTAGE, OBSTACLE_PERCENTAGE);
+    public static final int NEST_ROW = 0;
+    public static final int NEST_COLUMN = 0;
 
     public ForageSimulation(){
         super();
     }
 
-    public ForageSimulation(Map<String, Double> params, int rows, int cols){
-        myParameters = params;
-        myGrid = new AntGrid(rows, cols);
-        myNextGrid = new AntGrid(rows, cols);
+
+    public ForageSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
     }
 
     @Override
     public void updateGrid() {
-        myNextGrid = new AntGrid(myGrid.getNumRows(), myGrid.getNumCols());
+        myNextGrid = new GridFactory().generateGrid(myGrid);
         copyMyGrid();
         for (Cell patch: myGrid.getCells()){
-            ((ForagePatch) patch).updateState((AntGrid) myNextGrid);
+            ((ForagePatch) patch).updateState(myNextGrid);
         }
         myGrid = myNextGrid;
     }
 
     private void copyMyGrid() {
         for (Cell patch : myGrid.getCells()){
-            myNextGrid.put(patch.getMyLocation(), new ForagePatch((ForagePatch) patch, (AntGrid) myNextGrid));
+            myNextGrid.put(patch.getMyLocation(), new ForagePatch((ForagePatch) patch, myNextGrid));
         }
     }
 
@@ -48,6 +51,24 @@ public class ForageSimulation extends Simulation {
 
     @Override
     public List<String> getPercentageFields() {
-        return null;
+        return List.of(OBSTACLE_PERCENTAGE,EMPTY_PERCENTAGE);
+    }
+
+    @Override
+    public void updateNeighbors(Map<String, String> styleProperties){
+        super.updateNeighbors(styleProperties, NeighborsDefinitions.ADJACENT);
+    }
+
+    @Override
+    public void setInitialStates(String[][] initialStates, String simulationType, Map<String, Double> parameters) {
+        super.setInitialStates(initialStates, simulationType, parameters);
+        setFoodAndNest(initialStates);
+    }
+
+    private void setFoodAndNest(String[][] initialStates) {
+        Location nestLocation = new Location(NEST_ROW, NEST_COLUMN);
+        myGrid.put(nestLocation, new ForagePatch(nestLocation, ForageState.NEST, myGrid, myNextGrid, myParameters));
+        Location foodLocation = new Location(initialStates.length-1, initialStates[0].length-1);
+        myGrid.put(foodLocation, new ForagePatch(foodLocation, ForageState.FOOD, myGrid, myNextGrid, myParameters));
     }
 }

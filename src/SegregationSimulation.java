@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SegregationSimulation extends Simulation{
 
@@ -23,6 +24,10 @@ public class SegregationSimulation extends Simulation{
         setMyGrid(new BasicGrid(rows, cols));
     }
 
+    public SegregationSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
+    }
+
     @Override
     public boolean isOver() {
         for (Cell cell: myGrid.getCells()){
@@ -41,5 +46,10 @@ public class SegregationSimulation extends Simulation{
     @Override
     public List<String> getPercentageFields() {
         return List.of(RED_PERCENTAGE, BLUE_PERCENTAGE, EMPTY_PERCENTAGE);
+    }
+
+    @Override
+    public void updateNeighbors(Map<String, String> styleProperties){
+        super.updateNeighbors(styleProperties, NeighborsDefinitions.BOX_NEIGHBORS);
     }
 }

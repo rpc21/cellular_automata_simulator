@@ -4,14 +4,12 @@ import java.util.Map;
 
 public class SpreadingFireCell extends Cell {
 
-    private static final int[] SPREADING_FIRE_ROW_NEIGHBORS = {-1, 1, 0, 0};
-    private static final int[] SPREADING_FIRE_COL_NEIGHBORS = {0, 0, -1, 1};
-    //Name of parameter -> probCatch
+    public static final double PROB_CATCH_DEFAULT_VALUE = 1.0D;
 
     public SpreadingFireCell(Location location, SpreadingFireState initialState, Grid currentGrid, Grid nextGrid, Map<String,
                 Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
-        myNeighbors = NeighborsDefinitions.ADJACENT;
+//        myNeighbors = NeighborsDefinitions.ADJACENT;
     }
 
     @Deprecated
@@ -23,7 +21,7 @@ public class SpreadingFireCell extends Cell {
     @Deprecated
     public SpreadingFireCell(Location loc, SpreadingFireState startingState, Grid grid, Grid nextGrid){
         this(loc, startingState, grid, nextGrid, new HashMap<>());
-        myParameters.put(SpreadingFireSimulation.PROB_CATCH, 1.0D);
+        myParameters.put(SpreadingFireSimulation.PROB_CATCH, PROB_CATCH_DEFAULT_VALUE);
     }
 
     /**

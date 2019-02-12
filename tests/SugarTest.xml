@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="simulation">
+    <simulationType>Sugar</simulationType>
+    <title>The Sugar Simulation</title>
+    <author>Dima, Anna and Ryan</author>
+    <rows>99</rows>
+    <columns>99</columns>
+    <edges>basic</edges>
+    <maxSugar>25.0</maxSugar>
+    <GenerateStatesBy>randomFromPercentages</GenerateStatesBy>
+    <cellStates>
+        <CellRows index="0">
+            <CellColumns>3</CellColumns>
+            <CellColumns>3</CellColumns>
+            <CellColumns>1</CellColumns>
+        </CellRows>
+        <CellRows index="1">
+            <CellColumns>9</CellColumns>
+            <CellColumns>24</CellColumns>
+            <CellColumns>15</CellColumns>
+        </CellRows>
+        <CellRows index="2">
+            <CellColumns>4</CellColumns>
+            <CellColumns>20</CellColumns>
+            <CellColumns>1</CellColumns>
+        </CellRows>
+    </cellStates>
+    <sugarAgentPercentage>0.5</sugarAgentPercentage>
+    <sugarGrowBackRate>0.0</sugarGrowBackRate>
+    <maxVision>2.0</maxVision>
+    <maxMetabolism>7.0</maxMetabolism>
+    <initSugar>2.0</initSugar>
+    <light_patchPercentage>0.1</light_patchPercentage>
+    <medium_light_patchPercentage>0.1</medium_light_patchPercentage>
+    <medium_patchPercentage>0.1</medium_patchPercentage>
+    <medium_dark_patchPercentage>0.1</medium_dark_patchPercentage>
+    <dark_patchPercentage>0.1</dark_patchPercentage>
+</data>

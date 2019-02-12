@@ -92,13 +92,6 @@ public abstract class Cell {
         myCurrentState = newState;
     }
 
-//    /**
-//     * implement rule of which neighbors are possible given the simulation
-//     * @return
-//     */
-//    protected void updatePossibleNeighbors(){
-//        possibleNeighbors = myGrid.getNeighbors(myLocation);
-//    }
 
     /**
      * Changes the cell to the next state
@@ -109,26 +102,19 @@ public abstract class Cell {
     }
 
     /**
-     * Getter for the current state of the cell
-     * @return the current state of the cell
+     * Getter for the current state of the cell as a String
+     * @return the current state of the cell as a String
      */
-    public CellState getMyCurrentState() {
+    public String getMyCurrentState() {
+        return myCurrentState.toString();
+    }
+
+    /**
+     * Getter for the current state of the cell as a CellState
+     * @return the current state of the cell as a CellState
+     */
+    public CellState getCurrentCellState(){
         return myCurrentState;
-    }
-
-    //TODO: Determine if we need this
-    public void setMyCurrentState(CellState myCurrentState) {
-        this.myCurrentState = myCurrentState;
-    }
-
-    //TODO: Determine if we need this
-    public CellState getMyNextState() {
-        return myNextState;
-    }
-
-    //TODO: Determine if we need this
-    public void setMyNextState(CellState myNextState) {
-        this.myNextState = myNextState;
     }
 
     /**
@@ -153,7 +139,6 @@ public abstract class Cell {
      * @param updates is a map of parameters to be changed and their new values
      */
     public void setMyParameters(Map<String, Double> updates) {
-
         for (String parameter : updates.keySet()){
             myParameters.put(parameter, updates.get(parameter));
         }
@@ -184,5 +169,44 @@ public abstract class Cell {
     @Override
     public String toString() {
         return myCurrentState.getMyShortenedName();
+    }
+
+
+    public void setMyNeighbors(NeighborsDefinitions neighbors) {
+        if (neighbors == NeighborsDefinitions.HEXAGON){
+            handleHexagons();
+        }
+        else if (neighbors == NeighborsDefinitions.TRIANGLE_12_POINT_UP){
+            handleTriangles();
+        }
+        else{
+            myNeighbors = neighbors;
+        }
+    }
+
+    private void handleTriangles() {
+        if ((myLocation.getRow() + myLocation.getCol()) % 2 == 0){
+            myNeighbors = NeighborsDefinitions.TRIANGLE_12_POINT_UP;
+        }
+        else{
+            myNeighbors = NeighborsDefinitions.TRIANGLE_12_POINT_DOWN;
+        }
+    }
+
+    private void handleHexagons() {
+        if (myLocation.getRow() % 2 == 1){
+            myNeighbors = NeighborsDefinitions.HEXAGON;
+        }
+        else{
+            myNeighbors = NeighborsDefinitions.FLIPPED_HEXAGON;
+        }
+    }
+
+    /**
+     * Should be overridden to return the appropriate values for cells that could contain agents
+     * @return false for all cells that cannot contain agents
+     */
+    public boolean containsAgent(){
+        return false;
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data media="style">
+    <shape>rectangle</shape>
+    <neighborsType>ADJACENT</neighborsType>
+    <edges>basic</edges>
+    <outline>no</outline>
+    <stateColors>
+        <color id = "EMPTY">BLUE</color>
+        <color id = "SHARK">GRAY</color>
+        <color id = "FISH">GREEN</color>
+    </stateColors>
+</data>

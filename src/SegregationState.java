@@ -9,9 +9,12 @@ import java.util.List;
  */
 public enum SegregationState implements CellState {
 
-    EMPTY("E", "emptyPercentage",Color.WHITE),
-    RED("A", "redPercentage", Color.RED),
-    BLUE("B", "bluePercentage", Color.BLUE),
+    //EMPTY("O", "emptyPercentage",Color.WHITE),
+    //RED("A", "redPercentage", Color.RED),
+    //BLUE("B", "bluePercentage", Color.BLUE),
+    EMPTY("E", "EMPTY",Color.WHITE),
+    RED("R", "RED", Color.RED),
+    BLUE("B", "BLUE", Color.BLUE),
     TO_BE_MOVED("TBM", "TO_BE_MOVED", Color.ORANGE);
 
     private final String myShortenedName;
@@ -30,7 +33,7 @@ public enum SegregationState implements CellState {
      */
     @Override
     public String toString() {
-        return myShortenedName;
+        return myFullState;
     }
 
     /**
@@ -55,7 +58,8 @@ public enum SegregationState implements CellState {
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i< values().length; i++){
-            arrayList.add(myFullState);
+            if (!values()[i].myFullState.equals(SegregationState.TO_BE_MOVED.toString()))
+                arrayList.add(values()[i].myFullState);
         }
         return arrayList;
     }

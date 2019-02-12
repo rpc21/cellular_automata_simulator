@@ -36,6 +36,11 @@ public abstract class Simulation {
         setMyGrid(new BasicGrid(10,10));
     }
 
+    public Simulation(Map<String, Double> params, Grid grid){
+        myGrid = grid;
+        myParameters = params;
+    }
+
     public Simulation(Map<String, Double> params, int rows, int cols){
         setMyGrid(new BasicGrid(rows, cols));
         myParameters = params;
@@ -88,7 +93,6 @@ public abstract class Simulation {
         for (String key: parameters.keySet()){
             myParameters.put(key, parameters.get(key));
         }
-        System.out.println("Parameters updated");
     }
 
     public void stopSimulation(){
@@ -109,20 +113,16 @@ public abstract class Simulation {
         return myGrid;
     }
 
-    public void setInitialStates(String[][] initialStates, String simulationType, HashMap<String, Double> parameters){
+    public void setInitialStates(String[][] initialStates, String simulationType, Map<String, Double> parameters){
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
-                System.out.println("Creating a "+simulationType+" cell");
                 Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
                         myGrid, myNextGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
                 getMyGrid().put(newCell.getMyLocation(), newCell);
             }
         }
         getMyGrid().printGrid();
-        System.out.println("Initial states set");
     }
 
     @Deprecated
@@ -167,7 +167,7 @@ public abstract class Simulation {
             case WATOR_SIMULATION_NAME:
                 return generateWatorCellByState(loc, WatorState.valueOf(state));
             case FORAGE_SIMULATION_NAME:
-                return new ForagePatch(loc, ForageState.valueOf(state), (AntGrid) grid, (AntGrid) nextGrid, parameters);
+                return new ForagePatch(loc, ForageState.valueOf(state), grid, nextGrid, parameters);
             case SUGAR_SIMULATION_NAME:
                 return new SugarPatch(loc, parameters, grid, state);
         }
@@ -187,13 +187,39 @@ public abstract class Simulation {
         Cell newCell = generateSimulationSpecificCell(getMyName(), location, newState, myGrid, myNextGrid,
                 myParameters);
         myGrid.put(location, newCell);
+        updateNeighbors(myStyleProperties, NeighborsDefinitions.ADJACENT);
     }
 
     public List<String> getMyPossibleStates(){
-        return myGrid.getCells().get(0).getMyCurrentState().getPossibleValues();
+        try{
+            return myGrid.getCells().get(0).getCurrentCellState().getPossibleValues();
+        }catch(IndexOutOfBoundsException e){
+            throw new IndexOutOfBoundsException("No states");
+        }
     }
     public Map<String,Double> getInitialParams(){
         return myParameters;
+    }
+
+    public void updateNeighbors(Map<String, String> styleProperties){
+        this.updateNeighbors(styleProperties, NeighborsDefinitions.ADJACENT);
+    }
+
+    public void updateNeighbors(Map<String, String> styleProperties, NeighborsDefinitions defaultValue){
+        for (Cell cell : myGrid.getCells()){
+            String neighbor = styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME, defaultValue.toString());
+            cell.setMyNeighbors(NeighborsDefinitions.valueOf(neighbor.toUpperCase()));
+        }
+    }
+
+    public void updateNeighbors(String neighborsString){
+        for (Cell cell : myGrid.getCells()){
+            cell.setMyNeighbors(NeighborsDefinitions.valueOf(neighborsString.toUpperCase()));
+        }
+    }
+
+    public void setMyStyleProperties(Map<String, String> myStyleProperties) {
+        this.myStyleProperties = myStyleProperties;
     }
 
 }

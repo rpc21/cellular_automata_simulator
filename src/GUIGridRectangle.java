@@ -1,15 +1,14 @@
-import javafx.stage.Stage;
 
 public class GUIGridRectangle extends GUIGridPolygon {
     private double myRectangleLength;
     private double myRectangleHeight;
-    private double myCols;
+    private int myCols;
 
     public GUIGridRectangle(int r, int c) {
-        super(r, c);
+        super(r,c);
         myCols = c;
-        myRectangleLength = GUIGrid.GUI_GRID_SIZE / r;
-        myRectangleHeight = GUIGrid.GUI_GRID_SIZE / c;
+        myRectangleLength = GUIGrid.GUI_GRID_SIZE / (double)r;
+        myRectangleHeight = GUIGrid.GUI_GRID_SIZE / (double)c;
     }
 
     public Double[] getVertices(int r, int c) {
@@ -29,9 +28,13 @@ public class GUIGridRectangle extends GUIGridPolygon {
         return (r * 1.0 * myRectangleHeight);
     }
 
-    public double getHalfWay(){
-        return myCols * myRectangleLength/2.0;
+
+    protected Double[] getInnerVertices(){
+        Double[] arr = {myRectangleLength/2.0, 0.0, myRectangleLength, myRectangleHeight/2.0,
+                myRectangleLength/2.0, myRectangleHeight, 0.0, myRectangleHeight/2.0};
+        return arr;
     }
+
 
 }
 

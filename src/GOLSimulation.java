@@ -25,6 +25,9 @@ public class GOLSimulation extends Simulation {
         setMyGrid(new BasicGrid(rows, cols));
     }
 
+    public GOLSimulation(Map<String, Double> params, Grid grid){
+        super(params, grid);
+    }
 
 
     /**
@@ -49,5 +52,10 @@ public class GOLSimulation extends Simulation {
     @Override
     public List<String> getPercentageFields() {
         return List.of(DEAD_PERCENTAGE, ALIVE_PERCENTAGE);
+    }
+
+    @Override
+    public void updateNeighbors(Map<String, String> styleProperties){
+        super.updateNeighbors(styleProperties, NeighborsDefinitions.BOX_NEIGHBORS);
     }
 }
