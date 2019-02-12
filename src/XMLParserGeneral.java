@@ -5,6 +5,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public abstract class XMLParserGeneral {
@@ -12,6 +13,7 @@ public abstract class XMLParserGeneral {
     protected final String TYPE_ATTRIBUTE;
     // keep only one documentBuilder because it is expensive to make and can reset it before parsing
     protected final DocumentBuilder DOCUMENT_BUILDER;
+    protected final File DEFAULT_XML_FILE = new File("tests/GameOfLifeTest.xml");
 
     public XMLParserGeneral (String type) {
         DOCUMENT_BUILDER = getDocumentBuilder();
@@ -24,9 +26,15 @@ public abstract class XMLParserGeneral {
             DOCUMENT_BUILDER.reset();
             var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
             return xmlDocument.getDocumentElement();
-        }
-        catch (SAXException | IOException e) {
-            throw new XMLException(e);
+        }catch (SAXException | IOException e) {
+            try {
+                System.out.println("File not found. Using default Game of Life File.");
+                DOCUMENT_BUILDER.reset();
+                var xmlDocument = DOCUMENT_BUILDER.parse(DEFAULT_XML_FILE);
+                return xmlDocument.getDocumentElement();
+            }catch(SAXException | IOException ee){
+                throw new XMLException(e);
+            }
         }
     }
 

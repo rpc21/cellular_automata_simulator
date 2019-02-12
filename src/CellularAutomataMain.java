@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.FileNotFoundException;
+
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -25,7 +27,7 @@ public class CellularAutomataMain extends Application {
         //String testCase = "tests/GOLTest.xml";
         //String testCase = "tests/GameOfLifeTest.xml";
         //String testCase = "tests/PercolationTest.xml";
-        String testCase = "tests/SpreadingFireTest.xml";
+        String testCase = "SpreadingFireTest.xml";
         //String testCase = "tests/SugarTest.xml";
         //String testCase = "tests/WatorTest.xml";
         //String testCase = "tests/ForageTest.xml";
