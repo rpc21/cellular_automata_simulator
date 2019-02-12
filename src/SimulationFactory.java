@@ -83,7 +83,7 @@ public class SimulationFactory {
         String simulationType = basicParameters.get("simulationType");
         int rows = Integer.parseInt(basicParameters.getOrDefault("rows", "10"));
         int cols = Integer.parseInt(basicParameters.getOrDefault("columns", "10"));
-        String gridType = basicParameters.getOrDefault("gridType", Grid.BASIC_GRID_NAME);
+        String gridType = basicParameters.getOrDefault("edges", Grid.BASIC_GRID_NAME);
         Grid grid = new GridFactory().generateGrid(gridType, rows, cols);
         return selectSimulationConstructor(simulationType, grid, simulationSpecificParameters);
     }
