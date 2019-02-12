@@ -64,6 +64,8 @@ Extra credit:
 * User can actively change neighbor type during simulation
 * User can modify display of two grids during simulation
 * Added additional neighbor types - i-formation, knight, diagonal, 
+* Changing cell shape during simulation
+* prompting user with alerts at the start of the simulation
 
 
 ### Notes
