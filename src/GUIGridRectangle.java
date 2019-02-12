@@ -2,11 +2,9 @@
 public class GUIGridRectangle extends GUIGridPolygon {
     private double myRectangleLength;
     private double myRectangleHeight;
-    private int myCols;
 
     public GUIGridRectangle(int r, int c) {
         super(r,c);
-        myCols = c;
         myRectangleLength = GUIGrid.GUI_GRID_SIZE / (double)r;
         myRectangleHeight = GUIGrid.GUI_GRID_SIZE / (double)c;
     }
