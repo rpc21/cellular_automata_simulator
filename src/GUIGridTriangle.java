@@ -3,14 +3,12 @@
 public class GUIGridTriangle extends GUIGridPolygon{
     private double myTriangleBottomLength;
     private double myTriangleHeight;
-    private double myCols;
 
     private static final double SIDE_TO_GRID_RATIO = 4.0/3.0;
     private static final double HEIGHT_TO_SIDE_RATIO = 21.0/40.0;
 
     public GUIGridTriangle(int r, int c) {
         super(r,c);
-        myCols = c;
         myTriangleBottomLength = GUIGrid.GUI_GRID_SIZE/(double)r * SIDE_TO_GRID_RATIO;
         myTriangleHeight = myTriangleBottomLength * HEIGHT_TO_SIDE_RATIO;
     }
