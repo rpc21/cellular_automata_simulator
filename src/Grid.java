@@ -81,19 +81,6 @@ public interface Grid {
     ArrayList<Location> getEmptyLocations();
 
     /**
-     * Gets the valid locations adjacent to a given location in all eight
-     * compass directions (north, northeast, east, southeast, south, southwest,
-     * west, and northwest). <br />
-     * Precondition: <code>loc</code> is valid in this grid
-     * @param loc a location in this grid
-     * @return an array list of the valid locations adjacent to <code>loc</code>
-     * in this grid
-     */
-//    ArrayList<Location> getValidAdjacentLocations(Location loc);
-
-//    ArrayList<Location> getValidBoxLocations(Location loc);
-
-    /**
      * Gets the valid empty locations adjacent to a given location in all eight
      * compass directions (north, northeast, east, southeast, south, southwest,
      * west, and northwest). <br />

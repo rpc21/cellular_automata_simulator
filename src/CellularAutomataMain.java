@@ -59,10 +59,7 @@ public class CellularAutomataMain extends Application {
 //            System.out.println("Invalid Simulation or Style File");
 //        }
 //        System.out.println("Ready to Display");
-//
-//        GUI myGUI = new GUI(stage,myCurrentSimulation);
-//
-//    }
+
 
     // kind of data files to look for
     public static final String DATA_FILE_EXTENSION = "*.xml";
