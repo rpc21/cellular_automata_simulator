@@ -6,7 +6,7 @@
     <rows>3</rows>
     <columns>3</columns>
     <edges>basic</edges>
-    <GenerateStatesBy>seeBelow</GenerateStatesBy>
+    <GenerateStatesBy>seebelow</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
             <CellColumns>TREE</CellColumns>
@@ -24,8 +24,8 @@
             <CellColumns>TREE</CellColumns>
         </CellRows>
     </cellStates>
-    <treePercentage>0.7</treePercentage>
-    <firePercentage>0.2</firePercentage>
-    <emptyPercentage>0.1</emptyPercentage>
-    <probCatch>0.8</probCatch>
+    <treePercentage>HI</treePercentage>
+    <firePercentage>0.0</firePercentage>
+    <emptyPercentage>1.0</emptyPercentage>
+    <probCatch>0.0</probCatch>
 </data>

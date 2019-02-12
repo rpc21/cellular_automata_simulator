@@ -173,15 +173,16 @@ public class XMLStyler {
     }
 
     // Get value of Element's text
-    private String getTextValue (Element e, String tagName) {
-        var nodeList = e.getElementsByTagName(tagName);
-        if (nodeList != null && nodeList.getLength() > 0) {
-            return nodeList.item(0).getTextContent();
+    private String getTextValue (Element e, String tagName) throws NullPointerException {
+        try{
+            var nodeList = e.getElementsByTagName(tagName);
+            if (nodeList != null && nodeList.getLength() > 0) {
+                return nodeList.item(0).getTextContent();
+            }
+        }catch(NullPointerException exc){
+            throw new NullPointerException("No such field" + tagName);
         }
-        else {
-            // FIXME: empty string or null, is it an error to not find the text value?
-            return "";
-        }
+        return "";
     }
 
     private DocumentBuilder getDocumentBuilder () {
