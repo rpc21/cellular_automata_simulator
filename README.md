@@ -44,18 +44,20 @@ run an additional simulation of the same type to compare states, and cycle throu
 
 Assumptions or Simplifications:
 
-* Switching between simulations requires the 5 default files GOLTest.xml, PercolationTest.xml, SegregationTest.xml, SpreadingFireTest.xml, and WatorTest.xml
-* Percolation continues running until no changes occur between iterations of the simulation. The number of filled water cells at the start of the configuration is not limited to 1; the user can begin the simulation with as many water filled cells as desired. 
+* Switching between simulations requires the 7 default files GameOfLifeTest.xml, PercolationTest.xml, SegregationTest.xml, SpreadingFireTest.xml, WatorTest.xml, SugarTest.xml, ForageTest.xml
+* The number of filled water cells at the start of the configuration in percolation is limited to 0; the user begins the simulation by clicking the desired cell in the GUI to percolate it. 
 * The Spreading Fire simulation trees only remain on fire for one iteration before burning down
-* The Predator Prey simulation assumes predator and prey can only move to immediately adjacent vacant cells (including wrap around adjacent cells)
 * We assumed that the user would only ever want to run one or two simulations at the same time, and that the user would want to run the same simulation at the same time.
 * The graph only displays the original simulation's distribution
+* If invalid inputs are set or information is missing from the XML files then the default simulation, which we chose to be Game of Life, is used.
+* Errors we check for when parsing the XML file include invalid types for each input field, missing information, invalid inputs, invalid file types and invalid files. The program does not crash, but rather is designed to use defaults specific to the named simulation or if no named simulation is found, then Game of Life simulation is run.
 
 Known Bugs:
 
 * Grid changes size when you switch shape
 * Sometimes grid options button overlaps grid after many cycles of changes to the current GUI
 * Clicking on the grid to change the cell state when the shapes are a triangle is non-intuitive because the triangle is in a stackpane
+* Graph only shows 50 iterations
 
 Extra credit: 
 
