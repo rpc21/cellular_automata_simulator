@@ -44,7 +44,7 @@ public class GUI {
         }
     };
 
-    public static final int STAGE_SIZE = 750;
+    public static final int STAGE_SIZE = 600;
     private static final String STAGE_TITLE = "Cellular Automata Simulation";
     private static final Color BACKGROUND_COLOR = Color.LIGHTSKYBLUE;
     private static final int FRAMES_PER_SECOND = 60;
@@ -68,7 +68,7 @@ public class GUI {
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(myFrame);
-        Scale scale = new Scale(0.75, 0.75);
+        Scale scale = new Scale(0.6, 0.6);
         scale.setPivotX(0);
         scale.setPivotY(0);
         myScene.getRoot().getTransforms().setAll(scale);
