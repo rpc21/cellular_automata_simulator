@@ -1,3 +1,4 @@
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import org.w3c.dom.Element;
@@ -22,6 +23,8 @@ public class XMLStyler extends XMLParserGeneral{
     public static final String GRID_LINE_ON = "yes";
     public static final String GRID_LINE_OFF = "no";
     public static final String defaultGridLineSetting = GRID_LINE_ON;
+    public static final String COLOR = "color";
+    public static final String ID = "id";
     private Queue<Paint> DEFAULT_COLORS= new LinkedList<>(List.of(Color.ALICEBLUE, Color.BISQUE, Color.BLANCHEDALMOND, Color.HONEYDEW, Color.LINEN));
 
     // name of root attribute that notes the type of file expecting to parse
@@ -47,13 +50,12 @@ public class XMLStyler extends XMLParserGeneral{
     public Map<String, Paint> getColorMap(File dataFile, Simulation mySim) {
         Map<String, Paint> colorMap = new HashMap<String, Paint>();
         var root = getRootElement(dataFile);
-        NodeList colors = root.getElementsByTagName("color");
-        System.out.println("Num Colors = "+colors.getLength());
+        NodeList colors = root.getElementsByTagName(COLOR);
         for (int i = 0; i < colors.getLength(); i++) {
             Element element = (Element) colors.item(i);
             String colorval = element.getTextContent();
             Paint p = Paint.valueOf(colorval);
-            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), p);
+            colorMap.put(element.getAttributes().getNamedItem(ID).getNodeValue(), p);
         }
         validateColorMap(colorMap, mySim);
         return colorMap;
@@ -111,6 +113,7 @@ public class XMLStyler extends XMLParserGeneral{
                 }
             }
             catch (IllegalArgumentException ee) {
+                System.out.print("Not a valid neighbors option. Default used.");
                 styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, defaultNeighbors);
             }
         }
@@ -154,11 +157,11 @@ public class XMLStyler extends XMLParserGeneral{
 
     private HashMap<String, String> readStateColors(Element root, Simulation simulation){
         Map<String, String> colorMap = new HashMap<String, String>();
-        NodeList colors = root.getElementsByTagName("color");
+        NodeList colors = root.getElementsByTagName(COLOR);
         for (int i = 0; i < colors.getLength(); i++) {
             Element element = (Element) colors.item(i);
             String colorval = element.getTextContent();
-            colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), colorval);
+            colorMap.put(element.getAttributes().getNamedItem(ID).getNodeValue(), colorval);
         }
         return (HashMap)colorMap;
     }
@@ -166,7 +169,6 @@ public class XMLStyler extends XMLParserGeneral{
     private void validateColorMap(Map<String, Paint> colorMap, Simulation simulation){
         try{
             List<String> states = simulation.getMyGrid().getCells().get(0).getCurrentCellState().getPossibleValues();
-            System.out.println(states);
             for(String state: states){
                 if (!colorMap.containsKey(state)){
                     Paint color = DEFAULT_COLORS.poll();
@@ -178,50 +180,6 @@ public class XMLStyler extends XMLParserGeneral{
             throw new NullPointerException("Unable to validate color map");
         }
     }
-
-//    // Get root element of an XML file
-//    private Element getRootElement (File xmlFile) {
-//        try {
-//            DOCUMENT_BUILDER.reset();
-//            var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-//            return xmlDocument.getDocumentElement();
-//        }
-//        catch (SAXException | IOException e) {
-//            throw new XMLException(e);
-//        }
-//    }
-//
-//    // Returns if this is a valid XML file for the specified object type
-//    private boolean isValidFile (Element root, String type) {
-//        return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
-//    }
-//
-//    // Get value of Element's attribute
-//    private String getAttribute (Element e, String attributeName) {
-//        return e.getAttribute(attributeName);
-//    }
-//
-//    // Get value of Element's text
-//    private String getTextValue (Element e, String tagName) throws NullPointerException {
-//        try{
-//            var nodeList = e.getElementsByTagName(tagName);
-//            if (nodeList != null && nodeList.getLength() > 0) {
-//                return nodeList.item(0).getTextContent();
-//            }
-//        }catch(NullPointerException exc){
-//            throw new NullPointerException("No such field" + tagName);
-//        }
-//        return "";
-//    }
-//
-//    private DocumentBuilder getDocumentBuilder () {
-//        try {
-//            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-//        }
-//        catch (ParserConfigurationException e) {
-//            throw new XMLException(e);
-//        }
-//    }
 
     private String readInEdges(Element root){
         return getTextValue(root, XMLParser.EDGE_TYPE_TAG_NAME);
