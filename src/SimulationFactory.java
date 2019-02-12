@@ -48,6 +48,9 @@ public class SimulationFactory {
     private String[][] createInitialStatesFromPercentages(Simulation mySimulation,
                                                           Map<String, Double> simulationSpecificParameters) {
 
+        if (!simulationSpecificParameters.keySet().containsAll(mySimulation.getPercentageFields())){
+            return createInitialStatesFromRandomPercentages(mySimulation, simulationSpecificParameters);
+        }
         int rows = mySimulation.getMyGrid().getNumRows();
         int cols = mySimulation.getMyGrid().getNumCols();
         ArrayList<Location> gridLocations = getShuffledGridLocations(rows, cols);

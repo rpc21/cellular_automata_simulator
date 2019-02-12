@@ -25,24 +25,6 @@ public class ForageAnt {
 
     }
 
-    private void findFoodSource() {
-        Location myNextLocation = null;
-        if (((ForagePatch) myGrid.get(myLocation)).isTheNest()) {
-            myDirection = getDirectionWithMaxFoodPheromones(calculateForwardDirections());
-        }
-        myNextLocation = selectLocationOnFood(calculateForwardLocations());
-        if (myNextLocation == null){
-            myNextLocation = selectLocationOnFood(getPossibleMoves(calculateNeighborLocations()));
-        }
-        if (myNextLocation != null){
-            dropHomePheromones();
-            move(myNextLocation);
-            if (((ForagePatch) myGrid.get(myLocation)).hasFoodSource()){
-                hasFoodItem = true;
-            }
-        }
-    }
-
     private List<Location> calculateNeighborLocations() {
         return myGrid.getValidNeighbors(myLocation, NeighborsDefinitions.BOX_NEIGHBORS);
     }
@@ -75,8 +57,6 @@ public class ForageAnt {
         }
     }
 
-
-
     private List<NeighborsDefinitions> calculateForwardDirections() {
         ArrayList<NeighborsDefinitions> forwardDirections = new ArrayList<>();
         NeighborsDefinitions[] directions = NeighborsDefinitions.CARDINAL_DIRECTIONS_COMPLETE;
@@ -95,12 +75,12 @@ public class ForageAnt {
             ((ForagePatch) myGrid.get(myLocation)).topOffPheromones(ForageState.NEST);
         }
         else {
-            Double max = Collections.max(getNeighborHomePheromones(myLocation));
-            double desired = max - 2.0;
-            double d = desired - ((ForagePatch) myGrid.get(myLocation)).getMyHomePheromones();
-            if (d > 0){
-                ((ForagePatch) myNextGrid.get(myLocation)).addHomePheromones(d);
-            }
+//            Double max = Collections.max(getNeighborHomePheromones(myLocation));
+//            double desired = max - 2.0;
+//            double d = desired - ((ForagePatch) myGrid.get(myLocation)).getMyHomePheromones();
+//            if (d > 0){
+            ((ForagePatch) myNextGrid.get(myLocation)).addHomePheromones(1.0D);
+//            }
         }
     }
 
@@ -109,12 +89,12 @@ public class ForageAnt {
             ((ForagePatch) myNextGrid.get(myLocation)).topOffPheromones(ForageState.FOOD);
         }
         else {
-            Double max = Collections.max(getNeighborFoodPheromones(myLocation));
-            double desired = max - 2.0;
-            double d = desired - ((ForagePatch) myNextGrid.get(myLocation)).getMyFoodPheromones();
-            if (d > 0){
-                ((ForagePatch) myNextGrid.get(myLocation)).addFoodPheromones(d);
-            }
+//            Double max = Collections.max(getNeighborFoodPheromones(myLocation));
+//            double desired = max - 2.0;
+//            double d = desired - ((ForagePatch) myNextGrid.get(myLocation)).getMyFoodPheromones();
+//            if (d > 0){
+                ((ForagePatch) myNextGrid.get(myLocation)).addFoodPheromones(1.0D);
+//            }
         }
     }
 
@@ -139,6 +119,7 @@ public class ForageAnt {
     }
 
     private Location getNextLocation(List<Location> neighborLocations, Comparator<Location> locationComparator) {
+        Collections.shuffle(neighborLocations);
         PriorityQueue<Location> possibleLocations = new PriorityQueue<>(locationComparator);
         possibleLocations.addAll(getPossibleMoves(neighborLocations));
         if (possibleLocations.isEmpty()) {
@@ -164,19 +145,35 @@ public class ForageAnt {
         }
     }
 
+    private void findFoodSource() {
+        Location myNextLocation = null;
+        if (((ForagePatch) myGrid.get(myLocation)).isTheNest()) {
+            myDirection = getDirectionWithMaxFoodPheromones(calculateForwardDirections());
+        }
+        myNextLocation = selectLocationOnFood(calculateNeighborLocations());
+        if (myNextLocation == null){
+            myNextLocation = selectLocationOnFood(getPossibleMoves(calculateNeighborLocations()));
+        }
+        if (myNextLocation != null){
+            dropHomePheromones();
+            move(myNextLocation);
+            if (((ForagePatch) myGrid.get(myLocation)).hasFoodSource()){
+                hasFoodItem = true;
+            }
+        }
+    }
 
     private void returnToNest() {
-        NeighborsDefinitions myNextDirection = null;
+        Location myNextLocation;
         if (((ForagePatch) myGrid.get(myLocation)).hasFoodSource()) {
-            myNextDirection = getDirectionWithMaxHomePheromones(calculateForwardDirections());
+            myDirection = getDirectionWithMaxHomePheromones(calculateForwardDirections());
         }
-        if (myNextDirection == null){
-            myNextDirection = getDirectionWithMaxHomePheromones(Arrays.asList(NeighborsDefinitions.CARDINAL_DIRECTIONS_COMPLETE));
+        myNextLocation = selectLocationOnHome(calculateNeighborLocations());
+        if (myNextLocation == null){
+            myNextLocation = selectLocationOnHome(getPossibleMoves(calculateNeighborLocations()));
         }
-        if (myNextDirection != null){
-            myDirection = myNextDirection;
+        if (myNextLocation != null){
             dropFoodPheromones();
-            Location myNextLocation = calculateNextLocation(myLocation, myDirection);
             move(myNextLocation);
             if (((ForagePatch) myGrid.get(myLocation)).isTheNest()){
                 ((ForagePatch) myGrid.get(myLocation)).addFoodItem();
