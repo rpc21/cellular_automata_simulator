@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class XMLStyler {
+public class XMLStyler extends XMLParserGeneral{
     public static final String SHAPE_TYPE_TAG_NAME="shape";
     public static final String NEIGHBORS_TYPE_TAG_NAME="neighborsType";
     public static final String OUTLINE_TAG_NAME="outline";
@@ -31,6 +31,7 @@ public class XMLStyler {
     private final DocumentBuilder DOCUMENT_BUILDER;
 
     public XMLStyler (String type) {
+        super(type);
         DOCUMENT_BUILDER = getDocumentBuilder();
         TYPE_ATTRIBUTE = type;
     }
@@ -161,49 +162,49 @@ public class XMLStyler {
         return (HashMap)colorMap;
     }
 
-    // Get root element of an XML file
-    private Element getRootElement (File xmlFile) {
-        try {
-            DOCUMENT_BUILDER.reset();
-            var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-            return xmlDocument.getDocumentElement();
-        }
-        catch (SAXException | IOException e) {
-            throw new XMLException(e);
-        }
-    }
-
-    // Returns if this is a valid XML file for the specified object type
-    private boolean isValidFile (Element root, String type) {
-        return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
-    }
-
-    // Get value of Element's attribute
-    private String getAttribute (Element e, String attributeName) {
-        return e.getAttribute(attributeName);
-    }
-
-    // Get value of Element's text
-    private String getTextValue (Element e, String tagName) throws NullPointerException {
-        try{
-            var nodeList = e.getElementsByTagName(tagName);
-            if (nodeList != null && nodeList.getLength() > 0) {
-                return nodeList.item(0).getTextContent();
-            }
-        }catch(NullPointerException exc){
-            throw new NullPointerException("No such field" + tagName);
-        }
-        return "";
-    }
-
-    private DocumentBuilder getDocumentBuilder () {
-        try {
-            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        }
-        catch (ParserConfigurationException e) {
-            throw new XMLException(e);
-        }
-    }
+//    // Get root element of an XML file
+//    private Element getRootElement (File xmlFile) {
+//        try {
+//            DOCUMENT_BUILDER.reset();
+//            var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
+//            return xmlDocument.getDocumentElement();
+//        }
+//        catch (SAXException | IOException e) {
+//            throw new XMLException(e);
+//        }
+//    }
+//
+//    // Returns if this is a valid XML file for the specified object type
+//    private boolean isValidFile (Element root, String type) {
+//        return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
+//    }
+//
+//    // Get value of Element's attribute
+//    private String getAttribute (Element e, String attributeName) {
+//        return e.getAttribute(attributeName);
+//    }
+//
+//    // Get value of Element's text
+//    private String getTextValue (Element e, String tagName) throws NullPointerException {
+//        try{
+//            var nodeList = e.getElementsByTagName(tagName);
+//            if (nodeList != null && nodeList.getLength() > 0) {
+//                return nodeList.item(0).getTextContent();
+//            }
+//        }catch(NullPointerException exc){
+//            throw new NullPointerException("No such field" + tagName);
+//        }
+//        return "";
+//    }
+//
+//    private DocumentBuilder getDocumentBuilder () {
+//        try {
+//            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
+//        }
+//        catch (ParserConfigurationException e) {
+//            throw new XMLException(e);
+//        }
+//    }
 
     private String readInEdges(Element root){
         return getTextValue(root, XMLParser.EDGE_TYPE_TAG_NAME);
