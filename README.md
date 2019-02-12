@@ -40,7 +40,7 @@ Features implemented:
 * Configuration: The ability to read in the simulation from xml file. The ability to read in the initial states for each individual cell or for larger simulations, one can generate the initial states by specifying the percentage of each cell type used in the simulation in the xml file. To have the states be generated based on cell type percentages, set GenerateStatesBy tag in the xml file to "random".
 * Simulation: The ability to run one of 7 simulations: Game of Life, Segregation, Predator-Prey, Fire, Percolation, Forage, & Sugar.  
 * Visualization: The ability to display the simulations and allow the user to interact with the simulation by changing simulation-specific parameters, simulation speed, pause, reset, and switch simulations using the GUI. From visualization, you can track the current simulation's distribution in the chart above, modify the shape of the cells, change its neighbor type,
-* run an additional simulation of the same type to compare states, and cycle through new states by clicking on the grid, 
+run an additional simulation of the same type to compare states, and cycle through new states by clicking on the grid, 
 
 Assumptions or Simplifications:
 
@@ -49,6 +49,7 @@ Assumptions or Simplifications:
 * The Spreading Fire simulation trees only remain on fire for one iteration before burning down
 * The Predator Prey simulation assumes predator and prey can only move to immediately adjacent vacant cells (including wrap around adjacent cells)
 * We assumed that the user would only ever want to run one or two simulations at the same time, and that the user would want to run the same simulation at the same time.
+* The graph only displays the original simulation's distribution
 
 Known Bugs:
 
