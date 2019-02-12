@@ -3,6 +3,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Credentials {
+
     private static final double CREDENTIALS_PANEL_X_COOR = GUI.STAGE_SIZE * 5.0/3.0;
     private static final double CREDENTIALS_PANEL_Y_COOR = GUI.STAGE_SIZE * 5.0/3.0;
 
