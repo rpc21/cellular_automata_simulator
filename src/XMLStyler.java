@@ -21,6 +21,9 @@ public class XMLStyler {
     public static final String STATE_COLORS_TAG_NAME = "stateColors";
     public static final String defaultShape = "rectangle";
     public static final String defaultNeighbors = "ADJACENT";
+    public static final String GRID_LINE_ON = "yes";
+    public static final String GRID_LINE_OFF = "no";
+    public static final String defaultGridLineSetting = GRID_LINE_ON;
 
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
@@ -74,8 +77,20 @@ public class XMLStyler {
     }
 
     private void readInOutline(Element root, HashMap<String, String> styleProperties){
-        String outline = getTextValue(root, OUTLINE_TAG_NAME);
-        styleProperties.put(OUTLINE_TAG_NAME, outline);
+        try {
+            String outline = getTextValue(root, OUTLINE_TAG_NAME);
+            if (isValidOutlineOption(outline)) {
+                styleProperties.put(OUTLINE_TAG_NAME, outline);
+            } else {
+                styleProperties.put(OUTLINE_TAG_NAME, defaultGridLineSetting);
+            }
+        }catch(NullPointerException e){
+            styleProperties.put(OUTLINE_TAG_NAME, defaultGridLineSetting);
+        }
+    }
+
+    private boolean isValidOutlineOption(String outline){
+        return (outline.equals(GRID_LINE_ON) || outline.equals(GRID_LINE_OFF));
     }
 
     private void readInNeighborsType(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException{

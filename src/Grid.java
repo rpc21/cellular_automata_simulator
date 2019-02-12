@@ -16,6 +16,7 @@ public interface Grid {
 
     public static final String BASIC_GRID_NAME = "basic";
     public static final String TOROIDAL_GRID_NAME = "toroidal";
+    public static final List<String> GRID_EDGE_TYPES = List.of(BASIC_GRID_NAME, TOROIDAL_GRID_NAME);
 
     /**
      * Returns the number of rows in this grid.
