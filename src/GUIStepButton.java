@@ -18,7 +18,6 @@ public class GUIStepButton extends GUIControlManager{
         super.setUpButton(myButton, NAME, e -> fire());
     }
 
-
     private void fire(){
         myAnimation.pause();
         myGUIStepFunction.guiGridStep();

@@ -28,11 +28,6 @@ public class GUIGridCell {
     }
 
 
-    public double getHalfWay(){
-        return myPolygon.getHalfWay();
-    }
-
-
     public StackPane setUpCell(int r, int c, String state, boolean border, String shape){
         Polygon p = new Polygon();
         myPolygon = myFactory.makeGUIPolygon(mySim.getMyGrid().getNumRows(),mySim.getMyGrid().getNumCols(),shape);
@@ -53,7 +48,7 @@ public class GUIGridCell {
     }
 
 
-    protected void setUpColorSwitch(int r, int c, Polygon currPolygon,StackPane currStack){
+    private void setUpColorSwitch(int r, int c, Polygon currPolygon,StackPane currStack){
         final int rCopy = r;
         final int cCopy = c;
         currStack.setOnMousePressed(new EventHandler<MouseEvent>() {

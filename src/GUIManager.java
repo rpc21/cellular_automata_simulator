@@ -16,7 +16,9 @@ public class GUIManager {
     private SimulationFactory mySimFact = new SimulationFactory();
     private int numSimulations;
     private Stage myStage;
-    private String myShape;
+
+    private static final int GRID_X_COOR = 250;
+    private static final int GRID_Y_COOR = 350;
     private int GRID_SPACING = 50;
     private int CTRL_OFFSET = 20;
 
@@ -31,18 +33,13 @@ public class GUIManager {
         numSimulations++;
         mySimulations.add(sim);
         myStage = stage;
-        myShape = "rectangle";
-        myGUIGrids.add(myGUISimulationFactory.makeGUIGrid(myShape, sim,stage));
+        myGUIGrids.add(myGUISimulationFactory.makeGUIGrid(sim,stage));
         myGUIGrids.get(numSimulations - 1).makeGUIGrid(sim.getMyGrid().getCells());
         myGUISimPanels.add(myGUISimulationFactory.makeSimulationPanel(sim.getMyName(), sim));
         managePositions();
-        currNode.getChildren().addAll( myGUIGrids.get(numSimulations - 1).getGUIGrid(),myGUIGrids.get(numSimulations - 1).getGUIStyle(),myGUISimPanels.get(numSimulations - 1).getGUISimulationPanel());
-        for (GUIGrid g: myGUIGrids) {
-            if (!currNode.getChildren().contains(g.getGUIGrid())) {
-                currNode.getChildren().add(g.getGUIGrid());
-                currNode.getChildren().add(g.getGUIStyle());
-            }
-        }
+        currNode.getChildren().addAll( myGUIGrids.get(numSimulations - 1).getGUIGrid(),
+                                       myGUIGrids.get(numSimulations - 1).getGUIStyle(),
+                                       myGUISimPanels.get(numSimulations - 1).getGUISimulationPanel());
     }
 
 
@@ -56,14 +53,6 @@ public class GUIManager {
         numSimulations--;
         managePositions();
     }
-    private void updateNeighbors(){
-        for (int i = 0; i < numSimulations; i++){
-            Simulation currSim = mySimulations.get(i);
-            GUIGrid currGrid = myGUIGrids.get(i);
-            currSim.updateNeighbors(currGrid.getNeighbors());
-        }
-    }
-
 
 
     public void updateGUIParts(){
@@ -96,7 +85,7 @@ public class GUIManager {
             }
             if (currSim != null)
                 mySimulations.set(i,currSim);
-            GUIGrid currGrid = myGUISimulationFactory.makeGUIGrid(myShape, currSim,myStage);
+            GUIGrid currGrid = myGUISimulationFactory.makeGUIGrid(currSim,myStage);
             currGrid.makeGUIGrid(currSim.getMyGrid().getCells());
             myGUIGrids.set(i,currGrid);
             myGUISimPanels.set(i,myGUISimulationFactory.makeSimulationPanel(currSim.getMyName(),currSim));
@@ -117,16 +106,16 @@ public class GUIManager {
     }
 
 
-    public void managePositions() {
+    private void managePositions() {
         for (int i = 0; i < numSimulations; i++) {
             StackPane currGrid = myGUIGrids.get(i).getGUIGrid();
 
             currGrid.setScaleX(1.0 / (double) numSimulations);
             currGrid.setScaleY(1.0 / (double) numSimulations);
 
-            currGrid.setLayoutY(350);
+            currGrid.setLayoutY(GRID_Y_COOR);
             currGrid.setTranslateY(i * (currGrid.getBoundsInParent().getHeight() + GRID_SPACING));
-            currGrid.setLayoutX(250);
+            currGrid.setLayoutX(GRID_X_COOR);
 
             StackPane currPanel = myGUISimPanels.get(i).getGUISimulationPanel();
             currPanel.setLayoutY(currGrid.getLayoutY() + currGrid.getTranslateY());

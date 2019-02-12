@@ -4,37 +4,50 @@ import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class GUIWatorPanel extends GUISimulationPanel {
     private Text myFishBreedTextBox;
     private Spinner<Integer> myFishBreedSpinner;
+    private static final String myFishBreedName = "Fish Breed";
+
     private Text mySharkBreedTextBox;
     private Spinner<Integer> mySharkBreedSpinner;
+    private static final String mySharkBreedName = "Shark Breed";
+
     private Text mySharkStarveTextBox;
     private Spinner<Integer> mySharkStarveSpinner;
+    private static final String mySharkStarveName = "Shark Starve";
+
     private Text mySharkPercentBox;
     private Spinner<Integer> mySharkPercentSpinner;
+    private static final String mySharkPercentName = "Shark Percent";
+
     private Text myFishPercentBox;
     private Spinner<Integer> myFishPercentSpinner;
+    private static final String myFishPercentName = "Fish Percent";
+
     private Text myEmptyPercentBox;
     private Spinner<Integer> myEmptyPercentSpinner;
+    private static final String myEmptyPercentName = "Water Percent";
+
     private HashMap<String,Double>  myMap = new HashMap<String,Double>();
 
     private static final int MIN_TURNS = 0;
     private static final int MAX_TURNS = 20;
 
-    public GUIWatorPanel(Simulation mySim){
-        super(mySim);
+    public GUIWatorPanel(String mySimName, Map<String,Double> initParams){
+        super(mySimName);
 
-        for (String paramName: mySim.getInitialParams().keySet() )
-            myMap.put(new String(paramName), new Double(mySim.getInitialParams().get(paramName)));
+        for (String paramName: initParams.keySet() )
+            myMap.put(new String(paramName), new Double(initParams.get(paramName)));
         
-        myFishBreedTextBox = setUpLabel("Fish Breed");
-        mySharkBreedTextBox = setUpLabel("Shark Breed");
-        mySharkStarveTextBox = setUpLabel("Shark Starve");
-        myFishPercentBox = setUpLabel("Fish Percent");
-        mySharkPercentBox = setUpLabel("Shark Percent");
-        myEmptyPercentBox = setUpLabel("Water Percent");
+        myFishBreedTextBox = setUpLabel(myFishBreedName);
+        mySharkBreedTextBox = setUpLabel(mySharkBreedName);
+        mySharkStarveTextBox = setUpLabel(mySharkStarveName);
+        myFishPercentBox = setUpLabel(myFishPercentName);
+        mySharkPercentBox = setUpLabel(mySharkPercentName);
+        myEmptyPercentBox = setUpLabel(myEmptyPercentName);
 
         myFishBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.FISH_BREED_TIME) *1.0));
         mySharkBreedSpinner = setUpSpinner(MIN_TURNS,MAX_TURNS,(int)(myMap.get(WatorSimulation.SHARK_BREED_TIME)*1.0));

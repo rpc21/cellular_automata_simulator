@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>rectangle</shape>
-    <neighborsType>DIAGONAL</neighborsType>
-    <edges>basic</edges>
+    <shape>hexagon</shape>
+    <neighborsType>HEXAGON</neighborsType>
+    <edges>toroidal</edges>
     <outline>no</outline>
     <stateColors>
         <color id = "OPEN">WHITE</color>

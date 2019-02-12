@@ -1,14 +1,4 @@
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.List;
 
 public class GUIGridTriangle extends GUIGridPolygon{
     private double myTriangleBottomLength;
@@ -39,6 +29,11 @@ public class GUIGridTriangle extends GUIGridPolygon{
                 myTriangleBottomLength/2, myTriangleHeight };
 
     }
+    public Double[] getInnerVertices(){
+        Double[] arr = {myTriangleHeight/2.0, 0.0, myTriangleHeight, myTriangleHeight/2.0,
+                myTriangleHeight/2.0, myTriangleHeight, 0.0, myTriangleHeight/2.0};
+        return arr;
+    }
 
     public double getX(int r, int c){
         return c * 1.0 * myTriangleBottomLength/2.0;
@@ -46,24 +41,6 @@ public class GUIGridTriangle extends GUIGridPolygon{
 
     public double getY(int r, int c){
         return r * 1.0 * myTriangleHeight;
-    }
-
-    public double getHalfWay(){
-        return myCols * myTriangleBottomLength/2.0 * 1.0/SIDE_TO_GRID_RATIO;
-    }
-
-    public Polygon getPolygon(int r, int c){
-        Polygon p = new Polygon();
-        p.getPoints().addAll(getVertices(r,c));
-        return p;
-    }
-    public Polygon getInnerPolygon(){
-        Double[] arr = {myTriangleHeight/2.0, 0.0, myTriangleHeight, myTriangleHeight/2.0,
-                myTriangleHeight/2.0, myTriangleHeight, 0.0, myTriangleHeight/2.0};
-        Polygon p = new Polygon();
-        p.getPoints().addAll(arr);
-        p.setFill(Color.DARKMAGENTA);
-        return p;
     }
 
 }

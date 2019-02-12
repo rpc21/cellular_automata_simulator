@@ -7,7 +7,11 @@ import java.util.List;
 
 public class GUIGridBoundriesChooser extends GUIControlManager{
     private ChoiceBox<Object> myChooser = new ChoiceBox<>();
-    private List<Object> possibleBoundries = Arrays.asList("yes", "no");
+    private static final String BORDER_ON = "yes";
+    private static final String BORDER_OFF = "no";
+
+    private List<Object> possibleBoundries = Arrays.asList(BORDER_ON, BORDER_OFF);
+    
     public GUIGridBoundriesChooser(String initialBoundry){
         super.setUpChoiceBox(myChooser, initialBoundry, possibleBoundries);
     }
@@ -17,6 +21,6 @@ public class GUIGridBoundriesChooser extends GUIControlManager{
         return myList;
     }
     public boolean determineStroke(){
-        return (myChooser.getValue().toString().equals("yes"));
+        return (myChooser.getValue().toString().equals(BORDER_ON));
     }
 }

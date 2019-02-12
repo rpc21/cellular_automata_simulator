@@ -27,7 +27,7 @@ public class GUIGrid {
         int r = 0, c = 0;
         while (r <  myRows){
             while (c < myCols){
-                String currState = myCells.get(r * myRows + c).getMyCurrentState().toString();
+                String currState = myCells.get(r * myRows + c).getMyCurrentState();
                 boolean hasBorder = myOptions.getStroke();
                 String polygon = myOptions.getShape();
                 StackPane currStackPane = myGUICell.setUpCell(r,c, currState, hasBorder, polygon);
@@ -49,9 +49,6 @@ public class GUIGrid {
     }
     public StackPane getGUIGrid(){
         return myStackPane;
-    }
-    public double getHalfway(){
-        return myGUICell.getHalfWay();
     }
 
 
