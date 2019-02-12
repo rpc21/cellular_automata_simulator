@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>rectangle</shape>
-    <neighborsType>DIAGONAL</neighborsType>
+    <shape>hexagon</shape>
+    <neighborsType>HEXAGON</neighborsType>
     <edges>basic</edges>
-    <outline>no</outline>
+    <outline>yes</outline>
     <stateColors>
         <color id = "TREE">GREEN</color>
         <color id = "EMPTY">WHITE</color>
