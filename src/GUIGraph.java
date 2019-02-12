@@ -30,8 +30,8 @@ public class GUIGraph {
     }
 
     public LineChart<Number,Number> getMyChart(){
-        myChart.setMaxHeight(270);
-        myChart.setMinWidth(GUI.STAGE_SIZE *.92);
+        myChart.setMaxHeight(280);
+        myChart.setMinWidth(GUI.STAGE_SIZE * 1.0/GUI.SCALE);
         return myChart;
     }
 
