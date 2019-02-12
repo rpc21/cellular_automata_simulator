@@ -5,6 +5,9 @@ public class SugarAgent {
     public static final String MAX_VISION = "maxVision";
     public static final String MAX_METABOLISM = "maxMetabolism";
     public static final String INIT_SUGAR = "initSugar";
+    public static final double DEFAULT_MAX_VISION = 5.0D;
+    public static final double DEFAULT_MAX_METABOLISM = 4.0D;
+    public static final double DEFAULT_INTIAL_SUGAR = 2.0D;
     private int sugar;
     private int sugarMetabolism;
     private int vision;
@@ -21,9 +24,9 @@ public class SugarAgent {
     }
 
     private void initializeInstanceVariables() {
-        vision = (int) (Math.random() * myParameters.get(MAX_VISION)) + 1;
-        sugarMetabolism = (int) (Math.random() * myParameters.get(MAX_METABOLISM));
-        sugar = (int) (double) myParameters.get(INIT_SUGAR);
+        vision = (int) (Math.random() * myParameters.getOrDefault(MAX_VISION, DEFAULT_MAX_VISION)) + 1;
+        sugarMetabolism = (int) (Math.random() * myParameters.getOrDefault(MAX_METABOLISM, DEFAULT_MAX_METABOLISM));
+        sugar = (int) (double) myParameters.getOrDefault(INIT_SUGAR, DEFAULT_INTIAL_SUGAR);
         shouldRemove = false;
     }
 
