@@ -93,7 +93,6 @@ public abstract class Simulation {
         for (String key: parameters.keySet()){
             myParameters.put(key, parameters.get(key));
         }
-        System.out.println("Parameters updated");
     }
 
     public void stopSimulation(){
@@ -118,16 +117,12 @@ public abstract class Simulation {
         for (int i = 0; i < getMyGrid().getNumRows(); i++){
             for (int j = 0; j < getMyGrid().getNumCols(); j++){
                 Location thisLocation = new Location(i, j);
-                System.out.println("Creating a "+simulationType+" cell");
                 Cell newCell = generateSimulationSpecificCell(simulationType, thisLocation, initialStates[i][j],
                         myGrid, myNextGrid, parameters);
-                System.out.println(newCell + " to be inserted at "+ i + ", "+j);
-                System.out.println(newCell.getMyLocation().getRow()+", "+newCell.getMyLocation().getCol());
                 getMyGrid().put(newCell.getMyLocation(), newCell);
             }
         }
         getMyGrid().printGrid();
-        System.out.println("Initial states set");
     }
 
     @Deprecated
@@ -219,9 +214,7 @@ public abstract class Simulation {
 
     public void updateNeighbors(String neighborsString){
         for (Cell cell : myGrid.getCells()){
-            System.out.println("Updating nieghbors type to : "+neighborsString.toUpperCase());
             cell.setMyNeighbors(NeighborsDefinitions.valueOf(neighborsString.toUpperCase()));
-            System.out.println(cell.myNeighbors);
         }
     }
 
