@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
     <shape>rectangle</shape>
-    <neighborsType>ok</neighborsType>
+    <neighborsType>ADJACENT</neighborsType>
     <edges>basic</edges>
     <outline>no</outline>
     <stateColors>
