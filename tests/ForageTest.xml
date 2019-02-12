@@ -6,7 +6,7 @@
     <rows>3</rows>
     <columns>3</columns>
     <edges>basic</edges>
-    <GenerateStatesBy>seebelow</GenerateStatesBy>
+    <GenerateStatesBy>randomFromPercentages</GenerateStatesBy>
     <cellStates>
         <CellRows index="0">
             <CellColumns>NEST</CellColumns>

@@ -19,6 +19,8 @@ public class XMLStyler {
     public static final String NEIGHBORS_TYPE_TAG_NAME="neighborsType";
     public static final String OUTLINE_TAG_NAME="outline";
     public static final String STATE_COLORS_TAG_NAME = "stateColors";
+    public static final String defaultShape = "rectangle";
+    public static final String defaultNeighbors = "ADJACENT";
 
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
@@ -82,17 +84,17 @@ public class XMLStyler {
             if (isValidNeighbors(neighbors)) {
                 styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, neighbors);
             } else {
-                throw new IllegalArgumentException("neighbors type must be a valid string: " + NeighborsDefinitions.values());
+                styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, defaultNeighbors);
             }
         } catch (IllegalArgumentException e){
             try {//try all lower case
-                String lowerCaseName = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME).toLowerCase();
-                if(isValidNeighbors(lowerCaseName)){
-                    styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, lowerCaseName);
+                String upperCaseName = getTextValue(root, NEIGHBORS_TYPE_TAG_NAME).toUpperCase();
+                if(isValidNeighbors(upperCaseName)){
+                    styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, upperCaseName);
                 }
             }
             catch (IllegalArgumentException ee) {
-                throw new IllegalArgumentException("neighbors type must be a valid string: " + NeighborsDefinitions.values());
+                styleProperties.put(NEIGHBORS_TYPE_TAG_NAME, defaultNeighbors);
             }
         }
     }
@@ -100,14 +102,7 @@ public class XMLStyler {
     private void readInShape(Element root, HashMap<String, String> styleProperties) throws IllegalArgumentException {
         try {
             String shape = getTextValue(root, SHAPE_TYPE_TAG_NAME);
-            if (isValidShape(shape)) {
-                styleProperties.put(SHAPE_TYPE_TAG_NAME, shape);
-            }
-            else {
-                System.out.println("not a valid shape!");
-                throw new IllegalArgumentException("shape must be a valid string: " + simulationShapes.values());
-
-            }
+            styleProperties.put(SHAPE_TYPE_TAG_NAME, shape);
         } catch(IllegalArgumentException e){
             try {//try all lower case
                 String lowerCaseName = getTextValue(root, SHAPE_TYPE_TAG_NAME).toLowerCase();
@@ -116,7 +111,8 @@ public class XMLStyler {
                 }
             }
             catch (IllegalArgumentException ee) {
-                throw new IllegalArgumentException("shape must be a valid string: " + simulationShapes.values());
+                styleProperties.put(SHAPE_TYPE_TAG_NAME, defaultShape);
+                System.out.println("Not a valid shape specified. Default rectangle used.");
             }
         }
     }
