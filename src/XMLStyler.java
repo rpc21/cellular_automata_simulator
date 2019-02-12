@@ -10,9 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class XMLStyler extends XMLParserGeneral{
     public static final String SHAPE_TYPE_TAG_NAME="shape";
@@ -24,6 +22,7 @@ public class XMLStyler extends XMLParserGeneral{
     public static final String GRID_LINE_ON = "yes";
     public static final String GRID_LINE_OFF = "no";
     public static final String defaultGridLineSetting = GRID_LINE_ON;
+    private Queue<Paint> DEFAULT_COLORS= new LinkedList<>(List.of(Color.ALICEBLUE, Color.BISQUE, Color.BLANCHEDALMOND, Color.HONEYDEW, Color.LINEN));
 
     // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
@@ -38,14 +37,14 @@ public class XMLStyler extends XMLParserGeneral{
 
     public Simulation setSimulationStyle(File dataFile, Simulation simulation){
         var root = getRootElement(dataFile);
-        simulation.setColors(readStateColors(root));
+        simulation.setColors(readStateColors(root, simulation));
         Map<String, String> map = makeStylePropertiesMap(root);
         simulation.setMyStyleProperties(map);
         simulation.updateNeighbors(map);
         return simulation;
     }
 
-    public Map<String, Paint> getColorMap(File dataFile) {
+    public Map<String, Paint> getColorMap(File dataFile, Simulation mySim) {
         Map<String, Paint> colorMap = new HashMap<String, Paint>();
         var root = getRootElement(dataFile);
         NodeList colors = root.getElementsByTagName("color");
@@ -56,8 +55,10 @@ public class XMLStyler extends XMLParserGeneral{
             Paint p = Paint.valueOf(colorval);
             colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), p);
         }
+        validateColorMap(colorMap, mySim);
         return colorMap;
     }
+
     /**
      * public for visualization to use
      * @param dataFile
@@ -151,7 +152,7 @@ public class XMLStyler extends XMLParserGeneral{
         return false;
     }
 
-    private HashMap<String, String> readStateColors(Element root){
+    private HashMap<String, String> readStateColors(Element root, Simulation simulation){
         Map<String, String> colorMap = new HashMap<String, String>();
         NodeList colors = root.getElementsByTagName("color");
         for (int i = 0; i < colors.getLength(); i++) {
@@ -160,6 +161,22 @@ public class XMLStyler extends XMLParserGeneral{
             colorMap.put(element.getAttributes().getNamedItem("id").getNodeValue(), colorval);
         }
         return (HashMap)colorMap;
+    }
+
+    private void validateColorMap(Map<String, Paint> colorMap, Simulation simulation){
+        try{
+            List<String> states = simulation.getMyGrid().getCells().get(0).getCurrentCellState().getPossibleValues();
+            System.out.println(states);
+            for(String state: states){
+                if (!colorMap.containsKey(state)){
+                    Paint color = DEFAULT_COLORS.poll();
+                    colorMap.put(state, color);
+                    DEFAULT_COLORS.add(color);
+                }
+            }
+        }catch(NullPointerException e){
+            throw new NullPointerException("Unable to validate color map");
+        }
     }
 
 //    // Get root element of an XML file

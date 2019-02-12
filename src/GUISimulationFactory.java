@@ -107,7 +107,7 @@ public class GUISimulationFactory {
         System.out.println("%%%%" + initProps.keySet().contains(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
         System.out.println(initProps.get(XMLStyler.NEIGHBORS_TYPE_TAG_NAME));
 
-        Map<String,Paint> myColors = myStyler.getColorMap(new File(makeXMLStyleName(mySim.getMyName())));
+        Map<String,Paint> myColors = myStyler.getColorMap(new File(makeXMLStyleName(mySim.getMyName())), mySim);
         GUIGridPolygon myPolygon = makeGUIPolygon(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),newShape);
         GUIGridCell myCell = new GUIGridCell(myColors, mySim, myPolygon);
         myGrid = new GUIGrid(mySim.getMyGrid().getNumRows(), mySim.getMyGrid().getNumCols(),stage,myCell,initProps);
