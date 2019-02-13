@@ -29,11 +29,6 @@ public enum SugarState implements CellState{
     }
 
     @Override
-    public Color getMyCellColor() {
-        return Color.ORANGE;
-    }
-
-    @Override
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i< values().length; i++){

@@ -3,7 +3,7 @@
     <shape>hexagon</shape>
     <neighborsType>HEXAGON</neighborsType>
     <edges>toroidal</edges>
-    <outline>no</outline>
+    <outline>yes</outline>
     <stateColors>
         <color id = "OPEN">WHITE</color>
         <color id = "CLOSED">BLACK</color>

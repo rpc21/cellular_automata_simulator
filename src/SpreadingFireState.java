@@ -42,14 +42,6 @@ public enum SpreadingFireState implements CellState {
         return myShortenedName;
     }
 
-    /**
-     * Return the color to display representing the state of the cell
-     * @return a Color representing the state of the cell
-     */
-    @Override
-    public Color getMyCellColor() {
-        return myCellColor;
-    }
 
     @Override
     public List<String> getPossibleValues() {

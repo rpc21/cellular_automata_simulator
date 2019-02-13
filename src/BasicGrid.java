@@ -95,7 +95,7 @@ public class BasicGrid implements Grid{
     }
 
     /**
-     *
+     * If the location in the grid is valid, it will be removed and replaced with an empty cells
      * @param loc the location of the object that is to be removed
      */
     @Override
@@ -129,8 +129,8 @@ public class BasicGrid implements Grid{
      * @return a list of the locations currently occupied by cells
      */
     @Override
-    public ArrayList<Location> getOccupiedLocations() {
-        ArrayList<Location> occupiedLocations = new ArrayList<>();
+    public List<Location> getOccupiedLocations() {
+        List<Location> occupiedLocations = new ArrayList<>();
         for (Cell cell : getCells()){
             if (!cell.isEmpty()){
                 occupiedLocations.add(cell.getMyLocation());
@@ -145,8 +145,8 @@ public class BasicGrid implements Grid{
      * @return a list of the locations currently occupied by empty cells
      */
     @Override
-    public ArrayList<Location> getEmptyLocations() {
-        ArrayList<Location> emptyLocations = new ArrayList<>();
+    public List<Location> getEmptyLocations() {
+        List<Location> emptyLocations = new ArrayList<>();
         for (Cell cell : getCells()){
             if (cell.isEmpty()){
                 emptyLocations.add(cell.getMyLocation());
@@ -163,10 +163,10 @@ public class BasicGrid implements Grid{
      * @param deltaCol used with deltaRow to specify the relative positions of possible neighbors
      * @return an ArrayList of the locations of valid neighbors
      */
-    public ArrayList<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol) {
+    public List<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol) {
         int locRow = loc.getRow();
         int locCol = loc.getCol();
-        ArrayList<Location> validLocations = new ArrayList<>();
+        List<Location> validLocations = new ArrayList<>();
         for (int i = 0; i < deltaCol.length; i++) {
             Location locationToBeChecked = new Location(locRow + deltaRow[i], locCol + deltaCol[i]);
             if (isValid(locationToBeChecked)) {
@@ -176,7 +176,7 @@ public class BasicGrid implements Grid{
         return validLocations;
     }
 
-    public ArrayList<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions){
+    public List<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions){
         return getValidNeighbors(loc, neighborsDefinitions.getDeltaRow(), neighborsDefinitions.getDeltaCol());
     }
 
@@ -186,8 +186,8 @@ public class BasicGrid implements Grid{
      * @return ArrayList of empty adjacent locations
      */
     @Override
-    public ArrayList<Location> getEmptyAdjacentLocations(Location loc) {
-        ArrayList<Location> emptyAdjacentLocations = new ArrayList<>();
+    public List<Location> getEmptyAdjacentLocations(Location loc) {
+        List<Location> emptyAdjacentLocations = new ArrayList<>();
         if (isValid(loc)) {
             for (Location location : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)) {
                 if (get(location).isEmpty()) {
@@ -204,8 +204,8 @@ public class BasicGrid implements Grid{
      * @return ArrayList of occupied adjacent locations
      */
     @Override
-    public ArrayList<Location> getOccupiedAdjacentLocations(Location loc) {
-        ArrayList<Location> occupiedAdjacentLocations = new ArrayList<>();
+    public List<Location> getOccupiedAdjacentLocations(Location loc) {
+        List<Location> occupiedAdjacentLocations = new ArrayList<>();
         if (isValid(loc)) {
             for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)) {
                 if (!get(l).isEmpty()) {
@@ -222,7 +222,7 @@ public class BasicGrid implements Grid{
      * @return null
      */
     @Override
-    public ArrayList<Cell> getNeighbors(Location loc) {
+    public List<Cell> getNeighbors(Location loc) {
         return null;
     }
 

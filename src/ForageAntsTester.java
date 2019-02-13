@@ -1,5 +1,8 @@
 import java.util.HashMap;
 
+/**
+ * Class used to hard code test the backend of the Forage Simulation
+ */
 public class ForageAntsTester {
 
     public static void main(String[] args) {
