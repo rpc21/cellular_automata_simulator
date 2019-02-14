@@ -16,14 +16,19 @@ import java.util.*;
 /**
  * This class handles parsing XML files and returning a new simulation.
  *
- * Based on code by:
- * @author Rhondu Smithwick
- * @author Robert C. Duvall
+ * This class assumes that the tag names for the fields or options to set are correctly specified
+ * If any field is missing, then the defaults are used for that simulation.
+ * If any invalid data or selection is entered, then the defaults are used
+ *
+ * The XML file sets which simulation will be run, the initial states of the cells in the simulation,
+ * parameters specific to the simulation, size of simulation, title and author
+ * This class extends XMLParserGeneral which is an abstract class that implements methods used for parsing
+ * XML files.
+ * Note: Defaults set for the Game of Life simulation
  *
  * Author:
  * @author Dima Fayyad
  *
- * Note: Defaults set for the Game of Life simulation
  */
 public class XMLParser extends XMLParserGeneral{
     // Readable error message that can be displayed by the GUI
@@ -40,12 +45,11 @@ public class XMLParser extends XMLParserGeneral{
     public static final String EDGE_TYPE_TAG_NAME="edges";
     public static final int defaultColumns = 10;
     public static final int defaultRows = 10;
-    // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
-    // keep only one documentBuilder because it is expensive to make and can reset it before parsing
     private final DocumentBuilder DOCUMENT_BUILDER;
 
     /**
+     * Class constructor
      * Create a parser for XML files of given type.
      */
     public XMLParser (String type) {
@@ -56,6 +60,8 @@ public class XMLParser extends XMLParserGeneral{
 
     /**
      * getSimulation takes in an XML file and returns a new simulation
+     * As this function returns a new simulation, the SimulationFactory class is used.
+     *
      * @param dataFile the xml file containing the setup for the simulation
      * @return a new simulation
      */
@@ -273,54 +279,5 @@ public class XMLParser extends XMLParserGeneral{
             throw new NullPointerException("No Edge Type specified");
         }
     }
-//    // Get root element of an XML file
-//    private Element getRootElement (File xmlFile) {
-//        try {
-//            DOCUMENT_BUILDER.reset();
-//            var xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-//            return xmlDocument.getDocumentElement();
-//        }
-//        catch (SAXException | IOException e) {
-//            throw new XMLException(e);
-//        }
-//    }
-//
-//    // Returns if this is a valid XML file for the specified object type
-//    private boolean isValidFile (Element root, String type) {
-//        return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
-//    }
-//
-//    // Get value of Element's attribute
-//    private String getAttribute (Element e, String attributeName) {
-//        try {
-//            return e.getAttribute(attributeName);
-//        }catch(NullPointerException exc){
-//            throw new NullPointerException("No such attribute");
-//        }
-//    }
-//
-//    // Get value of Element's text
-//    private String getTextValue (Element e, String tagName) throws NullPointerException {
-//        try{
-//            var nodeList = e.getElementsByTagName(tagName);
-//            if (nodeList != null && nodeList.getLength() > 0) {
-//                return nodeList.item(0).getTextContent();
-//            }
-//        }catch(NullPointerException exc){
-//            throw new NullPointerException("No such field" + tagName);
-//        }
-//        return "";
-//    }
-//
-//    private DocumentBuilder getDocumentBuilder () {
-//        try {
-//            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-//        }
-//        catch (ParserConfigurationException e) {
-//            throw new XMLException(e);
-//        }
-//    }
-
-
 
 }

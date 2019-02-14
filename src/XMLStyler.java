@@ -24,7 +24,7 @@ import java.util.*;
  *
  * This class depends on XMLParserGeneral which implements methods used for parsing any xml file
  * To use the class, the user must have pass in an initialized simulation with which to associate these style options
- * The call XMLStyler.setSimulationStyle is used to set the style options from an xml file to the desire simulation
+ * The call XMLStyler.setSimulationStyle() is used to set the style options from an xml file to the desire simulation
  *
  * @author Dima Fayyad
  */
