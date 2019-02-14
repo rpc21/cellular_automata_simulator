@@ -27,11 +27,11 @@ public class WatorEmpty extends WatorCell {
     public void calculateNewState() {
         myNextState = null;
     }
-
-    @Override
-    public Color getMyColor() {
-        return Color.WHITE;
-    }
+//
+//    @Override
+//    public Color getMyColor() {
+//        return Color.WHITE;
+//    }
 
     @Override
     public String toString() {

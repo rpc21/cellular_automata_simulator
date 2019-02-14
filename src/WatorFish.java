@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +33,7 @@ public class WatorFish extends WatorCell {
     @Override
     public void step(){
         turnsUntilCanBreed--;
-        ArrayList<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
+        List<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
         if(openSpots.size() > 0){
             Location oldLocation = myLocation;
             Collections.shuffle(openSpots);

@@ -2,6 +2,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class WatorShark extends WatorCell {
@@ -37,7 +38,7 @@ public class WatorShark extends WatorCell {
 
     private void tryToBreed() {
         if(turnsUntilCanBreed <= 0){
-            ArrayList<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
+            List<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
             if(openSpots.size() > 0){
                 Collections.shuffle(openSpots);
                 Location offspringLocation = openSpots.get(0);
@@ -49,7 +50,7 @@ public class WatorShark extends WatorCell {
     }
 
     private void tryToMove() {
-        ArrayList<Location> emptyLocations = myGrid.getEmptyAdjacentLocations(myLocation);
+        List<Location> emptyLocations = myGrid.getEmptyAdjacentLocations(myLocation);
         if (emptyLocations.size() > 0){
             Collections.shuffle(emptyLocations);
             Location newLocation = emptyLocations.get(0);

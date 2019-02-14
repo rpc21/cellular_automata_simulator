@@ -41,10 +41,13 @@ public enum PercolationState implements CellState{
         return myShortenedName;
     }
 
-
+    /**
+     * Return a list of the possible values that the state could take on
+     * @return list of possible states
+     */
     @Override
     public List<String> getPossibleValues() {
-        ArrayList<String> arrayList = new ArrayList<>();
+        List<String> arrayList = new ArrayList<>();
         for (int i = 0; i< values().length; i++){
             arrayList.add(values()[i].myFullState);
         }

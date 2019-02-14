@@ -36,7 +36,7 @@ public enum WatorState implements CellState {
     public String getMyShortenedName() {
         return myShortenedName;
     }
-    
+
     @Override
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();

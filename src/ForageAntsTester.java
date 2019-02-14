@@ -6,9 +6,9 @@ import java.util.HashMap;
 public class ForageAntsTester {
 
     public static void main(String[] args) {
-//        System.out.println(NeighborsDefinitions.ADJACENT);
-//        System.out.println(NeighborsDefinitions.values());
-//        System.out.println(GOLState.ALIVE);
+        System.out.println(NeighborsDefinitions.ADJACENT);
+        System.out.println(NeighborsDefinitions.values());
+        System.out.println(GOLState.ALIVE);
 
         HashMap<String, String> basicParameters = new HashMap<>();
         basicParameters.put("rows", "4");

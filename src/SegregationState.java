@@ -45,6 +45,10 @@ public enum SegregationState implements CellState {
         return myShortenedName;
     }
 
+    /**
+     * Return a list of the possible values that the state could take on
+     * @return list of possible states
+     */
     @Override
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
