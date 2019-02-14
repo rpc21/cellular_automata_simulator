@@ -20,7 +20,13 @@ public class GUISpreadingFirePanel extends GUISimulationPanel {
 
     private static final int SPINNER_MAX = 100;
 
-    private HashMap<String,Double>  myMap = new HashMap<String,Double>();
+    private Map<String,Double>  myMap = new HashMap<>();
+    /**
+     * Sets up SpreadingFire specific parameters for user to manipulate
+     * @param mySimName needed for super constructor
+     * @param initParams maps initial parameters set from xml file to set up spinner
+     * @see Spinner<Integer>
+     */
     public GUISpreadingFirePanel(String mySimName, Map<String,Double> initParams){
         super(mySimName);
 
@@ -44,8 +50,11 @@ public class GUISpreadingFirePanel extends GUISimulationPanel {
         myEmptySpinner = setUpSpinner(0,SPINNER_MAX ,(int)(myMap.get(SpreadingFireSimulation.EMPTY_PERCENTAGE) * SPINNER_MAX ));
         super.addToStackPane(myEmptyTextBox,myEmptySpinner);
     }
-
-    public HashMap<String,Double> getMyParams(){
+    /**
+     * Returns parameters simulation needs to restart
+     * @see Spinner<Integer>
+     */
+    public Map<String,Double> getMyParams(){
         myMap.put(SpreadingFireSimulation.PROB_CATCH,1.0* myProbSpinner.getValue()/SPINNER_MAX );
         myMap.put(SpreadingFireSimulation.FIRE_PERCENTAGE,1.0* myFireSpinner.getValue()/SPINNER_MAX );
         myMap.put(SpreadingFireSimulation.EMPTY_PERCENTAGE, 1.0* myEmptySpinner.getValue()/SPINNER_MAX );

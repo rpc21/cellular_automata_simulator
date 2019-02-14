@@ -14,9 +14,17 @@ public class GUIPanel {
     private static final int SPINNER_MAX_WIDTH = 80;
     protected static String DEFAULT_FONT_NAME = "Copperplate";
     protected static int CONTROL_TEXT_SIZE = 15;
-    public GUIPanel(){
 
+    public GUIPanel(){
     }
+    /**
+     * This is a generic method panels may use to set up spinners such that it is only set to save its current inputted
+     * value. Strictly using an integer-only spinner helps standardize calculations
+     * @param min this is the minimum value permitted to be input (any value the user inputs below this will default to this minimum)
+     * @param init this is the default value of the spinner
+     * @param max this is the maximum value permitted to be input (any value the user inputs above this will default to this maximum)
+     * @see Spinner<Integer>
+     */
     protected Spinner<Integer> setUpSpinner(int min, int max, int init){
         Spinner<Integer> mySpinner = new Spinner<>();
         SpinnerValueFactory<Integer> valFactory = //
@@ -27,7 +35,11 @@ public class GUIPanel {
         mySpinner.setMaxWidth(SPINNER_MAX_WIDTH);
         return mySpinner;
     }
-
+    /**
+     * This is a generic method panels may use to set up choice boxes such that it is only set to save its current inputted
+     * value. Flexible to all object types
+     * @see ChoiceBox<Object>
+     */
     protected void setUpChoiceBox(ChoiceBox<Object> cb, Object initVal, List<Object> possibleChoices){
         cb.getItems().addAll(possibleChoices);
         cb.setValue(initVal);
@@ -40,7 +52,10 @@ public class GUIPanel {
         });
     }
 
-
+    /**
+     * This is a generic method panels may use to return important parameters for the GUIManager to use
+     * @see ChoiceBox<Object>
+     */
     public Map<String,Double> getMyParams(){
         return new HashMap<String,Double>();
     }
