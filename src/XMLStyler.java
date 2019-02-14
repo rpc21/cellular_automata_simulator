@@ -13,6 +13,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * This class parses and validates a style .xml file and updates the simulation with the styles set in the file
+ * Used to set the shape of cells in the simulation, type of neighbors used in the simulation, enable or disable grid
+ * lines, set the type of edges used in the simulation, and the colors used in the simulation
+ *
+ * This class assumes that the tag names for the fields or options to set are correctly specified
+ * If any field is missing, then the defaults are used for that simulation.
+ * If any invalid data or selection is entered, then the defaults are used
+ *
+ * This class depends on XMLParserGeneral which implements methods used for parsing any xml file
+ * To use the class, the user must have pass in an initialized simulation with which to associate these style options
+ * The call XMLStyler.setSimulationStyle is used to set the style options from an xml file to the desire simulation
+ *
+ * @author Dima Fayyad
+ */
+
 public class XMLStyler extends XMLParserGeneral{
     public static final String SHAPE_TYPE_TAG_NAME="shape";
     public static final String NEIGHBORS_TYPE_TAG_NAME="neighborsType";
@@ -27,17 +43,26 @@ public class XMLStyler extends XMLParserGeneral{
     public static final String ID = "id";
     private Queue<Paint> DEFAULT_COLORS= new LinkedList<>(List.of(Color.ALICEBLUE, Color.BISQUE, Color.BLANCHEDALMOND, Color.HONEYDEW, Color.LINEN));
 
-    // name of root attribute that notes the type of file expecting to parse
     private final String TYPE_ATTRIBUTE;
-    // keep only one documentBuilder because it is expensive to make and can reset it before parsing
     private final DocumentBuilder DOCUMENT_BUILDER;
 
+    /**
+     * Class constructor
+     * @param type the type of expected
+     */
     public XMLStyler (String type) {
         super(type);
         DOCUMENT_BUILDER = getDocumentBuilder();
         TYPE_ATTRIBUTE = type;
     }
 
+
+    /**
+     *setSimulationStyle is used to set style options read in from an xml file for a simulation
+     * @param dataFile the xml file containing the style settings
+     * @param simulation the simulation for to which the style settings will be applied
+     * @return the simulation after being updated with the styles settings read in from the xml file
+     */
     public Simulation setSimulationStyle(File dataFile, Simulation simulation){
         var root = getRootElement(dataFile);
         simulation.setColors(readStateColors(root, simulation));
@@ -47,6 +72,14 @@ public class XMLStyler extends XMLParserGeneral{
         return simulation;
     }
 
+    /**
+     * getColorMap is used when the map from state to colors is needed
+     * The method validates that the map associates each state in the simulation with a color, and fills in any missing
+     * states with default colors
+     * @param dataFile the xml file containing the style settings
+     * @param mySim the simulation for to which the style settings will be applied
+     * @return the map of states to colors set in the xml file
+     */
     public Map<String, Paint> getColorMap(File dataFile, Simulation mySim) {
         Map<String, Paint> colorMap = new HashMap<String, Paint>();
         var root = getRootElement(dataFile);
@@ -62,7 +95,8 @@ public class XMLStyler extends XMLParserGeneral{
     }
 
     /**
-     * public for visualization to use
+     * getStyleProperties map is used to immediately extract the map of style options to their set values from a given file
+     * Used when the information in the xml is desired independent of the simulation for which it will be used
      * @param dataFile
      * @return the map containing shape, neighbors, outline
      */
@@ -137,7 +171,7 @@ public class XMLStyler extends XMLParserGeneral{
         }
     }
 
-    public boolean isValidNeighbors(String possibleNeighbors){
+    private boolean isValidNeighbors(String possibleNeighbors){
         for(NeighborsDefinitions neighborType: NeighborsDefinitions.values()){
             if(possibleNeighbors.toUpperCase().equals(neighborType.toString().toUpperCase())){
                 return possibleNeighbors.equals(neighborType.toString());
@@ -146,7 +180,7 @@ public class XMLStyler extends XMLParserGeneral{
         return false;
     }
 
-    public boolean isValidShape(String possibleShape){
+    private boolean isValidShape(String possibleShape){
         for(simulationShapes s: simulationShapes.values()){
             if(possibleShape.equals(s.toString())){
                 return possibleShape.equals(s.toString());
