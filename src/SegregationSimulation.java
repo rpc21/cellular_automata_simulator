@@ -4,12 +4,6 @@ import java.util.Map;
 
 public class SegregationSimulation extends Simulation{
 
-    /**
-     * Constructor for the SegregationSimulation. Initializes the grid for the simulation to a BasicGrid of size rows x
-     * cols
-     * @param rows number of rows in the grid for the simulation
-     * @param cols number of columns in the grid for the simulation
-     */
     public static final String RED_PERCENTAGE = "redPercentage";
     public static final String BLUE_PERCENTAGE = "bluePercentage";
     public static final String EMPTY_PERCENTAGE = "emptyPercentage";
@@ -19,11 +13,11 @@ public class SegregationSimulation extends Simulation{
             RED_PERCENTAGE, BLUE_PERCENTAGE, EMPTY_PERCENTAGE, THRESHOLD
     );
 
-    public SegregationSimulation(HashMap<String, Double> params, int rows, int cols){
-        super(params, rows, cols);
-        setMyGrid(new BasicGrid(rows, cols));
-    }
 
+    /**
+     * Constructor for the SegregationSimulation. Initializes the grid for the simulation using the parameters in the map params
+     * @param params the basic parameters associated with the simulation, which are listed in SEGREGATION_DATA_FIELDS
+     */
     public SegregationSimulation(Map<String, Double> params, Grid grid){
         super(params, grid);
     }

@@ -201,21 +201,14 @@ public class XMLStyler extends XMLParserGeneral{
     }
 
     private void validateColorMap(Map<String, Paint> colorMap, Simulation simulation){
-        try{
-            List<String> states = simulation.getMyGrid().getCells().get(0).getCurrentCellState().getPossibleValues();
-            for(String state: states){
-                if (!colorMap.containsKey(state)){
-                    Paint color = DEFAULT_COLORS.poll();
-                    colorMap.put(state, color);
-                    DEFAULT_COLORS.add(color);
-                }
+        List<String> states = simulation.getMyGrid().getCells().get(0).getCurrentCellState().getPossibleValues();
+        for(String state: states){
+            if (!colorMap.containsKey(state)){
+                Paint color = DEFAULT_COLORS.poll();
+                colorMap.put(state, color);
+                DEFAULT_COLORS.add(color);
             }
-        }catch(NullPointerException e){
-            throw new NullPointerException("Unable to validate color map");
         }
     }
 
-    private String readInEdges(Element root){
-        return getTextValue(root, XMLParser.EDGE_TYPE_TAG_NAME);
-    }
 }

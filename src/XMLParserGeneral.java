@@ -75,4 +75,8 @@ public abstract class XMLParserGeneral {
             throw new XMLException(e);
         }
     }
+
+    protected String readInEdges(Element root){
+        return getTextValue(root, XMLParser.EDGE_TYPE_TAG_NAME);
+    }
 }

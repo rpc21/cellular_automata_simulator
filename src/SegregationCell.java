@@ -81,6 +81,10 @@ public class SegregationCell extends MovableCell{
         toBeMoved = true;
     }
 
+    /**
+     * Used to determine if a cell needs to moved
+     * @return true if the cell will remain where it is, false if not
+     */
     public boolean isSatisfied(){
         List<Location> myNeighborLocations = getMyGrid().getValidNeighbors(myLocation, myNeighbors);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);

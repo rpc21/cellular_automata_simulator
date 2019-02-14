@@ -145,7 +145,11 @@ public class XMLParser extends XMLParserGeneral{
             }
             return myCredentials;
         } catch(NullPointerException e){
-            throw new NullPointerException("Invalid author or name");
+            System.out.println("Invalid author or name");
+            for (var field : Simulation.DATA_CREDENTIALS) {
+                myCredentials.put(field, "");
+            }
+            return myCredentials;
         }
     }
 
@@ -270,14 +274,6 @@ public class XMLParser extends XMLParserGeneral{
             }
         }
         return 0;
-    }
-
-    private String readInEdges(Element root){
-        try {
-            return getTextValue(root, EDGE_TYPE_TAG_NAME);
-        }catch(NullPointerException e){
-            throw new NullPointerException("No Edge Type specified");
-        }
     }
 
 }
