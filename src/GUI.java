@@ -57,6 +57,13 @@ public class GUI {
         render();
         makeDefaultPanel(sim);
         makeGUIParts(sim);
+
+    /**
+     * sets up the default window for the GUI and initializes variables necessary to manipulate the timeline. Scale
+     * parameters were added to make it easier to adapt the window to fit different screen sizes
+     * @see Stage
+     * @see Timeline
+     */
     }
     private void render(){
         myFrame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
@@ -74,7 +81,14 @@ public class GUI {
         myScene.getRoot().getTransforms().setAll(scale);
     }
 
-    public void step(){
+
+    /**
+     * Updates every GUI part currently being handled by the manager and displays the changes in the graph
+     * @see GUIManager
+     * @see GUIGraph
+     * @see Simulation
+     */
+    private void step(){
         myManager.updateGUIParts();
         myGUIGraph.updateChart(mySimulation.getMyGrid().getCells());
     }
@@ -87,8 +101,15 @@ public class GUI {
         myManager.removeSimulation(myNode);
     }
 
-
-    public void resetWithParams() {
+    /**
+     * Clears the current root of the scene in preparation for a simulation with new parameters. The manager handles whether
+     * this involves a new simulation or simply changes backend parameters. Once the new GUI pieces are ready, they are added
+     * back into the root of the scene
+     * @see GUIManager
+     * @see GUIGraph
+     * @see GUIDefaultPanel
+     */
+    private void resetWithParams() {
 
         myNode.getChildren().clear();
         myManager.resetSimulations(myGUIDefaultPanel,mySimulation.getCredentials());
@@ -102,7 +123,13 @@ public class GUI {
             myNode.getChildren().add(simPanel.getGUISimulationPanel());
     }
 
-
+    /**
+     * Makes the GUI parts that are not part of a larger structure (the graph and credentials), and adds in the default panel here
+     * so the default panel remains constant throughout most other changes the user may input into the GUI
+     * @see Credentials
+     * @see GUIGraph
+     * @see GUIDefaultPanel
+     */
     private void makeGUIParts(Simulation currSim){
         Credentials myCredentials = new Credentials(mySimulation.getCredentials().get(Simulation.TITLE_CREDENTIAL),
                 mySimulation.getCredentials().get(Simulation.AUTHOR_CREDENTIAL));
@@ -110,6 +137,13 @@ public class GUI {
         myNode.getChildren().addAll(myGUIDefaultPanel.getGUIDefaultPanel(), myCredentials.getMyCredentials(),myGUIGraph.getMyChart());
     }
 
+    /**
+     * Initializes the default panel with references to functions it may need from GUI, such as adding and removing a simulation,
+     * access to time-sensitive variables, and the current simulation's state. Sets up the layout of the default panel with
+     * respect to other parts of the GUI
+     * @see GUIManager
+     * @see GUIDefaultPanel
+     */
     private void makeDefaultPanel(Simulation currSim){
         myGUIDefaultPanel = new GUIDefaultPanel(myStepFunction, myResetFunction, myAddSimFunction,myRemoveSimFunction, myAnimation,myFrame,
                 currSim.getMyName(),currSim.getMyGrid().getNumRows(),currSim.getMyGrid().getNumCols());

@@ -17,11 +17,21 @@ public class GUIStepButton extends GUIControlManager{
         myGUIStepFunction = f;
         super.setUpButton(myButton, NAME, e -> fire());
     }
-
+    /**
+     * Pauses animation and update the grid by one iteration
+     * type
+     * @see GUIGridStep
+     */
     private void fire(){
         myAnimation.pause();
         myGUIStepFunction.guiGridStep();
     }
+    /**
+     * This getter method was necessary to add the node that allows the user to access the step button
+     * type
+     * @see Node
+     * @return myList which is a list of nodes necessary for the user to step through the animation
+     */
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
         myList.add(myButton);

@@ -6,6 +6,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class GUISimulationPanel extends GUIPanel{
     public static String DEFAULT_FONT_NAME = "Copperplate";
@@ -18,7 +19,7 @@ public class GUISimulationPanel extends GUIPanel{
     private static final int NUM_NODES_PER_COL = 8;
     private static final int NUM_CONTROL_GROUPS_PER_COL = 4;
 
-    private HashMap<String,Double> myParamsMap = new HashMap<String,Double>();
+    private Map<String,Double> myParamsMap = new HashMap<String,Double>();
     private StackPane myStackPane;
     private String mySimulationName;
 
@@ -54,7 +55,7 @@ public class GUISimulationPanel extends GUIPanel{
     }
 
 
-    public HashMap<String,Double> getMyParams(){
+    public Map<String,Double> getMyParams(){
         return myParamsMap;
     }
 
