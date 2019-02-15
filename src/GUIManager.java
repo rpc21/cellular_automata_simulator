@@ -150,7 +150,7 @@ public class GUIManager {
         try{
             currSim = sim;
         }catch (Exception e){
-            System.out.println("Failed to properly load XML files for new simulation, please check to see if files" +
+            System.out.println("Failed to properly load XML files for new simulation, please check to see if files " +
                     "are in the correct folder and formatted properly");
         }
         return currSim;

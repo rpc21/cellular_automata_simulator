@@ -1,6 +1,11 @@
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-
+/**
+ * This class allows me to use different shapes for cells but still have the flexibility of adding multiple items to one cell.
+ * This class is well designed because it provides a uniform manner to structure cells but allows them to handle the issue of
+ * cells intertwining with one another. It is difficult to ensure the offsets for each shape align properly with their
+ * neighbors, so each GUIGridPolygon subclass handles this issue
+ */
 public abstract class GUIGridPolygon {
     private static final Color MY_INNER_POLYGON_COLOR = Color.DARKMAGENTA;
 

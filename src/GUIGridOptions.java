@@ -15,17 +15,16 @@ public class GUIGridOptions extends GUIPanel {
     private GUIGridBoundriesChooser myBoundryChooser;
     private GUIGridNeighborsChooser myNeighborsChooser;
 
-
     private VBox myBox;
     private Scene dialogScene;
     private Map<String,String> myInitialProperties;
-
 
 
     private static final int POP_UP_BOX_X = 300;
     private static final int POP_UP_BOX_Y = 200;
     private static final int V_BOX_SIZE = 20;
 
+    private static final String BUTTON_NAME = "Grid Design...";
 
     public GUIGridOptions(Stage myStage, Map<String,String> initProps) {
         makeStyleButton(myStage);
@@ -37,7 +36,7 @@ public class GUIGridOptions extends GUIPanel {
 
     private void makeStyleButton(Stage primaryStage) {
         myGUIGridOptionsButton = new Button();
-        myGUIGridOptionsButton.setText("Grid Design...");
+        myGUIGridOptionsButton.setText(BUTTON_NAME);
         myGUIGridOptionsButton.setOnAction(
                 new EventHandler<ActionEvent>() {
                     @Override

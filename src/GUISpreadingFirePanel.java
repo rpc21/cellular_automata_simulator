@@ -1,6 +1,8 @@
 
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,11 +56,13 @@ public class GUISpreadingFirePanel extends GUISimulationPanel {
      * Returns parameters simulation needs to restart
      * @see Spinner<Integer>
      */
-    public Map<String,Double> getMyParams(){
+    @Override
+    public Map<String, Double> getMyParams(){
         myMap.put(SpreadingFireSimulation.PROB_CATCH,1.0* myProbSpinner.getValue()/SPINNER_MAX );
         myMap.put(SpreadingFireSimulation.FIRE_PERCENTAGE,1.0* myFireSpinner.getValue()/SPINNER_MAX );
         myMap.put(SpreadingFireSimulation.EMPTY_PERCENTAGE, 1.0* myEmptySpinner.getValue()/SPINNER_MAX );
         myMap.put(SpreadingFireSimulation.TREE_PERCENTAGE, 1.0* myTreeSpinner.getValue()/SPINNER_MAX );
-        return myMap;
+        return Collections.unmodifiableMap(myMap);
     }
+
 }

@@ -3,6 +3,7 @@ import javafx.scene.control.ChoiceBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIGridBoundriesChooser extends GUIControlManager{
@@ -26,7 +27,7 @@ public class GUIGridBoundriesChooser extends GUIControlManager{
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
         myList.add(myChooser);
-        return myList;
+        return Collections.unmodifiableList(myList);
     }
     /**
      * This getter method for the value of the choicebox was necessary to determine whether or not to draw a border around

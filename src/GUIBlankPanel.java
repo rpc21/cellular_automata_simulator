@@ -12,7 +12,7 @@ public class GUIBlankPanel extends GUISimulationPanel{
      * Returns an empty map if the simulation has no simulation-specific parameters
      * @see GUISimulationPanel
      */
-    public Map<String,Double> getMyParams(){
+    public Map<String, Double> getMyParams(){
         return myMap;
     }
 

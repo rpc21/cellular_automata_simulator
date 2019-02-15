@@ -1,6 +1,8 @@
 
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +29,9 @@ public class GUIGameOfLifePanel extends GUISimulationPanel{
      * type
      * @see GOLSimulation
      */
-    public Map<String,Double> getMyParams(){
+    public Map<String, Double> getMyParams(){
         myMap.put(GOLSimulation.DEAD_PERCENTAGE,1.0*mySpinner.getValue()/MAX);
         myMap.put(GOLSimulation.ALIVE_PERCENTAGE, 1- 1.0*mySpinner.getValue()/MAX);
-        return myMap;
+        return Collections.unmodifiableMap(myMap);
     }
 }
