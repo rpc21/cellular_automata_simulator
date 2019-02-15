@@ -3,6 +3,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,13 +120,13 @@ public class GUIWatorPanel extends GUISimulationPanel {
      * Returns parameters simulation needs to restart
      * @see Spinner<Integer>
      */
-    public Map<String,Double> getMyParams(){
+    public Map<String, Double> getMyParams(){
         myMap.put(WatorSimulation.FISH_BREED_TIME,1.0* myFishBreedSpinner.getValue());
         myMap.put(WatorSimulation.SHARK_BREED_TIME,1.0* mySharkBreedSpinner.getValue());
         myMap.put(WatorSimulation.STARVE_TIME,1.0* mySharkStarveSpinner.getValue());
         myMap.put(WatorSimulation.FISH_PERCENTAGE, 1.0* myFishPercentSpinner.getValue()/100);
         myMap.put(WatorSimulation.SHARK_PERCENTAGE, 1.0* mySharkPercentSpinner.getValue()/100);
         myMap.put(WatorSimulation.EMPTY_PERCENTAGE, 1.0* myEmptyPercentSpinner.getValue()/100);
-        return myMap;
+        return Collections.unmodifiableMap(myMap);
     }
 }

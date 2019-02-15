@@ -55,7 +55,7 @@ public class GUISimulationPanel extends GUIPanel{
     }
 
 
-    public Map<String,Double> getMyParams(){
+    public Map<String, Double> getMyParams(){
         return myParamsMap;
     }
 

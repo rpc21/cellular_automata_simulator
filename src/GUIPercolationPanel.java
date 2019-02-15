@@ -2,6 +2,7 @@
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +34,11 @@ public class GUIPercolationPanel extends GUISimulationPanel{
      * has begun to flow through the grid
      * @see Spinner<Integer>
      */
-    public Map<String,Double> getMyParams(){
+    public Map<String, Double> getMyParams(){
         myMap.put(PercolationSimulation.CLOSED_PERCENTAGE,1.0* mySpinner.getValue()/SPINNER_MAX);
         myMap.put(PercolationSimulation.OPEN_PERCENTAGE, 1 - 1.0* mySpinner.getValue()/SPINNER_MAX);
         myMap.put(PercolationSimulation.PERCOLATED_PERCENTAGE,0.0);
-        return myMap;
+        return Collections.unmodifiableMap(myMap);
     }
 
 
