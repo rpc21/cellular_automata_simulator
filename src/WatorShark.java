@@ -5,12 +5,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Shark cells in the Wator simulation
+ */
 public class WatorShark extends WatorCell {
 
     private int turnsSinceLastAte;
     private int turnsUntilCanBreed;
     private int starveTime;
 
+    /**
+     * Constructor for Wator Cell class
+     * @param loc location
+     * @param grid grid
+     * @param nextGrid next Grid
+     * @param parameters parameters
+     */
     public WatorShark(Location loc, Grid grid, Grid nextGrid, Map<String, Double> parameters){
         super(loc, grid, nextGrid, parameters);
         myCurrentState = WatorState.SHARK;
@@ -19,6 +29,9 @@ public class WatorShark extends WatorCell {
         turnsUntilCanBreed = (int) (double) (parameters.get(WatorSimulation.SHARK_BREED_TIME));
     }
 
+    /**
+     * Implements the rules for a shark in the Wator simulation
+     */
     @Override
     public void step() {
         turnsUntilCanBreed--;
@@ -79,11 +92,19 @@ public class WatorShark extends WatorCell {
         return false;
     }
 
+    /**
+     * Sharks are not edible
+     * @return false
+     */
     @Override
     public boolean isEdible() {
         return false;
     }
 
+    /**
+     * Sharks are not empty
+     * @return false
+     */
     @Override
     public boolean isEmpty() {
         return false;

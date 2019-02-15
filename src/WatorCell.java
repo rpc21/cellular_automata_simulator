@@ -16,17 +16,25 @@ public abstract class WatorCell extends Cell {
 
     protected int turnsUntilCanBreed;
 
+    /**
+     * Default constructor
+     */
     public WatorCell(){
         super();
     }
 
+    /**
+     * Constructor for WatorCells
+     * @param location location
+     * @param currentGrid current grid
+     * @param nextGrid next grid
+     * @param parameters parameters specific to Wator simulation
+     */
     public WatorCell(Location location, Grid currentGrid, Grid nextGrid, Map<String, Double> parameters){
         myLocation = location;
         myGrid = currentGrid;
         myNextGrid = nextGrid;
         myParameters = parameters;
-//        myNeighbors = NeighborsDefinitions.ADJACENT;
-//        turnsUntilCanBreed = (int) (parameters.get("breedTime") + Math.random() * 3);
     }
 
     /**
@@ -36,6 +44,10 @@ public abstract class WatorCell extends Cell {
     public void calculateNewState() {}
 
 
+    /**
+     * Allows wator cells to move locations
+     * @param loc next location
+     */
     public void moveTo(Location loc){
         myGrid.put(loc, this);
     }
@@ -49,8 +61,15 @@ public abstract class WatorCell extends Cell {
         return false;
     }
 
+    /**
+     * Method in which wator cells should implement their rules about how to advance from one iteration to the next
+     */
     public abstract void step();
 
+    /**
+     * Update the neighbors of the Wator Cells
+     * @param styleProperties style properties
+     */
     public void updateNeighbors(Map<String, String> styleProperties){
         for (Cell cell : myGrid.getCells()){
             cell.setMyNeighbors(NeighborsDefinitions.valueOf(styleProperties.getOrDefault(XMLStyler.NEIGHBORS_TYPE_TAG_NAME,

@@ -3,6 +3,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enumerates the possible state that a SugarPatch can take
+ */
 public enum SugarState implements CellState{
     LIGHT_PATCH("LP", "LIGHT_PATCH", Color.WHITE),
     MEDIUM_LIGHT_PATCH("ML", "MEDIUM_LIGHT_PATCH", Color.LIGHTGREEN),
