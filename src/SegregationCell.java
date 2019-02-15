@@ -6,6 +6,14 @@ public class SegregationCell extends MovableCell{
     private static int[] SEGREGATION_CELL_COL_NEIGHBORS = {-1, -1, -1, 0, 0, 1, 1, 1};
     private boolean toBeMoved = false;
 
+    /**
+     * Segregation cell class constructor
+     * @param location position in the grid
+     * @param initialState
+     * @param currentGrid the grid in which the cell exists
+     * @param nextGrid the grid in which the cell's next state will be placed
+     * @param parameters the parameters that determine rules for the simulation (threshold for satisfaction)
+     */
     public SegregationCell(Location location, SegregationState initialState, Grid currentGrid, Grid nextGrid, Map<String,
                 Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
@@ -18,10 +26,13 @@ public class SegregationCell extends MovableCell{
         this(location, SegregationState.values()[initialState], grid, nextGrid, parameters);
     }
 
+    /**
+     * updates the cell's state, used when the next iteration of the simulation is ready to be presented
+     * handles swapping cells in the grid when necessary
+     */
     @Override
     public void updateState(){
         if(myNextState == SegregationState.TO_BE_MOVED){
-            System.out.println("moving from " + myLocation.getRow()+" " + myLocation.getCol()+" to New location:"+myNextLocation.getRow() + " " + myNextLocation.getCol());
             swapLocations();
             myNextState = myCurrentState;
         }
@@ -31,6 +42,9 @@ public class SegregationCell extends MovableCell{
         }
     }
 
+    /**
+     * calculates what the state of the cell should be on the next iteration of the simulation
+     */
     @Override
     public void calculateNewState() {
         if(isSatisfied() && myCurrentState != SegregationState.EMPTY){ myNextState=myCurrentState; }
@@ -81,6 +95,10 @@ public class SegregationCell extends MovableCell{
         toBeMoved = true;
     }
 
+    /**
+     * Used to determine if a cell needs to moved
+     * @return true if the cell will remain where it is, false if not
+     */
     public boolean isSatisfied(){
         List<Location> myNeighborLocations = getMyGrid().getValidNeighbors(myLocation, myNeighbors);
         double percentSame = calcPercentSimilarNeighbors(myNeighborLocations);

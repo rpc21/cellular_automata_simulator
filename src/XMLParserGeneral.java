@@ -8,10 +8,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * The XMLParserGeneral class is an abstract class that implements methods used for parsing XML files of any type
+ *
+ * Based on code by:
+ *  @author Rhondu Smithwick
+ *  @author Robert C. Duvall
+ *
+ *
+ * @author Dima Fayyad
+ */
 public abstract class XMLParserGeneral {
-    // name of root attribute that notes the type of file expecting to parse
     protected final String TYPE_ATTRIBUTE;
-    // keep only one documentBuilder because it is expensive to make and can reset it before parsing
     protected final DocumentBuilder DOCUMENT_BUILDER;
     protected final File DEFAULT_XML_FILE = new File("tests/GameOfLifeTest.xml");
 
@@ -20,7 +28,6 @@ public abstract class XMLParserGeneral {
         TYPE_ATTRIBUTE = type;
     }
 
-    // Get root element of an XML file
     protected Element getRootElement (File xmlFile) {
         try {
             DOCUMENT_BUILDER.reset();
@@ -33,12 +40,11 @@ public abstract class XMLParserGeneral {
                 var xmlDocument = DOCUMENT_BUILDER.parse(DEFAULT_XML_FILE);
                 return xmlDocument.getDocumentElement();
             }catch(SAXException | IOException ee){
-                throw new XMLException(e);
+                throw new XMLException("Default File not found. Simulation could not be started");
             }
         }
     }
 
-    // Returns if this is a valid XML file for the specified object type
     protected boolean isValidFile (Element root, String type) {
         return getAttribute(root, TYPE_ATTRIBUTE).equals(type);
     }
@@ -68,5 +74,9 @@ public abstract class XMLParserGeneral {
         catch (ParserConfigurationException e) {
             throw new XMLException(e);
         }
+    }
+
+    protected String readInEdges(Element root){
+        return getTextValue(root, XMLParser.EDGE_TYPE_TAG_NAME);
     }
 }
