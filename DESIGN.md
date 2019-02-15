@@ -34,11 +34,10 @@ Cell Society - Team 12
 # Major Design Choices
 **1. Simulation and Cell Hierarchy**
 
-   * Pro: It's relatively easy to add a new level, and any page that only displays text,
-   such as a splash page or an "evaluation" page (lose vs win) is quite quick to instantiate.
-   * Con: There is a strict format for the files that specify the state and layout of GamePieces, as
-   files are read in a particular manner dictated by (for example) a LevelPage. Though this has not 
-   caused any immediate issues, it may present future ones for unique configurations.
+   * Pro: It's relatively easy to add a new simulation as we don't have to change any existing
+   code, we just have to add new code. The cell hierarchy allows us flexibility in the way cells behave
+   * Con: Cells that act in a deviant manner from the other cells have to be downcast to 
+   access their methods
    
    
 **2. GUIPolygon Hierarchy**
