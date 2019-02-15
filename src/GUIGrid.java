@@ -1,5 +1,4 @@
 import javafx.scene.Node;
-import javafx.scene.chart.LineChart;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.util.List;
@@ -13,7 +12,12 @@ public class GUIGrid {
     private GUIGridOptions myOptions;
 
     public static final double GUI_GRID_SIZE = 500;
-
+    /**
+     * This class is well designed because it is removed from the specific interworkings of the cell design and simply
+     * facilitates transferring information from GUIGridOptions to the accessory class GUIGridCell. Further,
+     * its field GUIOptions, allows for a separation of responsibilities for updating the grid and knowing the actual
+     * parameters of the grid.
+     */
     public GUIGrid(int r, int c, Stage stage, GUIGridCell cell, Map<String,String> initProps){
         myRows = r;
         myCols = c;
@@ -37,9 +41,12 @@ public class GUIGrid {
                 String currState = myCells.get(r * myRows + c).getMyCurrentState();
                 boolean hasBorder = myOptions.getStroke();
                 String polygon = myOptions.getShape();
+
                 StackPane currStackPane = myGUICell.setUpCell(r,c, currState, hasBorder, polygon);
+
                 if (myCells.get(r*myRows + c).containsAgent())
                     myGUICell.addAgent(currStackPane);
+
                 populateGUIGrid(currStackPane);
                 c = c + 1;
             }

@@ -3,11 +3,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
+/**
+ * This class allows all subclasses with control options to have a uniform manner in the user interface and design
+ * of spinners and choice boxes between the default panel, simulation specific panel, and the GUIGrid options window.
+ * I believe this code is well designed because it allows the subclasses to not have excessively repetitive boilerplate
+ * code. Additionally, I was able to impose constraints, such as only having integer spinners, but allow for more user
+ * flexibility by having object choice boxes instead of String choice boxes. This way, I could display shapes or images
+ * as options instead without having to go through and alter every instance of a choicebox if I wanted to maintain this
+ * hierarchy
+ */
 public class GUIPanel {
 
     private static final int SPINNER_STEP = 1;
@@ -50,13 +55,5 @@ public class GUIPanel {
                 cb.setValue(cb.getItems().get((Integer)number2));
             }
         });
-    }
-
-    /**
-     * This is a generic method panels may use to return important parameters for the GUIManager to use
-     * @see ChoiceBox<Object>
-     */
-    public Map<String,Double> getMyParams(){
-        return new HashMap<String,Double>();
     }
 }

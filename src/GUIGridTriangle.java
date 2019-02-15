@@ -1,11 +1,15 @@
 
-
 public class GUIGridTriangle extends GUIGridPolygon{
     private double myTriangleBottomLength;
     private double myTriangleHeight;
 
     private static final double SIDE_TO_GRID_RATIO = 4.0/3.0;
     private static final double HEIGHT_TO_SIDE_RATIO = 21.0/40.0;
+
+    /**
+     * This class is a subclass of GUIGridPolygon that handles the issue of the orientation of triangle configurations,
+     * as their row and column combination determine whether or not the triangle is facing upright.
+     */
 
     public GUIGridTriangle(int r, int c) {
         super(r,c);

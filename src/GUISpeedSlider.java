@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GUISpeedSlider extends GUIControlManager{
@@ -61,6 +62,6 @@ public class GUISpeedSlider extends GUIControlManager{
         List<Node> myList = new ArrayList<>();
         myList.add(mySpeedSliderLabel);
         myList.add(mySlider);
-        return myList;
+        return Collections.unmodifiableList(myList);
     }
 }

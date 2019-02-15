@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIPlayButton extends GUIControlManager{
@@ -39,6 +40,6 @@ public class GUIPlayButton extends GUIControlManager{
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
         myList.add(myButton);
-        return myList;
+        return Collections.unmodifiableList(myList);
     }
 }

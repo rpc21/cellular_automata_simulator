@@ -1,5 +1,4 @@
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -9,7 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * This class abstracts information concerning how the appearance of an actual cell is displayed on the GUIGrid.
+ * This is a good design for this general feature because there is only one place that needs to necessarily access Simulation
+ * information. Further, this abstraction provides flexibility in the way cells appear because some simulations require
+ * that a particular cell have more than one item in it.
+ */
 
 public class GUIGridCell {
 

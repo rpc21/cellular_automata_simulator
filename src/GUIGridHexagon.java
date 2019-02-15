@@ -2,12 +2,10 @@
 
 public class GUIGridHexagon extends GUIGridPolygon{
     private double myApothemLength;
-    private double myCols;
 
 
     public GUIGridHexagon(int r, int c){
         super(r,c);
-        myCols = c;
         myApothemLength = GUIGrid.GUI_GRID_SIZE/(double)r/2.0;
 
     }

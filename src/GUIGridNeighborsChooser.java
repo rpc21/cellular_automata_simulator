@@ -2,6 +2,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIGridNeighborsChooser extends GUIControlManager{
@@ -23,7 +24,7 @@ public class GUIGridNeighborsChooser extends GUIControlManager{
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
         myList.add(myChooser);
-        return myList;
+        return Collections.unmodifiableList(myList);
     }
     public String getNeighbors(){
         return myChooser.getValue().toString();

@@ -4,6 +4,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIRowColSpinner extends GUIControlManager {
@@ -37,7 +38,7 @@ public class GUIRowColSpinner extends GUIControlManager {
         List<Node> myList = new ArrayList<>();
         myList.add(myRowSpinnerLabel);
         myList.add(myRowSpinner);
-        return myList;
+        return Collections.unmodifiableList(myList);
     }
 
 }
