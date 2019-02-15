@@ -1,7 +1,6 @@
 
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
-
 import java.util.HashMap;
 import java.util.Map;
 

@@ -24,41 +24,6 @@ public class CellularAutomataMain extends Application {
     private static final String ERROR_FILE = "Not a valid file!";
     private static final String START_SIMULATION = "Starting new ";
     private static final String SIMULATION = " Simulation";
-//
-//    @Override
-//    public void start(Stage stage) {
-//        //String testCase = "tests/GameOfLifeTest.xml";
-//        //String testCase = "tests/SegregationTest.xml";
-//        //String testCase = "tests/GOLTest.xml";
-//        //String testCase = "tests/GameOfLifeTest.xml";
-//        //String testCase = "tests/PercolationTest.xml";
-//        String testCase = "SpreadingFireTest.xml";
-//        //String testCase = "tests/SugarTest.xml";
-//        //String testCase = "tests/WatorTest.xml";
-//        //String testCase = "tests/ForageTest.xml";
-//        //String testCase = "tests/PercolationNeighborsTest";
-//        //String testCase = "tests/SmallGridTestSpreadingFire.xml";
-//        File testFile = new File(testCase);
-////
-//        //String styleTestCase = "tests/ForageStyle.XML";
-//       //String styleTestCase = "tests/SegregationStyle.XML";
-//        //String styleTestCase = "tests/GameOfLifeStyle.XML";
-//        //String styleTestCase = "tests/PercolationStyle.XML";
-//        String styleTestCase = "tests/SpreadingFireStyle.XML";
-//        //String styleTestCase = "tests/SugarStyle.XML";
-//        //String styleTestCase = "tests/GameOfLifeStyle.XML";
-//        File styleFile = new File(styleTestCase);
-////
-//        //var p = new XMLParser(Simulation.DATA_TYPE).getSimulation(file);
-////        File testFile = new File(DEFAULT_SIMULATION);
-//        //File styleFile = new File(DEFAULT_STYLE);
-//        var simulation = new setUpSimulation().setSimulation(testFile, styleFile);
-//        try{
-//            myCurrentSimulation = simulation;
-//        }catch (Exception e){
-//            System.out.println("Invalid Simulation or Style File");
-//        }
-//        System.out.println("Ready to Display");
 
 
     // kind of data files to look for

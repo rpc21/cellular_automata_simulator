@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>hexagon</shape>
-    <neighborsType>HEXAGON</neighborsType>
+    <shape>rectangle</shape>
+    <neighborsType>KNIGHT</neighborsType>
     <edges>toroidal</edges>
-    <outline>no</outline>
+    <outline>yes</outline>
     <stateColors>
         <color id = "OPEN">WHITE</color>
         <color id = "CLOSED">BLACK</color>

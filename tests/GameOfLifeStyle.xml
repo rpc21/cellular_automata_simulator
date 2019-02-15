@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
     <shape>rectangle</shape>
-    <neighborsType>ADJACENT</neighborsType>
+    <neighborsType>BOX_NEIGHBORS</neighborsType>
     <edges>basic</edges>
-    <outline>no</outline>
+    <outline>yes</outline>
     <stateColors>
-        <color id = "DEAD">BLUE</color>
-        <color id = "ALIVE">ORANGE</color>
+        <color id = "DEAD">WHITE</color>
+        <color id = "ALIVE">BLACK</color>
     </stateColors>
 </data>

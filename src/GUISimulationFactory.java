@@ -10,13 +10,13 @@ public class GUISimulationFactory {
         String testCase;
         switch(newSim){
             case Simulation.GOL_SIMULATION_NAME:
-                testCase = "tests/GameOfLifeTest.xml";
+                testCase = "demo/GameOfLifeDemo.xml";
                 break;
             case Simulation.SPREADING_FIRE_SIMULATION_NAME:
-                testCase = "tests/SpreadingFireTest.xml";
+                testCase = "demo/SpreadingFireDemo.xml";
                 break;
             case Simulation.PERCOLATION_SIMULATION_NAME:
-                testCase = "tests/PercolationTest.xml";
+                testCase = "demo/PercolationDemo.xml";
                 break;
             case Simulation.SEGREGATION_SIMULATION_NAME:
                 testCase = "tests/SegregationTest.xml";
@@ -28,7 +28,7 @@ public class GUISimulationFactory {
                 testCase = "tests/ForageTest.xml";
                 break;
             case Simulation.SUGAR_SIMULATION_NAME:
-                testCase = "tests/SugarTest.xml";
+                testCase = "demo/SugarDemo.xml";
                 break;
             default:
                 testCase = "tests/GameOfLifeTest.xml";
