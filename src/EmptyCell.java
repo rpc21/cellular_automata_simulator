@@ -2,11 +2,11 @@ import javafx.scene.paint.Color;
 
 
 /**
- * The WatorEmpty has a location in the grid, is white when displayed in the visualization and is able to communicate
- * that it is empty, making it a viable location for other cells to move.  The WatorEmpty has unchanging state and no
+ * The EmptyCell has a location in the grid, is white when displayed in the visualization and is able to communicate
+ * that it is empty, making it a viable location for other cells to move.  The EmptyCell has unchanging state and no
  * real state representation
  */
-public class WatorEmpty extends WatorCell {
+public class EmptyCell extends WatorCell {
 
     /**
      * Empty cells do not advance state, they just remain the same
@@ -18,7 +18,7 @@ public class WatorEmpty extends WatorCell {
      * Empty cell constructor
      * @param loc
      */
-    public WatorEmpty(Location loc){
+    public EmptyCell(Location loc){
         myLocation = loc;
         myCurrentState = WatorState.EMPTY;
     }

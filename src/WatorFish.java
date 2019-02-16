@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class WatorFish extends WatorCell {
                 myGrid.put(newFish.getMyLocation(), newFish);
                 turnsUntilCanBreed = (int) Math.floor(myParameters.get(WatorSimulation.FISH_BREED_TIME));
             }else{
-                myGrid.put(myLocation, new WatorEmpty(myLocation));
+                myGrid.put(myLocation, new EmptyCell(myLocation));
             }
             myLocation = openSpots.get(0);
         }

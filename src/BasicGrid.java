@@ -1,17 +1,17 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * The BasicGrid implements the Grid interface, implementing the functionality that all grids should have. In the
  * BasicGrid, cells cannot wrap around to the other side of the grid.  The BasicGrid has an underlying structure of a
- * 2-D array of Cell objects
+ * 2-D array of Cell objects. 
  */
 public class BasicGrid implements Grid{
 
     // ADJACENT_COL and ADJACENT_ROW work together to specify the four adjacent neighbors to a grid location
-    public static final int[] ADJACENT_COL = {0, 0, -1, 1};
-    public static final int[] ADJACENT_ROW = {-1, 1, 0, 0};
+    private static final int[] ADJACENT_COL = {0, 0, -1, 1};
+    private static final int[] ADJACENT_ROW = {-1, 1, 0, 0};
 
     protected Cell[][] myGrid;
     protected int myNumRows;
@@ -37,10 +37,8 @@ public class BasicGrid implements Grid{
     @Override
     public List<Cell> getCells() {
         List<Cell> returnList = new ArrayList<>();
-        for (int i = 0; i < myGrid.length; i++){
-            for (int j = 0; j < myGrid[0].length; j++){
-                returnList.add(myGrid[i][j]);
-            }
+        for (Cell[] rowOfCells : myGrid) {
+            returnList.addAll(Arrays.asList(rowOfCells));
         }
         return returnList;
     }
@@ -65,7 +63,6 @@ public class BasicGrid implements Grid{
         } catch(ArrayIndexOutOfBoundsException e){
             return 0;
         }
-
     }
 
     /**
@@ -85,7 +82,7 @@ public class BasicGrid implements Grid{
      * @param obj the new object to be added
      */
     @Override
-    public void put(Location loc, Cell obj) {
+    public void put(Location loc, Cell obj) throws ArrayIndexOutOfBoundsException {
         if (isValid(loc)){
             myGrid[loc.getRow()][loc.getCol()] = obj;
         }
@@ -99,9 +96,9 @@ public class BasicGrid implements Grid{
      * @param loc the location of the object that is to be removed
      */
     @Override
-    public void remove(Location loc) {
+    public void remove(Location loc) throws ArrayIndexOutOfBoundsException {
         if (isValid(loc)) {
-            myGrid[loc.getRow()][loc.getCol()] = new WatorEmpty(loc);
+            myGrid[loc.getRow()][loc.getCol()] = new EmptyCell(loc);
         }
         else {
             throw new ArrayIndexOutOfBoundsException();
@@ -114,7 +111,7 @@ public class BasicGrid implements Grid{
      * @return Cell at the Location loc
      */
     @Override
-    public Cell get(Location loc) {
+    public Cell get(Location loc) throws ArrayIndexOutOfBoundsException{
         if (isValid(loc)) {
             return myGrid[loc.getRow()][loc.getCol()];
         }
@@ -161,7 +158,7 @@ public class BasicGrid implements Grid{
      * @param loc the location of the cell whose neighbors you want
      * @param deltaRow used with deltaCol to specify the relative positions of possible neighbors
      * @param deltaCol used with deltaRow to specify the relative positions of possible neighbors
-     * @return an ArrayList of the locations of valid neighbors
+     * @return an List of the locations of valid neighbors
      */
     public List<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol) {
         int locRow = loc.getRow();
@@ -177,10 +174,10 @@ public class BasicGrid implements Grid{
     }
 
     /**
-     * Get the valid neighbors applying neighbor rules for a basic grid
-     * @param loc location to be checked
-     * @param neighborsDefinitions neighbor definitions to be checked
-     * @return List of valid neighbors
+     * Returns the valid neighbors of a location with give neighbors definitions
+     * @param loc location to check
+     * @param neighborsDefinitions the neighbors to check
+     * @return list of valid neighbor locations
      */
     public List<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions){
         return getValidNeighbors(loc, neighborsDefinitions.getDeltaRow(), neighborsDefinitions.getDeltaCol());
@@ -228,10 +225,10 @@ public class BasicGrid implements Grid{
      */
     @Override
     public void printGrid() {
-        for(int i = 0; i < myGrid.length; i++){
+        for (Cell[] row : myGrid) {
             StringBuilder rowOfCells = new StringBuilder();
-            for(int j = 0; j < myGrid[0].length; j++){
-                rowOfCells.append(myGrid[i][j]);
+            for (int j = 0; j < myGrid[0].length; j++) {
+                rowOfCells.append(row[j]);
             }
             System.out.println(rowOfCells);
         }

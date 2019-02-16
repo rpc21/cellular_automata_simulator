@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,7 +90,7 @@ public class WatorSimulation extends Simulation {
             return new WatorShark(thisLocation, grid, nextGrid, parameters);
         }
         else{
-            return new WatorEmpty(thisLocation);
+            return new EmptyCell(thisLocation);
         }
     }
 

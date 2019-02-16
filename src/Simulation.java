@@ -179,7 +179,7 @@ public abstract class Simulation {
             return new WatorShark(loc, grid, nextGrid, parameters);
         }
         else{
-            return new WatorEmpty(loc);
+            return new EmptyCell(loc);
         }
     }
 
@@ -198,7 +198,7 @@ public abstract class Simulation {
             return new WatorShark(loc, myGrid, myNextGrid, myParameters);
         }
         else{
-            return new WatorEmpty(loc);
+            return new EmptyCell(loc);
         }
     }
 
