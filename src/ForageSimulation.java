@@ -2,6 +2,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Simulation for the ForageAnts simulation
+ */
 public class ForageSimulation extends Simulation {
 
     public static final String MAX_FOOD_PHEROMONES = "maxFoodPheromones";

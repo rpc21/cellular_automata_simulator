@@ -235,6 +235,10 @@ public class ForageAnt {
 //        return neighborFoodPheromones;
 //    }
 
+    /**
+     * Setter for the grid
+     * @param myNextGrid
+     */
     public void setMyNextGrid(Grid myNextGrid) {
         this.myNextGrid = myNextGrid;
     }

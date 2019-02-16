@@ -2,12 +2,6 @@ import java.util.Map;
 
 /** ADAPTED from WATORWORLD CODE
  * https://www2.cs.duke.edu/courses/spring19/compsci308/assign/02_cellsociety/nifty/scott-wator-world/SourceCode/Actor.java
-<<<<<<< HEAD
- * Moves this actor to a new location. If there is another actor at the
- * given location, it is removed. <br />
- * Precondition: (1) This actor is contained in a grid (2)
- * <code>newLocation</code> is valid in the grid of this actor
-=======
  * Moves this cell to a new location. If there is another cell at the
  * given location, it is removed.
  * Precondition: (1) This cell is contained in a grid (2)
@@ -15,7 +9,6 @@ import java.util.Map;
  *
  * @author Dima Fayyad
  * @author Ryan Culhane
->>>>>>> 8fb2523ec17f5564ff29de2fd3a744aa807a32d4
  */
 public abstract class MovableCell extends Cell {
 

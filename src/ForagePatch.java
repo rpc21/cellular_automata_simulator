@@ -188,7 +188,7 @@ public class ForagePatch extends Cell{
 
     /**
      * Add a specified number of home pheromones to a patch
-     * @param d
+     * @param d number of food pheromones to add
      */
     public void addFoodPheromones(Double d){
         myFoodPheromones += d;

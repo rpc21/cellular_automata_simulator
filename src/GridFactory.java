@@ -1,3 +1,6 @@
+/**
+ * Factory to create grids
+ */
 public class GridFactory {
 
     /**

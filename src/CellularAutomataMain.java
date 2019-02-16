@@ -9,7 +9,9 @@ import java.io.FileNotFoundException;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-
+/**
+ * Main class to run the application
+ */
 public class CellularAutomataMain extends Application {
     public static final int WINDOW_SIZE = 750;
     private Simulation myCurrentSimulation;
