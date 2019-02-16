@@ -3,6 +3,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enumerates the possibl e states for wator cells
+ */
 public enum WatorState implements CellState {
 
     EMPTY("E", "EMPTY", Color.AQUAMARINE),
@@ -37,16 +40,10 @@ public enum WatorState implements CellState {
         return myShortenedName;
     }
 
-
     /**
-     * Return the color to display representing the state of the cell
-     * @return a Color representing the state of the cell
+     * Return the possible states of a Wator cell as Strings
+     * @return the possible states of a Wator cell as Strings
      */
-    @Override
-    public Color getMyCellColor() {
-        return myCellColor;
-    }
-
     @Override
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();

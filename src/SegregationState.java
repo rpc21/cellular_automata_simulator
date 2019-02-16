@@ -46,14 +46,9 @@ public enum SegregationState implements CellState {
     }
 
     /**
-     * Return the color to display representing the state of the cell
-     * @return a Color representing the state of the cell
+     * Return a list of the possible values that the state could take on
+     * @return list of possible states
      */
-    @Override
-    public Color getMyCellColor() {
-        return myCellColor;
-    }
-
     @Override
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();

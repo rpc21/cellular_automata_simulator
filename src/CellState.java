@@ -18,12 +18,9 @@ public interface CellState {
     String getMyShortenedName();
 
     /**
-     * Return the color to display representing the state of the cell
-     * @return a Color representing the state of the cell
+     * Returns a list of strings for all the possible values associated with a CellState
+     * @return a list of strings of all the possible values associated with a CellState
      */
-    Color getMyCellColor();
-
-
     List<String> getPossibleValues();
 
 }

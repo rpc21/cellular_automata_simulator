@@ -1,13 +1,16 @@
 import java.util.Map;
 
+/**
+ * SugarAgents are used in the Sugar simulation and implement rules involved in the Sugar Simulation.
+ */
 public class SugarAgent {
 
     public static final String MAX_VISION = "maxVision";
     public static final String MAX_METABOLISM = "maxMetabolism";
     public static final String INIT_SUGAR = "initSugar";
-    public static final double DEFAULT_MAX_VISION = 5.0D;
-    public static final double DEFAULT_MAX_METABOLISM = 4.0D;
-    public static final double DEFAULT_INTIAL_SUGAR = 2.0D;
+    private static final double DEFAULT_MAX_VISION = 5.0D;
+    private static final double DEFAULT_MAX_METABOLISM = 4.0D;
+    private static final double DEFAULT_INTIAL_SUGAR = 2.0D;
     private int sugar;
     private int sugarMetabolism;
     private int vision;
@@ -16,6 +19,12 @@ public class SugarAgent {
     private Grid myGrid;
     private boolean shouldRemove;
 
+    /**
+     * Constructor for the sugar agents that are involved in the Sugar simulation
+     * @param location location of the agent
+     * @param parameters parameters for how sugar agents should behave
+     * @param grid grid that is being used in the simulation
+     */
     public SugarAgent(Location location, Map<String, Double> parameters, Grid grid){
         myGrid = grid;
         myLocation = location;
@@ -30,6 +39,9 @@ public class SugarAgent {
         shouldRemove = false;
     }
 
+    /**
+     * Method that advances a sugar agent from one iteration to the next
+     */
     public void act(){
         Location nextLocation = findMaxSugarLocation();
         moveSugarAgent(nextLocation);
@@ -70,6 +82,9 @@ public class SugarAgent {
         return maxSugarLocation;
     }
 
+    /**
+     * @return true if the agent is dead and should be removed
+     */
     public boolean isDead(){
         return shouldRemove;
     }

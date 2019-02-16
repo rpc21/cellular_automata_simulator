@@ -1,5 +1,9 @@
 import java.util.List;
 
+/**
+ * Enum defining all the possible neighbors as two parallel arrays of row and column offsets.  This enum also defines
+ * the directions in the same way
+ */
 public enum NeighborsDefinitions {
     ADJACENT(new int[] {0,0,-1,1}, new int[] {-1,1,0,0}),
     BOX_NEIGHBORS(new int[] {0, 0, -1, -1, -1, 1, 1, 1}, new int[] {-1, 1, -1, 0, 1, -1, 0, 1}),
@@ -24,8 +28,6 @@ public enum NeighborsDefinitions {
     public static final NeighborsDefinitions[] CARDINAL_DIRECTIONS_COMPLETE = {NORTH, NORTH_EAST, EAST, SOUTH_EAST,
             SOUTH, SOUTH_WEST, WEST, NORTH_WEST};
 
-    public static final List<Object> allPossibleNeighbors = List.of(ADJACENT,BOX_NEIGHBORS,DIAGONAL,KNIGHT,
-            I_FORMATION,TRIANGLE_12_POINT_UP,HEXAGON);
     private final int[] deltaRow;
     private final int[] deltaCol;
 
@@ -34,10 +36,16 @@ public enum NeighborsDefinitions {
         this.deltaCol = deltaCol;
     }
 
+    /**
+     * @return array of the column offsets associated with the neighbor definition
+     */
     public int[] getDeltaCol() {
         return deltaCol;
     }
 
+    /**
+     * @return array of the row offsets associated with the neighbor definition
+     */
     public int[] getDeltaRow() {
         return deltaRow;
     }

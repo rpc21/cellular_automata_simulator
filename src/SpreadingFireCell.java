@@ -2,10 +2,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class of the cells that are used in a SpreadingFire simulation.  This class implements the rules of the
+ * SpreadingFire simulation
+ */
 public class SpreadingFireCell extends Cell {
 
     public static final double PROB_CATCH_DEFAULT_VALUE = 1.0D;
 
+    /**
+     * Constructor for the Spreading Fire Cell
+     * @param location location of the cell
+     * @param initialState initial state of the cell
+     * @param currentGrid current grid
+     * @param nextGrid next grid
+     * @param parameters specific parameters
+     */
     public SpreadingFireCell(Location location, SpreadingFireState initialState, Grid currentGrid, Grid nextGrid, Map<String,
                 Double> parameters){
         super(location, initialState, currentGrid, nextGrid, parameters);
@@ -54,6 +66,9 @@ public class SpreadingFireCell extends Cell {
         return nextToTreeOnFire && (randomNumber <= myParameters.get(SpreadingFireSimulation.PROB_CATCH));
     }
 
+    /**
+     * @return true if cell is on fire
+     */
     public boolean isOnFire() {
         return myCurrentState == SpreadingFireState.FIRE;
     }

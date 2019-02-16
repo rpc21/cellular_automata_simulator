@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * Simulation class specific to the Sugar Simulation
+ */
 public class SugarSimulation extends Simulation{
 
     public static final String SUGAR_AGENT_PERCENTAGE = "sugarAgentPercentage";
@@ -21,31 +24,26 @@ public class SugarSimulation extends Simulation{
             MAX_VISION, MAX_METABOLISM, INIT_SUGAR, MAX_SUGAR, LIGHT_PATCH_PERCENTAGE, MEDIUM_LIGHT_PERCENTAGE, MEDIUM_PERCENTAGE,
             MEDIUM_DARK_PERCENTAGE, DARK_PERCENTAGE);
 
-
-    public SugarSimulation(int rows, int cols, Map<String, Double> parameters){
-        super(parameters, rows, cols);
-        sugarMax = (int) (double) parameters.getOrDefault(MAX_SUGAR, SugarPatch.MAX_SUGAR_DEFAULT_VALUE);
-    }
-
+    /**
+     * Constructor for the SugarSimulation
+     * @param params parameters specific to the Sugar Simulation
+     * @param grid grid for the simulation
+     */
     public SugarSimulation(Map<String, Double> params, Grid grid){
         super(params, grid);
         sugarMax = (int) (double) params.getOrDefault(MAX_SUGAR, SugarPatch.MAX_SUGAR_DEFAULT_VALUE);
     }
 
+    /**
+     * Override setInitialStates to also initialize the agents
+     * @param initialStates 2-D array of strings specifying states
+     * @param simulationType simulation name
+     * @param parameters simulation specific parameters
+     */
     @Override
     public void setInitialStates(String[][] initialStates, String simulationType, Map<String, Double> parameters) {
         super.setInitialStates(initialStates, simulationType, parameters);
         initializeSugarAgents();
-//        sugarMax = sugarMax();
-    }
-
-    private int sugarMax(){
-        int currMax = 0;
-        for (Cell cell : myGrid.getCells()){
-            currMax = Math.max(((SugarPatch) cell).getSugar(), currMax);
-        }
-        return currMax;
-
     }
 
     private void initializeSugarAgents() {
@@ -57,6 +55,9 @@ public class SugarSimulation extends Simulation{
         }
     }
 
+    /**
+     * Override updateGrid to just update the SugarAgents and update the SugarPatches
+     */
     @Override
     public void updateGrid(){
         updateSugarAgents();
@@ -81,53 +82,51 @@ public class SugarSimulation extends Simulation{
         }
     }
 
+    /**
+     * Override update neighbors to use ADJACENT neighbors as the default
+     * @param styleProperties map including the neighborsType and new neighborstype
+     */
     @Override
     public void updateNeighbors(Map<String, String> styleProperties){
         super.updateNeighbors(styleProperties, NeighborsDefinitions.ADJACENT);
     }
 
 
+    /**
+     * Overrides the isOver method to be true if all sugar agents are dead
+     * @return true if all the sugar agents are dead
+     */
     @Override
     public boolean isOver() {
-        return false;
+        return mySugarAgents.isEmpty();
     }
 
+    /**
+     * Return the Sugar Simulation name
+     * @return Sugar Simulation name
+     */
     @Override
     public String getMyName() {
         return Simulation.SUGAR_SIMULATION_NAME;
     }
 
+    /**
+     * Return percentageFields to look for when creating a new simulation
+     * @return
+     */
     @Override
     public List<String> getPercentageFields() {
         return List.of(LIGHT_PATCH_PERCENTAGE, MEDIUM_LIGHT_PERCENTAGE, MEDIUM_PERCENTAGE,
                 MEDIUM_DARK_PERCENTAGE, DARK_PERCENTAGE);
     }
 
+    /**
+     * Used to replace the cell when it is clicked on by the front end
+     * @param location location of the cell to be replaced
+     * @param newState new state of the cell
+     */
     @Override
     public void replaceCell(Location location, String newState){
-        int sugar = mapColorToSugar(newState);
-        ((SugarPatch) myGrid.get(location)).setSugar(sugar);
+        myGrid.put(location, new SugarPatch(location, myParameters, myGrid, newState));
     }
-
-    private int mapColorToSugar(String newState) {
-        int sugar = 0;
-        if(newState.equals(SugarState.LIGHT_PATCH.toString())){
-            sugar = sugarMax / 5;
-        }
-        else if (newState.equals(SugarState.MEDIUM_LIGHT_PATCH.toString())){
-            sugar = sugarMax * 2 / 5;
-        }
-        else if (newState.equals(SugarState.MEDIUM_PATCH.toString())){
-            sugar = sugarMax * 3 / 5;
-        }
-        else if (newState.equals(SugarState.MEDIUM_DARK_PATCH.toString())){
-            sugar = sugarMax * 4 / 5;
-        }
-        else{
-            sugar = sugarMax;
-        }
-        return sugar;
-    }
-
-
 }

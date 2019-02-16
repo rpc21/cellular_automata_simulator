@@ -1,11 +1,14 @@
 import java.util.HashMap;
 
+/**
+ * Class used to hard code test the backend of the Forage Simulation
+ */
 public class ForageAntsTester {
 
     public static void main(String[] args) {
-//        System.out.println(NeighborsDefinitions.ADJACENT);
-//        System.out.println(NeighborsDefinitions.values());
-//        System.out.println(GOLState.ALIVE);
+        System.out.println(NeighborsDefinitions.ADJACENT);
+        System.out.println(NeighborsDefinitions.values());
+        System.out.println(GOLState.ALIVE);
 
         HashMap<String, String> basicParameters = new HashMap<>();
         basicParameters.put("rows", "4");

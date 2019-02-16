@@ -34,6 +34,7 @@ public abstract class MovableCell extends Cell {
     }
 
     /**
+     * Finds swaps cell with the cell currently in its next location
      * swaps two cells in the grid
      * Used in simulations where cells are allowed to move in the grid
      */
@@ -55,6 +56,7 @@ public abstract class MovableCell extends Cell {
         myLocation = myNextLocation;
         myGrid.put(myLocation, this);
     }
+
 
     /**
      * Sets the next location of the cell so that when cells are swapped their next positions are available

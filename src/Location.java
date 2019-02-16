@@ -51,8 +51,7 @@ public class Location {
      * <code>Location</code> with the same row and column as this location;
      * <code>false</code> otherwise
      */
-    public boolean equals(Object other)
-    {
+    public boolean equals(Object other) {
         if (!(other instanceof Location)) {
             return false;
         }
