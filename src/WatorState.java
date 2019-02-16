@@ -40,7 +40,10 @@ public enum WatorState implements CellState {
         return myShortenedName;
     }
 
-
+    /**
+     * Return the possible states of a Wator cell as Strings
+     * @return the possible states of a Wator cell as Strings
+     */
     @Override
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();

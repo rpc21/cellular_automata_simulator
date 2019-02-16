@@ -176,6 +176,12 @@ public class BasicGrid implements Grid{
         return validLocations;
     }
 
+    /**
+     * Get the valid neighbors applying neighbor rules for a basic grid
+     * @param loc location to be checked
+     * @param neighborsDefinitions neighbor definitions to be checked
+     * @return List of valid neighbors
+     */
     public List<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions){
         return getValidNeighbors(loc, neighborsDefinitions.getDeltaRow(), neighborsDefinitions.getDeltaCol());
     }
@@ -183,7 +189,7 @@ public class BasicGrid implements Grid{
     /**
      * Get the adjacent locations to a specified location where the cell is marked as empty
      * @param loc a location in this grid
-     * @return ArrayList of empty adjacent locations
+     * @return List of empty adjacent locations
      */
     @Override
     public List<Location> getEmptyAdjacentLocations(Location loc) {
@@ -201,30 +207,21 @@ public class BasicGrid implements Grid{
     /**
      * Get the adjacent locations to a specified location where the cell is not marked as empty
      * @param loc a location in this grid
-     * @return ArrayList of occupied adjacent locations
+     * @return List of occupied adjacent locations
      */
     @Override
     public List<Location> getOccupiedAdjacentLocations(Location loc) {
         List<Location> occupiedAdjacentLocations = new ArrayList<>();
         if (isValid(loc)) {
-            for (Location l : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)) {
-                if (!get(l).isEmpty()) {
-                    occupiedAdjacentLocations.add(l);
+            for (Location location : getValidNeighbors(loc, ADJACENT_ROW, ADJACENT_COL)) {
+                if (!get(location).isEmpty()) {
+                    occupiedAdjacentLocations.add(location);
                 }
             }
         }
         return occupiedAdjacentLocations;
     }
 
-    /**
-     * This method is currently unused???
-     * @param loc a location in this grid
-     * @return null
-     */
-    @Override
-    public List<Cell> getNeighbors(Location loc) {
-        return null;
-    }
 
     /**
      * Prints the grid row by row using the toStrings specified by each of the cells

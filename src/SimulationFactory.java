@@ -94,7 +94,7 @@ public class SimulationFactory {
         }
         while(index<gridLocations.size()){
             initialStates[gridLocations.get(index).getRow()][gridLocations.get(index).getCol()] =
-                    mySimulation.getPercentageFields().get(0).split("P")[0].toUpperCase();
+                    mySimulation.getPercentageFields().get(0).split(THE_MAGIC_LETTER_UPON_WHICH_ALL_OUR_CODE_IS_HINGED)[0].toUpperCase();
             index++;
         }
         return  initialStates;

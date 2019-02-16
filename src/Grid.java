@@ -103,17 +103,6 @@ public interface Grid {
     List<Location> getOccupiedAdjacentLocations(Location loc);
 
     /**
-     * Gets the neighboring occupants in all eight compass directions (north,
-     * northeast, east, southeast, south, southwest, west, and northwest).
-     * <br />
-     * Precondition: <code>loc</code> is valid in this grid
-     * @param loc a location in this grid
-     * @return returns a list of the objects in the occupied locations
-     * adjacent to <code>loc</code> in this grid
-     */
-    List<Cell> getNeighbors(Location loc);
-
-    /**
      * Returns the a list of Cells that are in the grid while they underlying implementation of the grid remains hidden
      * @return
      */
@@ -129,6 +118,12 @@ public interface Grid {
      */
     List<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol);
 
+    /**
+     * Get the valid neighbors of a location that exist in the grid
+     * @param loc location to check
+     * @param neighborsDefinitions neighbors to check
+     * @return valid neighbors
+     */
     List<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions);
 
     /**

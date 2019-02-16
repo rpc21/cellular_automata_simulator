@@ -40,7 +40,7 @@ public class CellularAutomataMain extends Application {
 //        //String testCase = "tests/SmallGridTestSpreadingFire.xml";
 //        File testFile = new File(testCase);
 ////
-//        //String styleTestCase = "tests/ForageStyle.XML";
+//        //String styleTestCase = "tests/ForageStyle.xml";
 //       //String styleTestCase = "tests/SegregationStyle.XML";
 //        //String styleTestCase = "tests/GameOfLifeStyle.XML";
 //        //String styleTestCase = "tests/PercolationStyle.XML";
