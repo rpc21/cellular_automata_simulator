@@ -2,12 +2,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GUIBlankPanel extends GUISimulationPanel{
-    HashMap<String,Double> myMap = new HashMap<String,Double>();
+    Map<String,Double> myMap = new HashMap<>();
 
     public GUIBlankPanel(String mySimName, Map<String,Double> initParams) {
         super(mySimName);
     }
-    public HashMap<String,Double> getMyParams(){
+
+    /**
+     * Returns an empty map if the simulation has no simulation-specific parameters
+     * @see GUISimulationPanel
+     */
+    public Map<String, Double> getMyParams(){
         return myMap;
     }
 

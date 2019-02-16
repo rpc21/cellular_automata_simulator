@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIPlayButton extends GUIControlManager{
@@ -18,7 +19,11 @@ public class GUIPlayButton extends GUIControlManager{
         super.setUpButton(myButton, NAME, e -> fire());
     }
 
-
+    /**
+     * Pauses or plays primary timeline
+     * type
+     * @see Timeline
+     */
     private void fire(){
         if (myAnimation.getStatus() == Animation.Status.RUNNING)
             myAnimation.pause();
@@ -26,9 +31,15 @@ public class GUIPlayButton extends GUIControlManager{
             myAnimation.play();
         }
     }
+    /**
+     * This getter method was necessary to add the node that allows the user to access the play button
+     * type
+     * @see Node
+     * @return myList which is a list of nodes necessary for the user to pause the animation
+     */
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
         myList.add(myButton);
-        return myList;
+        return Collections.unmodifiableList(myList);
     }
 }

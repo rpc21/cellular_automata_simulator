@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data media="style">
-    <shape>hexagon</shape>
-    <neighborsType>HEXAGON</neighborsType>
+    <shape>rectangle</shape>
+    <neighborsType>KNIGHT</neighborsType>
     <edges>toroidal</edges>
     <outline>yes</outline>
     <stateColors>
