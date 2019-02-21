@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The BasicGrid implements the Grid interface, implementing the functionality that all grids should have. In the
  * BasicGrid, cells cannot wrap around to the other side of the grid.  The BasicGrid has an underlying structure of a
- * 2-D array of Cell objects. 
+ * 2-D array of Cell objects.
  */
 public class BasicGrid implements Grid{
 
