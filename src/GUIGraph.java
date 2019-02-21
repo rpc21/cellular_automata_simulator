@@ -13,14 +13,18 @@ public class GUIGraph {
     private static final int MAX_STEPS = 50;
     private static final double Y_STEP = 0.01;
 
+    private static final String X_AXIS = "Cycle";
+    private static final String Y_AXIS = "Cell Percentage";
+    private static final String TITLE = "Cell Perecentage Distribution";
+
     public GUIGraph(Simulation mySim){
         NumberAxis xAxis = new NumberAxis(0,MAX_STEPS,1);
-        xAxis.setLabel("Cycle");
+        xAxis.setLabel(X_AXIS);
         NumberAxis yAxis = new NumberAxis(0,1,Y_STEP);
-        yAxis.setLabel("Cell Percentage");
+        yAxis.setLabel(Y_AXIS);
 
         myChart = new LineChart<Number,Number>(xAxis,yAxis);
-        myChart.setTitle("Cell Percentage Distribution");
+        myChart.setTitle(TITLE);
         for (String a: mySim.getMyPossibleStates()) {
             myMap.put(a, new XYChart.Series<>());
             myMap.get(a).setName(a);
@@ -29,13 +33,22 @@ public class GUIGraph {
         }
         currStep++;
     }
-
+    /**
+     * This method sets parameters for the linechart's display and returns its display
+     * type
+     * @see LineChart
+     * @return myChart to add to root node of the scene
+     */
     public LineChart<Number,Number> getMyChart(){
         myChart.setMaxHeight(CHART_HEIGHT);
         myChart.setMinWidth(GUI.STAGE_SIZE * 1.0/GUI.SCALE);
         return myChart;
     }
-
+    /**
+     * This method sets parameters for the linechart's display and returns its display
+     * type
+     * @see LineChart
+     */
     public void updateChart(List<Cell> myCells) {
         HashMap<String, Double> paramCountMap = new HashMap<>();
         for (String cellType : myMap.keySet())

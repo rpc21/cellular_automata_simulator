@@ -6,17 +6,22 @@ import java.util.Map;
 
 public class GUISimulationFactory {
     private static final String STYLER_NAME = "media";
+    /**
+     * Initializes XMLFile name for setup purposes. This method is public for GUIManager to access if it needs ot add a new simulation
+     * @param newSim name of the simulation to be loaded in
+     */
+
     public String makeXMLFileName(String newSim){
         String testCase;
         switch(newSim){
             case Simulation.GOL_SIMULATION_NAME:
-                testCase = "tests/GameOfLifeTest.xml";
+                testCase = "demo/GameOfLifeDemo.xml";
                 break;
             case Simulation.SPREADING_FIRE_SIMULATION_NAME:
-                testCase = "tests/SpreadingFireTest.xml";
+                testCase = "demo/SpreadingFireDemo.xml";
                 break;
             case Simulation.PERCOLATION_SIMULATION_NAME:
-                testCase = "tests/PercolationTest.xml";
+                testCase = "demo/PercolationDemo.xml";
                 break;
             case Simulation.SEGREGATION_SIMULATION_NAME:
                 testCase = "tests/SegregationTest.xml";
@@ -28,7 +33,7 @@ public class GUISimulationFactory {
                 testCase = "tests/ForageTest.xml";
                 break;
             case Simulation.SUGAR_SIMULATION_NAME:
-                testCase = "tests/SugarTest.xml";
+                testCase = "demo/SugarDemo.xml";
                 break;
             default:
                 testCase = "tests/GameOfLifeTest.xml";
@@ -36,6 +41,7 @@ public class GUISimulationFactory {
         }
         return testCase;
     }
+
     private String makeXMLStyleName(String newSim){
         String testCase;
         switch(newSim){
@@ -66,6 +72,13 @@ public class GUISimulationFactory {
         }
         return testCase;
     }
+    /**
+     * Initializes GUIGridSimulationPanel for display purposes. This method is public because GUIManager needs to access it if it needs
+     * to add an additional simulation
+     * @param newSim the SimulationPanel keeps track of the name of the current simulation to compare against user input
+     * @param mySim This is the Simulation instance that will specify the initial properties of the GUISimulationPanel
+     * @see GUISimulationPanel
+     */
     public GUISimulationPanel makeSimulationPanel(String newSim, Simulation mySim){
         GUISimulationPanel mySimPanel;
         switch(newSim){
@@ -96,6 +109,13 @@ public class GUISimulationFactory {
         }
         return mySimPanel;
     }
+    /**
+     * Initializes GUIGrid for display purposes. This method is public because GUIManager needs to access it if it needs
+     * to add an additional simulation
+     * @param mySim This is the Simulation instance that will specify the initial properties of the GUIGrid's options
+     * @param stage This is needed to handle adding another window to the scene for GUIGrid's options window
+     * @see GUIGrid
+     */
 
     public GUIGrid makeGUIGrid(Simulation mySim, Stage stage){
         GUIGrid myGrid;
@@ -110,6 +130,14 @@ public class GUISimulationFactory {
         return myGrid;
 
     }
+    /**
+     * Initializes GUIGridPolygon for display purposes. This method is public because if the user switches shapes, there needs
+     * to be a way for the GUIGridOptions to access this method in order to know which shape to switch to
+     * @param rows This is the number of rows in the simulation
+     * @param cols This is the number of columns in the simulation
+     * @param shape This is the string used to determine which subclass of GUIGridPolygon to instantiate
+     */
+
     public GUIGridPolygon makeGUIPolygon(int rows, int cols, String shape){
         GUIGridPolygon myPolygon;
         switch(shape) {
@@ -129,4 +157,5 @@ public class GUISimulationFactory {
         return myPolygon;
 
     }
+
 }

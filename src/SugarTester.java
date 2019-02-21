@@ -1,6 +1,13 @@
 import java.util.HashMap;
 
+/**
+ * Class used for testing the sugar simulation backend
+ */
 public class SugarTester {
+    /**
+     * main
+     * @param args arguments to main
+     */
     public static void main(String[] args) {
 //        System.out.println(NeighborsDefinitions.ADJACENT);
 //        System.out.println(NeighborsDefinitions.values());

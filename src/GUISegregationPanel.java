@@ -1,11 +1,13 @@
 
 import javafx.scene.control.Spinner;
 import javafx.scene.text.Text;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GUISegregationPanel extends GUISimulationPanel {
-    private Spinner<Integer> myThresholdSpinner = new Spinner<>();
+    private Spinner<Integer> myThresholdSpinner;
     private Text myThresh;
     private Spinner<Integer> myRaceOneSpinner;
     private Text myRaceOne;
@@ -21,6 +23,10 @@ public class GUISegregationPanel extends GUISimulationPanel {
     private static final String RACE_ONE_NAME = "Red %";
     private static final String RACE_TWO_NAME = "Blue %";
 
+    /**
+     * Sets up segregation simulation panel with needed spinners and labels
+     * @see Spinner<></>
+     */
 
     public GUISegregationPanel(String mySimName, Map<String,Double> initParams){
         super(mySimName);
@@ -47,12 +53,15 @@ public class GUISegregationPanel extends GUISimulationPanel {
 
     }
 
-
-    public HashMap<String,Double> getMyParams(){
+    /**
+     * Returns parameters Simulation needs to restart a simulation with this distribution of percentages of cells
+     * @see Spinner<Integer>
+     */
+    public Map<String,Double> getMyParams(){
         myMap.put(SegregationSimulation.THRESHOLD,1.0*myThresholdSpinner.getValue()/SPINNER_MAX);
         myMap.put(SegregationSimulation.EMPTY_PERCENTAGE, 1.0 * myEmptySpinner.getValue() /SPINNER_MAX);
         myMap.put(SegregationSimulation.RED_PERCENTAGE,1.0 *myRaceOneSpinner.getValue()/SPINNER_MAX);
         myMap.put(SegregationSimulation.BLUE_PERCENTAGE, 1.0 *myRaceTwoSpinner.getValue()/SPINNER_MAX);
-        return myMap;
+        return Collections.unmodifiableMap(myMap);
     }
 }

@@ -9,7 +9,9 @@ import java.io.FileNotFoundException;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-
+/**
+ * Main class to run the application
+ */
 public class CellularAutomataMain extends Application {
     public static final int WINDOW_SIZE = 750;
     private Simulation myCurrentSimulation;
@@ -24,7 +26,6 @@ public class CellularAutomataMain extends Application {
     private static final String ERROR_FILE = "Not a valid file!";
     private static final String START_SIMULATION = "Starting new ";
     private static final String SIMULATION = " Simulation";
-
 
     // kind of data files to look for
     public static final String DATA_FILE_EXTENSION = "*.xml";

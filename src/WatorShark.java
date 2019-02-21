@@ -2,14 +2,25 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+/**
+ * Shark cells in the Wator simulation
+ */
 public class WatorShark extends WatorCell {
 
     private int turnsSinceLastAte;
     private int turnsUntilCanBreed;
     private int starveTime;
 
+    /**
+     * Constructor for Wator Cell class
+     * @param loc location
+     * @param grid grid
+     * @param nextGrid next Grid
+     * @param parameters parameters
+     */
     public WatorShark(Location loc, Grid grid, Grid nextGrid, Map<String, Double> parameters){
         super(loc, grid, nextGrid, parameters);
         myCurrentState = WatorState.SHARK;
@@ -18,6 +29,9 @@ public class WatorShark extends WatorCell {
         turnsUntilCanBreed = (int) (double) (parameters.get(WatorSimulation.SHARK_BREED_TIME));
     }
 
+    /**
+     * Implements the rules for a shark in the Wator simulation
+     */
     @Override
     public void step() {
         turnsUntilCanBreed--;
@@ -37,7 +51,7 @@ public class WatorShark extends WatorCell {
 
     private void tryToBreed() {
         if(turnsUntilCanBreed <= 0){
-            ArrayList<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
+            List<Location> openSpots = myGrid.getEmptyAdjacentLocations(myLocation);
             if(openSpots.size() > 0){
                 Collections.shuffle(openSpots);
                 Location offspringLocation = openSpots.get(0);
@@ -49,7 +63,7 @@ public class WatorShark extends WatorCell {
     }
 
     private void tryToMove() {
-        ArrayList<Location> emptyLocations = myGrid.getEmptyAdjacentLocations(myLocation);
+        List<Location> emptyLocations = myGrid.getEmptyAdjacentLocations(myLocation);
         if (emptyLocations.size() > 0){
             Collections.shuffle(emptyLocations);
             Location newLocation = emptyLocations.get(0);
@@ -78,11 +92,19 @@ public class WatorShark extends WatorCell {
         return false;
     }
 
+    /**
+     * Sharks are not edible
+     * @return false
+     */
     @Override
     public boolean isEdible() {
         return false;
     }
 
+    /**
+     * Sharks are not empty
+     * @return false
+     */
     @Override
     public boolean isEmpty() {
         return false;

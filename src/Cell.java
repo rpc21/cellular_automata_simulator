@@ -61,14 +61,6 @@ public abstract class Cell {
     public abstract void calculateNewState();
 
     /**
-     * Used by the visualizer to get the colored shape associated with cell
-     * @return COLORED shape for visualizer
-     */
-    public Shape getMyShape(){
-        return myShape;
-    }
-
-    /**
      * Get the cell's location
      * @return myLocation
      */
@@ -139,8 +131,8 @@ public abstract class Cell {
      * @param updates is a map of parameters to be changed and their new values
      */
     public void setMyParameters(Map<String, Double> updates) {
-        for (String parameter : updates.keySet()){
-            myParameters.put(parameter, updates.get(parameter));
+        for (Map.Entry<String, Double> entry : updates.entrySet()){
+            myParameters.put(entry.getKey(), entry.getValue());
         }
     }
 
@@ -153,14 +145,6 @@ public abstract class Cell {
         return false;
     }
 
-    /**
-     * Get the color that the cell should display which depends on cell type and state
-     * Needs to be implemented by simulation specific subclasses
-     * @return color to display as a representation of the cell in the visualization
-     */
-    public Color getMyColor(){
-        return myCurrentState.getMyCellColor();
-    }
 
     /**
      * Get the string of length one representation of the cell

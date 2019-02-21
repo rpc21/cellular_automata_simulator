@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIResetButton extends GUIControlManager{
@@ -19,14 +20,23 @@ public class GUIResetButton extends GUIControlManager{
         myAnimation = t;
         super.setUpButton(myButton, NAME, e -> fire());
     }
-
+    /**
+     * Pauses animation and resets the GUI by invoking GUI's resetSimulation method
+     * @see GUIReset
+     */
     private void fire(){
         myAnimation.pause();
         myResetFunction.guiReset();
     }
+    /**
+     * This getter method was necessary to add the node that allows the user to access the play button
+     * type
+     * @see Node
+     * @return myList which is a list of nodes necessary for the user to reset the simulation
+     */
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
         myList.add(myButton);
-        return myList;
+        return Collections.unmodifiableList(myList);
     }
 }

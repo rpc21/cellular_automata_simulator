@@ -72,13 +72,13 @@ public interface Grid {
      * Gets the locations in this grid that contain objects.
      * @return an array list of all occupied locations in this grid
      */
-    ArrayList<Location> getOccupiedLocations();
+    List<Location> getOccupiedLocations();
 
     /**
      * Gets the locations in this grid that contain empty cells.
-     * @return an array list of all empty locations in this grid
+     * @return a list of all empty locations in this grid
      */
-    ArrayList<Location> getEmptyLocations();
+    List<Location> getEmptyLocations();
 
     /**
      * Gets the valid empty locations adjacent to a given location in all eight
@@ -86,10 +86,10 @@ public interface Grid {
      * west, and northwest). <br />
      * Precondition: <code>loc</code> is valid in this grid
      * @param loc a location in this grid
-     * @return an array list of the valid empty locations adjacent to
+     * @return a list of the valid empty locations adjacent to
      * <code>loc</code> in this grid
      */
-    ArrayList<Location> getEmptyAdjacentLocations(Location loc);
+    List<Location> getEmptyAdjacentLocations(Location loc);
 
     /**
      * Gets the valid occupied locations adjacent to a given location in all
@@ -97,21 +97,10 @@ public interface Grid {
      * southwest, west, and northwest). <br />
      * Precondition: <code>loc</code> is valid in this grid
      * @param loc a location in this grid
-     * @return an array list of the valid occupied locations adjacent to
+     * @return a list of the valid occupied locations adjacent to
      * <code>loc</code>Â in this grid
      */
-    ArrayList<Location> getOccupiedAdjacentLocations(Location loc);
-
-    /**
-     * Gets the neighboring occupants in all eight compass directions (north,
-     * northeast, east, southeast, south, southwest, west, and northwest).
-     * <br />
-     * Precondition: <code>loc</code> is valid in this grid
-     * @param loc a location in this grid
-     * @return returns an array list of the objects in the occupied locations
-     * adjacent to <code>loc</code> in this grid
-     */
-    ArrayList<Cell> getNeighbors(Location loc);
+    List<Location> getOccupiedAdjacentLocations(Location loc);
 
     /**
      * Returns the a list of Cells that are in the grid while they underlying implementation of the grid remains hidden
@@ -125,11 +114,17 @@ public interface Grid {
      * @param loc location of the cell whose neighbors you want
      * @param deltaRow the row offsets from loc
      * @param deltaCol the col offsets from loc
-     * @return ArrayList of the validNeighbor Locations of loc
+     * @return List of the validNeighbor Locations of loc
      */
-    ArrayList<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol);
+    List<Location> getValidNeighbors(Location loc, int[] deltaRow, int[] deltaCol);
 
-    ArrayList<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions);
+    /**
+     * Get the valid neighbors of a location that exist in the grid
+     * @param loc location to check
+     * @param neighborsDefinitions neighbors to check
+     * @return valid neighbors
+     */
+    List<Location> getValidNeighbors(Location loc, NeighborsDefinitions neighborsDefinitions);
 
     /**
      * Prints the string representation of the grid using the toStrings defined in the cells

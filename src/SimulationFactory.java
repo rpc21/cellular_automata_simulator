@@ -10,6 +10,13 @@ public class SimulationFactory {
     public static final String DEFAULT_NUMBER_OF_COLS = "10";
     private Random dice = new Random();
 
+    /**
+     * Generates a simulation based on the basic parameters, simulation specific parameters and initial states
+     * @param basicParameters simulation name, rows, and cols
+     * @param simulationSpecificParameters parameters specific to the simulation
+     * @param initialStates 2-D array of initial states
+     * @return new Simulation
+     */
     public Simulation generateSimulation(HashMap<String, String> basicParameters, HashMap<String, Double> simulationSpecificParameters, String[][] initialStates){
 
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
@@ -18,6 +25,12 @@ public class SimulationFactory {
         return mySimulation;
     }
 
+    /**
+     * Generates simulation without having to specify all the initial states
+     * @param basicParameters simulation type, number of rows, number of columns
+     * @param simulationSpecificParameters simulation specific parameters
+     * @return a new simulation
+     */
     public Simulation generateSimulation(Map<String, String> basicParameters,
                                           Map<String, Double> simulationSpecificParameters){
         for (String a: basicParameters.keySet())
@@ -43,8 +56,15 @@ public class SimulationFactory {
         return myNewSimulation;
     }
 
+    /**
+     * Generates a simulation based on the basic parameters, simulation specific parameters and initial states
+     * @param basicParameters simulation name, rows, and cols
+     * @param simulationSpecificParameters parameters specific to the simulation
+     * @param initialStatesType specifies how states should be randomly generated
+     * @return new Simulation
+     */
     public Simulation generateSimulation(Map<String, String> basicParameters,
-                                         Map<String, Double> simulationSpecificParameters, String InitialStatesType){
+                                         Map<String, Double> simulationSpecificParameters, String initialStatesType){
 
         Simulation mySimulation = getSimulationWithEmptyGrid(basicParameters, simulationSpecificParameters);
         String[][] initialStates = createInitialStatesFromRandomPercentages(mySimulation, simulationSpecificParameters);
@@ -74,7 +94,7 @@ public class SimulationFactory {
         }
         while(index<gridLocations.size()){
             initialStates[gridLocations.get(index).getRow()][gridLocations.get(index).getCol()] =
-                    mySimulation.getPercentageFields().get(0).split("P")[0].toUpperCase();
+                    mySimulation.getPercentageFields().get(0).split(THE_MAGIC_LETTER_UPON_WHICH_ALL_OUR_CODE_IS_HINGED)[0].toUpperCase();
             index++;
         }
         return  initialStates;
@@ -129,7 +149,7 @@ public class SimulationFactory {
     }
 
 
-    public double getRandomInRange(double min, double max) {
+    private double getRandomInRange(double min, double max) {
         return min + (max - min) * dice.nextDouble();
     }
 

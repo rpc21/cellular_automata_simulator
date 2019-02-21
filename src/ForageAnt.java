@@ -1,16 +1,28 @@
 import java.util.*;
 
+/**
+ * ForageAnt is a class of the ant agents used in the Forage simulation.  Ants move on each iteration of the
+ * simulation, can drop pheromones, return to the nest or search for food.  Ants move themselves from place to place
+ * on the grid.
+ */
 public class ForageAnt {
 
-    public static final double PHEROMONE_INCREMENT = 1.0D;
-    public static final double THIRD_NEIGHBOR_THRESHOLD = 0.20D;
-    public static final double TWO_NEIGHBOR_THRESHOLD = 0.5;
+    private static final double PHEROMONE_INCREMENT = 1.0D;
+    private static final double THIRD_NEIGHBOR_THRESHOLD = 0.20D;
+    private static final double TWO_NEIGHBOR_THRESHOLD = 0.5;
     private Location myLocation;
     private NeighborsDefinitions myDirection;
     private Grid myGrid;
     private Grid myNextGrid;
     private boolean hasFoodItem;
 
+    /**
+     * Constructor for the ForageAnt class
+     * @param myLocation location of the ant
+     * @param myDirection ant's direction
+     * @param myGrid current grid
+     * @param myNextGrid next grid
+     */
     public ForageAnt(Location myLocation, NeighborsDefinitions myDirection, Grid myGrid, Grid myNextGrid) {
         this.myLocation = myLocation;
         this.myDirection = myDirection;
@@ -18,6 +30,9 @@ public class ForageAnt {
         this.myNextGrid = myNextGrid;
     }
 
+    /**
+     * Advances the ant from one iteration to the next
+     */
     public void act(){
         if (hasFoodItem){
             returnToNest();
@@ -32,18 +47,18 @@ public class ForageAnt {
         return myGrid.getValidNeighbors(myLocation, NeighborsDefinitions.BOX_NEIGHBORS);
     }
 
-    private List<Location> calculateForwardLocations() {
-        ArrayList<Location> forwardLocations = new ArrayList<>();
-        for (NeighborsDefinitions neighborsDefinitions : calculateForwardDirections()){
-            Location neighborLocation = new Location(myLocation.getRow() + neighborsDefinitions.getDeltaRow()[0],
-                    myLocation.getCol() + neighborsDefinitions.getDeltaCol()[0]);
-            forwardLocations.add(neighborLocation);
-        }
-        return forwardLocations;
-    }
+//    private List<Location> calculateForwardLocations() {
+//        ArrayList<Location> forwardLocations = new ArrayList<>();
+//        for (NeighborsDefinitions neighborsDefinitions : calculateForwardDirections()){
+//            Location neighborLocation = new Location(myLocation.getRow() + neighborsDefinitions.getDeltaRow()[0],
+//                    myLocation.getCol() + neighborsDefinitions.getDeltaCol()[0]);
+//            forwardLocations.add(neighborLocation);
+//        }
+//        return forwardLocations;
+//    }
 
     private NeighborsDefinitions getDirectionWithMaxFoodPheromones(List<NeighborsDefinitions> directions) {
-        HashMap<NeighborsDefinitions, Double> neighborToPheromoneMap = new HashMap<>();
+        Map<NeighborsDefinitions, Double> neighborToPheromoneMap = new HashMap<>();
         for (NeighborsDefinitions direction : directions){
             Location neighborLocation = new Location(myLocation.getRow() + direction.getDeltaRow()[0],
                     myLocation.getCol()+direction.getDeltaCol()[0]);
@@ -61,7 +76,7 @@ public class ForageAnt {
     }
 
     private List<NeighborsDefinitions> calculateForwardDirections() {
-        ArrayList<NeighborsDefinitions> forwardDirections = new ArrayList<>();
+        List<NeighborsDefinitions> forwardDirections = new ArrayList<>();
         NeighborsDefinitions[] directions = NeighborsDefinitions.CARDINAL_DIRECTIONS_COMPLETE;
         for (int i = 0; i < directions.length; i++){
             if (directions[i] == myDirection){
@@ -170,10 +185,10 @@ public class ForageAnt {
     }
 
 
-    private Location calculateNextLocation(Location myLocation, NeighborsDefinitions myDirection) {
-        return  new Location(myLocation.getRow() + myDirection.getDeltaRow()[0],
-                myLocation.getCol() + myDirection.getDeltaCol()[0]);
-    }
+//    private Location calculateNextLocation(Location myLocation, NeighborsDefinitions myDirection) {
+//        return  new Location(myLocation.getRow() + myDirection.getDeltaRow()[0],
+//                myLocation.getCol() + myDirection.getDeltaCol()[0]);
+//    }
 
 
     private NeighborsDefinitions getDirectionWithMaxHomePheromones(List<NeighborsDefinitions> directions) {
@@ -195,7 +210,7 @@ public class ForageAnt {
     }
 
     private List<Location> getPossibleMoves(List<Location> neighborLocations) {
-        ArrayList<Location> possibleLocations = new ArrayList<>();
+        List<Location> possibleLocations = new ArrayList<>();
         for (Location loc : neighborLocations){
             if (myGrid.isValid(loc) && ((ForagePatch) myGrid.get(loc)).isValidAntLocation()){
                 possibleLocations.add(loc);
@@ -204,22 +219,26 @@ public class ForageAnt {
         return possibleLocations;
     }
 
-    private List<Double> getNeighborHomePheromones(Location location){
-        List<Double> neighborHomePheromones = new ArrayList<>();
-        for (Location loc : myGrid.getValidNeighbors(location, NeighborsDefinitions.BOX_NEIGHBORS)){
-            neighborHomePheromones.add(((ForagePatch) myGrid.get(loc)).getMyHomePheromones());
-        }
-        return neighborHomePheromones;
-    }
+//    private List<Double> getNeighborHomePheromones(Location location){
+//        List<Double> neighborHomePheromones = new ArrayList<>();
+//        for (Location loc : myGrid.getValidNeighbors(location, NeighborsDefinitions.BOX_NEIGHBORS)){
+//            neighborHomePheromones.add(((ForagePatch) myGrid.get(loc)).getMyHomePheromones());
+//        }
+//        return neighborHomePheromones;
+//    }
 
-    private List<Double> getNeighborFoodPheromones(Location location){
-        List<Double> neighborFoodPheromones = new ArrayList<>();
-        for (Location loc : myGrid.getValidNeighbors(location, NeighborsDefinitions.BOX_NEIGHBORS)){
-            neighborFoodPheromones.add(((ForagePatch) myGrid.get(loc)).getMyFoodPheromones());
-        }
-        return neighborFoodPheromones;
-    }
+//    private List<Double> getNeighborFoodPheromones(Location location){
+//        List<Double> neighborFoodPheromones = new ArrayList<>();
+//        for (Location loc : myGrid.getValidNeighbors(location, NeighborsDefinitions.BOX_NEIGHBORS)){
+//            neighborFoodPheromones.add(((ForagePatch) myGrid.get(loc)).getMyFoodPheromones());
+//        }
+//        return neighborFoodPheromones;
+//    }
 
+    /**
+     * Setter for the grid
+     * @param myNextGrid
+     */
     public void setMyNextGrid(Grid myNextGrid) {
         this.myNextGrid = myNextGrid;
     }

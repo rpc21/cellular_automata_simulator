@@ -21,7 +21,14 @@ public class GUISimulationNameChooser extends GUIControlManager{
     public String getMyName(){
         return myChooser.getValue().toString();
     }
-
+    /**
+     * This getter method was necessary to add the node that allows the user to access a list of simulation options
+     * to the root of the scene in GUI
+     * type
+     * @see Node
+     * @return myList which is a list of nodes necessary for the user to understand and change values for the current
+     * simulation
+     */
     public List<Node> getDisplay(){
         List<Node> myList = new ArrayList<>();
         myList.add(myChooser);

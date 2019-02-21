@@ -3,6 +3,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enumerates the possible state in the Forage Simulation
+ */
 public enum ForageState implements CellState {
 
     FOOD("F", "FOOD", Color.RED),
@@ -20,17 +23,25 @@ public enum ForageState implements CellState {
         myFullState = fullState;
         myCellColor = cellColor;
     }
+
+    /**
+     * @return string representation of fullState name
+     */
+    @Override
     public String toString(){ return myFullState;}
+
+    /**
+     * @return one letter representation of the cell state
+     */
     @Override
     public String getMyShortenedName() {
         return myShortenedName;
     }
 
-    @Override
-    public Color getMyCellColor() {
-        return myCellColor;
-    }
-
+    /**
+     * Return a list of the possible values that the state could take on
+     * @return list of possible states
+     */
     @Override
     public List<String> getPossibleValues() {
         ArrayList<String> arrayList = new ArrayList<>();
